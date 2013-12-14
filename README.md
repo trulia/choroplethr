@@ -8,7 +8,7 @@ See the [wiki](https://github.com/arilamstein/choroplethr/wiki) for examples of 
 
 ## Installation
 
-To install the development version of choroplethr it's easiest to use the `devtools` package:
+To install the development version of `choroplethr` use the `devtools` package:
 
 ```
 # install.packages("devtools")
@@ -16,7 +16,7 @@ library(devtools)
 install_github("choroplethr", "arilamstein")
 ```
 
-choroplethr is currently not available on CRAN.
+`choroplethr` is currently not available on CRAN.
 
 ## Usage
 
