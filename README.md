@@ -63,4 +63,7 @@ The [American Community Survey (ACS)](https://www.census.gov/acs/www/) is an ong
 ACS data is accessed by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  To create a choropleth of an ACS table you only need to provide the tableId to one of these three functions:
 
 ```
+acs_all_state_choropleth(tableId, num_buckets = 9, showLabels = T)
+acs_all_county_choropleth(tableId, num_buckets = 9)
+acs_all_zip_choropleth(tableId, num_buckets = 9)
 ```
