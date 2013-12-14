@@ -1,6 +1,5 @@
 # given a dataframe with 2 columns, fips and value, create a choropleth of all counties in
 # the contiguous 48 states
-# TODO: Display AK and HI as an inset
 all_county_choropleth = function(df_fips, num_buckets=9, title="", roundLabel=T, scaleName="")
 {
   stopifnot(c("fips", "value") %in% colnames(df_fips));
@@ -54,6 +53,7 @@ all_county_choropleth = function(df_fips, num_buckets=9, title="", roundLabel=T,
     ggplot(choropleth, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
       geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
+      scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
       ggtitle(title) +
       theme_clean();
   }  
