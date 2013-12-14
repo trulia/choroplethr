@@ -1,6 +1,6 @@
 # choroplethr
 
-choroplethr is a set of functions for conveniently drawing choropleths in R.  Choropleths are thematic maps where regions (eg. states) are colored according to some metric (eg. which political party the state voted for).  choroplethr currently supports three levels of geographic resolution in the US: state, county and ZIP code.  Common problems such as rendering/matching county data with map data, choosing scales, creating labels and creating a clean background are handled automatically, making it easier to explore your data.
+`choroplethr` is a set of functions for conveniently drawing choropleths in R.  Choropleths are thematic maps where regions (eg. states) are colored according to some metric (eg. which political party the state voted for).  choroplethr currently supports three levels of geographic resolution in the US: state, county and ZIP code.  Common problems such as rendering/matching county data with map data, choosing scales, creating labels and creating a clean background are handled automatically, making it easier to explore your data.  `choroplethr` was originally created to support visualizing US census data and attempts to work seamlessly with the [acs](http://cran.r-project.org/web/packages/acs/) package.
 
 ## Installation
 
