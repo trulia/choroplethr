@@ -56,7 +56,7 @@ all_zip_choropleth = function(df_zip,
 
 ZIP code choropleths are currently rendered as scatterplots.
 
-#### Creating a map of ACS data
+#### Creating a choropleth of ACS data
 
 The [American Community Survey (ACS)](https://www.census.gov/acs/www/) is an ongoing survey conducted by the Census Bureau.  It differs from the decennial census in two important ways.  First, it samples a small portion of the population each year, whereas the decennial census attempts to perform a complete count.  This leads to results (such as population counts) being estimates with margins of error and confidence intervals as opposed to single numbers.  Second, it asks much more detailed demographic information than the decennial census.  
 
