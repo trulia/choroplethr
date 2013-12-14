@@ -40,7 +40,7 @@ To create a county choropleth call `all_county_choropleth` with a data.frame tha
 # the contiguous 48 states
 all_county_choropleth(df_fips, num_buckets=9, title="", roundLabel=T, scaleName="")
 ```
-the fips column must represent county FIPS codes.
+the fips column must contain [county FIPS codes](http://en.wikipedia.org/wiki/FIPS_county_code).
 
 #### Creating a ZIP Code Choropleth
 To create a ZIP code choropleth call `all_zip_choropleth` with a data.frame that has one column named `zip` and one column named `value`:
