@@ -20,7 +20,7 @@ install_github("choroplethr", "arilamstein")
 
 ### The `choroplethr` function
 
-The `choroplethr` function creates choropleths from user-supplied data.  The first parameter is a data.frame containing a column named `region` and a column named `value`.  The second parameter specifies the level of detail of the data and must be one of `state`, `county` or `zip`.  There are other, optional parameters as well.  Here are some examples of using `choroplethr` to create maps at the state, county and zip level.
+The `choroplethr` function creates choropleths from user-supplied data.  The first parameter is a data.frame containing a column named `region` and a column named `value`.  The second parameter specifies the level of detail (lod) of the data and must be one of "state", "county" or "zip".  There are other, optional parameters as well.  Here are some examples of using `choroplethr` to create maps at the state, county and zip level.
 
 ```
 # a state choropleth
@@ -41,7 +41,7 @@ The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a dis
 
 ### The `choroplethr_acs` function
 
-`choroplethr` provides native support for viewing data collected by the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/) with the `choroplethr_acs` function.  The first parameter to `choroplethr_acs` is an ACS table id, and the second parameter is a level of detail (lod).  The `lod` parameter must be one of "state", "county" or "zip".  A list of tables from 2007-2011 5-year ACS can be viewed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#). Here are some examples of using the `choroplethr_acs` function:
+`choroplethr` provides native support for viewing data collected as part of the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/) with the `choroplethr_acs` function.  The first parameter to `choroplethr_acs` is an ACS table id and the second parameter is a level of detail (lod).  A list of tables from 2007-2011 5-year ACS can be viewed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#). Here are some examples of using the `choroplethr_acs` function:
 
 ```
 # total population, state level
