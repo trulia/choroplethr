@@ -43,7 +43,7 @@ The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a dis
 
 ### The `choroplethr_acs` function
 
-`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  ACS data is referenced by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  Then you can make a choroplethr of ACS data with the `choroplethr_acs` function like this:
+`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  The ACS collects a massive amount of data and references it by table id.  can be viewed here [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  You can create a choropleth of an ACS table by calling `choroplethr_acs` with a table name as the first parameter and the level of detail you want as the second parameter.  The second parameter must be one of `state`, `county` or `zip`.  Here are a few examples:
 
 ```
 # total population, state level
@@ -56,4 +56,4 @@ choroplethr_acs("B00001", "county", 2);
 choroplethr_acs("B19301", "zip");
 ```
 
-To use `choroplethr_acs` you must have the [acs package](http://cran.r-project.org/web/packages/acs/) installed, acquired a [Census API key](http://www.census.gov/developers/tos/key_request.html), and stored your with the the acs's `api.key.install` function.
+To use `choroplethr_acs` you must have the [acs package](http://cran.r-project.org/web/packages/acs/) installed, acquired a [Census API key](http://www.census.gov/developers/tos/key_request.html), and stored your key with the the acs package's `api.key.install` function.
