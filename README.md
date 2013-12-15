@@ -39,7 +39,7 @@ df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=T)
 choroplethr(df, "zip", 9)
 ```
 
-The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a discrete scale (if in the range [2, 9]).  For discrete scales `choroplethr` will create `num_buckets` equally sized buckets.
+The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a discrete scale (if in the range [2, 9]).  For discrete scales `choroplethr` will bucket the data into `num_buckets` equally sized buckets.
 
 ### The `choroplethr_acs` function
 
