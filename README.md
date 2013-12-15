@@ -41,15 +41,13 @@ choroplethr(df, "zip", 9)
 
 ### The `choroplethr_acs` function
 
-`choroplethr` is a 
-#### Creating a choropleth of ACS data
-
-The [American Community Survey (ACS)](https://www.census.gov/acs/www/) is an ongoing survey conducted by the Census Bureau.  It differs from the decennial census in two important ways.  First, it samples a small portion of the population each year, whereas the decennial census attempts to perform a complete count.  This leads to results (such as population counts) being estimates with margins of error and confidence intervals as opposed to single numbers.  Second, it asks much more detailed demographic information than the decennial census.  
-
-ACS data is accessed by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  To create a choropleth of an ACS table you only need to provide the tableId to one of these three functions:
+`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  ACS data is referenced by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  To create a choropleth of an ACS table you must have the [acs](http://cran.r-project.org/web/packages/acs/) package installed and a valid Census API Key (see the acs package documentation for this).  Then you can make a choroplethr of ACS data with the `choroplethr_acs` function like this:
 
 ```
-acs_all_state_choropleth(tableId, num_buckets = 9, showLabels = T)
-acs_all_county_choropleth(tableId, num_buckets = 9)
-acs_all_zip_choropleth(tableId, num_buckets = 9)
+# total population, state level
+choroplethr_acs("B00001", "state", 1);
+# total population, county level, above and below median
+choroplethr_acs("B00001", "county", 2); 
+# per capita income, zip code, continuous scale
+choroplethr_acs("B19301", "zip");
 ```
