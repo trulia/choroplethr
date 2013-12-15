@@ -1,8 +1,7 @@
-# given a dataframe with 2 columns, fips and value, create a choropleth of all counties in
-# the contiguous 48 states
-all_county_choropleth = function(df_fips, num_buckets=9, title="", roundLabel=T, scaleName="")
+all_county_choropleth = function(df, num_buckets=9, title="", roundLabel=T, scaleName="")
 {
-  stopifnot(c("fips", "value") %in% colnames(df_fips));
+  stopifnot(c("region", "value") %in% colnames(df))
+  df = rename(df, replace=c("region" = "fips"))
   
   # add fips column to county maps
   # this is the maps data
@@ -24,7 +23,7 @@ all_county_choropleth = function(df_fips, num_buckets=9, title="", roundLabel=T,
   county.df = merge(county.df, county.fips.2); 
   
   # new we can merge our data with the map data, because the map data now has fips codes
-  choropleth = merge(county.df, df_fips, all = T);
+  choropleth = merge(county.df, df, all = T);
   if (any(is.na(choropleth$value)))
   {
     missing_polynames = unique(choropleth[is.na(choropleth$value), ]$polyname);

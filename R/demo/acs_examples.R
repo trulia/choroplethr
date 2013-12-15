@@ -10,19 +10,19 @@
 gen_choropleths = function(tableId)
 {
   # some useful county choropleths
-  print(acs_all_county_choropleth(tableId, num_buckets = 1)); # continuous scale 
-  print(acs_all_county_choropleth(tableId, num_buckets = 2)); # buckets show above/below median
-  print(acs_all_county_choropleth(tableId, num_buckets = 9)); # 9 equal sized buckets - max resolution
+  print(choroplethr_acs(tableId, "county", 1));
+  print(choroplethr_acs(tableId, "county", 2));
+  print(choroplethr_acs(tableId, "county", 9));
   
   # some useful state choropleths
-  print(acs_all_state_choropleth(tableId, num_buckets = 1, showLabels = T)); # continuous scale, with state labels
-  print(acs_all_state_choropleth(tableId, 2, F)); # buckets show above/below median, no labels
-  print(acs_all_state_choropleth(tableId, 9, T)); # 9 equal sized buckets (max resolution), with labels
+  print(choroplethr_acs(tableId, "state", 1, T)); 
+  print(choroplethr_acs(tableId, "state", 2, F)); 
+  print(choroplethr_acs(tableId, "state", 9, T));
 
   # some useful zip choropleths
-  print(acs_all_zip_choropleth(tableId, num_buckets = 1)); # continuous scale
-  print(acs_all_zip_choropleth(tableId, num_buckets = 2)); # buckets show above/below median
-  print(acs_all_zip_choropleth(tableId, num_buckets = 9)); # 9 equal sized buckets (max resolution)
+  print(choroplethr_acs(tableId, "zip", 1));
+  print(choroplethr_acs(tableId, "zip", 2)); 
+  print(choroplethr_acs(tableId, "zip", 9)); 
 }
 
 # The idea here is that, like a 5 number summary for values, these bucket sizes are useful for 
@@ -39,9 +39,9 @@ print_3_maps = function(m1, m2, m3)
 }  
 
 print_3_maps(
-  acs_all_state_choropleth(tableId, num_buckets = 1), # continuous scale
-  acs_all_state_choropleth(tableId, num_buckets = 2), # buckets show above/below median
-  acs_all_state_choropleth(tableId, num_buckets = 9)  # 9 equal sized buckets (max resolution)
+  choroplethr_acs(tableId, "zip", 1), 
+  choroplethr_acs(tableId, "zip", 2), 
+  choroplethr_acs(tableId, "zip", 9)  
 );
   
 # total population

@@ -1,15 +1,14 @@
-# requires a df with columns named "zip" and "value"
-all_zip_choropleth = function(df_zip, 
+all_zip_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 
                                 roundLabel = T,
                                 scaleName = "")
 {
-  stopifnot(c("zip", "value") %in% colnames(df_zip));
-  df_zip = df_zip[, c("zip", "value")] # prevent naming collisions below
-  
+  stopifnot(c("region", "value") %in% colnames(df))
+  df = rename(df, replace=c("region" = "zip"))
+    
   data(zipcode) # from library(zipcode)
-  choropleth = merge(zipcode, df_zip, by.x="zip", by.y="zip", all.x=F, all.y=T);
+  choropleth = merge(zipcode, df, all.x=F, all.y=T);
 
   # only print contiguous 48 states now, mostly for conformity with state and county maps,
   # where the limitation is technical

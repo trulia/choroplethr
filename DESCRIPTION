@@ -21,4 +21,4 @@ Version: 0.1
 Author: Ari Lamstein <arilamstein@gmail.com>
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
 License: BSD-3
-Imports: ggplot2, acs, maps, gdata, scales, zipcode
+Imports: ggplot2, acs, maps, gdata, scales, zipcode, gridExtra

@@ -25,24 +25,16 @@ normalize_state_names = function(state_names)
   state_names;
 }
 
-# requires a df with columns named "state" and "value"
-all_state_choropleth = function(df_state, 
+all_state_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 
                                 roundLabel = T, 
                                 showLabels = T,
                                 scaleName = "")
 {
-  stopifnot(c("state", "value") %in% colnames(df_state));
-  
-  df_state$state = normalize_state_names(df_state$state)
+  df$region = normalize_state_names(df$region)
   state_map_df = map_data("state");
-  choropleth = 
-    merge(state_map_df, 
-          df_state, 
-          by.x = "region", 
-          by.y = "state",
-          all  = T)
+  choropleth = merge(state_map_df, df, all = T)
   
   if (any(is.na(choropleth$value)))
   {
