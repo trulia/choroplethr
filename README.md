@@ -20,7 +20,7 @@ install_github("choroplethr", "arilamstein")
 
 ### The `choroplethr` function
 
-The `choroplethr` function creates choropleths from user-supplied data.  The first parameter is a data.frame containing a column named `region` and a column named `value`.  The second parameter specifies the level of detail (lod) of the data and must be one of "state", "county" or "zip".  There are other, optional parameters as well.  Here are some examples of using `choroplethr` to create maps at the state, county and zip level.
+The `choroplethr` function creates choropleths from user-supplied data.  The first parameter is a data.frame containing a column named "region" and a column named "value".  The second parameter specifies the level of detail (lod) of the data and must be one of "state", "county" or "zip".  There are other, optional parameters as well.  Here are some examples of using `choroplethr` to create maps at the state, county and zip level.
 
 ```
 # a state choropleth
