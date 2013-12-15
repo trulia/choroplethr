@@ -1,6 +1,6 @@
 # choroplethr
 
-`choroplethr` simplifies the creation of thematic maps (choropleths) in R.  In a choropleth geographic regions such as states are colored according to some metric, such as which political party the state voted for.  Three levels of geographic resolution and two types of scales are supported.  Common problems such as matching county data with map data, choosing and labeling discrete scales and creating a clean background are handled automatically. 
+`choroplethr` simplifies the creation of choropleths in R.  A choropleth is a thematic map where geographic regions such as states are colored according to some metric, such as which political party the state voted for.  `choroplethr` supports three levels of geographic resolution and two types of scales.  Common problems such as matching county data with map data, choosing and labeling discrete scales and creating a clean background are handled automatically. 
 
 `choroplethr` was originally created to support visualizing US census data and attempts to work seamlessly with the [acs](http://cran.r-project.org/web/packages/acs/) package.  
 
@@ -20,42 +20,30 @@ install_github("choroplethr", "arilamstein")
 
 ## Usage
 
-#### Creating a State Choropleth
-To create a state choropleth call `all_state_choropleth` with a data.frame that has one column named `state` and one column named `value`:
-```
-# requires a df with columns named "state" and "value"
-all_state_choropleth(df_state, 
-                    num_buckets = 9, 
-                    title = "", 
-                    roundLabel = T, 
-                    showLabels = T,
-                    scaleName = "")
-```
-The `num_buckets` argument is the most interesting.  Setting it to 1 will cause the scale to be continuous, 2 will highlight values above/below the median, and 9 will show the maximum resolution.  `showLabels` will optionally add state abbreviations.
+### The `choroplethr` function
 
-#### Creating a County Choropleth
-To create a county choropleth call `all_county_choropleth` with a data.frame that has one column named `fips` and one column named `value`:
-```
-# given a dataframe with 2 columns, fips and value, create a choropleth of all counties in
-# the contiguous 48 states
-all_county_choropleth(df_fips, num_buckets=9, title="", roundLabel=T, scaleName="")
-```
-the fips column must contain [county FIPS codes](http://en.wikipedia.org/wiki/FIPS_county_code).
-
-#### Creating a ZIP Code Choropleth
-To create a ZIP code choropleth call `all_zip_choropleth` with a data.frame that has one column named `zip` and one column named `value`:
+The `choroplethr` function is designed to handle arbitrary user-defined data.  The first parameter, `df` must be a data.frame containing a column named `region` and a column named `value`.  The second parameter, `lod`, specifies the level of detail of the data.frame and must be one of `state`, `county` or `zip`.  There are other, optional parameters as well.  Here are some examples.
 
 ```
-# requires a df with columns named "zip" and "value"
-all_zip_choropleth = function(df_zip, 
-                                num_buckets = 9, 
-                                title = "", 
-                                roundLabel = T,
-                                scaleName = "")
+# example of state choropleth
+df = data.frame(region=state.abb, value=sample(100, 50))
+choroplethr(df, lod="state")
+
+# example of county choropleth
+df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
+choroplethr(df, "county", 2)
+
+# example of zip map
+data(zipcode)
+df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=T))
+choroplethr(df, "zip", 9)
 ```
 
-ZIP code choropleths are currently rendered as scatterplots.
+The third parameter to `choroplethr` is `num_buckets`, which specifies the scale.  See the wiki for details.
 
+### The `choroplethr_acs` function
+
+`choroplethr` is a 
 #### Creating a choropleth of ACS data
 
 The [American Community Survey (ACS)](https://www.census.gov/acs/www/) is an ongoing survey conducted by the Census Bureau.  It differs from the decennial census in two important ways.  First, it samples a small portion of the population each year, whereas the decennial census attempts to perform a complete count.  This leads to results (such as population counts) being estimates with margins of error and confidence intervals as opposed to single numbers.  Second, it asks much more detailed demographic information than the decennial census.  
