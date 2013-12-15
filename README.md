@@ -41,7 +41,9 @@ The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a dis
 
 ### The `choroplethr_acs` function
 
-`choroplethr` provides native support for viewing data collected from the US Census's American Community Survey (ACS) with the `choroplethr_acs` function.  The first parameter to `choroplethr_acs` is an ACS table id and the second parameter is a level of detail (lod).  A list of tables from 2007-2011 5-year ACS can be viewed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#). Here are some examples of using the `choroplethr_acs` function:
+Support for viewing data collected from the US Census's American Community Survey (ACS) is provided via the  `choroplethr_acs` function.  The first parameter is an ACS table id and the second parameter is a level of detail (lod), which must be one of "state", "county" or "zip".  A list of tables from 2007-2011 5-year ACS can be found [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#). 
+
+Here are some examples of using the `choroplethr_acs` function:
 
 ```
 # total population, state level
