@@ -7,6 +7,14 @@
 # B00001 UNWEIGHTED SAMPLE COUNT OF THE POPULATION 
 # B19301  PER CAPITA INCOME IN THE PAST 12 MONTHS (IN 2011 INFLATION-ADJUSTED DOLLARS) 
 
+# total population, state level
+choroplethr_acs("B00001", "state", 1);
+# total population, county level, above and below median
+choroplethr_acs("B00001", "county", 2); 
+# per capita income, zip code, continuous scale
+choroplethr_acs("B19301", "zip");
+
+
 gen_choropleths = function(tableId)
 {
   # some useful county choropleths
@@ -48,5 +56,3 @@ print_3_maps(
 gen_choropleths("B00001");
 # per capita income
 gen_choropleths("B19301");
-
-#acs_all_zip_choropleth("B00001", num_buckets = 2); # buckets show above/below median

@@ -1,8 +1,33 @@
-# code to transparently generate choropleths from the American Community Survey (ACS)
-# using the acs package (http://cran.r-project.org/web/packages/acs/).
-# The ACS stores data in tables.  A list of tableIds of the 2011 ACS can be found here:
-# http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#
-
+#' Create a choropleth using the US Census' American Community Survey (ACS) data.  
+#' Requires the acs package to be installed, and a Census API Key to be set with 
+#' the acs's api.key.install function.
+#'
+#' @param The id of an ACS table
+#' @param A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
+#' @param The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
+#' example, 2 will show values above or below the median, and 9 will show the maximum
+#' resolution.  Defaults to 9.
+#' @param For state choropleths, whether or not to show state abbreviations on the map.
+#' Defaults to T. 
+#' @return A choropleth
+#' 
+#' @keywords choropleth, acs
+#' 
+#' @seealso \code{\link{choroplethr}} which this function wraps
+#' @seealso \code{\link{api.key.install}} which sets an Census API key for the acs library
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#,
+#' which contains a list of tables from the 2011 5 year ACS.
+#' @export
+#' @examples
+#' # total population, state level
+#' choroplethr_acs("B00001", "state", 1);
+#' 
+#' # total population, county level, above and below median
+#' choroplethr_acs("B00001", "county", 2); 
+#' 
+#' # per capita income, zip code, continuous scale
+#' choroplethr_acs("B19301", "zip");
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
