@@ -39,9 +39,11 @@ df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=T)
 choroplethr(df, "zip", 9)
 ```
 
+The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a discrete scale (if in the range [2, 9]).  For discrete scales `choroplethr` will create `num_buckets` equally sized buckets.
+
 ### The `choroplethr_acs` function
 
-`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  ACS data is referenced by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  To create a choropleth of an ACS table you must have the [acs](http://cran.r-project.org/web/packages/acs/) package installed and a valid Census API Key (see the acs package documentation for this).  Then you can make a choroplethr of ACS data with the `choroplethr_acs` function like this:
+`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  ACS data is referenced by table id.  For example, the list of 2007-2011 American Community Survey 5-Year Estimates, with corresponding table ids, can be accessed [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  Then you can make a choroplethr of ACS data with the `choroplethr_acs` function like this:
 
 ```
 # total population, state level
@@ -53,3 +55,5 @@ choroplethr_acs("B00001", "county", 2);
 # per capita income, zip code, continuous scale
 choroplethr_acs("B19301", "zip");
 ```
+
+To use `choroplethr_acs` you must have the [acs package](http://cran.r-project.org/web/packages/acs/) installed, acquired a [Census API key](http://www.census.gov/developers/tos/key_request.html), and stored your with the the acs's `api.key.install` function.
