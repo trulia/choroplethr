@@ -43,7 +43,7 @@ The third parameter, `num_buckets`, specifies a continuous scale (if 1) or a dis
 
 ### The `choroplethr_acs` function
 
-`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  The ACS collects a massive amount of data and references it by table id.  can be viewed here [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  You can create a choropleth of an ACS table by calling `choroplethr_acs` with a table name as the first parameter and the level of detail you want as the second parameter.  The second parameter must be one of `state`, `county` or `zip`.  Here are a few examples:
+`choroplethr` was originally created to facilitate viewing data collected by the US Census Bureau - specifically the [American Community Survey (ACS)](https://www.census.gov/acs/www/).  The ACS collects a massive amount of data and references it by table id.  For example, estimates from the 2007-2011 5-year ACS can be viewed here [here](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#).  You can create a choropleth of an ACS table by calling `choroplethr_acs` with a table name as the first parameter and the level of detail you want as the second parameter.  The second parameter must be one of `state`, `county` or `zip`.  Here are a few examples:
 
 ```
 # total population, state level
