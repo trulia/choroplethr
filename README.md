@@ -22,24 +22,22 @@ install_github("choroplethr", "arilamstein")
 
 ### The `choroplethr` function
 
-The `choroplethr` function is designed to handle arbitrary user-defined data.  The first parameter, `df` must be a data.frame containing a column named `region` and a column named `value`.  The second parameter, `lod`, specifies the level of detail of the data.frame and must be one of `state`, `county` or `zip`.  There are other, optional parameters as well.  Here are some examples.
+The `choroplethr` function creates choropleths from user-supplied data.  The first parameter is a data.frame containing a column named `region` and a column named `value`.  The second parameter specifies the level of detail of the data and must be one of `state`, `county` or `zip`.  There are other, optional parameters as well.  Here are some examples of using `choroplethr` to create maps at the state, county and zip level.
 
 ```
-# example of state choropleth
+# a state choropleth
 df = data.frame(region=state.abb, value=sample(100, 50))
 choroplethr(df, lod="state")
 
-# example of county choropleth
+# a county choropleth
 df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
 choroplethr(df, "county", 2)
 
-# example of zip map
+# a zip choropleth 
 data(zipcode)
 df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=T))
 choroplethr(df, "zip", 9)
 ```
-
-The third parameter to `choroplethr` is `num_buckets`, which specifies the scale.  See the wiki for details.
 
 ### The `choroplethr_acs` function
 
