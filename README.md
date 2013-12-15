@@ -4,8 +4,6 @@
 
 `choroplethr` was originally created to support visualizing US census data and attempts to work seamlessly with the [acs](http://cran.r-project.org/web/packages/acs/) package.  
 
-See the [wiki](https://github.com/arilamstein/choroplethr/wiki) for examples of `choroplethr` in action as well as a discussion of the impact of various geographic and scale choices in map generation.
-
 ## Installation
 
 To install the development version of `choroplethr` use the `devtools` package:
