@@ -46,8 +46,10 @@ choroplethr(df, "zip", 9)
 ```
 # total population, state level
 choroplethr_acs("B00001", "state", 1);
+
 # total population, county level, above and below median
 choroplethr_acs("B00001", "county", 2); 
+
 # per capita income, zip code, continuous scale
 choroplethr_acs("B19301", "zip");
 ```
