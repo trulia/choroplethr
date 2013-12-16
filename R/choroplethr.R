@@ -1,15 +1,17 @@
-#' Create a choropleth from a specified data.frame and level of detail.
+#' Create a choropleth
+#' 
+#' Creates a choropleth from a specified data.frame and level of detail.
 #'
-#' @param A data.frame with a column named "region" and a column named "value"
-#' @param A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
-#' @param The number of equally sized buckets to places the values in.  A value of 1 
+#' @param df A data.frame with a column named "region" and a column named "value"
+#' @param lod A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.  Defaults to 9.
-#' @param A title for the map.  Defaults to "".
-#' @param Whether to round values in the label of the map.  Default to T.
-#' @param An optional label for the legend.  Defaults to "".
-#' @param For state choropleths, whether or not to show state abbreviations on the map.
+#' @param title A title for the map.  Defaults to "".
+#' @param roundLabel Whether to round values in the label of the map.  Default to T.
+#' @param scaleName An optional label for the legend.  Defaults to "".
+#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
 #' @return A choropleth
 #' 

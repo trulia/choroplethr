@@ -1,14 +1,16 @@
-#' Create a choropleth using the US Census' American Community Survey (ACS) data.  
+#' Create a choropleth from ACS data.
+#' 
+#' Creates a choropleth using the US Census' American Community Survey (ACS) data.  
 #' Requires the acs package to be installed, and a Census API Key to be set with 
 #' the acs's api.key.install function.
 #'
-#' @param The id of an ACS table
-#' @param A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
-#' @param The number of equally sized buckets to places the values in.  A value of 1 
+#' @param tableId The id of an ACS table
+#' @param lod A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.  Defaults to 9.
-#' @param For state choropleths, whether or not to show state abbreviations on the map.
+#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
 #' @return A choropleth
 #' 
