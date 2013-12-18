@@ -30,6 +30,9 @@
 #' 
 #' # per capita income, zip code, continuous scale
 #' choroplethr_acs("B19301", "zip");
+#' 
+#' # median age by sex
+#' choroplethr_acs("B01002", "state")
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
@@ -37,12 +40,19 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
   
   if (lod == "state") {
     # get census data for all states from specified table
-    us.state = geo.make(state = "*");
-    acs.data = acs.fetch(geography=us.state, table.number = tableId, col.names = "pretty");
+    us.state = geo.make(state = "*")
+    acs.data = acs.fetch(geography=us.state, table.number = tableId, col.names = "pretty")
+    column_idx = 1
+    if (length(acs.data@acs.colnames) > 1)
+    {
+      num_cols = length(acs.data@acs.colnames)
+      title = paste0("Table ", tableId, " has ", num_cols, " columns.  Please choose which column to render:")
+      column_idx = menu(acs.data@acs.colnames, title=title)
+    }
     # put in format for call to all_county_choropleth
     acs.df = data.frame(region = geography(acs.data)$NAME, 
-                        value  = as.numeric(estimate(acs.data)));
-    title  = acs.data@acs.colnames; 
+                        value  = as.numeric(estimate(acs.data[,column_idx])));
+    title  = acs.data@acs.colnames[column_idx]; 
     choroplethr(acs.df, "state", num_buckets, title, showLabels);  
     
   } else if (lod == "county") {
