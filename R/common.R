@@ -26,27 +26,5 @@ theme_clean = function(base_size = 12)
 
 generate_values = function(values, num_buckets, roundLabel = T)
 {
-  q = quantile(values, probs = seq(0, 1, 1/num_buckets));
-  if (roundLabel)
-  {
-    q = round(q);
-  }
-
-  # add commas to the legend
-  cut(values, 
-      breaks         = q, 
-      include.lowest = T, 
-      labels = paste( 
-        "(", 
-        format(q[1:(length(q)-1)], 
-               big.mark   = ",",
-               scientific = F,
-               digits     = 3), 
-        ", ", 
-        format(q[-1], 
-               big.mark   = ",",
-               scientific = F,
-               digits     = 3), 
-        "]", 
-        sep = ""));     
+  cut2(values, g=num_buckets)
 }
