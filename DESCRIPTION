@@ -20,6 +20,7 @@ Imports:
     scales,
     zipcode,
     gridExtra,
-    plyr
+    plyr,
+    Hmisc
 Suggests: knitr
 VignetteBuilder: knitr
