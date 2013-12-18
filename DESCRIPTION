@@ -19,4 +19,7 @@ Imports:
     gdata,
     scales,
     zipcode,
-    gridExtra
+    gridExtra,
+    plyr
+Suggests: knitr
+VignetteBuilder: knitr

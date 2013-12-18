@@ -33,7 +33,7 @@ all_state_choropleth = function(df,
                                 scaleName = "")
 {
   df$region = normalize_state_names(df$region)
-  state_map_df = map_data("state");
+  state_map_df = ggplot2::map_data("state");
   choropleth = merge(state_map_df, df, all = T)
   
   if (any(is.na(choropleth$value)))
