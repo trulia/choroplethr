@@ -1,4 +1,4 @@
-all_county_choropleth = function(df, num_buckets=9, title="", roundLabel=T, scaleName="")
+all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "fips"))

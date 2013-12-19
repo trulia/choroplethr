@@ -2,8 +2,8 @@
 \alias{choroplethr}
 \title{Create a choropleth}
 \usage{
-choroplethr(df, lod, num_buckets = 9, title = "", roundLabel = T,
-  scaleName = "", showLabels = T)
+choroplethr(df, lod, num_buckets = 9, title = "", scaleName = "",
+  showLabels = T)
 }
 \arguments{
   \item{df}{A data.frame with a column named "region" and a
@@ -20,9 +20,6 @@ choroplethr(df, lod, num_buckets = 9, title = "", roundLabel = T,
   to 9.}
 
   \item{title}{A title for the map.  Defaults to "".}
-
-  \item{roundLabel}{Whether to round values in the label of
-  the map.  Default to T.}
 
   \item{scaleName}{An optional label for the legend.
   Defaults to "".}

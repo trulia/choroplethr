@@ -1,7 +1,6 @@
 all_zip_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 
-                                roundLabel = T,
                                 scaleName = "")
 {
   stopifnot(c("region", "value") %in% colnames(df))
@@ -28,7 +27,7 @@ all_zip_choropleth = function(df,
   if (num_buckets > 1)
   {
     choropleth$value = generate_values(choropleth$value, num_buckets);
-
+    
     ggplot(choropleth, aes(x=longitude, y=latitude,color=value)) + 
       geom_point() + 
       scale_colour_brewer(scaleName, labels=comma) +

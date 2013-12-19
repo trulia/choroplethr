@@ -28,7 +28,6 @@ normalize_state_names = function(state_names)
 all_state_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 
-                                roundLabel = T, 
                                 showLabels = T,
                                 scaleName = "")
 {

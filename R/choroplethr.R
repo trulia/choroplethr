@@ -9,7 +9,6 @@
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.  Defaults to 9.
 #' @param title A title for the map.  Defaults to "".
-#' @param roundLabel Whether to round values in the label of the map.  Default to T.
 #' @param scaleName An optional label for the legend.  Defaults to "".
 #' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
@@ -37,7 +36,6 @@ choroplethr = function(df,
                        lod, 
                        num_buckets = 9, 
                        title = "", 
-                       roundLabel = T,
                        scaleName = "",
                        showLabels = T)
 {
@@ -49,10 +47,10 @@ choroplethr = function(df,
   
   if (lod == "state")
   {
-    all_state_choropleth(df, num_buckets, title, roundLabel, showLabels, scaleName);
+    all_state_choropleth(df, num_buckets, title, showLabels, scaleName);
   } else if (lod == "county") {
-    all_county_choropleth(df, num_buckets, title, roundLabel, scaleName)
+    all_county_choropleth(df, num_buckets, title, scaleName)
   } else if (lod == "zip") {
-    all_zip_choropleth(df, num_buckets, title, roundLabel, scaleName)
+    all_zip_choropleth(df, num_buckets, title, scaleName)
   }
 }
