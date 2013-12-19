@@ -60,4 +60,4 @@ To use `choroplethr_acs` you must have the [acs package](http://cran.r-project.o
 
 ## Warning
 
-`choroplethr` is still in the early stages of development and the API might change without notice.
+`choroplethr` is in the early stages of development and the API might change without notice.
