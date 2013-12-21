@@ -23,7 +23,6 @@ Imports:
     Hmisc,
     grid
 Suggests:
-    knitr
+    testthat
 Depends:
     acs
-VignetteBuilder: knitr
