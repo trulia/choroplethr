@@ -40,6 +40,7 @@ df = data.frame(region=state.abb, value=sample(100, 50))
 choroplethr(df, lod="state")
 
 # a county choropleth
+data(county.fips, package="maps")
 df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
 choroplethr(df, "county", 2)
 

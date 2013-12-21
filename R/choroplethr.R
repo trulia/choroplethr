@@ -16,8 +16,9 @@
 #' 
 #' @keywords choropleth
 #' 
-#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text scale_fill_continuous
-#' @importFrom plyr arrange
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous map_data
+#' @importFrom plyr arrange rename
 #' @importFrom scales comma
 #' @importFrom Hmisc cut2
 #' 
@@ -30,6 +31,7 @@
 #' choroplethr(df, lod="state")
 #'
 #' # a county choropleth
+#' data(county.fips, package="maps")
 #' df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
 #' choroplethr(df, "county", 2)
 #' 

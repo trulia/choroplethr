@@ -8,7 +8,8 @@ all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
   county.df = map_data("county");
   names(county.df)[5:6] = c("state","county")
   county.df$polyname = paste(county.df$state, county.df$county, sep = ",");
-  data(county.fips);
+  data(county.fips, package="maps", envir = environment())
+  
   
   # county.fips handles non-contiguous counties by adding eg ":main" to the end.
   # however, map_data does follow this convention.  In order to merge properly
@@ -55,5 +56,5 @@ all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
       scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
       ggtitle(title) +
       theme_clean();
-  }  
+  }
 }
