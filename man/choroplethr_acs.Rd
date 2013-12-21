@@ -38,9 +38,6 @@ choroplethr_acs("B00001", "county", 2);
 
 # per capita income, zip code, continuous scale
 choroplethr_acs("B19301", "zip");
-
-# median age by sex
-choroplethr_acs("B01002", "state")
 }
 \seealso{
 \code{\link{choroplethr}} which this function wraps

@@ -41,12 +41,12 @@ choroplethr(df, lod="state")
 
 # a county choropleth
 data(county.fips, package="maps")
-df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
+df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=TRUE))
 choroplethr(df, "county", 2)
 
 # a zip choropleth
-data(zipcode)
-df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=T))
+data(zipcode, package="zipcode", envir=environment())
+df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=TRUE))
 choroplethr(df, "zip", 9)
 }
 \seealso{

@@ -11,7 +11,7 @@ Description: choroplethr simplifies the creation of choropleths in R. A
 Version: 0.1
 Author: Ari Lamstein <arilamstein@gmail.com>
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
-License: BSD-3
+License: file LICENSE
 Imports:
     ggplot2,
     maps,

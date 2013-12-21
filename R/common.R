@@ -1,9 +1,9 @@
-# this code comes from section 13.19 "Making a Map with a Clean Background"
-# of "R Graphics Cookbook" by Winston Chang.  Reused with permission.
-# Create a theme with many of the background elements removed
+#' @importFrom grid unit
+# this code, with minor modifications comes from section 13.19 
+# "Making a Map with a Clean Background" of "R Graphics Cookbook" by Winston Chang.  
+# Reused with permission. Create a theme with many of the background elements removed
 theme_clean = function(base_size = 12)
 {
-  require(grid); #needed for unit() function
   theme_grey(base_size);
   theme(
     axis.title        = element_blank(),

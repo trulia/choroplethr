@@ -30,9 +30,6 @@
 #' 
 #' # per capita income, zip code, continuous scale
 #' choroplethr_acs("B19301", "zip");
-#' 
-#' # median age by sex
-#' choroplethr_acs("B01002", "state")
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
