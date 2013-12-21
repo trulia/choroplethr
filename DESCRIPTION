@@ -21,6 +21,8 @@ Imports:
     zipcode,
     gridExtra,
     plyr,
-    Hmisc
-Suggests: knitr
+    Hmisc,
+    grid
+Suggests:
+    knitr
 VignetteBuilder: knitr

@@ -1,9 +1,3 @@
-library(ggplot2)
-library(maps)
-library(gdata)
-library(scales)
-library(zipcode)
-
 # this code comes from section 13.19 "Making a Map with a Clean Background"
 # of "R Graphics Cookbook" by Winston Chang.  Reused with permission.
 # Create a theme with many of the background elements removed

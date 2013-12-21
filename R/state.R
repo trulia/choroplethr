@@ -25,6 +25,20 @@ normalize_state_names = function(state_names)
   state_names;
 }
 
+#' Create a state choropleth of the lower 48 states
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value"
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
+#' example, 2 will show values above or below the median, and 9 will show the maximum
+#' resolution.  Defaults to 9.
+#' @param title A title for the map.  Defaults to "".
+#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
+#' Defaults to T. 
+#' @param scaleName An optional label for the legend.  Defaults to "".
+#' @return A choropleth
+#' 
+#' @keywords choropleth
 all_state_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 

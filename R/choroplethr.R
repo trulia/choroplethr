@@ -16,6 +16,11 @@
 #' 
 #' @keywords choropleth
 #' 
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text scale_fill_continuous
+#' @importFrom plyr arrange
+#' @importFrom scales comma
+#' @importFrom Hmisc cut2
+#' 
 #' @seealso \code{\link{choroplethr_acs}} which generates choropleths from Census tables.
 #' 
 #' @export
