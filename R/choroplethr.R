@@ -17,7 +17,7 @@
 #' @keywords choropleth
 #' 
 #' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
-#' @importFrom ggplot2 scale_fill_continuous map_data
+#' @importFrom ggplot2 scale_fill_continuous map_data scale_colour_brewer
 #' @importFrom plyr arrange rename
 #' @importFrom scales comma
 #' @importFrom Hmisc cut2

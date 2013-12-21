@@ -14,7 +14,6 @@ Maintainer: Ari Lamstein <arilamstein@gmail.com>
 License: BSD-3
 Imports:
     ggplot2,
-    acs,
     maps,
     gdata,
     scales,
@@ -25,4 +24,6 @@ Imports:
     grid
 Suggests:
     knitr
+Depends:
+    acs
 VignetteBuilder: knitr
