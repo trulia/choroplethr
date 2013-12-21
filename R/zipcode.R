@@ -1,3 +1,4 @@
+#' @importFrom ggplot2 geom_point scale_color_continuous
 all_zip_choropleth = function(df, 
                                 num_buckets = 9, 
                                 title = "", 
@@ -6,7 +7,7 @@ all_zip_choropleth = function(df,
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "zip"))
     
-  data(zipcode) # from library(zipcode)
+  data(zipcode, package="zipcode", envir=environment()) 
   choropleth = merge(zipcode, df, all.x=F, all.y=T);
 
   # only print contiguous 48 states now, mostly for conformity with state and county maps,
