@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/[arilamstein]/[choroplethr].png)](https://travis-ci.org/[arilamstein]/[choroplethr])
+[![Build Status](https://travis-ci.org/arilamstein/choroplethr.png)](https://travis-ci.org/arilamstein/choroplethr)
 
 # choroplethr
 
