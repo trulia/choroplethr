@@ -3,7 +3,7 @@ context("choroplethr")
 # rendering a test state-level map at the continuous and discrete scales needs to return a valid ggplot object
 test_that("state level choropleths return ggplots with discrete and continuous lods", {
   df = data.frame(region=state.abb, value=sample(100, 50))
-  expect_equal(class(choroplethr(df, lod="state", num_buckets=1)), c("gg", "ggplot"))
+  expect_that(class(choroplethr(df, lod="state", num_buckets=1)), matches(c("gg", "ggplot")))
   expect_that(class(choroplethr(df, lod="state", num_buckets=9)), matches(c("gg", "ggplot")))
 })
                         
