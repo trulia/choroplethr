@@ -8,6 +8,10 @@ install:
 - ./travis-tool.sh github_package hadley/testthat
 - ./travis-tool.sh install_deps
 script: ./travis-tool.sh run_tests
+
+before_script:
+- Rscript -e "library(acs); api.key.install('QT6vsewc1Vvakn7tSr5WwxDS4ClB1vzGXb7jwOs/xm/RRRECWfX21GfK2g1ImVrcOTP8tFVdgvnsJ+DmkyqonFMRxayQD2MZvGhX2WjLVtm24cyE1MHFDZU+Awy8R8RlihQk9dRPso7whqic3MBKZbitCOdenfs5ZwP1MgVkYIM=')"
+
 on_failure:
 - ./travis-tool.sh dump_logs
 branches:
