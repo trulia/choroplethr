@@ -8,10 +8,8 @@ install:
 - ./travis-tool.sh github_package hadley/testthat
 - ./travis-tool.sh install_deps
 script: ./travis-tool.sh run_tests
-
 before_script:
-- Rscript -e "library(acs); api.key.install('f8b2a6df01479981aef39577b3c4466f5a4c8274')"
-
+- Rscript -e "library(acs); api.key.install('CENSUS_API_KEY')"
 on_failure:
 - ./travis-tool.sh dump_logs
 branches:
@@ -24,3 +22,5 @@ notifications:
 env:
   global:
     secure: QT6vsewc1Vvakn7tSr5WwxDS4ClB1vzGXb7jwOs/xm/RRRECWfX21GfK2g1ImVrcOTP8tFVdgvnsJ+DmkyqonFMRxayQD2MZvGhX2WjLVtm24cyE1MHFDZU+Awy8R8RlihQk9dRPso7whqic3MBKZbitCOdenfs5ZwP1MgVkYIM=
+dd:
+  secure: Ez8WnyxgwxOUj8FyUnE0xHeuPbUvNVhhXOrkP2I3+4xwlt+LCAyQlUl5qX5lYJkWFIy1QJYGbKjKM3Ss0DKWl2M3Hb6AwIr9JwOpIAZZ0d/VAOGD93ouPPMbWcodJOfY+Cy4OklXeryVF2rimr1Hc/er3bLtrCZNyVtoe9fJ8Eg=
