@@ -29,16 +29,6 @@ Community Survey (ACS) data. Requires the acs package to be
 installed, and a Census API Key to be set with the acs's
 api.key.install function.
 }
-\examples{
-# total population, state level
-choroplethr_acs("B00001", "state", 1);
-
-# total population, county level, above and below median
-choroplethr_acs("B00001", "county", 2);
-
-# per capita income, zip code, continuous scale
-choroplethr_acs("B19301", "zip");
-}
 \seealso{
 \code{\link{choroplethr}} which this function wraps
 

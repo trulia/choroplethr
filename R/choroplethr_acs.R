@@ -21,15 +21,6 @@
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#,
 #' which contains a list of tables from the 2011 5 year ACS.
 #' @export
-#' @examples
-#' # total population, state level
-#' choroplethr_acs("B00001", "state", 1);
-#' 
-#' # total population, county level, above and below median
-#' choroplethr_acs("B00001", "county", 2); 
-#' 
-#' # per capita income, zip code, continuous scale
-#' choroplethr_acs("B19301", "zip");
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
