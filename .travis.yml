@@ -9,7 +9,7 @@ install:
 - ./travis-tool.sh install_deps
 script: ./travis-tool.sh run_tests
 before_script:
-- Rscript -e "library(acs); api.key.install('CENSUS_API_KEY')"
+- Rscript -e "library(acs); api.key.install('f8b2a6df01479981aef39577b3c4466f5a4c8274')"
 on_failure:
 - ./travis-tool.sh dump_logs
 branches:
