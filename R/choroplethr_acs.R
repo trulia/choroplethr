@@ -26,48 +26,60 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
   stopifnot(lod %in% c("state", "county", "zip"))
   stopifnot(num_buckets > 0 && num_buckets < 10)
   
+  acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty")
+  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  title      = acs.data@acs.colnames[column_idx] 
+  acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
+  
+  choroplethr(acs.df, lod, num_buckets, title, showLabels);  
+}
+
+make_geo = function(lod)
+{
+  stopifnot(lod %in% c("state", "county", "zip"))
   if (lod == "state") {
-    # get census data for all states from specified table
-    us.state = geo.make(state = "*")
-    acs.data = acs.fetch(geography=us.state, table.number = tableId, col.names = "pretty")
-    column_idx = 1
-    if (length(acs.data@acs.colnames) > 1)
-    {
-      num_cols = length(acs.data@acs.colnames)
-      title = paste0("Table ", tableId, " has ", num_cols, " columns.  Please choose which column to render:")
-      column_idx = menu(acs.data@acs.colnames, title=title)
-    }
-    # put in format for call to all_county_choropleth
-    acs.df = data.frame(region = geography(acs.data)$NAME, 
-                        value  = as.numeric(estimate(acs.data[,column_idx])));
-    title  = acs.data@acs.colnames[column_idx]; 
-    choroplethr(acs.df, "state", num_buckets, title, showLabels);  
-    
+    geo.make(state = "*")
   } else if (lod == "county") {
-    # get census data for all counties from specified table
-    us.county = geo.make(state = "*", county = "*");
-    acs.data  = acs.fetch(geography=us.county, table.number = tableId, col.names = "pretty");
+    geo.make(state = "*", county = "*")
+  } else {
+    geo.make(zip.code = "*")
+  }
+}
+
+# support multiple column tables
+get_column_idx = function(acs.data, tableId)
+{
+  column_idx = 1
+  if (length(acs.data@acs.colnames) > 1)
+  {
+    num_cols   = length(acs.data@acs.colnames)
+    title      = paste0("Table ", tableId, " has ", num_cols, " columns.  Please choose which column to render:")
+    column_idx = menu(acs.data@acs.colnames, title=title)
+  }
+  column_idx
+}
+
+make_df = function(lod, acs.data, column_idx) 
+{
+  stopifnot(lod %in% c("state", "county", "zip"))
+  
+  if (lod == "state") {
+    data.frame(region = geography(acs.data)$NAME, 
+               value  = as.numeric(estimate(acs.data[,column_idx])));
+  } else if (lod == "county") {
     # create fips code
     acs.data@geography$fips = paste(as.character(acs.data@geography$state), 
                                     acs.data@geography$county, 
                                     sep = "");
     # put in format for call to all_county_choropleth
-    acs.df = data.frame(region  = geography(acs.data)$fips, 
-                        value = as.numeric(estimate(acs.data)));
-    title  = acs.data@acs.colnames; 
-    choroplethr(acs.df, "county", num_buckets, title);  
-  } else if (lod == "zip") {
-    us.zip.code = geo.make(zip.code = "*")
-    acs.data = acs.fetch(geography=us.zip.code, table.number = tableId, col.names = "pretty")
+    data.frame(region = geography(acs.data)$fips, 
+               value  = as.numeric(estimate(acs.data)));
     
+  } else if (lod == "zip") {
     # put in format for call to choroplethr
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
                         value  = as.numeric(estimate(acs.data)))
-    title  = acs.data@acs.colnames
     
-    acs.df = na.omit(acs.df) # surprisingly, this sometimes returns NA values
-    
-    choroplethr(acs.df, lod, num_buckets, title) 
+    na.omit(acs.df) # surprisingly, this sometimes returns NA values
   }
 }
-
