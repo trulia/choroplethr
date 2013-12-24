@@ -12,6 +12,7 @@ Version: 0.1
 Author: Ari Lamstein <arilamstein@gmail.com>
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
 URL: https://github.com/arilamstein/choroplethr/
+BugReports: https://github.com/arilamstein/choroplethr/issues
 License: file LICENSE
 Imports:
     ggplot2,
