@@ -1,5 +1,6 @@
 # choroplethr
 [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=master)](https://travis-ci.org/arilamstein/choroplethr)
+[![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=dev)](https://travis-ci.org/arilamstein/choroplethr)
 
 `choroplethr` simplifies the creation of choropleths in R.  A choropleth is a thematic map where geographic regions such as states are colored according to some metric, such as which political party the state voted for.  `choroplethr` supports three levels of geographic resolution and two types of scales.  Common problems such as matching county data with map data, choosing and labeling discrete scales and creating a clean background are handled automatically. 
 
