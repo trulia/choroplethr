@@ -31,7 +31,7 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
   title      = acs.data@acs.colnames[column_idx] 
   acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
   
-  choroplethr(acs.df, lod, num_buckets, title, showLabels);  
+  choroplethr(acs.df, lod, num_buckets, title, "", showLabels);
 }
 
 make_geo = function(lod)
