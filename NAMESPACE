@@ -1,6 +1,8 @@
 export(choroplethr)
 export(choroplethr_acs)
 importFrom(Hmisc,cut2)
+importFrom(acs,acs.fetch)
+importFrom(acs,geo.make)
 importFrom(ggplot2,aes)
 importFrom(ggplot2,element_blank)
 importFrom(ggplot2,geom_point)

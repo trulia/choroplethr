@@ -20,6 +20,7 @@
 #' @seealso \code{\link{api.key.install}} which sets an Census API key for the acs library
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#,
 #' which contains a list of tables from the 2011 5 year ACS.
+#' @importFrom acs acs.fetch geo.make
 #' @export
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
 {

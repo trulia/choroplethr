@@ -16,14 +16,12 @@ BugReports: https://github.com/arilamstein/choroplethr/issues
 License: file LICENSE
 Imports:
     ggplot2,
-    maps,
-    gdata,
     scales,
-    zipcode,
-    gridExtra,
     plyr,
     Hmisc,
-    grid
+    grid,
+    maps,
+    zipcode
 Suggests:
     testthat
 Depends:
