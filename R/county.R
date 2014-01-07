@@ -1,3 +1,9 @@
+# This is unfortunately necessary to have R CMD not throw out spurious NOTEs when using ggplot2
+# http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
+}
+
 all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
 {
   stopifnot(c("region", "value") %in% colnames(df))

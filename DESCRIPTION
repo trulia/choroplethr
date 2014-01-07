@@ -19,10 +19,10 @@ Imports:
     scales,
     plyr,
     Hmisc,
-    grid,
+    grid
+Suggests:
+    testthat,
     maps,
     zipcode
-Suggests:
-    testthat
 Depends:
     acs
