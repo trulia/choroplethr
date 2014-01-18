@@ -6,6 +6,8 @@ Dev: [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=d
 
 `choroplethr` provides native support for viewing data from the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/).  
 
+The `choroplethr` package is described more fully in [this](http://tech.truliablog.com/2014/01/15/the-choroplethr-package-for-r/) blog post.
+
 ## Installation
 
 To install the development version of `choroplethr` use the `devtools` package:
