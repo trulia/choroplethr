@@ -1,0 +1,5 @@
+Version 1.1.0
+
+FEATURES
+  -Allow users to specify choropleths of a subset of states.  See the "states" parameter in ?choroplethr ?choroplethr_acs.
+  -choroplethr_acs now supports year and span fields.  See http://1.usa.gov/1geFSSj for a list of all ACS years with spans.

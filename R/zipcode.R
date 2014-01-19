@@ -1,8 +1,5 @@
 #' @importFrom ggplot2 geom_point scale_color_continuous
-all_zip_choropleth = function(df, 
-                                num_buckets = 9, 
-                                title = "", 
-                                scaleName = "")
+zip_choropleth = function(df, num_buckets = 9, title = "", scaleName = "", states)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "zip"))
@@ -12,14 +9,14 @@ all_zip_choropleth = function(df,
 
   # only print contiguous 48 states now, mostly for conformity with state and county maps,
   # where the limitation is technical
-  choropleth = choropleth[choropleth$state %in% state.abb
+  choropleth = choropleth[choropleth$state %in% states
                     & !choropleth$state %in% c("AK", "HI"), ]
   # remove 2 points of bad data in the zipcode package.
   # it has two zips in NY and VA in the atlantic/europe
   choropleth = choropleth[choropleth$longitude < -10, ]   
   
   # add an outline for states.  rename columns for consistency
-  state_map_df = map_data("state");
+  state_map_df = subset_map("state", states);
   colnames(state_map_df)[names(state_map_df) == "long"] = "longitude"
   colnames(state_map_df)[names(state_map_df) == "lat"]  = "latitude"
   state_map_df = arrange(state_map_df, group, order);

@@ -12,6 +12,7 @@
 #' @param scaleName An optional label for the legend.  Defaults to "".
 #' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
+#' @param states A vector of states to render.  Defaults to state.abb.
 #' @return A choropleth
 #' 
 #' @keywords choropleth
@@ -44,20 +45,27 @@ choroplethr = function(df,
                        num_buckets = 9, 
                        title = "", 
                        scaleName = "",
-                       showLabels = T)
+                       showLabels = T,
+                       states = state.abb)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   stopifnot(lod %in% c("state", "county", "zip"))
   stopifnot(num_buckets > 0 && num_buckets < 10)
+  
+  # states shouldn't be duplicated, and must be entered as valid postal codes
+  stopifnot(states %in% state.abb)
+  stopifnot(!any(duplicated(states)))
+  
+  states = states[!states %in% c("AK", "HI")] # for now, only render lower 48 states
 
   df = df[, c("region", "value")] # prevent naming collision from merges later on
   
   if (lod == "state")
   {
-    all_state_choropleth(df, num_buckets, title, showLabels, scaleName);
+    state_choropleth(df, num_buckets, title, showLabels, scaleName, states);
   } else if (lod == "county") {
-    all_county_choropleth(df, num_buckets, title, scaleName)
+    county_choropleth(df, num_buckets, title, scaleName, states)
   } else if (lod == "zip") {
-    all_zip_choropleth(df, num_buckets, title, scaleName)
+    zip_choropleth(df, num_buckets, title, scaleName, states)
   }
 }

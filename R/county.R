@@ -1,21 +1,13 @@
-# This is unfortunately necessary to have R CMD not throw out spurious NOTEs when using ggplot2
-# http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
-}
-
-all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
+county_choropleth = function(df, num_buckets=9, title="", scaleName="", states)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "fips"))
   
   # add fips column to county maps
-  # this is the maps data
-  county.df = map_data("county");
+  county.df = subset_map("county", states)
   names(county.df)[5:6] = c("state","county")
   county.df$polyname = paste(county.df$state, county.df$county, sep = ",");
   data(county.fips, package="maps", envir = environment())
-  
   
   # county.fips handles non-contiguous counties by adding eg ":main" to the end.
   # however, map_data does follow this convention.  In order to merge properly
@@ -30,7 +22,7 @@ all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
   county.df = merge(county.df, county.fips.2); 
   
   # new we can merge our data with the map data, because the map data now has fips codes
-  choropleth = merge(county.df, df, all = T);
+  choropleth = merge(county.df, df);
   if (any(is.na(choropleth$value)))
   {
     missing_polynames = unique(choropleth[is.na(choropleth$value), ]$polyname);
@@ -41,7 +33,7 @@ all_county_choropleth = function(df, num_buckets=9, title="", scaleName="")
   }
   
   # add state boundaries
-  state.df   = map_data("state");
+  state.df   = subset_map("state", states);
   choropleth = choropleth[order(choropleth$order), ];
   
   # how many buckets should I use?

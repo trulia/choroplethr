@@ -2,7 +2,8 @@
 \alias{choroplethr_acs}
 \title{Create a choropleth from ACS data.}
 \usage{
-choroplethr_acs(tableId, lod, num_buckets = 9, showLabels = T)
+choroplethr_acs(tableId, lod, num_buckets = 9, showLabels = T,
+  states = state.abb, endyear = 2011, span = 5)
 }
 \arguments{
   \item{tableId}{The id of an ACS table}
@@ -19,6 +20,16 @@ choroplethr_acs(tableId, lod, num_buckets = 9, showLabels = T)
 
   \item{showLabels}{For state choropleths, whether or not
   to show state abbreviations on the map. Defaults to T.}
+
+  \item{states}{A vector of states to render.  Defaults to
+  state.abb.}
+
+  \item{endyear}{The end year of the survey to use.  See
+  acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for
+  details.}
+
+  \item{span}{The span of time to use.  See acs.fetch and
+  http://1.usa.gov/1geFSSj for details.}
 }
 \value{
 A choropleth
@@ -35,8 +46,8 @@ api.key.install function.
 \code{\link{api.key.install}} which sets an Census API key
 for the acs library
 
-http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#,
-which contains a list of tables from the 2011 5 year ACS.
+http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS
+which contains a list of all ACS surveys.
 }
 \keyword{acs}
 \keyword{choropleth,}

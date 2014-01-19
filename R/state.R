@@ -1,39 +1,14 @@
-normalize_state_names = function(state_names)
-{
-  if (is.factor(state_names))
-  {
-    state_names = as.character(state_names)
-  }
-  
-  if (is.character(state_names))
-  {
-    if (all(nchar(state_names) == 2))
-    {
-      state_names = toupper(state_names) # "Ny" -> "NY"
-      state_names = tolower(state.name[match(state_names, state.abb)])
-    } else {      
-      # otherwise assume "New York", "new york", etc.
-      state_names = tolower(state_names);
-    }
-  }
-  
-  # TODO: handle FIPS codes for states
-  # fips codes are integers (at least in state.fips$fips), which might be a bug since technically
-  # they should have leading 0's.
-  # TODO: emit warnings for states that are not present
-  
-  state_names;
-}
-
-all_state_choropleth = function(df, 
-                                num_buckets = 9, 
-                                title = "", 
-                                showLabels = T,
-                                scaleName = "")
+state_choropleth = function(df, 
+                            num_buckets = 9, 
+                            title = "", 
+                            showLabels = T,
+                            scaleName = "",
+                            states)
 {
   df$region = normalize_state_names(df$region)
-  state_map_df = ggplot2::map_data("state");
-  choropleth = merge(state_map_df, df, all = T)
+  state_map_df = subset_map("state", states)
+  
+  choropleth = merge(state_map_df, df)
   
   if (any(is.na(choropleth$value)))
   {
@@ -67,10 +42,10 @@ all_state_choropleth = function(df,
   if (showLabels)
   {
     df_state_labels = data.frame(long = state.center$x, lat = state.center$y, label = state.abb);
-    df_state_labels = subset(df_state_labels, !state.abb %in% c("AK", "HI"));
-    
+    df_state_labels = df_state_labels[!df_state_labels$label %in% c("AK", "HI"), ];
+    df_state_labels = df_state_labels[df_state_labels$label %in% states, ];
     choropleth = choropleth + 
-      geom_text(data = df_state_labels, aes(long, lat, label = label,group = NULL), color = 'black')
+      geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
   }
   
   choropleth
