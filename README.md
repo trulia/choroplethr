@@ -7,8 +7,6 @@ Master: [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branc
 
 The `choroplethr` package is described more fully in [this](http://tech.truliablog.com/2014/01/15/the-choroplethr-package-for-r/) blog post.
 
-test
-
 ## Installation
 
 To install the development version of `choroplethr` use the `devtools` package:
