@@ -61,3 +61,5 @@ choroplethr_acs("B19301", "zip");
 ```
 
 To use `choroplethr_acs` you must have the [acs package](http://cran.r-project.org/web/packages/acs/) installed, acquired a [Census API key](http://www.census.gov/developers/tos/key_request.html), and stored your key with the the acs package's `api.key.install` function.
+
+There is a discussion issue for `choroplethr` [here](https://groups.google.com/forum/#!forum/choroplethr).
