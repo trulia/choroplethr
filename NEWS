@@ -1,0 +1,2 @@
+Version 1.0.1
+  -Add requirement of minimum R version of 3.0.0 in the DESCRIPTION file.  See https://groups.google.com/forum/#!topic/choroplethr/Owv7NgAacGE for details.
