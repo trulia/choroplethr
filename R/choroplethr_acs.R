@@ -20,7 +20,7 @@
 #' @keywords choropleth, acs
 #' 
 #' @seealso \code{\link{choroplethr}} which this function wraps
-#' @seealso \code{\link{api.key.install}} which sets an Census API key for the acs library
+#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
 #' which contains a list of all ACS surveys.
 #' @export

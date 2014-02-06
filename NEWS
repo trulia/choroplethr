@@ -1,5 +1,11 @@
-Version 1.1.0
+choroplethr 1.1.0
+----------------------------------------------------------------
 
 FEATURES
-  -Allow users to specify choropleths of a subset of states.  See the "states" parameter in ?choroplethr ?choroplethr_acs.
-  -choroplethr_acs now supports year and span fields.  See http://1.usa.gov/1geFSSj for a list of all ACS years with spans.
+  -Allow users to specify choropleths of a subset of states.  See the "states" parameter in ?choroplethr and ?choroplethr_acs.
+  -choroplethr_acs now supports year and span fields.  See http://1.usa.gov/1geFSSj for a list of all ACS years with spans.  However, see http://www.census.gov/developers/data/ for a list of which ACS are available via the Census API.  Currently it is the 5-year surveys ending in 2010, 2011, 2012.  Thanks to Ezra Haber Glenn for clarifying this.
+
+choroplethr 1.0.1
+----------------------------------------------------------------
+
+  -Add requirement of minimum R version of 3.0.0 in the DESCRIPTION file.  See https://groups.google.com/forum/#!topic/choroplethr/Owv7NgAacGE for details.
