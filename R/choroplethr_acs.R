@@ -24,6 +24,7 @@
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
 #' which contains a list of all ACS surveys.
 #' @export
+#' @importFrom acs acs.fetch geography estimate geo.make
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
