@@ -9,6 +9,12 @@ The `choroplethr` package is described more fully in [this](http://tech.truliabl
 
 ## Installation
 
+To install the latest stable release of `choroplethr` type the following from an R console:
+
+```
+install.packages("choroplethr")
+```
+
 To install the development version of `choroplethr` use the `devtools` package:
 
 ```
@@ -17,8 +23,6 @@ library(devtools)
 install_github("choroplethr", "arilamstein")
 library(choroplethr)
 ```
-
-`choroplethr` is currently not available on CRAN.
 
 ## Usage
 
