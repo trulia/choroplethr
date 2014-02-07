@@ -3,7 +3,7 @@
 \title{Create a choropleth}
 \usage{
 choroplethr(df, lod, num_buckets = 9, title = "", scaleName = "",
-  showLabels = T)
+  showLabels = T, states = state.abb)
 }
 \arguments{
   \item{df}{A data.frame with a column named "region" and a
@@ -26,6 +26,9 @@ choroplethr(df, lod, num_buckets = 9, title = "", scaleName = "",
 
   \item{showLabels}{For state choropleths, whether or not
   to show state abbreviations on the map. Defaults to T.}
+
+  \item{states}{A vector of states to render.  Defaults to
+  state.abb.}
 }
 \value{
 A choropleth

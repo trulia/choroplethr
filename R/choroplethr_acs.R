@@ -12,27 +12,30 @@
 #' resolution.  Defaults to 9.
 #' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
+#' @param states A vector of states to render.  Defaults to state.abb.
+#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
+#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' @return A choropleth
 #' 
 #' @keywords choropleth, acs
 #' 
 #' @seealso \code{\link{choroplethr}} which this function wraps
-#' @seealso \code{\link{api.key.install}} which sets an Census API key for the acs library
-#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_11_5YR#,
-#' which contains a list of tables from the 2011 5 year ACS.
-#' @importFrom acs acs.fetch geo.make
+#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
+#' which contains a list of all ACS surveys.
 #' @export
-choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T)
+#' @importFrom acs acs.fetch geography estimate geo.make
+choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
   stopifnot(num_buckets > 0 && num_buckets < 10)
   
-  acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty")
+  acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
   acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
   
-  choroplethr(acs.df, lod, num_buckets, title, "", showLabels);
+  choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
 }
 
 make_geo = function(lod)

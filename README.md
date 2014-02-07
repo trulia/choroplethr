@@ -14,7 +14,7 @@ To install the development version of `choroplethr` use the `devtools` package:
 ```
 # install.packages("devtools")
 library(devtools)
-install_github("choroplethr", "trulia")
+install_github("choroplethr", "arilamstein")
 library(choroplethr)
 ```
 

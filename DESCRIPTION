@@ -8,22 +8,23 @@ Description: choroplethr simplifies the creation of choropleths in R. A
     data, choosing and labeling discrete scales and creating a clean background
     are handled automatically. choroplethr provides native support for viewing
     data from the US Census's American Community Survey (ACS).
-Version: 1.0.1
+Version: 1.1.0
 Author: Ari Lamstein <arilamstein@gmail.com>
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
-URL: https://github.com/arilamstein/choroplethr/
-BugReports: https://github.com/arilamstein/choroplethr/issues
-License: file LICENSE
+URL: https://github.com/trulia/choroplethr/, https://groups.google.com/forum/#!forum/choroplethr
+BugReports: https://github.com/trulia/choroplethr/issues
+Copyright: Trulia, Inc.
+License: BSD_3_clause + file LICENSE
 Imports:
     ggplot2,
     scales,
     plyr,
     Hmisc,
-    grid
+    grid,
+    acs
 Suggests:
     testthat,
     maps,
-    zipcode
+    zipcode,
 Depends:
-    acs,
     R (>= 3.0.0)
