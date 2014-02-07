@@ -9,13 +9,13 @@ The `choroplethr` package is described more fully in [this](http://tech.truliabl
 
 ## Installation
 
-To install the latest stable release of `choroplethr` type the following from an R console:
+To install the latest stable release type the following from an R console:
 
 ```
 install.packages("choroplethr")
 ```
 
-To install the development version of `choroplethr` use the `devtools` package:
+To install the development version use the `devtools` package:
 
 ```
 # install.packages("devtools")
