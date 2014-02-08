@@ -23,8 +23,9 @@ Imports:
     grid,
     acs
 Suggests:
-    testthat,
-    maps,
-    zipcode,
+    testthat
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.0.0),
+    maps,
+    zipcode
+
