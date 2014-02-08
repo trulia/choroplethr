@@ -21,11 +21,11 @@ Imports:
     plyr,
     Hmisc,
     grid,
-    acs
+    acs,
+    maps,
+    zipcode
 Suggests:
     testthat
 Depends:
-    R (>= 3.0.0),
-    maps,
-    zipcode
+    R (>= 3.0.0)
 
