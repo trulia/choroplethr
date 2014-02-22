@@ -34,8 +34,24 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
   acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
-  
+  acs.df$region = as.character(acs.df$region) # not a factor
   choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
+}
+
+# should probably export this one...
+get_acs_df = function(tableId, lod, endyear, span)
+{
+  acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
+  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  acs.df     = make_df(lod, acs.data, column_idx) # turn into df
+  acs.df$region = as.character(acs.df$region)
+  acs.df
+}
+  # only include 48 contiguous states
+  acs.df = acs.df[length(acs.df$region) == 4 || 
+                  (length(acs.df$region) == 5 & substr(acs.df$region, 1, 2) %in% state.fips$fips), ]
+  contiguous.state.fips = state.fips[state.fips$polyname != alas]
+  my.state.fip
 }
 
 make_geo = function(lod)
