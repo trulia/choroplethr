@@ -68,5 +68,5 @@ theme_clean = function(base_size = 12)
 
 generate_values = function(values, num_buckets)
 {
-  cut2(values, g=num_buckets)
+  cut2(values, cuts=c(0,1000000,2000000))
 }
