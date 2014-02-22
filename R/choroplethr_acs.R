@@ -38,21 +38,39 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
   choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
 }
 
-# should probably export this one...
+#' @export
 get_acs_df = function(tableId, lod, endyear, span)
 {
   acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   acs.df     = make_df(lod, acs.data, column_idx) # turn into df
   acs.df$region = as.character(acs.df$region)
-  acs.df
+  
+  # strip out the state fips code from a county fips code.
+  # the census returns data for places that we don't map (such as Puerto Rico, Guam, etc.)
+  # See http://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code#FIPS_state_codes
+  get_state_fips = function(county_fips)
+  {
+    if (nchar(county_fips) == 4)
+    {
+      substr(county_fips, 1, 1)
+    } else if (nchar(county_fips) == 5) {
+      substr(county_fips, 1, 2)
+    }
+    else {
+      stop("county fips must be 4 or 5 characters")
+    }
+  }
+  acs.df$state_fips = lapply(acs.df$region, get_state_fips)
+  data(state.fips, package="maps", envir = environment())
+  acs.df = acs.df[acs.df$state_fips %in% state.fips$fips, ]
 }
   # only include 48 contiguous states
-  acs.df = acs.df[length(acs.df$region) == 4 || 
-                  (length(acs.df$region) == 5 & substr(acs.df$region, 1, 2) %in% state.fips$fips), ]
-  contiguous.state.fips = state.fips[state.fips$polyname != alas]
-  my.state.fip
-}
+#  acs.df = acs.df[length(acs.df$region) == 4 || 
+#                  (length(acs.df$region) == 5 & substr(acs.df$region, 1, 2) %in% state.fips$fips), ]
+#  contiguous.state.fips = state.fips[state.fips$polyname != alas]
+##  my.state.fip
+#}
 
 make_geo = function(lod)
 {
