@@ -61,10 +61,10 @@ choroplethr = function(df,
   df = df[, c("region", "value")] # prevent naming collision from merges later on
   
   if (lod == "state") {
-    state_choropleth(df, num_buckets, title, showLabels, scaleName, states);
+    state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states);
   } else if (lod == "county") {
-    county_choropleth(df, num_buckets, title, scaleName, states)
+    county_choropleth_auto(df, num_buckets, title, scaleName, states)
   } else if (lod == "zip") {
-    zip_choropleth(df, num_buckets, title, scaleName, states)
+    zip_choropleth_zuto(df, num_buckets, title, scaleName, states)
   }
 }

@@ -38,7 +38,16 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
   choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
 }
 
+#' Returns a data.frame representing American Community Survey estimates.
+#' 
+#' @param tableId The id of an ACS table.
+#' @param lod The level of geographic detail for the data.frame.  Must be one of "state", "county" or "zip". 
+#' @param endyear The end year of the survey.  
+#' @param span The span of the survey.
+#' @return A data.frame 
 #' @export
+#' See also \link{http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS}, which lists all ACS Surveys.
+#' @importFrom acs acs.fetch geography estimate geo.make
 get_acs_df = function(tableId, lod, endyear, span)
 {
   acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
@@ -46,31 +55,30 @@ get_acs_df = function(tableId, lod, endyear, span)
   acs.df     = make_df(lod, acs.data, column_idx) # turn into df
   acs.df$region = as.character(acs.df$region)
   
-  # strip out the state fips code from a county fips code.
-  # the census returns data for places that we don't map (such as Puerto Rico, Guam, etc.)
-  # See http://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code#FIPS_state_codes
-  get_state_fips = function(county_fips)
-  {
-    if (nchar(county_fips) == 4)
+  if (lod == "state") {
+    acs.df = acs.df[acs.df$region %in% state.name, ]
+  } else if (lod == "county") {
+    # strip out the state fips code from a county fips code.
+    get_state_fips = function(county_fips)
     {
-      substr(county_fips, 1, 1)
-    } else if (nchar(county_fips) == 5) {
-      substr(county_fips, 1, 2)
+      if (nchar(county_fips) == 4) {
+        substr(county_fips, 1, 1)
+      } else if (nchar(county_fips) == 5) {
+        substr(county_fips, 1, 2)
+      }
+      else {
+        stop("county fips must be 4 or 5 characters")
+      }
     }
-    else {
-      stop("county fips must be 4 or 5 characters")
-    }
+    acs.df$state_fips = lapply(acs.df$region, get_state_fips)
+    data(state.fips, package="maps", envir = environment())
+    # the census returns data for places that we don't map (such as Puerto Rico, Guam, etc.)
+    # See http://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code#FIPS_state_codes
+    acs.df = acs.df[acs.df$state_fips %in% state.fips$fips, ]
+  } else {
+    stop("unknown lod!")
   }
-  acs.df$state_fips = lapply(acs.df$region, get_state_fips)
-  data(state.fips, package="maps", envir = environment())
-  acs.df = acs.df[acs.df$state_fips %in% state.fips$fips, ]
 }
-  # only include 48 contiguous states
-#  acs.df = acs.df[length(acs.df$region) == 4 || 
-#                  (length(acs.df$region) == 5 & substr(acs.df$region, 1, 2) %in% state.fips$fips), ]
-#  contiguous.state.fips = state.fips[state.fips$polyname != alas]
-##  my.state.fip
-#}
 
 make_geo = function(lod)
 {
