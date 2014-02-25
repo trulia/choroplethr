@@ -4,71 +4,78 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-state_choropleth = function(df, 
+#' Bind a data.frame of state data to a map of the contintental US
+#'  
+#' @param df A data.frame with one column named "region" and one column named "value".
+#' @param states a vector of postal codes representing US states.  Defaults to state.abb.
+#' 
+#' @return A data.frame.
+#' @export
+bind_df_to_state_map = function(df, states = state.abb)
+{
+  stopifnot(c("region", "value") %in% colnames(df))
+ 
+  df$region = normalize_state_names(df$region)
+  state_map_df = subset_map("state", states)
+  
+  choropleth = merge(state_map_df, df)
+  
+  if (any(is.na(choropleth$value)))
+  {
+    missing_states = unique(choropleth[is.na(choropleth$value), ]$region);
+    missing_states = paste(missing_states, collapse = ", ");
+    warning_string = paste("The following regions were missing and are being set to 0:", missing_states);
+    print(warning_string);
+    choropleth$value[is.na(choropleth$value)] = 0;
+  }
+
+  choropleth = choropleth[order(choropleth$order), ];
+  choropleth
+}
+
+#' @export
+render_state_choropleth = function(choropleth.df, title="", scaleName="", showLabels=TRUE, states=state.abb)
+{
+  # maps with numeric values are mapped with a continuous scale
+  if (is.numeric(choropleth.df$value))
+  {
+    choropleth = ggplot(choropleth.df, aes(long, lat, group = group)) +
+                     geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+                     scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
+                     ggtitle(title) +
+                     theme_clean();
+  } else if (is.factor(choropleth.df$value)) {
+    stopifnot(length(levels(choropleth.df$value)) <= 9) # brewer scale only goes up to 9
+
+    choropleth = ggplot(choropleth.df, aes(long, lat, group = group)) +
+                     geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+                     scale_fill_brewer(scaleName, labels=comma) + # use discrete scale for buckets
+                     ggtitle(title) +
+                     theme_clean();
+  } else {
+    stop("value needs to be numeric or factor")
+  }
+
+  if (showLabels) {
+      df_state_labels = data.frame(long = state.center$x, lat = state.center$y, label = state.abb)
+      df_state_labels = df_state_labels[!df_state_labels$label %in% c("AK", "HI"), ]
+      df_state_labels = df_state_labels[df_state_labels$label %in% states, ]
+      choropleth = choropleth + geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
+  }
+ 
+  choropleth
+}
+
+state_choropleth_auto = function(df, 
                             num_buckets = 9, 
                             title = "", 
                             showLabels = T,
                             scaleName = "",
-                            states)
+                            states = state.abb)
 {
-  df = bind_df_to_state_map(df, states)
-  
-  # bucket values if necessary
-  if (num_buckets > 1)
-  {
-    df$value = generate_values(df$value, num_buckets);
+  choropleth.df = bind_df_to_state_map(df, states)
+  if (num_buckets > 1) {
+    choropleth.df$value = discretize_values(num_buckets)
   }
-  
-  choropleth = generate_base_state_choropleth(df)
-
-  if (num_buckets > 1)
-  {
-    choropleth = choropleth +
-      scale_fill_brewer(scaleName, labels=comma); # use brewer discrete scale
-  } else {
-    choropleth = choropleth +
-      scale_fill_continuous(scaleName, labels=comma); # use a continuous scale
-  }
-  
-  if (showLabels)
-  {
-    choropleth = choropleth + add_state_labels(choropleth)
-  }
-  
-  choropleth
-}
-
-generate_base_state_choropleth = function(choropleth_df, num_buckets)
-{
-  choropleth_df = arrange(choropleth_df, group, order);
-  ggplot(choropleth_df, aes(x = long, y = lat, group = group)) + 
-    geom_polygon(aes(fill = value), color = "black") +
-    ggtitle(title) +
-    theme_clean()  
-}
-
-bind_df_to_state_map = function(df, states)
-{
-  df$region     = normalize_state_names(df$region)
-  state_map_df  = subset_map("state", states)
-  choropleth_df = merge(state_map_df, df)
-  
-  if (any(is.na(choropleth_df$value)))
-  {
-    missing_states = unique(choropleth_df[is.na(choropleth_df$value), ]$region);
-    missing_states = paste(missing_states, collapse = ", ");
-    warning_string = paste("The following regions were missing and are being set to 0:", missing_states);
-    print(warning_string);
-    choropleth_df$value[is.na(choropleth$value)] = 0;
-  }
-  choropleth_df
-}
-
-add_state_labels = function()
-{
-  df_state_labels = data.frame(long = state.center$x, lat = state.center$y, label = state.abb);
-  df_state_labels = df_state_labels[!df_state_labels$label %in% c("AK", "HI"), ];
-  df_state_labels = df_state_labels[df_state_labels$label %in% states, ];
-
-  geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
+  render_state_choropleth(choropleth.df, title="", scaleName="", showLabels = TRUE)
 }
