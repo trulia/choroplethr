@@ -4,13 +4,6 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-#' Bind a data.frame of state data to a map of the contintental US
-#'  
-#' @param df A data.frame with one column named "region" and one column named "value".
-#' @param states a vector of postal codes representing US states.  Defaults to state.abb.
-#' 
-#' @return A data.frame.
-#' @export
 bind_df_to_state_map = function(df, states = state.abb)
 {
   stopifnot(c("region", "value") %in% colnames(df))
@@ -33,7 +26,6 @@ bind_df_to_state_map = function(df, states = state.abb)
   choropleth
 }
 
-#' @export
 render_state_choropleth = function(choropleth.df, title="", scaleName="", showLabels=TRUE, states=state.abb)
 {
   # maps with numeric values are mapped with a continuous scale
@@ -75,7 +67,7 @@ state_choropleth_auto = function(df,
 {
   choropleth.df = bind_df_to_state_map(df, states)
   if (num_buckets > 1) {
-    choropleth.df$value = discretize_values(num_buckets)
+    choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
   }
   render_state_choropleth(choropleth.df, title="", scaleName="", showLabels = TRUE)
 }
