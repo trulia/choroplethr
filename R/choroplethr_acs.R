@@ -46,10 +46,12 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
 #' @param span The span of the survey.
 #' @return A data.frame 
 #' @export
-#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS}, which lists all ACS Surveys.
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
 #' @importFrom acs acs.fetch geography estimate geo.make
 get_acs_df = function(tableId, lod, endyear, span)
 {
+  stopifnot(lod %in% c("state", "county", "zip"))
+  
   acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   acs.df     = make_df(lod, acs.data, column_idx) # turn into df
@@ -75,9 +77,7 @@ get_acs_df = function(tableId, lod, endyear, span)
     # the census returns data for places that we don't map (such as Puerto Rico, Guam, etc.)
     # See http://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code#FIPS_state_codes
     acs.df = acs.df[acs.df$state_fips %in% state.fips$fips, ]
-  } else {
-    stop("unknown lod!")
-  }
+  } 
 }
 
 make_geo = function(lod)

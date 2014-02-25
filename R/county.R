@@ -2,8 +2,6 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-# TODO: Rename return value choropleth.df
-#' @export
 bind_df_to_county_map = function(df, states = state.abb)
 {
   stopifnot(c("region", "value") %in% colnames(df))
@@ -43,7 +41,6 @@ bind_df_to_county_map = function(df, states = state.abb)
   choropleth
 }
 
-#' @export
 render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb)
 {
   # county maps really need state backgrounds

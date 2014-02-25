@@ -4,8 +4,14 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
+bind_df_to_zip_map = function()
+{}
+
+render_zip_choropleth = function()
+{}
+
 #' @importFrom ggplot2 geom_point scale_color_continuous
-zip_choropleth = function(df, num_buckets = 9, title = "", scaleName = "", states)
+zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "zip"))
