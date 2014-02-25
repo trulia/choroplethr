@@ -2,34 +2,6 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-#' Create a choropleth
-#' 
-#' Creates a choropleth from a specified data.frame and level of detail.
-#'
-#' @param df A data.frame with a column named "region" and a column named "value"
-#' @param lod A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
-#' example, 2 will show values above or below the median, and 9 will show the maximum
-#' resolution.  Defaults to 9.
-#' @param title A title for the map.  Defaults to "".
-#' @param scaleName An optional label for the legend.  Defaults to "".
-#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
-#' Defaults to T. 
-#' @param states A vector of states to render.  Defaults to state.abb.
-#' @return A choropleth
-#' 
-#' @keywords choropleth
-#' 
-#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
-#' @importFrom ggplot2 scale_fill_continuous map_data scale_colour_brewer
-#' @importFrom plyr arrange rename
-#' @importFrom scales comma
-#' @importFrom Hmisc cut2
-#' 
-#' @seealso \code{\link{choroplethr_acs}} which generates choropleths from Census tables.
-
-
 # TODO: Rename return value choropleth.df
 #' @export
 bind_df_to_county_map = function(df, states = state.abb)
@@ -103,7 +75,9 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 # this needs to be called from the main choroplethr function
 county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
 {
-  choropleth.df = bind_df_to_county_map(df, states)
-  choropleth.df$value = discretize_values(choropleth.df$value, num_buckets);
-  render_county_choropleth(choropleth.df, title, scaleName, states)
+    choropleth.df = bind_df_to_county_map(df, states)
+    if (num_buckets > 1) {
+        choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
+    }
+    render_county_choropleth(choropleth.df, title, scaleName, states)
 }

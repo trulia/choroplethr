@@ -9,9 +9,9 @@ require("plyr")
 #    and then remove where state not %in% state.abbr
 # 3. join against census data for values
 
-setwd('~/Desktop/tl_2013_us_zcta510/tl_2013_us_zcta510.shp')
-zips = readOGR(dsn=".", layer="tl_2013_us_zcta510")
-zips = gSimplify(m, 0.01)
-map.df = fortify(zips)
-map.df$value=sample(1:10,size=nrow(map.df),replace=T)
-ggplot(map.df, aes(long, lat, group=group)) + geom_polygon(fill=value)
+#setwd('~/Desktop/tl_2013_us_zcta510/tl_2013_us_zcta510.shp')
+#zips = readOGR(dsn=".", layer="tl_2013_us_zcta510")
+#zips = gSimplify(m, 0.01)
+#map.df = fortify(zips)
+#map.df$value=sample(1:10,size=nrow(map.df),replace=T)
+#ggplot(map.df, aes(long, lat, group=group)) + geom_polygon(fill=value)

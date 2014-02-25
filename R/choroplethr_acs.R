@@ -46,7 +46,7 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
 #' @param span The span of the survey.
 #' @return A data.frame 
 #' @export
-#' See also \link{http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS}, which lists all ACS Surveys.
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS}, which lists all ACS Surveys.
 #' @importFrom acs acs.fetch geography estimate geo.make
 get_acs_df = function(tableId, lod, endyear, span)
 {
