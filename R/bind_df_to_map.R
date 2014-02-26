@@ -1,7 +1,7 @@
 #' Bind a data.frame to a map
 #' 
 #' Given a data.frame which contains (region, value) pairs, bind it to either a state, county
-#' or ZIP code map.  The result can then be rendered by calling \link{\code{render_choropleth}}.
+#' or ZIP code map.  The result can then be rendered by calling render_choropleth.
 #'  
 #' @param df A data.frame with one column named "region" and one column named "value".
 #' @param lod A string representing the level of detail of the map you want.  Must be one of "state",
@@ -9,7 +9,7 @@
 #' @param states a vector of postal codes representing US states.  Defaults to state.abb.
 #' 
 #' @return A data.frame.
-#' @seealso \link{\code{render_choropleth}}.
+#' @seealso \code{\link{render_choropleth}}.
 #' @export
 bind_df_to_map = function(df, lod, states=state.abb)
 {
