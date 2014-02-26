@@ -1,3 +1,12 @@
+choroplethr 1.2.0
+----------------------------------------------------------------
+
+FEATURES
+  -TODO: Describe these 3 functions
+  	-get_acs_df
+  	-bind_df_to_map
+  	-render_choropleth
+
 choroplethr 1.1.0
 ----------------------------------------------------------------
 
