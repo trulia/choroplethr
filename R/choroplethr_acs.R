@@ -1,3 +1,7 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("state.fips"))
+}
+
 #' Create a choropleth from ACS data.
 #' 
 #' Creates a choropleth using the US Census' American Community Survey (ACS) data.  
