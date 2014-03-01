@@ -1,9 +1,4 @@
-# TODO: PUT BOTH IMAGES SIDE BY SIDE!
 library(gridExtra)
-
-plot1 <- qplot(1)
-plot2 <- qplot(1)
-grid.arrange(plot1, plot2, ncol=2)
 
 #States with less than or greater than 1M residents
 df=get_acs_df("B01003", "state")
