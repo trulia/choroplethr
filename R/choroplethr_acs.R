@@ -28,6 +28,16 @@ if (base::getRversion() >= "2.15.1") {
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
 #' which contains a list of all ACS surveys.
 #' @export
+#' @examples
+#' \dontrun{
+#' # population of all states, 9 equally sized buckets
+#' choroplethr_acs("B01003", "state")
+#' 
+#' # median income, continuous scale, counties in New York, New Jersey and Connecticut
+#' choroplethr_acs("B19301", "county", num_buckets=1, states=c("NY", "NJ", "CT"))
+#'
+#' # median income, all zip codes
+#' choroplethr_acs("B19301", "zip") } 
 #' @importFrom acs acs.fetch geography estimate geo.make
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5)
 {
