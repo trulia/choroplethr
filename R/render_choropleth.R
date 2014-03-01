@@ -1,6 +1,6 @@
 #' Render a choropleth
 #' 
-#' Given a data.frame which contains map data and value data, render it as a map using ggplot2.
+#' Given a data.frame which contains map data and value data, render it as a choropleth using ggplot2.
 #'  
 #' @param choropleth.df A data.frame with one column named "region" and one column named "value".  The variable is 
 #' normally the output of bind_df_to_map.
@@ -17,13 +17,13 @@
 render_choropleth = function(choropleth.df, lod, title="", scaleName="", showLabels=TRUE, states=state.abb)
 {
   stopifnot("value" %in% colnames(choropleth.df))
-  stopifnot("lod" %in% c("state", "county", "zip"))
+  stopifnot(lod %in% c("state", "county", "zip"))
   
   if (lod == "state") {
-    render_state_choropleth(choropleth.df, title="", scaleName="", showLabels, states=state.abb)
+    render_state_choropleth(choropleth.df, title, scaleName, showLabels, states)
   } else if (lod == "county") {
-    render_county_choropleth(choropleth.df, title="", scaleName="", states=state.abb)
+    render_county_choropleth(choropleth.df, title, scaleName, states)
   } else if (lod == "zip") {
-    render_zip_choropleth(choropleth.df, title="", scaleName="", states=state.abb)
+    render_zip_choropleth(choropleth.df, title, scaleName, states)
   }
 }

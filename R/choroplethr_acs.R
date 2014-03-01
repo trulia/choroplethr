@@ -46,13 +46,13 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
 #' 
 #' @param tableId The id of an ACS table.
 #' @param lod The level of geographic detail for the data.frame.  Must be one of "state", "county" or "zip". 
-#' @param endyear The end year of the survey.  
-#' @param span The span of the survey.
+#' @param endyear The end year of the survey.  Defaults to 2012.
+#' @param span The span of the survey.  Defaults to 5.
 #' @return A data.frame 
 #' @export
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
 #' @importFrom acs acs.fetch geography estimate geo.make
-get_acs_df = function(tableId, lod, endyear, span)
+get_acs_df = function(tableId, lod, endyear=2012, span=5)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
   
@@ -61,9 +61,7 @@ get_acs_df = function(tableId, lod, endyear, span)
   acs.df     = make_df(lod, acs.data, column_idx) # turn into df
   acs.df$region = as.character(acs.df$region)
   
-  if (lod == "state") {
-    acs.df = acs.df[acs.df$region %in% state.name, ]
-  } else if (lod == "county") {
+  if (lod == "county") {
     # strip out the state fips code from a county fips code.
     get_state_fips = function(county_fips)
     {
@@ -77,11 +75,10 @@ get_acs_df = function(tableId, lod, endyear, span)
       }
     }
     acs.df$state_fips = lapply(acs.df$region, get_state_fips)
-    data(state.fips, package="maps", envir = environment())
-    # the census returns data for places that we don't map (such as Puerto Rico, Guam, etc.)
-    # See http://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code#FIPS_state_codes
-    acs.df = acs.df[acs.df$state_fips %in% state.fips$fips, ]
-  } 
+  }
+  # TODO: Do anything for states?
+  
+  acs.df
 }
 
 make_geo = function(lod)
