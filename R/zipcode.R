@@ -23,6 +23,9 @@ bind_df_to_zip_map = function(df, states=state.abb)
 
 render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb)
 {
+  # only render the states the user requested
+  choropleth.df = choropleth.df[choropleth.df$state %in% states, ]
+  
   # add an outline for states.  rename columns for consistency
   state_map_df = subset_map("state", states);
   colnames(state_map_df)[names(state_map_df) == "long"] = "longitude"
@@ -35,7 +38,7 @@ render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=s
       geom_point() + 
       ggtitle(title) +
       theme_clean() + 
-      scale_color_continuous(labels=comma) +
+      scale_color_continuous(scaleName, labels=comma) +
       geom_polygon(data = state_map_df, color = "black", fill = NA, aes(group=group));
     
   } else {

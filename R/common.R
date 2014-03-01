@@ -56,7 +56,7 @@ theme_clean = function(base_size = 12)
   theme(
     axis.title        = element_blank(),
     axis.text         = element_blank(),
-    panel.background  = element_blank(),
+#     panel.background  = element_blank(),
     panel.grid        = element_blank(),
     axis.ticks.length = unit(0, "cm"),
     axis.ticks.margin = unit(0, "cm"),
