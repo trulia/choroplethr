@@ -57,7 +57,7 @@ choroplethr_acs("B19301", "zip") }
 \code{api.key.install} in the acs package which sets an
 Census API key for the acs library
 
-\link{http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS}
+http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS
 which contains a list of all ACS surveys.
 }
 \keyword{acs}
