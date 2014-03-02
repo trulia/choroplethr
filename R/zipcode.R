@@ -4,7 +4,7 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-bind_df_to_zip_map = function(df, states=state.abb)
+bind_df_to_zip_map = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "zip"))
@@ -14,7 +14,7 @@ bind_df_to_zip_map = function(df, states=state.abb)
   
   # only print contiguous 48 states now, mostly for conformity with state and county maps,
   # where the limitation is technical
-  choropleth = choropleth[choropleth$state %in% states
+  choropleth = choropleth[choropleth$state %in% state.abb
                           & !choropleth$state %in% c("AK", "HI"), ]
   # remove 2 points of bad data in the zipcode package.
   # it has two zips in NY and VA in the atlantic/europe
@@ -56,7 +56,7 @@ render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=s
 #' @importFrom ggplot2 geom_point scale_color_continuous
 zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states)
 {
-  choropleth.df = bind_df_to_zip_map(df, states)
+  choropleth.df = bind_df_to_zip_map(df)
   
   if (num_buckets > 1) {
     choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)

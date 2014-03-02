@@ -4,12 +4,12 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-bind_df_to_state_map = function(df, states = state.abb)
+bind_df_to_state_map = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
  
   df$region = normalize_state_names(df$region)
-  state_map_df = subset_map("state", states)
+  state_map_df = map_data("state")
   
   choropleth = merge(state_map_df, df)
   
@@ -65,7 +65,7 @@ state_choropleth_auto = function(df,
                             scaleName = "",
                             states = state.abb)
 {
-  choropleth.df = bind_df_to_state_map(df, states)
+  choropleth.df = bind_df_to_state_map(df)
   if (num_buckets > 1) {
     choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
   }

@@ -2,13 +2,13 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-bind_df_to_county_map = function(df, states = state.abb)
+bind_df_to_county_map = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "fips"))
     
   # add fips column to county maps
-  county.df = subset_map("county", states)
+  county.df = map_data("county")
   names(county.df)[5:6] = c("state","county")
   county.df$polyname = paste(county.df$state, county.df$county, sep = ",");
   data(county.fips, package="maps", envir = environment())
@@ -72,7 +72,7 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 # this needs to be called from the main choroplethr function
 county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
 {
-    choropleth.df = bind_df_to_county_map(df, states)
+    choropleth.df = bind_df_to_county_map(df)
     if (num_buckets > 1) {
         choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
     }

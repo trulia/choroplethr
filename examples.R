@@ -18,6 +18,7 @@ grid.arrange(map.state.1m, map.county.1m, ncol=2)
 
 # median age
 df=get_acs_df("B01002", "zip")
+df = df[df$value >= 50, ]
 df.map=bind_df_to_map(df, "zip")
 map.ny.zips = render_choropleth(df.map, 
                                 "zip", 
