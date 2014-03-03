@@ -1,20 +1,20 @@
-# This is unfortunately necessary to have R CMD not throw out spurious NOTEs when using ggplot2
+# This is unfortunately necessary to have R CMD check not throw out spurious NOTEs when using ggplot2
 # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-county_choropleth = function(df, num_buckets=9, title="", scaleName="", states)
+bind_df_to_county_map = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "fips"))
-  
+    
   # add fips column to county maps
-  county.df = subset_map("county", states)
+  county.df = map_data("county")
   names(county.df)[5:6] = c("state","county")
   county.df$polyname = paste(county.df$state, county.df$county, sep = ",");
   data(county.fips, package="maps", envir = environment())
-  
+    
   # county.fips handles non-contiguous counties by adding eg ":main" to the end.
   # however, map_data does follow this convention.  In order to merge properly
   # remove the : and everything after
@@ -24,9 +24,9 @@ county_choropleth = function(df, num_buckets=9, title="", scaleName="", states)
   county.fips.2$polyname = unlist(lapply(split_names, "[", 1));
   county.fips.2$polyname = as.factor(county.fips.2$polyname);
   county.fips.2 = unique(county.fips.2);
-  
+    
   county.df = merge(county.df, county.fips.2); 
-  
+    
   # new we can merge our data with the map data, because the map data now has fips codes
   choropleth = merge(county.df, df);
   if (any(is.na(choropleth$value)))
@@ -37,28 +37,46 @@ county_choropleth = function(df, num_buckets=9, title="", scaleName="", states)
     print(warning_string);
     choropleth$value[is.na(choropleth$value)] = 0;
   }
-  
-  # add state boundaries
-  state.df   = subset_map("state", states);
+
   choropleth = choropleth[order(choropleth$order), ];
   
-  # how many buckets should I use?
-  if (num_buckets > 1)
+  choropleth
+}
+
+render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb)
+{
+  # county maps really need state backgrounds
+  state.df = subset_map("state", states);
+  
+  # maps with numeric values are mapped with a continuous scale
+  if (is.numeric(choropleth.df$value))
   {
-    choropleth$value = generate_values(choropleth$value, num_buckets);
-    
-    ggplot(choropleth, aes(long, lat, group = group)) +
+    ggplot(choropleth.df, aes(long, lat, group = group)) +
+      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+      geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
+      scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
+      ggtitle(title) +
+      theme_clean();
+  } else if (is.factor(choropleth.df$value)) {
+    stopifnot(length(levels(choropleth.df$value)) <= 9) # brewer scale only goes up to 9
+
+    ggplot(choropleth.df, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
       geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
       scale_fill_brewer(scaleName, labels=comma) + # use discrete scale for buckets
       ggtitle(title) +
       theme_clean();
   } else {
-    ggplot(choropleth, aes(long, lat, group = group)) +
-      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-      geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
-      scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
-      ggtitle(title) +
-      theme_clean();
+    stop("value needs to be numeric or factor")
   }
+}
+
+# this needs to be called from the main choroplethr function
+county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
+{
+    choropleth.df = bind_df_to_county_map(df)
+    if (num_buckets > 1) {
+        choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
+    }
+    render_county_choropleth(choropleth.df, title, scaleName, states)
 }

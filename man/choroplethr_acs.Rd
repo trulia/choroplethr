@@ -40,6 +40,17 @@ Community Survey (ACS) data. Requires the acs package to be
 installed, and a Census API Key to be set with the acs's
 api.key.install function.
 }
+\examples{
+\dontrun{
+# population of all states, 9 equally sized buckets
+choroplethr_acs("B01003", "state")
+
+# median income, continuous scale, counties in New York, New Jersey and Connecticut
+choroplethr_acs("B19301", "county", num_buckets=1, states=c("NY", "NJ", "CT"))
+
+# median income, all zip codes
+choroplethr_acs("B19301", "zip") }
+}
 \seealso{
 \code{\link{choroplethr}} which this function wraps
 

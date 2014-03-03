@@ -1,5 +1,8 @@
+export(bind_df_to_map)
 export(choroplethr)
 export(choroplethr_acs)
+export(get_acs_df)
+export(render_choropleth)
 importFrom(Hmisc,cut2)
 importFrom(acs,acs.fetch)
 importFrom(acs,estimate)
