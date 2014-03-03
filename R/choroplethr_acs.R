@@ -71,23 +71,6 @@ get_acs_df = function(tableId, lod, endyear=2012, span=5)
   acs.df     = make_df(lod, acs.data, column_idx) # turn into df
   acs.df$region = as.character(acs.df$region)
   
-  if (lod == "county") {
-    # strip out the state fips code from a county fips code.
-    get_state_fips = function(county_fips)
-    {
-      if (nchar(county_fips) == 4) {
-        substr(county_fips, 1, 1)
-      } else if (nchar(county_fips) == 5) {
-        substr(county_fips, 1, 2)
-      }
-      else {
-        stop("county fips must be 4 or 5 characters")
-      }
-    }
-    acs.df$state_fips = lapply(acs.df$region, get_state_fips)
-  }
-  # TODO: Do anything for states?
-  
   acs.df
 }
 
