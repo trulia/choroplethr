@@ -1,3 +1,7 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("state.fips"))
+}
+
 #' Create a choropleth from ACS data.
 #' 
 #' Creates a choropleth using the US Census' American Community Survey (ACS) data.  
@@ -24,6 +28,16 @@
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
 #' which contains a list of all ACS surveys.
 #' @export
+#' @examples
+#' \dontrun{
+#' # population of all states, 9 equally sized buckets
+#' choroplethr_acs("B01003", "state")
+#' 
+#' # median income, continuous scale, counties in New York, New Jersey and Connecticut
+#' choroplethr_acs("B19301", "county", num_buckets=1, states=c("NY", "NJ", "CT"))
+#'
+#' # median income, all zip codes
+#' choroplethr_acs("B19301", "zip") } 
 #' @importFrom acs acs.fetch geography estimate geo.make
 choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5)
 {
@@ -34,8 +48,30 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
   acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
-  
+  acs.df$region = as.character(acs.df$region) # not a factor
   choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
+}
+
+#' Returns a data.frame representing American Community Survey estimates.
+#' 
+#' @param tableId The id of an ACS table.
+#' @param lod The level of geographic detail for the data.frame.  Must be one of "state", "county" or "zip". 
+#' @param endyear The end year of the survey.  Defaults to 2012.
+#' @param span The span of the survey.  Defaults to 5.
+#' @return A data.frame 
+#' @export
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
+#' @importFrom acs acs.fetch geography estimate geo.make
+get_acs_df = function(tableId, lod, endyear=2012, span=5)
+{
+  stopifnot(lod %in% c("state", "county", "zip"))
+  
+  acs.data   = acs.fetch(geography=make_geo(lod), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
+  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  acs.df     = make_df(lod, acs.data, column_idx) # turn into df
+  acs.df$region = as.character(acs.df$region)
+  
+  acs.df
 }
 
 make_geo = function(lod)

@@ -1,3 +1,14 @@
+choroplethr 1.2.0
+----------------------------------------------------------------
+
+FEATURES
+-Create 3 new functions which support a workflow of giving users more control of choropleths
+  -get_acs_df, which gets an ACS table as a data.frame.  You can then use, for example, cut2 to discretize the values as you see fit.
+  -bind_df_to_map, which binds a data.frame of (region, value) pairs to a state, county or zip map.
+  -render_choropleth, which renders a choropleth from (map, value) pairs.
+
+-Improve documentation
+
 choroplethr 1.1.0
 ----------------------------------------------------------------
 
