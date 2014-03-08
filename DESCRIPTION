@@ -22,10 +22,10 @@ Imports:
     plyr,
     Hmisc,
     grid,
-    acs,
-    maps,
-    zipcode
+    acs
 Suggests:
-    testthat
+    testthat,
+    maps, 
+    zipcode
 Depends:
     R (>= 3.0.0)
