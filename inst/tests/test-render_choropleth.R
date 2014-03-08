@@ -31,20 +31,14 @@ test_that("county render_choropleth discrete returns a ggplot object", {
 })
 
 test_that("zip render_choropleth continuous returns a ggplot object", {
-  # need to suppress warnings when getting all zips - otherwise travis registers a failure
-  options(warn=-1) 
-  df = get_acs_df("B01003", "zip") # population
-  options(warn=0)
+  df       = get_acs_df("B01003", "zip") # population
   df.map   = bind_df_to_map(df, "zip")
-  x = render_choropleth(df.map, "zip")
+  x        = render_choropleth(df.map, "zip")
   expect_equal(class(x), c("gg", "ggplot"))
 })
 
 test_that("zip render_choropleth discrete returns a ggplot object", {
-  # need to suppress warnings when getting all zips - otherwise travis registers a failure
-  options(warn=-1) 
-  df = get_acs_df("B01003", "zip") # population
-  options(warn=0)
+  df       = get_acs_df("B01003", "zip") # population
   df.map   = bind_df_to_map(df, "zip")
   df$value = cut2(df$value, g=3) # 3 equally-sized groups
   x = render_choropleth(df.map, "zip")
