@@ -1,6 +1,7 @@
 export(bind_df_to_map)
 export(choroplethr)
 export(choroplethr_acs)
+export(get_acs_column_names)
 export(get_acs_df)
 export(render_choropleth)
 importFrom(Hmisc,cut2)

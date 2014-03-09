@@ -1,8 +1,8 @@
-\name{get_acs_df}
-\alias{get_acs_df}
-\title{Returns a data.frame representing American Community Survey estimates.}
+\name{get_acs_column_names}
+\alias{get_acs_column_names}
+\title{Returns the column names of an ACS table.}
 \usage{
-get_acs_df(tableId, lod, endyear = 2012, span = 5, column_idx = -1)
+get_acs_column_names(tableId, lod, endyear = 2012, span = 5)
 }
 \arguments{
   \item{tableId}{The id of an ACS table.}
@@ -14,15 +14,12 @@ get_acs_df(tableId, lod, endyear = 2012, span = 5, column_idx = -1)
   2012.}
 
   \item{span}{The span of the survey.  Defaults to 5.}
-
-  \item{column_idx}{An optional column index to specify.}
 }
 \value{
-A data.frame
+A vector of column names
 }
 \description{
-Returns a data.frame representing American Community Survey
-estimates.
+Returns the column names of an ACS table.
 }
 \seealso{
 http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS,
