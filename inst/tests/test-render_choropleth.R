@@ -1,18 +1,18 @@
 context("render_choropleth")
 
 test_that("state render_choropleth continuous returns a ggplot object", {
-  df     = get_acs_df("B01003", "state") # population
+  df = data.frame(region=state.abb, value=sample(100, 50))  
   df.map = bind_df_to_map(df, "state")
-  x      = render_choropleth(df.map, "state", "title", "scale name")
-  expect_is(x, "ggplot")
+  choropleth = render_choropleth(df.map, "state", "title", "scale name")
+  expect_is(choropleth, "ggplot")
 })
 
 test_that("state render_choropleth discrete returns a ggplot object", {
-  df     = get_acs_df("B01003", "state") # population
+  df = data.frame(region=state.abb, value=sample(100, 50))
   df.map = bind_df_to_map(df, "state")
-  df.map$value = cut2(df.map$value, cuts=c(0,1000000,Inf))
-  x      = render_choropleth(df.map, "state", "title", "scale name")
-  expect_is(x, "ggplot")
+  df.map$value = cut2(df.map$value, cuts=c(0,25, 50, 100))
+  choropleth = render_choropleth(df.map, "state", "title", "scale name")
+  expect_is(choropleth, "ggplot")
 })
 
 test_that("county render_choropleth continuous returns a ggplot object", {
