@@ -1,3 +1,14 @@
+choroplethr 1.2.1
+----------------------------------------------------------------
+
+BUG FIXES
+  -Subsetting by state was broken for state and county choropleths
+  
+FEATURES
+  -Some features to support integration with shiny.  
+    -New function get_acs_column_names 
+    -New parameter column_idx parameter to function get_acs_df
+  
 choroplethr 1.2.0
 ----------------------------------------------------------------
 
