@@ -28,6 +28,9 @@ bind_df_to_state_map = function(df)
 
 render_state_choropleth = function(choropleth.df, title="", scaleName="", showLabels=TRUE, states=state.abb)
 {
+  # only show the states the user asked
+  choropleth.df = choropleth.df[choropleth.df$region %in% normalize_state_names(states), ]
+  
   # maps with numeric values are mapped with a continuous scale
   if (is.numeric(choropleth.df$value))
   {

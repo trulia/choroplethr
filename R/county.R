@@ -45,6 +45,9 @@ bind_df_to_county_map = function(df)
 
 render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb)
 {
+  # only show the states the user asked
+  choropleth.df = choropleth.df[choropleth.df$state %in% normalize_state_names(states), ]
+  
   # county maps really need state backgrounds
   state.df = subset_map("state", states);
   
