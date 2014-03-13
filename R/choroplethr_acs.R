@@ -135,12 +135,12 @@ make_df = function(lod, acs.data, column_idx)
                                     sep = "");
     # put in format for call to all_county_choropleth
     data.frame(region = geography(acs.data)$fips, 
-               value  = as.numeric(estimate(acs.data)));
+               value  = as.numeric(estimate(acs.data[,column_idx])));
     
   } else if (lod == "zip") {
     # put in format for call to choroplethr
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
-                        value  = as.numeric(estimate(acs.data)))
+                        value  = as.numeric(estimate(acs.data[,column_idx])))
     
     na.omit(acs.df) # surprisingly, this sometimes returns NA values
   }
