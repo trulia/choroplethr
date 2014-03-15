@@ -58,7 +58,7 @@ zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", 
 {
   choropleth.df = bind_df_to_zip_map(df)
   
-  if (num_buckets > 1) {
+  if (is.numeric(df$value) && num_buckets > 1) {
     choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
   }
   render_zip_choropleth(choropleth.df, title, scaleName, states)

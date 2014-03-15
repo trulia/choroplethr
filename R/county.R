@@ -78,7 +78,7 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
 {
     choropleth.df = bind_df_to_county_map(df)
-    if (num_buckets > 1) {
+    if (is.numeric(choropleth.df$value) && num_buckets > 1) {
         choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
     }
     render_county_choropleth(choropleth.df, title, scaleName, states)

@@ -69,7 +69,7 @@ state_choropleth_auto = function(df,
                             states = state.abb)
 {
   choropleth.df = bind_df_to_state_map(df)
-  if (num_buckets > 1) {
+  if (is.numeric(choropleth.df$value) && num_buckets > 1) {
     choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
   }
   render_state_choropleth(choropleth.df, title, scaleName, showLabels, states)

@@ -8,7 +8,7 @@ Description: choroplethr simplifies the creation of choropleths in R. A
     data, choosing and labeling discrete scales and creating a clean background
     are handled automatically. choroplethr provides native support for viewing
     data from the US Census's American Community Survey (ACS).
-Version: 1.3.0
+Version: 1.3.1
 Author: Ari Lamstein <arilamstein@gmail.com>
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
 URL: https://github.com/trulia/choroplethr/,
