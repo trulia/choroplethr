@@ -1,6 +1,10 @@
 choroplethr 1.3.1
 ----------------------------------------------------------------
 
+FEATURE
+  -Handle string data as values
+  -add df_president_2012 as an example dataset.  Type data(df_president_2012) to use it.
+
 BUG FIXES
   -Choropleths of state, county and zip data with factor values were broken
 
