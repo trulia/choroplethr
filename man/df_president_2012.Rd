@@ -6,6 +6,10 @@
 A data.frame containing election results from the 2012 US
 Presidential election.
 }
+\examples{
+data(df_president_2012)
+choroplethr(df_president_2012, "state", title="Results from the 2012 US Presidential Election")
+}
 \author{
 US Federal Election Commission and Ari Lamstein
 }
