@@ -1,13 +1,15 @@
-choroplethr 1.2.1
+choroplethr 1.3.0
 ----------------------------------------------------------------
 
 BUG FIXES
   -Subsetting by state was broken for state and county choropleths
+  -Fix a bug where ACS state choropleths were not displaying titles
   
 FEATURES
-  -Some features to support integration with shiny.  
+  -Some features to support integration with shiny - requested by pssguy via github.  
     -New function get_acs_column_names 
     -New parameter column_idx parameter to function get_acs_df
+  -Improve formatting of discrete scales
   
 choroplethr 1.2.0
 ----------------------------------------------------------------

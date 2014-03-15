@@ -66,7 +66,28 @@ theme_clean = function(base_size = 12)
   )
 }
 
+# make the output of cut2 a bit easier to read
+# see http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/
+#' @importFrom stringr str_extract_all
+format_levels = function(x,nsep=" to ") 
+{
+  n = str_extract_all(x, "\\d+")[[1]]  # extract numbers
+  v = format(as.numeric(n), big.mark=",", trim=TRUE) # change format
+  x = as.character(x)
+  # recombine
+  paste0(
+    substring(x, 1, 1), # preserve [ or ( 
+    paste(v,collapse=nsep),
+    substring(x, nchar(x), nchar(x))) # preserve ] or )
+}
+
+# for us, discretizing values means 
+# 1. breaking the values into num_buckets equal intervals
+# 2. formatting the intervals e.g. with commas
+#' @importFrom Hmisc cut2
 discretize_values = function(values, num_buckets)
 {
-  cut2(values, g=num_buckets)
+  ret = cut2(values, g = num_buckets)
+  levels(ret) = sapply(levels(ret), format_levels)
+  ret
 }
