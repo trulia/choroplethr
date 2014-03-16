@@ -1,17 +1,14 @@
 \docType{data}
-\name{df_president_2012}
-\alias{df_president_2012}
+\name{df_president}
+\alias{df_president}
 \title{A data.frame containing election results from the 2012 US Presidential election.}
 \description{
 A data.frame containing election results from the 2012 US
 Presidential election.
 }
 \examples{
-data(df_president_2012)
-choroplethr(df_president_2012, "state", title="Results from the 2012 US Presidential Election")
-}
-\author{
-US Federal Election Commission and Ari Lamstein
+data(choroplethr)
+choroplethr(df_president, "state", title="Results from the 2012 US Presidential Election")
 }
 \references{
 Taken from
