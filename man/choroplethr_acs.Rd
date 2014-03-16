@@ -32,13 +32,14 @@ choroplethr_acs(tableId, lod, num_buckets = 9, showLabels = T,
   http://1.usa.gov/1geFSSj for details.}
 }
 \value{
-A choropleth
+A choropleth.
 }
 \description{
 Creates a choropleth using the US Census' American
 Community Survey (ACS) data. Requires the acs package to be
 installed, and a Census API Key to be set with the acs's
-api.key.install function.
+api.key.install function.  Census API keys can be obtained
+at http://www.census.gov/developers/tos/key_request.html.
 }
 \examples{
 \dontrun{

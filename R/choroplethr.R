@@ -2,7 +2,9 @@
 #' 
 #' Creates a choropleth from a specified data.frame and level of detail.
 #'
-#' @param df A data.frame with a column named "region" and a column named "value"
+#' @param df A data.frame with a column named "region" and a column named "value".  If lod is "state" 
+#' then region must contain state names (e.g. "California" or "CA").  If lod is "county" then region must  
+#' contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes.
 #' @param lod A string indicating the level of detail of the map.  Must be "state", "county" or "zip".
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
@@ -13,7 +15,7 @@
 #' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
 #' Defaults to T. 
 #' @param states A vector of states to render.  Defaults to state.abb.
-#' @return A choropleth
+#' @return A choropleth.
 #' 
 #' @keywords choropleth
 #' 
@@ -27,19 +29,22 @@
 #' 
 #' @export
 #' @examples
-#' # a state choropleth
-#' df = data.frame(region=state.abb, value=sample(100, 50))
-#' choroplethr(df, lod="state")
+#' data(choroplethr)
 #'
-#' # a county choropleth
-#' data(county.fips, package="maps")
-#' df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=TRUE))
-#' choroplethr(df, "county", 2)
+#' # 2012 US Presidential results
+#' choroplethr(df_president, lod="state", title="2012 US Presidential Results")
+#'
+#' # 2012 state population estimates
+#' # on a continuous scale
+#' choroplethr(df_pop_state, lod="state", num_buckets=1, title="2012 State Population Estimates")
+#' # on a discrete scale, with 9 buckets
+#' choroplethr(df_pop_state, lod="state", num_buckets=9, title="2012 State Population Estimates")
 #' 
-#' # a zip choropleth 
-#' data(zipcode, package="zipcode", envir=environment())
-#' df = data.frame(region=zipcode$zi, value = sample(100, nrow(zipcode), replace=TRUE))
-#' choroplethr(df, "zip", 9)
+#' # counties in 2012 which were above or below the median population
+#' choroplethr(df_pop_county, lod="county", num_buckets=2, title="2012 County Population Estimates")
+#' 
+#' # Zip Code Tabulated Area (ZCTA) population estimates.  
+#' choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
 choroplethr = function(df, 
                        lod, 
                        num_buckets = 9, 

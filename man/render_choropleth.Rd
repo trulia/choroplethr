@@ -6,9 +6,12 @@ render_choropleth(choropleth.df, lod, title = "", scaleName = "",
   showLabels = TRUE, states = state.abb)
 }
 \arguments{
-  \item{choropleth.df}{A data.frame with one column named
-  "region" and one column named "value".  The variable is
-  normally the output of bind_df_to_map.}
+  \item{choropleth.df}{A data.frame with a column named
+  "region" and a column named "value".  If lod is "state"
+  then region must contain state names (e.g. "California"
+  or "CA").  If lod is "county" then region must contain
+  county FIPS codes.  if lod is "zip" then region must
+  contain 5 digit ZIP codes.}
 
   \item{lod}{A string representing the level of detail of
   your data.  Must be one of "state", "county" or "zip".}
@@ -21,42 +24,34 @@ render_choropleth(choropleth.df, lod, title = "", scaleName = "",
   \item{showLabels}{For State maps, whether or not to show
   labels of the states.}
 
-  \item{states}{A vector of postal codes representing US
-  states.  Defaults to state.abb.}
+  \item{states}{A vector of states to render.  Defaults to
+  state.abb. Defaults to state.abb.}
 }
 \value{
-A data.frame.
+A choropleth.
 }
 \description{
 Given a data.frame which contains map data and value data,
 render it as a choropleth using ggplot2.
 }
 \examples{
-\dontrun{
+data(choroplethr)
 library(Hmisc) # for cut2
+
 # States with greater than 1M residents
-df     = get_acs_df("B01003", "state") # population
-df.map = bind_df_to_map(df, "state")
+df.map = bind_df_to_map(df_pop_state, "state")
 df.map$value = cut2(df.map$value, cuts=c(0,1000000,Inf))
 render_choropleth(df.map, "state", "States with a population over 1M", "Population")
 
 # Counties with greater than or greater than 1M residents
-df     = get_acs_df("B01003", "county") # population
-df.map = bind_df_to_map(df, "county")
+df.map = bind_df_to_map(df_pop_county, "county")
 df.map$value = cut2(df.map$value, cuts=c(0,1000000,Inf))
 render_choropleth(df.map, "county", "Counties with a population over 1M", "Population")
 
-# ZIP codes in California where median age is between 20 and 30
-df       = get_acs_df("B01002", "zip") # median age
-df       = df[df$value >= 20 & df$value <= 30, ]
-df$value = cut2(df$value, g=3) # 3 equally-sized groups
-df.map   = bind_df_to_map(df, "zip")
-render_choropleth(df.map,
-                 "zip",
-                 title = "CA Zip Codes by Age",
-                 scaleName = "Median Age",
-                 states = "CA")
-}
+# Zip Code Tabulated Areas with less than 1000 people
+df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
+df.map = bind_df_to_map(df_pop_zip, "zip")
+render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
 }
 \seealso{
 \code{\link{get_acs_df}} and \code{\link{bind_df_to_map}}

@@ -1,9 +1,9 @@
-choroplethr 1.3.1
+choroplethr 1.4
 ----------------------------------------------------------------
 
 FEATURE
   -Handle string data as values
-  -add example datasets
+  -add example datasets and update help
 
 BUG FIXES
   -Choropleths of state, county and zip data with factor values were broken
