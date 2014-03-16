@@ -47,14 +47,12 @@ data(choroplethr)
 # 2012 US Presidential results
 choroplethr(df_president, lod="state", title="2012 US Presidential Results")
 
-# 2012 state population estimates
-# on a continuous scale
+# 2012 state population estimates - continuous vs. discrete scale
 choroplethr(df_pop_state, lod="state", num_buckets=1, title="2012 State Population Estimates")
-# on a discrete scale, with 9 buckets
 choroplethr(df_pop_state, lod="state", num_buckets=9, title="2012 State Population Estimates")
 
-# counties in 2012 which were above or below the median population
-choroplethr(df_pop_county, lod="county", num_buckets=2, title="2012 County Population Estimates")
+# West coast counties in 2012 which were above or below the median population
+choroplethr(df_pop_county, lod="county", num_buckets=2, title="2012 County Population Estimates", states=c("CA", "OR", "WA"))
 
 # Zip Code Tabulated Area (ZCTA) population estimates.
 choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
