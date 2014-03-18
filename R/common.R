@@ -87,7 +87,12 @@ format_levels = function(x,nsep=" to ")
 #' @importFrom Hmisc cut2
 discretize_values = function(values, num_buckets)
 {
+  # if cut2 uses scientific notation,  our attempt to put in commas will fail
+  scipen_orig = getOption("scipen")
+  options(scipen=999)
   ret = cut2(values, g = num_buckets)
+  options(scipen=scipen_orig)
+  
   levels(ret) = sapply(levels(ret), format_levels)
   ret
 }
