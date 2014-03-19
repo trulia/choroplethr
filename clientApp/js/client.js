@@ -16,6 +16,6 @@ angular.module('AnimatedMaps', ['ngAnimate'])
         $scope.dateValue = Number($scope.dateValue) + 1;
       });
     };
-  }]).run(function($rootScope) {
+  }]).run(function() {
     'use strict';
   });
