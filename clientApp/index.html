@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>PassportEDU</title>
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+<body ng-app="AnimatedMaps" ng-cloak>
+<div ng-controller="ClientApp" class="well well-lg">
+  <img class="mapImage" ng-animate=" 'animate' " ng-src="assets/images/map_{{dateValue}}.png">
+  <input type="range" class="input-sm" ng-model="dateValue" min="{{minMaps}}" max="{{maxMaps}}">
+  <div class="panel" ng-bind="dateValue"></div>
+  <button class="btn btn-primary" ng-click="play()">Play</button>
+  <button class="btn btn-primary" ng-click="stop()">Stop</button>
+</div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.2.10/angular-animate.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-resource.min.js"></script>
+<script src="js/client.js"></script>
+</body>
+</html>
