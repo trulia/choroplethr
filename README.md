@@ -5,7 +5,7 @@ Master: [![Build Status](https://travis-ci.org/trulia/choroplethr.png?branch=mas
 
 `choroplethr` provides native support for viewing data from the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/).  
 
-The `choroplethr` package is described more fully the  [wiki](http://tech.truliablog.com/2014/01/15/the-choroplethr-package-for-r/).
+The `choroplethr` package is described more fully int the [wiki](http://tech.truliablog.com/2014/01/15/the-choroplethr-package-for-r/).
 
 ## Installation
 
