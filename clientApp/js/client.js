@@ -1,19 +1,23 @@
 angular.module('AnimatedMaps', ['ngAnimate'])
-  .controller('ClientApp', ['$scope', function($scope) {
+  .controller('ClientApp', ['$scope', '$window', function($scope, $window) {
     'use strict';
-    $scope.dateValue = 0;
+    $scope.dateValue = 1;
     $scope.intervalRef = null;
-    $scope.maxMaps = 100;
-    $scope.minMaps = 0;
+    $scope.maxMaps = 3;
+    $scope.minMaps = 1;
     $scope.play = function() {
-      $scope.intervalRef = setInterval($scope.nextMap, 1000);
+      $scope.intervalRef = $window.setInterval($scope.nextMap, 1000);
     };
     $scope.stop = function() {
-      clearInterval($scope.intervalRef);
+      $window.clearInterval($scope.intervalRef);
     };
     $scope.nextMap = function() {
       $scope.$apply(function() {
-        $scope.dateValue = Number($scope.dateValue) + 1;
+        if ($scope.dateValue < $scope.maxMaps) {
+          $scope.dateValue = Number($scope.dateValue) + 1;
+        } else {
+          $window.clearInterval($scope.intervalRef);
+        }
       });
     };
   }]).run(function() {
