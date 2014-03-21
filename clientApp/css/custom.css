@@ -15,3 +15,25 @@
 .ranger {
     width: 500px;
 }
+
+.pinColumns {
+    -moz-column-count: 1;
+    -moz-column-gap: 10px;
+    -moz-column-fill: auto;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 10px;
+    -webkit-column-fill: auto;
+    column-count: 1;
+    column-gap: 3px;
+    column-fill: auto;
+}
+
+.pin {
+    -moz-column-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    column-break-inside: avoid;
+    display: inline-block;
+    margin: 5px;
+    padding: 0;
+    border: none;
+}
