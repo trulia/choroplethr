@@ -1,0 +1,46 @@
+\name{choroplethr_animate}
+\alias{choroplethr_animate}
+\title{Animate a list of chropleths}
+\usage{
+choroplethr_animate(choropleths)
+}
+\arguments{
+  \item{choropleths}{A list of choropleths represented as
+  ggplot2 objects.  Created by, for example,
+  \code{\link{choroplethr}} or
+  \code{\link{choroplethr_acs}}.}
+}
+\value{
+Nothing.  However, a variable number of files are written
+to the current working directory.
+}
+\description{
+Given a list of choropleths, represented as ggplot2 objects
+\enumerate{ \item Save the individual images to the working
+directory with the naming convention "choropleth_1.png",
+"choropleth_2.png", etc. \item Write a file called
+"animated_choropleth.html" which contains a viewer which
+animates them. }
+}
+\examples{
+\dontrun{
+data(choroplethr)
+?df_president_ts # time series of all US presidential elections 1789-2012
+
+# create a list of choropleths of presidential election results for each year
+choropleths = list()
+for (i in 2:ncol(df_president_ts)) {
+  df           = df_president_ts[, c(1, i)]
+  colnames(df) = c("region", "value")
+  title        = paste0("Presidential Election Results: ", colnames(df_president_ts)[i])
+  choropleths[[i-1]] = choroplethr(df, "state", title=title)
+}
+
+# set working directory and animate
+setwd("~/Desktop")
+choroplethr_animate(choropleths)
+}
+}
+\keyword{animation}
+\keyword{choropleth}
+
