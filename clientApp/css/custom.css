@@ -9,5 +9,9 @@
 }
 
 .mapImage {
-    height: 400px;
+    width: 100%;
+}
+
+.ranger {
+    width: 500px;
 }
