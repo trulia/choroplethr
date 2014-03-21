@@ -41,6 +41,10 @@ setwd("~/Desktop")
 choroplethr_animate(choropleths)
 }
 }
+\author{
+Ari Lamstein (R code) and Brian Johnson (JavaScript, HTML
+and CSS code)
+}
 \keyword{animation}
 \keyword{choropleth}
 
