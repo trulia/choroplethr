@@ -3,7 +3,8 @@
 %\VignetteIndexEntry{What is a choropleth? When should I use one?}
 -->
 
-# What is a choropleth? When should I use one?
+What is a choropleth? When should I use one?
+========================================================
 
 A choropleth is a map which 
   1. Shows geographic boundaries.

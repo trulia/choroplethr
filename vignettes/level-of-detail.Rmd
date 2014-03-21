@@ -3,7 +3,8 @@
 %\VignetteIndexEntry{Level of detail: Creating State, County and ZIP maps}
 -->
 
-# Level of detail: Creating State, County and ZIP maps
+Level of detail: Creating State, County and ZIP maps
+========================================================
 
 The main function in the choroplethr package is called `choroplethr` (`?choroplethr`). It has two required parameters: 
   1. `df` A data.frame which contains one column named `region` and one column named `value`.  df can have other columns, too - but choroplethr only cares about these columns.  
