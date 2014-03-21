@@ -1,11 +1,24 @@
 angular.module('AnimatedMaps', ['ngAnimate'])
-  .controller('ClientApp', ['$scope', '$window', '$interpolate', function($scope, $window, $interpolate) {
+  .config(['$sceDelegateProvider', function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+      'self',
+      'http://en.wikipedia.org/wiki/United_States_presidential_election,_**']);
+  }])
+  .controller('ClientApp', ['$scope', '$window', '$interpolate', '$sce', '$http', function($scope, $window, $interpolate, $sce) {
     'use strict';
     /**
      * The normalized date
      * @type {number}
      */
     $scope.dateValue = 1;
+    $scope.electionYear = function() {
+      return $scope.dateValue == 1 ? 1789 : Number($scope.dateValue - 1) * 4 + 1792;
+    };
+    $scope.electionYearURL = function() {
+      var url = $interpolate('http://en.wikipedia.org/wiki/United_States_presidential_election,_{{value}}')({value: $scope.electionYear()});
+      $sce.trustAsUrl(url);
+      return url;
+    }
     /**
      * A reference for storing the setInterval
      * @type {null}
@@ -15,7 +28,7 @@ angular.module('AnimatedMaps', ['ngAnimate'])
      * The starting map dateValue
      * @type {number}
      */
-    $scope.maxValue = 3;
+    $scope.maxValue = 57;
     /**
      * The ending map dateValue
      * @type {number}
@@ -25,12 +38,14 @@ angular.module('AnimatedMaps', ['ngAnimate'])
      * url template for preloading images
      * @type {string}
      */
-    $scope.urlTemplate = $interpolate('assets/images/map_{{dateValue}}.png');
+    $scope.urlTemplate = $interpolate('assets/images/choropleth_{{dateValue}}.png');
     /**
      * The map image URL being displayed
      * @type {string}
      */
-    $scope.mapURL = $scope.urlTemplate({dateValue: $scope.minValue});
+    $scope.mapURL = function() {
+      return $scope.urlTemplate({dateValue: $scope.dateValue});
+    };
     /**
      * Increment the date
      */
