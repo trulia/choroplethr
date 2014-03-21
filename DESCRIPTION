@@ -28,6 +28,7 @@ Imports:
 Suggests:
     testthat,
     maps,
-    zipcode
+    zipcode,
+    knitr
 Depends:
     R (>= 3.0.0)
