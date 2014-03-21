@@ -37,10 +37,8 @@
 choroplethr_animate = function(choropleths)
 {
   stopifnot(is.list(choropleths))
-  # stop if not all things are ggplot2 objects
-  
-  # stop if any of hte files we're going to write already exist in the current directory
-  # or alternative just write a emssage to the console saying what you wrote to the filesystem
+  print(paste0("All files will be written to the current working directory: ", getwd(), " . To change this use setwd()"))
+  print("Now writing individual choropleth files there as 'choropleth_1.png', 'choropleth_2.png', etc.")
   
   # save individual frames
   for (i in 1:length(choropleths))
@@ -214,5 +212,6 @@ choroplethr_animate = function(choropleths)
   '
   
   txt = str_replace(txt, fixed("[[[max]]]"), length(choropleths))
+  print("Now writing code to animate all images in 'animated_choropleth.html'.  Please open that file with a browser.")
   write(txt, "animated_choropleth.html")
 }
