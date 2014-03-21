@@ -21,6 +21,8 @@ choroplethr(df_pop_state, "state", num_buckets=1, title="2012 State Population E
 One striking feature of this map is how much brighter California is than all its neighbors.  Indeed, in the western half of the map only California and Texas stand out at all.  The reason for this can be seen by looking at a boxplot of state populations; California (37M) and Texas (25M) are the two largest outliers:
 
 ```{r}
+library(ggplot2)
+library(scales)
 ggplot(df_pop_state, aes(factor(1), value)) + 
   geom_boxplot() + 
   ggtitle("Boxplot of 2012 State Population Estimates") + 

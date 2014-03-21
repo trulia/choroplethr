@@ -1,0 +1,21 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{ZIP Level Maps}
+-->
+  
+ZIP Level Maps
+========================================================
+
+## Overview
+
+The highest level of detail that choroplethr supports is the ZIP code. From both a mapping and demographic standpoint zip codes are problematic. On the one hand, ZIP codes are useful because they are smaller than counties (so you can get a higher level of detail) and everyone knows which zip code they live in (so they are an intuitive unit for people). On the other hand ZIP codes are managed by the postal service for the sole pupose of delivering mail. This means that they can change without notice and are not always polygons. For an in depth discussion of these problems I recommend the article [Zip Codes are Not Areas](http://www.georeference.org/doc/zip_codes_are_not_areas.htm) from georeference.org; for an overview of ZIP codes in general see the [ZIP code](http://en.wikipedia.org/wiki/ZIP_code) article on Wikipedia.
+
+## ZIP level maps as scatterplots
+
+Despite these problems, a great deal of data is aggregated at the ZIP level.  choroplethr maps it by converting ZIP codes to longitude and latitude coordinates and rendering the result as a scatterplot against a map of the continental US. Longitude and latitude data comes from the [zipcode](http://cran.r-project.org/web/packages/zipcode/index.html) package, created by Jeffrey Breen. Each point is colored based on its value in the same way that choropleths are colored. To see a map of US Population Estimates for ZIP codes type the following
+
+```{r}
+library(choroplethr)
+data(choroplethr)
+choroplethr(df_pop_zip, "zip", title="ZIP Code Tabulated Area Population Estimates, 2012")
+```
