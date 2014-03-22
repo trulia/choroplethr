@@ -20,6 +20,6 @@ To install the development version use the `devtools` package:
 ```
 # install.packages("devtools")
 library(devtools)
-install_github("choroplethr", "arilamstein")
+install_github("choroplethr", "trulia")
 library(choroplethr)
 ```
