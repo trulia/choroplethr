@@ -1,9 +1,9 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{Level of detail: Creating State, County and ZIP maps}
+%\VignetteIndexEntry{2) Choosing a Level of Detail (lod)}
 -->
 
-Level of detail: Creating State, County and ZIP maps
+Choosing a Level of Detail (lod)
 ========================================================
 
 The main function in the choroplethr package is called `choroplethr` (`?choroplethr`). It has two required parameters: 

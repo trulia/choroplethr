@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{What is a choropleth? When should I use one?}
+%\VignetteIndexEntry{1) What is a choropleth? When should I use one?}
 -->
 
 What is a choropleth? When should I use one?

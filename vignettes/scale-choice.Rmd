@@ -1,9 +1,9 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{Continuous, Discrete and Manual Scales}
+%\VignetteIndexEntry{3) Choosing a Scale Type}
 -->
   
-Continuous, Discrete and Manual Scales
+Choosing a Scale Type
 ========================================================
 
 After deciding on the geographic level of detail of your choropleth, the next most important decision will be on the type of scale to use.  choroplethr supports three type of scales: continuous, discrete and manual.  They are controlled with the `num_buckets` argument.
