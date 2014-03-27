@@ -71,14 +71,26 @@ theme_clean = function(base_size = 12)
 #' @importFrom stringr str_extract_all
 format_levels = function(x,nsep=" to ") 
 {
-  n = str_extract_all(x, "\\d+")[[1]]  # extract numbers
+  n = str_extract_all(x, "[-+]?[0-9]*\\.?[0-9]+")[[1]]  # extract numbers
   v = format(as.numeric(n), big.mark=",", trim=TRUE) # change format
   x = as.character(x)
+  
+  # preserve starting [ or ( if appropriate
+  prefix = ""
+  if (substring(x, 1, 1) %in% c("[", "("))
+  {
+    prefix = substring(x, 1, 1)
+  }
+  
+  # preserve ending ] or ) if appropriate
+  suffix = ""
+  if (substring(x, nchar(x), nchar(x)) %in% c("]", ")"))
+  {
+    suffix = substring(x, nchar(x), nchar(x))
+  }
+  
   # recombine
-  paste0(
-    substring(x, 1, 1), # preserve [ or ( 
-    paste(v,collapse=nsep),
-    substring(x, nchar(x), nchar(x))) # preserve ] or )
+  paste0(prefix, paste(v,collapse=nsep), suffix)
 }
 
 # for us, discretizing values means 
