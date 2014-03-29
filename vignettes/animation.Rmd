@@ -1,0 +1,53 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{5) Creating Animated Choropleths}
+-->
+
+Animated Choropleths - Viewing a Geospatial Time Series
+========================================================
+
+Animated choropleths are a useful way to understand how regional values change over time.  Consider the US Presidential Election choropleth: it is normally used to show how each state voted in the last presidential election.  But what if you want to understand how the results of last election compare to the previous election? Or the election before?  In this case an animated choropleth is an effective tool to understand the data.
+
+### An Example Dataset
+choroplethr ships with an example dataset of all US Presidential Election returns.
+
+```{r}
+library(choroplethr)
+data(choroplethr)
+
+# ?df_president_ts
+head(df_president_ts)
+```
+
+
+As expected, the data is hard to understand in a data.frame.  
+
+### `choroplethr_animate`
+
+To animate this data.frame use the `choroplethr_animate` function (`?choroplethr_animate`).  It has one argument, a list of choropleths.  Our first task, then, is to convert `df_president_ts` into a list of choropleths:
+
+```
+# create a list of choropleths of presidential election results for each year
+choropleths = list()
+for (i in 2:ncol(df_president_ts)) {
+  df           = df_president_ts[, c(1, i)]
+  colnames(df) = c("region", "value")
+  title        = paste0("Presidential Election Results: ", colnames(df_president_ts)[i])
+  choropleths[[i-1]] = choroplethr(df, "state", title=title)
+}
+```
+
+Then call `choroplethr_animate` with the list of choropleths:
+
+```
+choroplethr_animate(choropleths)
+```
+
+
+### The Output
+
+`choroplethr_animate` will write each choropleth to your current working directory with the naming convention `choropleth_1.png`, `choropleth_2.png`, etc.  It will then write an HTML file named `animated_choropleth.html`.  Open that file with a browser - it contains a JavaScript based player that allows you to cycle thru all the images. 
+
+Here is a screenshot of the player.  Note that in the upper right hand corner are _play_ and _stop_ buttons.  Clicking them will play or stop the animation.  There are also _+_ and _-_ buttons which allow you to cycle thru the animation at your own speed.
+
+![choroplethr_animate screenshot](https://raw.githubusercontent.com/trulia/choroplethr/10e5e8447c24ef4ca8494eaa35ece8585e091993/wiki-images/animation-screenshot.png)

@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{5) ZIP Level Maps}
+%\VignetteIndexEntry{6) ZIP Level Maps}
 -->
   
 ZIP Level Maps
