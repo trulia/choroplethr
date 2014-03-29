@@ -92,9 +92,9 @@ choroplethr_animate = function(choropleths)
   </div>
   <form class="navbar-form navbar-right" role="search">
   <div class="form-group">
-  <button type="button" class="btn btn-success" ng-click="play()">&nbsp;<span class="glyphicon glyphicon-play glyphicon-inverse"></span>
+  <button type="button" class="btn btn-default" ng-click="play()">&nbsp;<span class="glyphicon glyphicon-play glyphicon-inverse"></span>
   </button>
-  <button type="button" class="btn btn-danger" ng-click="stop()"><span class="glyphicon glyphicon-stop"></span>&nbsp;
+  <button type="button" class="btn btn-default" ng-click="stop()"><span class="glyphicon glyphicon-stop"></span>&nbsp;
   </button>
   <button type="button" class="btn btn-default" ng-click="minusValue()">
   <span class="glyphicon glyphicon-minus"></span>&nbsp;</button>
@@ -108,7 +108,6 @@ choroplethr_animate = function(choropleths)
   </div>
   <div class="container">
   <div class="page-header">
-  <h2 class="text-center well" ng-bind="dateValue"></h2>
   </div>
   </div>
   <div class="container">
