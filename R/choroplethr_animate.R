@@ -159,13 +159,15 @@ choroplethr_animate = function(choropleths)
   * Increment the date
   */
   $scope.plusValue = function() {
-  $scope.dateValue++;
+  if ($scope.dateValue < $scope.maxValue)
+    $scope.dateValue++;
   }
   /**
   * Decrement the date
   */
   $scope.minusValue = function() {
-  $scope.dateValue--;
+  if ($scope.dateValue > $scope.minValue)
+    $scope.dateValue--;
   }
   /**
   * Start animation traversing through all images in order
