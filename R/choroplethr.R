@@ -39,7 +39,8 @@
 #' choroplethr(df_pop_state, lod="state", num_buckets=9, title="2012 State Population Estimates")
 #' 
 #' # West coast counties in 2012 which were above or below the median population
-#' choroplethr(df_pop_county, lod="county", num_buckets=2, title="2012 County Population Estimates", states=c("CA", "OR", "WA"))
+#' choroplethr(df_pop_county, lod="county", num_buckets=2, 
+#' title="2012 County Population Estimates", states=c("CA", "OR", "WA"))
 #' 
 #' # Zip Code Tabulated Area (ZCTA) population estimates.  
 #' choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
