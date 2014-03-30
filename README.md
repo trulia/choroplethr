@@ -5,6 +5,8 @@ Master: [![Build Status](https://travis-ci.org/trulia/choroplethr.png?branch=mas
 
 `choroplethr` provides native support for viewing data from the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/).  
 
+`choropleth` also supports animating choropleths, which is useful for seeing trends in regions over time, such as population changes.
+
 The `choroplethr` package is described more fully in the [wiki](https://github.com/trulia/choroplethr/wiki).
 
 ## Installation
