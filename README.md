@@ -8,6 +8,7 @@ Master: [![Build Status](https://travis-ci.org/trulia/choroplethr.png?branch=mas
 `choropleth` also supports animating choropleths, which is useful for seeing trends in regions over time, such as population changes.
 
 The `choroplethr` package is described more fully in the following wiki pages:
+
 1. [What is a choropleth?  When should I use one?](https://github.com/trulia/choroplethr/wiki/What-is-a-choropleth%3F--When-should-I-use-one%3F)
 1. [Choosing a Level of Detail (lod)](https://github.com/trulia/choroplethr/wiki/Choosing-a-Level-of-Detail-%28lod%29)
 1. [Choosing a Scale Type](https://github.com/trulia/choroplethr/wiki/Choosing-a-Scale-Type)
