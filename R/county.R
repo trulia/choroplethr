@@ -75,9 +75,9 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 # this needs to be called from the main choroplethr function
 county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
 {
-    choropleth.df = bind_df_to_county_map(df)
-    if (is.numeric(choropleth.df$value) && num_buckets > 1) {
-        choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
-    }
-    render_county_choropleth(choropleth.df, title, scaleName, states)
+  df = clip_df(df, "county", states) # remove elements we won't be rendering
+  df = discretize_df(df, num_buckets) # if user requested, discretize the values
+  
+  choropleth.df = bind_df_to_county_map(df) # bind df to map
+  render_county_choropleth(choropleth.df, title, scaleName, states) # render map
 }

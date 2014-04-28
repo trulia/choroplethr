@@ -25,9 +25,37 @@ clip_df_state = function(df, states)
   df[df$region %in% normalize_state_names(states), ]
 }
 
+county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
+{
+  # technically a county fips should always be 5 characters, but in practice people often
+  # drop the leading 0. See http://en.wikipedia.org/wiki/FIPS_county_code
+  ret = logical(0)
+  
+  for (fips in county.fips)
+  {
+    stopifnot(nchar(fips) == 4 || nchar(fips) == 5)
+    if (nchar(fips) == 4) {
+      state = substr(fips, 1, 1)
+    } else {
+      state = substr(fips, 1, 2)
+    }
+    
+    ret = c(ret, state %in% vector.of.valid.state.fips)
+  }
+  
+  ret
+}
+
 clip_df_county = function(df, states)
 {
+  # See ?county.fips. These codes are (intentionally) missing Alaska and Hawaii
+  data(county.fips, package="maps", envir=environment())
+  df = df[(df$region %in% county.fips$fips), ]
   
+  data(state.fips, package="maps", envir=environment())
+  state.fips.to.render = unique(state.fips[state.fips$abb %in% states, "fips"])
+
+  df[county_fips_has_valid_state(df$region, state.fips.to.render), ]
 }
 
 clip_df_zip = function(df, states)
