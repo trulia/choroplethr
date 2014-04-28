@@ -56,10 +56,9 @@ render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=s
 #' @importFrom ggplot2 geom_point scale_color_continuous
 zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states)
 {
-  choropleth.df = bind_df_to_zip_map(df)
+  df = clip_df(df, "zip", states) # remove elements we won't be rendering
+  df = discretize_df(df, num_buckets) # if user requested, discretize the values
   
-  if (is.numeric(df$value) && num_buckets > 1) {
-    choropleth.df$value = discretize_values(choropleth.df$value, num_buckets)
-  }
-  render_zip_choropleth(choropleth.df, title, scaleName, states)
-} 
+  choropleth.df = bind_df_to_zip_map(df) # bind df to map
+  render_zip_choropleth(choropleth.df, title, scaleName, states) # render map
+}

@@ -64,7 +64,7 @@ state_choropleth_auto = function(df,
                             title = "", 
                             showLabels = T,
                             scaleName = "",
-                            states = state.abb)
+                            states)
 {
   df = clip_df(df, "state", states) # remove elements we won't be rendering
   df = discretize_df(df, num_buckets) # if user requested, discretize the values

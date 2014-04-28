@@ -60,5 +60,9 @@ clip_df_county = function(df, states)
 
 clip_df_zip = function(df, states)
 {
-  
+  # list of all zips in listed states
+  data(zipcode, package="zipcode", envir=environment())
+  zipcode = zipcode[zipcode$state %in% states, ]
+
+  df[df$region %in% zipcode$zip, ]
 }
