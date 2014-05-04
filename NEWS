@@ -7,6 +7,9 @@ FEATURE
 when you want to do statistics on a data.frame (such as above/below median values), and have your computations match the map.  For example, maps in choroplethr do not contain Alaska or Hawaii.
   -Rename vignettes so that they appear in proper order on CRAN website.
 
+BUG FIXES
+  -handle counties with leading zeroes.
+
 choroplethr 1.4.0
 ----------------------------------------------------------------
 

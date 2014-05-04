@@ -78,6 +78,17 @@ county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
 
 clip_df_county = function(df, states)
 {
+  # if someone gives us county fips codes with leading 0's, remove them.
+  # although leading 0's are correct, the maps package, which we bind to, does not use that convention.
+  if (is.factor(df$region))
+  {
+    df$region = as.character(df$region)
+  }  
+  if (is.character(df$region))
+  {
+    df$region = as.numeric(df$region)
+  }    
+    
   # See ?county.fips. These codes are (intentionally) missing Alaska and Hawaii
   data(county.fips, package="maps", envir=environment())
   df = df[(df$region %in% county.fips$fips), ]
