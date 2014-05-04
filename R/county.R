@@ -28,14 +28,13 @@ bind_df_to_county_map = function(df)
   county.df = merge(county.df, county.fips.2); 
     
   # new we can merge our data with the map data, because the map data now has fips codes
-  choropleth = merge(county.df, df);
+  choropleth = merge(county.df, df, all.x=TRUE);
   if (any(is.na(choropleth$value)))
   {
     missing_polynames = unique(choropleth[is.na(choropleth$value), ]$polyname);
     missing_polynames = paste(missing_polynames, collapse = ", ");
-    warning_string    = paste("The following counties were missing and are being set to 0:", missing_polynames);
+    warning_string    = paste("The following counties were missing and are being set to NA:", missing_polynames);
     print(warning_string);
-    choropleth$value[is.na(choropleth$value)] = 0;
   }
 
   choropleth = choropleth[order(choropleth$order), ];
@@ -57,16 +56,16 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
     ggplot(choropleth.df, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
       geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
-      scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
+      scale_fill_continuous(scaleName, labels=comma, na.value="black") + # use a continuous scale
       ggtitle(title) +
       theme_clean();
   } else { # assume character or factor
-    stopifnot(length(unique(choropleth.df$value)) <= 9) # brewer scale only goes up to 9
+    stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
 
     ggplot(choropleth.df, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
       geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
-      scale_fill_brewer(scaleName, labels=comma) + # use discrete scale for buckets
+      scale_fill_brewer(scaleName, labels=comma, na.value="black") + # use discrete scale for buckets
       ggtitle(title) +
       theme_clean();
   }

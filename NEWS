@@ -1,7 +1,10 @@
-choroplethr 1.4.1
+choroplethr 1.5.0
 ----------------------------------------------------------------
 
 FEATURE
+  -Make NA values appear black on the map.  The default value for NA values in ggplot2, grey50, was difficult to distinguish from the light values in the brewer scale.
+  -Create function clip_df(data.frame, lod) that clips a data.frame to a map.  This is useful
+when you want to do statistics on a data.frame (such as above/below median values), and have your computations match the map.  For example, maps in choroplethr do not contain Alaska or Hawaii.
   -Rename vignettes so that they appear in proper order on CRAN website.
 
 choroplethr 1.4.0

@@ -11,15 +11,14 @@ bind_df_to_state_map = function(df)
   df$region = normalize_state_names(df$region)
   state_map_df = map_data("state")
   
-  choropleth = merge(state_map_df, df)
+  choropleth = merge(state_map_df, df, all.x=TRUE)
   
   if (any(is.na(choropleth$value)))
   {
     missing_states = unique(choropleth[is.na(choropleth$value), ]$region);
     missing_states = paste(missing_states, collapse = ", ");
-    warning_string = paste("The following regions were missing and are being set to 0:", missing_states);
+    warning_string = paste("The following regions were missing and are being set to NA:", missing_states);
     print(warning_string);
-    choropleth$value[is.na(choropleth$value)] = 0;
   }
 
   choropleth = choropleth[order(choropleth$order), ];
@@ -36,15 +35,15 @@ render_state_choropleth = function(choropleth.df, title="", scaleName="", showLa
   {
     choropleth = ggplot(choropleth.df, aes(long, lat, group = group)) +
                      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-                     scale_fill_continuous(scaleName, labels=comma) + # use a continuous scale
+                     scale_fill_continuous(scaleName, labels=comma, na.value="black") + # use a continuous scale
                      ggtitle(title) +
                      theme_clean();
   } else { # assume character or factor
-    stopifnot(length(unique(choropleth.df$value)) <= 9) # brewer scale only goes up to 9
+    stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
 
     choropleth = ggplot(choropleth.df, aes(long, lat, group = group)) +
                      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-                     scale_fill_brewer(scaleName, labels=comma) + # use discrete scale for buckets
+                     scale_fill_brewer(scaleName, labels=comma, na.value="black") + # use discrete scale for buckets
                      ggtitle(title) +
                      theme_clean();
   } 
