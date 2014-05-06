@@ -31,17 +31,28 @@
 #' nrow(new_df) # 32936
 clip_df = function(df, lod, states=state.abb)
 {
-  stopifnot(lod %in% c("state", "county", "zip"))
+  stopifnot(lod %in% c("world", "state", "county", "zip"))
   stopifnot(states %in% state.abb) # states must be valid abbreviations
   stopifnot("region" %in% colnames(df))
   
-  if (lod == "state") {
+  if (lod == "world") {
+    clip_df_world(df)
+  } else if (lod == "state") {
     clip_df_state(df, states)
   } else if (lod == "county") {
     clip_df_county(df, states)
   } else {
     clip_df_zip(df, states)
   }
+}
+
+clip_df_world = function(df)
+{
+# remove anything not in the world map
+#  data(choroplethr, package="choroplethr", envir=environment()) 
+#  df$region = normalize_country_names(df$region)
+  df = df[df$region %in% country.names, ]
+  
 }
 
 clip_df_state = function(df, states)
