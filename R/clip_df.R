@@ -51,7 +51,7 @@ clip_df_world = function(df)
 # remove anything not in the world map
 #  data(choroplethr, package="choroplethr", envir=environment()) 
 #  df$region = normalize_country_names(df$region)
-  df = df[df$region %in% country.names, ]
+#  df = df[df$region %in% country.names, ]
   
 }
 
