@@ -4,13 +4,43 @@
 \title{Map of the 50 US states plus the district of columbia.}
 \description{
 A data.frame which contains a map of all 50 US States plus
-the District of Columbia.  Taken from the US Census 2010
-Cartographic Boundary shapefiles
-(https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html).
-The resolutions is 20m (20m = 1:20,000,000). The shapefile
-was modified using the QGIS program in order to 1) remove
-Puerto Rico and 2) remove islands off of Alaska that
-crossed the antimeridian.
+the District of Columbia.  The shapefile was modified using
+QGIS in order to 1) remove Puerto Rico and 2) remove
+islands off of Alaska that crossed the antimeridian.
 }
-\keyword{data}
+\examples{
+data(all.us.states.map.df)
+require(ggplot2)
+require(grid)
+
+# simple map of all states.
+ggplot(all.us.states.map.df, aes(long, lat,group=group)) + geom_polygon()
+
+# render Alaska and Hawaii as insets on a map of the contiguous 48 states.
+
+# render lower 48 as a ggplot
+us.states.48 = all.us.states.map.df[!all.us.states.map.df$NAME \%in\% c("Alaska", "Hawaii"), ]
+base_map     = ggplot(us.states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
+
+# subset AK and render it
+alaska.df     = all.us.states.map.df[all.us.states.map.df$NAME=='Alaska',]
+alaska.ggplot = ggplot(alaska.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
+alaska.grob   = ggplotGrob(alaska.ggplot)
+
+# subset HI and render it
+hawaii.df     = all.us.states.map.df[all.us.states.map.df$NAME=='Hawaii',]
+hawaii.ggplot = ggplot(hawaii.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
+hawaii.grob   = ggplotGrob(hawaii.ggplot)
+
+# now render the final image
+base_map +
+ annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
+ annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)
+}
+\references{
+Taken from the US Census 2010 Cartographic Boundary
+shapefiles page
+(https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html)
+in May 2014. The resolutions is 20m (20m = 1:20,000,000).
+}
 
