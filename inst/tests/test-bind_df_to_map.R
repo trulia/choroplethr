@@ -4,7 +4,7 @@ test_that("state df gets bound to map",
 {
   df = data.frame(region=state.abb, value=sample(100, 50))
   df.map = bind_df_to_map(df, "state")
-  expect_equal(15537, nrow(df.map))
+  expect_equal(50763, nrow(df.map))
 })
 
 test_that("county df gets bound to map", {

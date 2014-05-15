@@ -83,35 +83,35 @@ NULL
 #' the District of Columbia.  The shapefile
 #' was modified using QGIS in order to 1) remove
 #' Puerto Rico and 2) remove islands off of Alaska that
-#' crossed the antimeridian.
+#' crossed the antimeridian 3) renamed column "STATE" to "region".
 #'
 #' @docType data
-#' @name all.us.states.map.df
+#' @name states.map.df
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
 #' 
 #' @examples
-#' data(all.us.states.map.df)
+#' data(states.map.df)
 #' require(ggplot2)
 #' require(grid)
 #' 
 #' # simple map of all states.  
-#' ggplot(all.us.states.map.df, aes(long, lat,group=group)) + geom_polygon()
+#' ggplot(states.map.df, aes(long, lat,group=group)) + geom_polygon()
 #' 
 #' # render Alaska and Hawaii as insets on a map of the contiguous 48 states.
 #'  
 #' # render lower 48 as a ggplot 
-#' us.states.48 = all.us.states.map.df[!all.us.states.map.df$NAME %in% c("Alaska", "Hawaii"), ]
-#' base_map     = ggplot(us.states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
+#' states.48 = states.map.df[!states.map.df$NAME %in% c("Alaska", "Hawaii"), ]
+#' base_map     = ggplot(states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
 #'
 #' # subset AK and render it
-#' alaska.df     = all.us.states.map.df[all.us.states.map.df$NAME=='Alaska',]
+#' alaska.df     = states.map.df[states.map.df$region=='Alaska',]
 #' alaska.ggplot = ggplot(alaska.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 #' alaska.grob   = ggplotGrob(alaska.ggplot)
 #'
 #' # subset HI and render it
-#' hawaii.df     = all.us.states.map.df[all.us.states.map.df$NAME=='Hawaii',]
+#' hawaii.df     = states.map.df[states.map.df$region=='Hawaii',]
 #' hawaii.ggplot = ggplot(hawaii.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 #' hawaii.grob   = ggplotGrob(hawaii.ggplot)
 #'

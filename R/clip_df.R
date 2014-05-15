@@ -57,9 +57,9 @@ clip_df_world = function(df)
 
 clip_df_state = function(df, states)
 {
-  # remove anything not a state in the lower 48
+  # remove anything not a state in the 50 states
   df$region = normalize_state_names(df$region)
-  choroplethr.state.names = setdiff(tolower(state.name), c("alaska", "hawaii"))
+  choroplethr.state.names = tolower(state.name)
   df = df[df$region %in% choroplethr.state.names, ]
   
   # now remove anything outside the list of states the user wants to render

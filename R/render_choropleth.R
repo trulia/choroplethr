@@ -11,6 +11,9 @@
 #' @param scaleName The name of the scale/legend.  Default to "".
 #' @param showLabels For State maps, whether or not to show labels of the states.
 #' @param states A vector of states to render.  Defaults to state.abb.
+#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+
 #' Defaults to state.abb.
 #' 
 #' @seealso \code{\link{get_acs_df}} and \code{\link{bind_df_to_map}}
@@ -34,13 +37,13 @@
 #' df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 #' df.map = bind_df_to_map(df_pop_zip, "zip")
 #' render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
-render_choropleth = function(choropleth.df, lod, title="", scaleName="", showLabels=TRUE, states=state.abb)
+render_choropleth = function(choropleth.df, lod, title="", scaleName="", showLabels=TRUE, states=state.abb, renderAsInsets=TRUE)
 {
   stopifnot("value" %in% colnames(choropleth.df))
   stopifnot(lod %in% c("state", "county", "zip"))
   
   if (lod == "state") {
-    render_state_choropleth(choropleth.df, title, scaleName, showLabels, states)
+    render_state_choropleth(choropleth.df, title, scaleName, showLabels, states, renderAsInsets)
   } else if (lod == "county") {
     render_county_choropleth(choropleth.df, title, scaleName, states)
   } else if (lod == "zip") {
