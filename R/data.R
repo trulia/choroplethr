@@ -120,3 +120,19 @@ NULL
 #'  annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
 #'  annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) 
 NULL
+
+#' Map of the counties of each of the 50 US states plus the district of columbia.
+#' 
+#' A data.frame which contains a map of all 50 US States plus 
+#' the District of Columbia.  The shapefile
+#' was modified using QGIS in order to 1) remove
+#' Puerto Rico 2) remove islands off of Alaska that
+#' crossed the antimeridian 3) renamed the county "Dona Ana" (which is properly written with a tilde over the
+#' first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters.
+#'
+#' @docType data
+#' @name counties.map
+#' @references Taken from the US Census 2010
+#' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
+#' The resolutions is 20m (20m = 1:20,000,000). 
+NULL
