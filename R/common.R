@@ -25,8 +25,15 @@ normalize_state_names = function(state_names)
   state_names;
 }
 
+get_state_fips_from_abb = function(state_abbs)
+{
+  stopifnot(state_abbs %in% state.abb)
+
+  data(state.names, package="choroplethr", envir=environment())
+  state.names[state.names$abb %in% state_abbs, "fips.character"]
+}
+
 # return a state or county map of the us, only showing the specified states
-#' @importFrom ggplot2 map_data
 subset_map = function(lod, states)
 {
   stopifnot(lod %in% c("state", "county"))
@@ -36,14 +43,22 @@ subset_map = function(lod, states)
   # get specified map
   if (lod == "state")
   {
-    df = map_data("state")
+    data(map.states, package="choroplethr", envir = environment())
+    df = map.states
+    
+    # subset 
+    states = normalize_state_names(states);
+    df = df[df$region %in% states, ]
+    
   } else if (lod == "county") {
-    df = map_data("county")
+    data(map.counties, package="choroplethr", envir = environment())
+    df = map.counties
+    
+    # subset
+    df = df[df$STATE %in% get_state_fips_from_abb(states), ]
   }
   
-  # subset 
-  states = normalize_state_names(states);
-  df[df$region %in% states, ]
+  df
 }
 
 #' Create a simple ggplot2 theme for rendering choropleths
@@ -158,4 +173,3 @@ discretize_df = function(df, num_buckets)
   
   df
 }
-

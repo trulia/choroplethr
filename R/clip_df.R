@@ -80,7 +80,6 @@ county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
     } else {
       state = substr(fips, 1, 2)
     }
-    
     ret = c(ret, state %in% vector.of.valid.state.fips)
   }
   
@@ -90,7 +89,8 @@ county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
 clip_df_county = function(df, states)
 {
   # if someone gives us county fips codes with leading 0's, remove them.
-  # although leading 0's are correct, the maps package, which we bind to, does not use that convention.
+  # although leading 0's are correct, some people do not use them.  It is easier to 
+  # convert to numeric than character - converting to numeric is not ambiguous.
   if (is.factor(df$region))
   {
     df$region = as.character(df$region)
@@ -99,14 +99,14 @@ clip_df_county = function(df, states)
   {
     df$region = as.numeric(df$region)
   }    
-    
-  # See ?county.fips. These codes are (intentionally) missing Alaska and Hawaii
-  data(county.fips, package="maps", envir=environment())
-  df = df[(df$region %in% county.fips$fips), ]
-  
-  data(state.fips, package="maps", envir=environment())
-  state.fips.to.render = unique(state.fips[state.fips$abb %in% states, "fips"])
 
+  # remove values that are not on our map at all
+  data(map.counties, package="choroplethr", envir=environment())
+  df = df[df$region %in% map.counties$county.fips.numeric, ]
+  
+  data(state.names, package="choroplethr", envir=environment())
+  state.fips.to.render = state.names[state.names$abb %in% states, "fips.numeric"]
+  
   df[county_fips_has_valid_state(df$region, state.fips.to.render), ]
 }
 

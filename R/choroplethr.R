@@ -68,7 +68,7 @@ choroplethr = function(df,
   if (lod == "state") {
     state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states, renderAsInsets);
   } else if (lod == "county") {
-    county_choropleth_auto(df, num_buckets, title, scaleName, states)
+    county_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets)
   } else if (lod == "zip") {
     zip_choropleth_auto(df, num_buckets, title, scaleName, states)
   }

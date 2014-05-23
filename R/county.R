@@ -4,31 +4,17 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
+#' @importFrom plyr rename join
 bind_df_to_county_map = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
-  df = rename(df, replace=c("region" = "fips"))
-    
-  # add fips column to county maps
-  county.df = map_data("county")
-  names(county.df)[5:6] = c("state","county")
-  county.df$polyname = paste(county.df$state, county.df$county, sep = ",");
-  data(county.fips, package="maps", envir = environment())
-    
-  # county.fips handles non-contiguous counties by adding eg ":main" to the end.
-  # however, map_data does follow this convention.  In order to merge properly
-  # remove the : and everything after
-  county.fips.2 = county.fips;
-  county.fips.2$polyname = as.character(county.fips.2$polyname);
-  split_names = strsplit(county.fips.2$polyname,":");
-  county.fips.2$polyname = unlist(lapply(split_names, "[", 1));
-  county.fips.2$polyname = as.factor(county.fips.2$polyname);
-  county.fips.2 = unique(county.fips.2);
-    
-  county.df = merge(county.df, county.fips.2); 
-    
-  # new we can merge our data with the map data, because the map data now has fips codes
-  choropleth = merge(county.df, df, all.x=TRUE);
+  stopifnot(class(df$region) %in% c("character", "numeric", "integer"))
+
+  df$region = as.numeric(df$region)
+  df = rename(df, replace=c("region" = "county.fips.numeric"))
+  
+  data(map.counties, package="choroplethr", envir=environment())
+  choropleth = join(map.counties, df, by="county.fips.numeric", type="left")
   if (any(is.na(choropleth$value)))
   {
     missing_polynames = unique(choropleth[is.na(choropleth$value), ]$polyname);
@@ -45,7 +31,7 @@ bind_df_to_county_map = function(df)
 render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb)
 {
   # only show the states the user asked
-  choropleth.df = choropleth.df[choropleth.df$state %in% normalize_state_names(states), ]
+  choropleth.df = choropleth.df[choropleth.df$STATE %in% get_state_fips_from_abb(states), ]
   
   # county maps really need state backgrounds
   state.df = subset_map("state", states);
@@ -72,7 +58,7 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 }
 
 # this needs to be called from the main choroplethr function
-county_choropleth_auto = function(df, num_buckets=9, title="", scaleName="", states=state.abb)
+county_choropleth_auto = function(df, num_buckets, title, scaleName, states, renderAsInsets)
 {
   df = clip_df(df, "county", states) # remove elements we won't be rendering
   df = discretize_df(df, num_buckets) # if user requested, discretize the values

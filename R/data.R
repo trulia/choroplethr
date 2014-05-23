@@ -86,32 +86,32 @@ NULL
 #' crossed the antimeridian 3) renamed column "STATE" to "region".
 #'
 #' @docType data
-#' @name states.map.df
+#' @name map.states
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
 #' 
 #' @examples
-#' data(states.map.df)
+#' data(map.states)
 #' require(ggplot2)
 #' require(grid)
 #' 
 #' # simple map of all states.  
-#' ggplot(states.map.df, aes(long, lat,group=group)) + geom_polygon()
+#' ggplot(map.states, aes(long, lat,group=group)) + geom_polygon()
 #' 
 #' # render Alaska and Hawaii as insets on a map of the contiguous 48 states.
 #'  
 #' # render lower 48 as a ggplot 
-#' states.48 = states.map.df[!states.map.df$NAME %in% c("Alaska", "Hawaii"), ]
+#' states.48 = map.states[!map.states$NAME %in% c("alaska", "hawaii"), ]
 #' base_map     = ggplot(states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
 #'
 #' # subset AK and render it
-#' alaska.df     = states.map.df[states.map.df$region=='Alaska',]
+#' alaska.df     = map.states[map.states$region=='alaska',]
 #' alaska.ggplot = ggplot(alaska.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 #' alaska.grob   = ggplotGrob(alaska.ggplot)
 #'
 #' # subset HI and render it
-#' hawaii.df     = states.map.df[states.map.df$region=='Hawaii',]
+#' hawaii.df     = map.states[map.states$region=='hawaii',]
 #' hawaii.ggplot = ggplot(hawaii.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 #' hawaii.grob   = ggplotGrob(hawaii.ggplot)
 #'
@@ -128,11 +128,26 @@ NULL
 #' was modified using QGIS in order to 1) remove
 #' Puerto Rico 2) remove islands off of Alaska that
 #' crossed the antimeridian 3) renamed the county "Dona Ana" (which is properly written with a tilde over the
-#' first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters.
+#' first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters 4) some columns were added for convenience.
 #'
 #' @docType data
-#' @name counties.map
+#' @name map.counties
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
+NULL
+
+#' A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
+#' and FIPS codes both as characters and numbers (i.e. with and without a leading 0).
+#' 
+#' @docType data
+#' @name state.names
+#' @references Taken from http://www.epa.gov/envirofw/html/codes/state.html
+NULL
+
+#' A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
+#' the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).
+#'  
+#' @docType data
+#' @name county.names
 NULL
