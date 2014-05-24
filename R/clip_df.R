@@ -1,3 +1,6 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("state.names"))
+}
 #' Clip a data.frame to a map
 #'
 #' Given a data.frame and a lod, remove elements from the data.frame which will not appear in the map. This is useful if you want to do a statistical analysis

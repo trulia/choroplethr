@@ -1,22 +1,27 @@
 bind_df_to_world_map = function(df)
 {
-  stopifnot(c("region", "value") %in% colnames(df))
+# Comment this out for now - it's just WIP for a world map. 
+# We'll need to put in our own world map later, because the one that ggplot2's map_data
+# gets is so old that it contains the USSR, which means that we basically can't make
+# choropleths of modern data.
+  
+#  stopifnot(c("region", "value") %in% colnames(df))
  
 #  df$region = normalize_state_names(df$region)
-  world_map_df = map_data("world")
+#  world_map_df # = map_data("world")
   
-  choropleth = merge(world_map_df, df, all.x=TRUE)
+#  choropleth = merge(world_map_df, df, all.x=TRUE)
   
-  if (any(is.na(choropleth$value)))
-  {
-    missing_countries = unique(choropleth[is.na(choropleth$value), ]$region);
-    missing_countries = paste(missing_countries, collapse = ", ");
-    warning_string = paste("The following regions were missing and are being set to NA:", missing_countries);
-    print(warning_string);
-  }
+#  if (any(is.na(choropleth$value)))
+#  {
+#    missing_countries = unique(choropleth[is.na(choropleth$value), ]$region);
+#    missing_countries = paste(missing_countries, collapse = ", ");
+#    warning_string = paste("The following regions were missing and are being set to NA:", missing_countries);
+#    print(warning_string);
+#  }
 
-  choropleth = choropleth[order(choropleth$order), ];
-  choropleth
+#  choropleth = choropleth[order(choropleth$order), ];
+#  choropleth
 }
 
 render_world_choropleth = function(choropleth.df, title="", scaleName="")
