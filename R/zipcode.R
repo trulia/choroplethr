@@ -12,10 +12,6 @@ bind_df_to_zip_map = function(df)
   data(zipcode, package="zipcode", envir=environment()) 
   choropleth = merge(zipcode, df, all.x=F, all.y=T);
   
-  # only print contiguous 48 states now, mostly for conformity with state and county maps,
-  # where the limitation is technical
-  choropleth = choropleth[choropleth$state %in% state.abb
-                          & !choropleth$state %in% c("AK", "HI"), ]
   # remove 2 points of bad data in the zipcode package.
   # it has two zips in NY and VA in the atlantic/europe
   choropleth = choropleth[choropleth$longitude < -10, ]
@@ -54,7 +50,7 @@ render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=s
 }
 
 #' @importFrom ggplot2 geom_point scale_color_continuous
-zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states)
+zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states, rendeAsInsets)
 {
   df = clip_df(df, "zip", states) # remove elements we won't be rendering
   df = discretize_df(df, num_buckets) # if user requested, discretize the values
