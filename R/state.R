@@ -57,7 +57,7 @@ render_state_choropleth = function(choropleth.df, title="", scaleName="", showLa
   
   # if user requested to render all 50 states, 
   # create separate data.frames for AK and HI and render them as separate images
-  # cache min, max value of entire data.frame to make scales consistent between all insets s
+  # cache min, max value of entire data.frame to make scales consistent between all 3 images
   min_val = 0
   max_val = 0
   if (is.numeric(choropleth.df$value))
