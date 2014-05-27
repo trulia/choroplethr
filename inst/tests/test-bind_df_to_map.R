@@ -20,5 +20,5 @@ test_that("zip df gets bound to map", {
   data(zipcode, package="zipcode", envir=environment())
   df = data.frame(region=zipcode$zip, value = sample(100, nrow(zipcode), replace=TRUE))
   df.map = bind_df_to_map(df, "zip")
-  expect_equal(42714, nrow(df.map))
+  expect_equal(44309, nrow(df.map))
 })
