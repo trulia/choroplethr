@@ -19,6 +19,8 @@ if (base::getRversion() >= "2.15.1") {
 #' @param states A vector of states to render.  Defaults to state.abb.
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
+#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
 #' @return A choropleth.
 #' 
 #' @keywords choropleth, acs
@@ -39,7 +41,7 @@ if (base::getRversion() >= "2.15.1") {
 #' # median income, all zip codes
 #' choroplethr_acs("B19301", "zip") } 
 #' @importFrom acs acs.fetch geography estimate geo.make
-choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5)
+choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states = state.abb, endyear = 2011, span = 5, renderAsInsets=TRUE)
 {
   stopifnot(lod %in% c("state", "county", "zip"))
   stopifnot(num_buckets > 0 && num_buckets < 10)
@@ -49,7 +51,7 @@ choroplethr_acs = function(tableId, lod, num_buckets = 9, showLabels = T, states
   title      = acs.data@acs.colnames[column_idx] 
   acs.df     = make_df(lod, acs.data, column_idx) # choroplethr requires a df
   acs.df$region = as.character(acs.df$region) # not a factor
-  choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states);  
+  choroplethr(acs.df, lod, num_buckets, title, "", showLabels, states=states, renderAsInsets=renderAsInsets);  
 }
 
 #' Returns a data.frame representing American Community Survey estimates.
