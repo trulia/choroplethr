@@ -3,7 +3,7 @@
 \alias{bind_df_to_map}
 \title{Bind a data.frame to a map}
 \usage{
-bind_df_to_map(df, lod)
+bind_df_to_map(df, lod, warn_na = TRUE)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  If lod is "state"
@@ -12,6 +12,8 @@ contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP
 
 \item{lod}{A string representing the level of detail of the map you want.  Must be one of "state",
 "county" or "zip".}
+
+\item{warn_na}{If true, emit a warning when returning a df with NA values. Only used for state and county maps.}
 }
 \value{
 A data.frame.

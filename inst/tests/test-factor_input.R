@@ -10,7 +10,7 @@ data(county.fips, package="maps")
 test_that("county level choropleths handle factor values", {
   df = data.frame(region=county.fips$fips, value=sample(5, nrow(county.fips), replace=T))
   df$value = factor(df$value)
-  expect_is(choroplethr(df, lod="county"), "ggplot")
+  expect_is(choroplethr(df, lod="county", warn_na=FALSE), "ggplot")
 })
 
 data(zipcode, package="zipcode")

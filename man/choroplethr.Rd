@@ -4,7 +4,8 @@
 \title{Create a choropleth}
 \usage{
 choroplethr(df, lod, num_buckets = 9, title = "", scaleName = "",
-  showLabels = TRUE, states = state.abb, renderAsInsets = TRUE)
+  showLabels = TRUE, states = state.abb, renderAsInsets = TRUE,
+  warn_na = TRUE)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  If lod is "state"
@@ -29,6 +30,8 @@ Defaults to T.}
 
 \item{renderAsInsets}{If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.}
+
+\item{warn_na}{If true, choroplethr will emit a warning when it renders a state or county as an NA.}
 }
 \value{
 A choropleth.

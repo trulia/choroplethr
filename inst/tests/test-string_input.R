@@ -10,7 +10,7 @@ data(county.fips, package="maps")
 test_that("county level choropleths handle string input", {
   df = data.frame(region=county.fips$fips, value=c("a", "b", "c", "d", "e"))
   df$value = as.character(df$value)
-  expect_is(choroplethr(df, lod="county"), "ggplot")
+  expect_is(choroplethr(df, lod="county", warn_na=FALSE), "ggplot")
 })
 
 data(zipcode, package="zipcode")

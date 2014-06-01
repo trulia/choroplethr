@@ -5,7 +5,7 @@ if (base::getRversion() >= "2.15.1") {
 }
 
 #' @importFrom plyr rename join
-bind_df_to_county_map = function(df)
+bind_df_to_county_map = function(df, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   stopifnot(class(df$region) %in% c("character", "numeric", "integer"))
@@ -19,7 +19,7 @@ bind_df_to_county_map = function(df)
   # county FIPS code 11001 is Washington DC, which choroplethr currently does not support
   # because it is not part of state.abb. However, it's in the map so it always triggers a warning
   missing_fips = setdiff(missing_fips, "11001") 
-  if (length(missing_fips) > 0)
+  if (warn_na && length(missing_fips) > 0)
   {
     missing_fips = paste(missing_fips, collapse = ", ");
     warning_string = paste("The following counties were missing and are being set to NA:", missing_fips);
@@ -105,11 +105,11 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
 }
 
 # this needs to be called from the main choroplethr function
-county_choropleth_auto = function(df, num_buckets, title, scaleName, states, renderAsInsets)
+county_choropleth_auto = function(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
 {
   df = clip_df(df, "county", states) # remove elements we won't be rendering
   df = discretize_df(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = bind_df_to_county_map(df) # bind df to map
+  choropleth.df = bind_df_to_county_map(df, warn_na) # bind df to map
   render_county_choropleth(choropleth.df, title, scaleName, states, renderAsInsets) # render map
 }

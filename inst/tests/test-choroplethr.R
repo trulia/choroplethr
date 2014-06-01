@@ -9,8 +9,8 @@ test_that("state level choropleths return ggplots with discrete and continuous l
 data(county.fips, package="maps")
 test_that("county level choropleths return ggplots at discrete and continuous lods", {
   df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
-  expect_is(choroplethr(df, lod="county", num_buckets=1), "ggplot")
-  expect_is(choroplethr(df, lod="county", num_buckets=9), "ggplot")
+  expect_is(choroplethr(df, lod="county", num_buckets=1, warn_na=FALSE), "ggplot")
+  expect_is(choroplethr(df, lod="county", num_buckets=9, warn_na=FALSE), "ggplot")
 })
 
 data(zipcode, package="zipcode")
@@ -23,7 +23,7 @@ test_that("zip level choropleths return ggplots at discrete and continuous lods"
 test_that("county level choropleths handle leading zeros for states", {
   # los angeles and san francisco
   df = data.frame(region=c("06037", "06075"), value=c(200,100))
-  expect_is(choroplethr(df, lod="county", num_buckets=1), "ggplot")
-  expect_is(choroplethr(df, lod="county", num_buckets=2), "ggplot")
+  expect_is(choroplethr(df, lod="county", num_buckets=1, warn_na=FALSE), "ggplot")
+  expect_is(choroplethr(df, lod="county", num_buckets=2, warn_na=FALSE), "ggplot")
 })
 

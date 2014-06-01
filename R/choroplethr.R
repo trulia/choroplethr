@@ -17,6 +17,7 @@
 #' @param states A vector of states to render.  Defaults to state.abb.
 #' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @param warn_na If true, choroplethr will emit a warning when it renders a state or county as an NA.
 #' @return A choropleth.
 #' 
 #' @keywords choropleth
@@ -53,7 +54,8 @@ choroplethr = function(df,
                        scaleName = "",
                        showLabels = TRUE,
                        states = state.abb,
-                       renderAsInsets = TRUE)
+                       renderAsInsets = TRUE,
+                       warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   stopifnot(lod %in% c("state", "county", "zip"))
@@ -66,9 +68,9 @@ choroplethr = function(df,
   df = df[, c("region", "value")] # prevent naming collision from merges later on
   
   if (lod == "state") {
-    state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states, renderAsInsets);
+    state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states, renderAsInsets, warn_na);
   } else if (lod == "county") {
-    county_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets)
+    county_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
   } else if (lod == "zip") {
     zip_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets)
   }

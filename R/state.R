@@ -5,7 +5,7 @@ if (base::getRversion() >= "2.15.1") {
 }
 
 #' @importFrom plyr rename join
-bind_df_to_state_map = function(df)
+bind_df_to_state_map = function(df, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
  
@@ -20,7 +20,7 @@ bind_df_to_state_map = function(df)
   # while the map contains Washington, DC, choroplethr does not support it because it 
   # is not in state.abb and is not technically a state.
   missing_states = setdiff(missing_states, "district of columbia")
-  if (length(missing_states) > 0)
+  if (warn_na && length(missing_states) > 0)
   {
     missing_states = paste(missing_states, collapse = ", ");
     warning_string = paste("The following regions were missing and are being set to NA:", missing_states);
@@ -111,11 +111,12 @@ state_choropleth_auto = function(df,
                             showLabels = T,
                             scaleName = "",
                             states,
-                            renderAsInsets)
+                            renderAsInsets,
+                            warn_na)
 {
   df = clip_df(df, "state", states) # remove elements we won't be rendering
   df = discretize_df(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = bind_df_to_state_map(df) # bind df to map
+  choropleth.df = bind_df_to_state_map(df, warn_na) # bind df to map
   render_state_choropleth(choropleth.df, title, scaleName, showLabels, states, renderAsInsets) # render map
 }

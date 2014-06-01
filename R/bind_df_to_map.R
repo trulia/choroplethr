@@ -10,6 +10,7 @@
 #' contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes.
 #' @param lod A string representing the level of detail of the map you want.  Must be one of "state",
 #' "county" or "zip".
+#' @param warn_na If true, emit a warning when returning a df with NA values. Only used for state and county maps.
 #' 
 #' @return A data.frame.
 #' @seealso \code{\link{get_acs_df}} and \code{\link{render_choropleth}}.
@@ -32,7 +33,7 @@
 #' df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 #' df.map = bind_df_to_map(df_pop_zip, "zip")
 #' render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
-bind_df_to_map = function(df, lod)
+bind_df_to_map = function(df, lod, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   stopifnot(lod %in% c("state", "county", "zip"))
@@ -41,9 +42,9 @@ bind_df_to_map = function(df, lod)
   df$value.bak = df$value
 
   if (lod == "state") {
-    bind_df_to_state_map(df)
+    bind_df_to_state_map(df, warn_na)
   } else if (lod == "county") {
-    bind_df_to_county_map(df)
+    bind_df_to_county_map(df, warn_na)
   } else if (lod == "zip") {
     bind_df_to_zip_map(df)
   }
