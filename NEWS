@@ -2,16 +2,15 @@ choroplethr 1.6.0
 ----------------------------------------------------------------
 
 FEATURE
-  -Create a data.frame, map.states, which contains a map for all 50 states plus the District of Columbia.  See ?map.staets for details.
-  -Create a data.frame, map.counties, which contains a map for the counties of all 50 states plus the District of Columbia.  See ?map.counties for details.
   -Add a flag to the choroplethr() function, renderAsInsets.  If TRUE and user asked to view all 
 states, then AK and HI will be rendered as insets, which is the standard way of rendering a map of
 all 50 US states. 
+  -Create a data.frame, map.states, which contains a map for all 50 states plus the District of Columbia.  See ?map.states for details.
   -Create a data.frame, state.names, which contains naming information for each state in map.states. See ?state.names for more information.
+  -Create a data.frame, map.counties, which contains a map for the counties of all 50 states plus the District of Columbia.  See ?map.counties for details.
   -Create a data.frame, county.names, which contains naming information for each county in map.counties. See ?county.names for more information.
 
 BUG FIXES
-
 
 choroplethr 1.5.0
 ----------------------------------------------------------------
