@@ -15,11 +15,14 @@ bind_df_to_county_map = function(df)
   
   data(map.counties, package="choroplethr", envir=environment())
   choropleth = join(map.counties, df, by="county.fips.numeric", type="left")
-  if (any(is.na(choropleth$value)))
+  missing_fips = unique(choropleth[is.na(choropleth$value), ]$county.fips);
+  # county FIPS code 11001 is Washington DC, which choroplethr currently does not support
+  # because it is not part of state.abb. However, it's in the map so it always triggers a warning
+  missing_fips = setdiff(missing_fips, "11001") 
+  if (length(missing_fips) > 0)
   {
-    missing_polynames = unique(choropleth[is.na(choropleth$value), ]$polyname);
-    missing_polynames = paste(missing_polynames, collapse = ", ");
-    warning_string    = paste("The following counties were missing and are being set to NA:", missing_polynames);
+    missing_fips = paste(missing_fips, collapse = ", ");
+    warning_string = paste("The following counties were missing and are being set to NA:", missing_fips);
     print(warning_string);
   }
 

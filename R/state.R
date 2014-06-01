@@ -16,9 +16,12 @@ bind_df_to_state_map = function(df)
   state_map_df$region = tolower(state_map_df$region)
   
   choropleth = join(state_map_df, df, by="region", type="left")
-  if (any(is.na(choropleth$value)))
+  missing_states = unique(choropleth[is.na(choropleth$value), ]$region)
+  # while the map contains Washington, DC, choroplethr does not support it because it 
+  # is not in state.abb and is not technically a state.
+  missing_states = setdiff(missing_states, "district of columbia")
+  if (length(missing_states) > 0)
   {
-    missing_states = unique(choropleth[is.na(choropleth$value), ]$region);
     missing_states = paste(missing_states, collapse = ", ");
     warning_string = paste("The following regions were missing and are being set to NA:", missing_states);
     print(warning_string);
