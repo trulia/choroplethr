@@ -40,6 +40,7 @@ A choropleth.
 Creates a choropleth from a specified data.frame and level of detail.
 }
 \examples{
+\dontrun{
 data(choroplethr)
 
 # 2012 US Presidential results
@@ -55,6 +56,7 @@ title="2012 County Population Estimates", states=c("CA", "OR", "WA"))
 
 # Zip Code Tabulated Area (ZCTA) population estimates.
 choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
+}
 }
 \seealso{
 \code{\link{choroplethr_acs}} which generates choropleths from Census tables.

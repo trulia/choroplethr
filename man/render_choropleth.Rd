@@ -33,6 +33,7 @@ A choropleth.
 Given a data.frame which contains map data and value data, render it as a choropleth using ggplot2.
 }
 \examples{
+\dontrun{
 data(choroplethr)
 library(Hmisc) # for cut2
 
@@ -50,6 +51,7 @@ render_choropleth(df.map, "county", "Counties with a population over 1M", "Popul
 df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 df.map = bind_df_to_map(df_pop_zip, "zip")
 render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
+}
 }
 \seealso{
 \code{\link{get_acs_df}} and \code{\link{bind_df_to_map}}

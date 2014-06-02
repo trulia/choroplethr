@@ -32,6 +32,7 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' data(choroplethr)
 #'
 #' # 2012 US Presidential results
@@ -47,6 +48,7 @@
 #' 
 #' # Zip Code Tabulated Area (ZCTA) population estimates.  
 #' choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
+#' }
 choroplethr = function(df, 
                        lod, 
                        num_buckets = 9, 

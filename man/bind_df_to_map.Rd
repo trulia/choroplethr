@@ -25,6 +25,7 @@ column is copied to a column named value.bak to facilitate user experimentation 
 visualization strategies.  This workflow gives you more control over output than \code{\link{choroplethr}}.
 }
 \examples{
+\dontrun{
 data(choroplethr)
 library(Hmisc) # for cut2
 
@@ -42,6 +43,7 @@ render_choropleth(df.map, "county", "Counties with a population over 1M", "Popul
 df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 df.map = bind_df_to_map(df_pop_zip, "zip")
 render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
+}
 }
 \seealso{
 \code{\link{get_acs_df}} and \code{\link{render_choropleth}}.

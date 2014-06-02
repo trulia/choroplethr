@@ -20,6 +20,7 @@
 #' @return A choropleth.
 #' @export
 #' @examples
+#' \dontrun{
 #' data(choroplethr)
 #' library(Hmisc) # for cut2
 #' 
@@ -37,6 +38,7 @@
 #' df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 #' df.map = bind_df_to_map(df_pop_zip, "zip")
 #' render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
+#' }
 render_choropleth = function(choropleth.df, lod, title="", scaleName="", showLabels=TRUE, states=state.abb, renderAsInsets=TRUE)
 {
   stopifnot("value" %in% colnames(choropleth.df))

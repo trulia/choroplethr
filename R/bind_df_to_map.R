@@ -16,6 +16,7 @@
 #' @seealso \code{\link{get_acs_df}} and \code{\link{render_choropleth}}.
 #' @export
 #' @examples
+#' \dontrun{
 #' data(choroplethr)
 #' library(Hmisc) # for cut2
 #' 
@@ -33,6 +34,7 @@
 #' df_pop_zip = df_pop_zip[df_pop_zip$value < 1000, ]
 #' df.map = bind_df_to_map(df_pop_zip, "zip")
 #' render_choropleth(df.map, "zip", "ZCTAs with less than 1000 people in California", states="CA")
+#' }
 bind_df_to_map = function(df, lod, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
