@@ -5,14 +5,14 @@
 \usage{
 choroplethr(df, lod, num_buckets = 9, title = "", scaleName = "",
   showLabels = TRUE, states = state.abb, renderAsInsets = TRUE,
-  warn_na = TRUE)
+  warn_na = TRUE, countries = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  If lod is "state"
 then region must contain state names (e.g. "California" or "CA").  If lod is "county" then region must
-contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes.}
+contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes. If lod is "world" then region must contain country names.}
 
-\item{lod}{A string indicating the level of detail of the map.  Must be "state", "county" or "zip".}
+\item{lod}{A string indicating the level of detail of the map.  Must be "state", "county", "zip" or "world".}
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
@@ -32,6 +32,8 @@ Defaults to T.}
 on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.}
 
 \item{warn_na}{If true, choroplethr will emit a warning when it renders a state or county as an NA.}
+
+\item{countries}{If null, render all countries. Otherwise must be a vector of country names.  See ?country.names for a list of valid country names.}
 }
 \value{
 A choropleth.

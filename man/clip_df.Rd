@@ -3,7 +3,7 @@
 \alias{clip_df}
 \title{Clip a data.frame to a map}
 \usage{
-clip_df(df, lod, states = state.abb)
+clip_df(df, lod, states = state.abb, countries = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region".  If lod is "state"
@@ -11,9 +11,11 @@ then region must contain state names (e.g. "California" or "CA").  If lod is "co
 contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes.}
 
 \item{lod}{A string representing the level of detail of the map you want.  Must be one of "state",
-"county" or "zip".}
+"county", "zip" or "world.}
 
 \item{states}{A list of states to subset. Must be a subset of state.abb.}
+
+\item{countries}{A list of countries to subset. Used only for the world map. Must be a subset of country.names.}
 }
 \value{
 A data.frame.
