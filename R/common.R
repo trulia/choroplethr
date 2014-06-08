@@ -34,9 +34,9 @@ get_state_fips_from_abb = function(state_abbs)
 }
 
 # return a state or county map of the us, only showing the specified states
-subset_map = function(lod, states)
+subset_map = function(lod, states=state.abb, countries=NULL)
 {
-  stopifnot(lod %in% c("state", "county"))
+  stopifnot(lod %in% c("state", "county", "world"))
   stopifnot(states %in% state.abb)
   stopifnot(!any(duplicated(states)))
   
@@ -56,6 +56,8 @@ subset_map = function(lod, states)
     
     # subset
     df = df[df$STATE %in% get_state_fips_from_abb(states), ]
+  } else if (lod == "world") {
+    df = df[df$region %in% countries, ]
   }
   
   df

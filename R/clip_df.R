@@ -11,8 +11,9 @@ if (base::getRversion() >= "2.15.1") {
 #' then region must contain state names (e.g. "California" or "CA").  If lod is "county" then region must  
 #' contain county FIPS codes.  if lod is "zip" then region must contain 5 digit ZIP codes.
 #' @param lod A string representing the level of detail of the map you want.  Must be one of "state",
-#' "county" or "zip".
+#' "county", "zip" or "world.
 #' @param states A list of states to subset. Must be a subset of state.abb.
+#' @param countries A list of countries to subset. Used only for the world map. Must be a subset of country.names.
 #' 
 #' @return A data.frame.
 #' @export
@@ -32,14 +33,14 @@ if (base::getRversion() >= "2.15.1") {
 #' nrow(df_pop_zip) # 33120
 #' new_df = clip_df(df_pop_zip, "zip")
 #' nrow(new_df) # 32936
-clip_df = function(df, lod, states=state.abb)
+clip_df = function(df, lod, states=state.abb, countries=NULL)
 {
-  stopifnot(lod %in% c("world", "state", "county", "zip"))
+  stopifnot(lod %in% c("world", "state", "county", "zip", "world"))
   stopifnot(states %in% state.abb) # states must be valid abbreviations
   stopifnot("region" %in% colnames(df))
   
   if (lod == "world") {
-    clip_df_world(df)
+    clip_df_world(df, countries)
   } else if (lod == "state") {
     clip_df_state(df, states)
   } else if (lod == "county") {
@@ -49,13 +50,14 @@ clip_df = function(df, lod, states=state.abb)
   }
 }
 
-clip_df_world = function(df)
+clip_df_world = function(df, countries)
 {
-# remove anything not in the world map
-#  data(choroplethr, package="choroplethr", envir=environment()) 
-#  df$region = normalize_country_names(df$region)
-#  df = df[df$region %in% country.names, ]
+  data(country.names, package="choroplethr", envir=environment())
+  stopifnot(countries %in% country.names)
+  stopifnot(!any(duplicated(countries)))
   
+  df = df[df$region %in% countries, ]
+  df
 }
 
 clip_df_state = function(df, states)
