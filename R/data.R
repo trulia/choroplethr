@@ -151,3 +151,20 @@ NULL
 #' @docType data
 #' @name county.names
 NULL
+
+#' Map of the world.
+#' 
+#' This data.frame corresponds to version 2.0.0 of the "Admin 0 - Countries" map from naturalearthdata.com
+#' The data.frame was modified by removing columns with non-ASCII characters. Also, 
+#' I added a column called "region" which is the the all lowercase version of the
+#' column "sovereignt". 
+#'  
+#' @references Taken from http://www.naturalearthdata.com/downloads/110m-cultural-vectors/
+#' @docType data
+#' @name map.world
+NULL
+
+#' Names of all counties on the map.world data.frame
+#' @name country.names
+#' @docType data
+NULL
