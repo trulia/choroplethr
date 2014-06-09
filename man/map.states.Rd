@@ -21,7 +21,7 @@ ggplot(map.states, aes(long, lat,group=group)) + geom_polygon()
 # render Alaska and Hawaii as insets on a map of the contiguous 48 states.
 
 # render lower 48 as a ggplot
-states.48 = map.states[!map.states$NAME \%in\% c("alaska", "hawaii"), ]
+states.48 = map.states[!map.states$region \%in\% c("alaska", "hawaii"), ]
 base_map     = ggplot(states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
 
 # subset AK and render it

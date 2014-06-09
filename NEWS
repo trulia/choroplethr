@@ -1,3 +1,11 @@
+choroplethr 1.7.0
+----------------------------------------------------------------
+
+FEATURE
+  -Add a world map: see ?map.world for more info
+  -Add a vector of all countries in the world map: see ?country.names for more info
+  -Add support for the world map to the choroplethr() function: see ?choroplethr for more info.
+
 choroplethr 1.6.0
 ----------------------------------------------------------------
 
