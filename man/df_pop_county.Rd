@@ -3,6 +3,9 @@
 \name{df_pop_county}
 \alias{df_pop_county}
 \title{A data.frame containing population estimates for US Counties in 2012.}
+\usage{
+data(choroplethr)
+}
 \description{
 A data.frame containing population estimates for US Counties in 2012.
 }

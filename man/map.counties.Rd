@@ -3,6 +3,9 @@
 \name{map.counties}
 \alias{map.counties}
 \title{Map of the counties of each of the 50 US states plus the district of columbia.}
+\usage{
+data(map.counties)
+}
 \description{
 A data.frame which contains a map of all 50 US States plus
 the District of Columbia.  The shapefile

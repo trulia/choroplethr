@@ -4,6 +4,7 @@
 #' @docType data
 #' @references Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014. 
 #' @keywords data
+#' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
 #' choroplethr(df_president, "state", title="Results from the 2012 US Presidential Election")
@@ -16,6 +17,7 @@ NULL
 #' @references Taken from the US American Community Survey (ACS) 5 year estimates with \link{get_acs_df} using table B01003.
 #' 
 #' @keywords data
+#' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
 #' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
@@ -28,6 +30,7 @@ NULL
 #' @references Taken from the US American Community Survey (ACS) 5 year estimates with \link{get_acs_df} using table B01003.
 #' 
 #' @keywords data
+#' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
 #' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
@@ -42,6 +45,7 @@ NULL
 #' @references Taken from the US American Community Survey (ACS) 5 year estimates with \link{get_acs_df} using table B01003.
 #' ZCTAs, and their realationship to ZIP codes, are explained here \url{https://www.census.gov/geo/reference/zctas.html}.
 #' @keywords data
+#' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
 #' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
@@ -75,6 +79,7 @@ NULL
 #' @references Taken from \url{http://en.wikipedia.org/wiki/List_of_United_States_presidential_election_results_by_state} 3/20/2014.
 #' @keywords data
 #' @name df_president_ts
+#' @usage data(choroplethr)
 NULL
 
 #' Map of the 50 US states plus the district of columbia.
@@ -87,6 +92,7 @@ NULL
 #'
 #' @docType data
 #' @name map.states
+#' @usage data(map.states)
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
@@ -132,6 +138,7 @@ NULL
 #'
 #' @docType data
 #' @name map.counties
+#' @usage data(map.counties)
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
@@ -142,6 +149,7 @@ NULL
 #' 
 #' @docType data
 #' @name state.names
+#' @usage data(state.names)
 #' @references Taken from http://www.epa.gov/envirofw/html/codes/state.html
 NULL
 
@@ -150,21 +158,27 @@ NULL
 #'  
 #' @docType data
 #' @name county.names
+#' @usage data(county.names)
 NULL
 
-#' Map of the world.
+#' A world map
 #' 
 #' This data.frame corresponds to version 2.0.0 of the "Admin 0 - Countries" map from naturalearthdata.com
 #' The data.frame was modified by removing columns with non-ASCII characters. Also, 
 #' I added a column called "region" which is the the all lowercase version of the
 #' column "sovereignt". 
+#' 
+#' Note that due to the resolution of the map (1:110m, or 1 cm=1,100 km), small countries are not
+#' represented on this map.  See ?country.names for a list of all countries represented on the map.
 #'  
 #' @references Taken from http://www.naturalearthdata.com/downloads/110m-cultural-vectors/
 #' @docType data
 #' @name map.world
+#' @usage data(map.world)
 NULL
 
 #' Names of all counties on the map.world data.frame
 #' @name country.names
+#' @usage data(country.names)
 #' @docType data
 NULL

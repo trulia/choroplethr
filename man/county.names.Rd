@@ -4,6 +4,9 @@
 \alias{county.names}
 \title{A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
 the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).}
+\usage{
+data(county.names)
+}
 \description{
 A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
 the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).

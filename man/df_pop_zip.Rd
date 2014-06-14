@@ -3,6 +3,9 @@
 \name{df_pop_zip}
 \alias{df_pop_zip}
 \title{A data.frame containing population estimates for US Zip Code Tabulated Areas (ZCTAs) in 2012.}
+\usage{
+data(choroplethr)
+}
 \description{
 ZCTAs are intended to be roughly analogous to postal ZIP codes.
 }

@@ -3,6 +3,9 @@
 \name{df_president}
 \alias{df_president}
 \title{A data.frame containing election results from the 2012 US Presidential election.}
+\usage{
+data(choroplethr)
+}
 \description{
 A data.frame containing election results from the 2012 US Presidential election.
 }

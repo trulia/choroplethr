@@ -3,6 +3,9 @@
 \name{country.names}
 \alias{country.names}
 \title{Names of all counties on the map.world data.frame}
+\usage{
+data(country.names)
+}
 \description{
 Names of all counties on the map.world data.frame
 }
