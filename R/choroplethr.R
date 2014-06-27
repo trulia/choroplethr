@@ -71,6 +71,11 @@ choroplethr = function(df,
   
   df = df[, c("region", "value")] # prevent naming collision from merges later on
   
+  if (is.character(df$value))
+  {
+    df$value = as.factor(df$value)
+  }
+  
   if (lod == "state") {
     state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states, renderAsInsets, warn_na);
   } else if (lod == "county") {

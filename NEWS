@@ -1,3 +1,8 @@
+choroplethr 1.7.1
+----------------------------------------------------------------
+BUG FIX
+  -with character input for values inset maps were not having consistent scales with main map. Fix this by converting character input to factors early on.
+
 choroplethr 1.7.0
 ----------------------------------------------------------------
 
