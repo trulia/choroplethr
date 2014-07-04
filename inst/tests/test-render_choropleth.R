@@ -16,14 +16,14 @@ test_that("state render_choropleth discrete returns a ggplot object", {
 })
 
 test_that("county render_choropleth continuous returns a ggplot object", {
-  df         = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
+  df         = data.frame(region=county.names$county.fips.numeric, value=sample(100, length(county.names$county.fips.character), replace=T))
   df.map     = bind_df_to_map(df, "county", warn_na=FALSE)
   choropleth = render_choropleth(df.map, "county", "test continuous counties", "scale name")
   expect_is(choropleth, "ggplot")
 })
 
 test_that("county render_choropleth discrete returns a ggplot object", {
-  df           = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
+  df           = data.frame(region=county.names$county.fips.numeric, value=sample(100, length(county.names$county.fips.character), replace=T))
   df.map       = bind_df_to_map(df, "county", warn_na=FALSE)
   df.map$value = cut2(df.map$value, cuts=c(0,50,Inf))
   choropleth   = render_choropleth(df.map, "county", "test discrete counties", "scale name")

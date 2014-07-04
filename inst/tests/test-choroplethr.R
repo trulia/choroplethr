@@ -5,10 +5,10 @@ test_that("state level choropleths return ggplots with discrete and continuous l
   expect_is(choroplethr(df, lod="state", num_buckets=1), "ggplot")
   expect_is(choroplethr(df, lod="state", num_buckets=9), "ggplot")
 })
-                        
-data(county.fips, package="maps")
+
+data(county.names, package="choroplethr")
 test_that("county level choropleths return ggplots at discrete and continuous lods", {
-  df = data.frame(region=county.fips$fips, value=sample(100, nrow(county.fips), replace=T))
+  df = data.frame(region=county.names$county.fips.character, value=sample(100, length(county.names$county.fips.character), replace=T))
   expect_is(choroplethr(df, lod="county", num_buckets=1, warn_na=FALSE), "ggplot")
   expect_is(choroplethr(df, lod="county", num_buckets=9, warn_na=FALSE), "ggplot")
 })

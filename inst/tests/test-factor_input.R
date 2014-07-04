@@ -6,9 +6,9 @@ test_that("state level choropleths handle factor values", {
   expect_is(choroplethr(df, lod="state"), "ggplot")
 })
 
-data(county.fips, package="maps")
+data(county.names, package="choroplethr")
 test_that("county level choropleths handle factor values", {
-  df = data.frame(region=county.fips$fips, value=sample(5, nrow(county.fips), replace=T))
+  df = data.frame(region=county.names$county.fips.character, value=sample(5, length(county.names$county.fips.character), replace=T))
   df$value = factor(df$value)
   expect_is(choroplethr(df, lod="county", warn_na=FALSE), "ggplot")
 })

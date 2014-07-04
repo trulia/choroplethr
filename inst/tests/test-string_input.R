@@ -6,9 +6,9 @@ test_that("state level choropleths handle string input", {
   expect_is(choroplethr(df, lod="state"), "ggplot")
 })
 
-data(county.fips, package="maps")
+data(county.names, package="choroplethr")
 test_that("county level choropleths handle string input", {
-  df = data.frame(region=county.fips$fips, value=c("a", "b", "c", "d", "e"))
+  df = data.frame(region=county.names$county.fips.character, value=c("a", "b"))
   df$value = as.character(df$value)
   expect_is(choroplethr(df, lod="county", warn_na=FALSE), "ggplot")
 })

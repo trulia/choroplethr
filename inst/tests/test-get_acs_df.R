@@ -10,8 +10,8 @@ test_that("get_acs_df returns valid data for state population table with default
 test_that("get_acs_df returns valid data for county population table with default parameters", {
   df = get_acs_df("B01003", "county")
   expect_true(nrow(df) > 3000 && nrow(df) < 4000)
-  expect_true(all(county.fips$fips %in% df$region))
-  expect_true(all(county.fips$fips %in% df$region))
+  expect_true(all(county.names$county.fips.numeric %in% df$region))
+  expect_true(all(county.names$county.fips.numeric %in% df$region))
   expect_true(all(df$value > 0))
 })
 
