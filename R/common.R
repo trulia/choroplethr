@@ -175,3 +175,43 @@ discretize_df = function(df, num_buckets)
   
   df
 }
+
+discretize_df = function(df, num_buckets)
+{
+  stopifnot(is.data.frame(df))
+  stopifnot(c("value","region") %in% colnames(df))
+  stopifnot(is.numeric(num_buckets) && num_buckets > 0 && num_buckets < 10)
+  
+  if (is.numeric(df$value) && num_buckets > 1) {
+    df$value = discretize_values(df$value, num_buckets)
+  }
+  
+  df
+}
+
+stop_if_not_valid_choroplethr_object = function(x)
+{
+  stopifnot(is.data.frame(x))
+  stopifnot(all(c("value","region") %in% colnames(x)) == TRUE)
+  
+}
+
+#' Given two choropleth dfs, return a df that represents the percent change
+#' 
+#' @param a A data.frame representing a choropleth, with one column named region and one column named value
+#' @param b A data.frame representing a choropleth, with one column named region and one column named value
+#' 
+#' @export
+percent_change = function(a, b)
+{
+  stop_if_not_valid_choroplethr_object(a)
+  stop_if_not_valid_choroplethr_object(b)
+  
+  stopifnot(is.numeric(a$value))
+  stopifnot(is.numeric(b$value))
+  
+  x = merge(a, b, by="region")
+  x$value = ((x$value.y - x$value.x) / x$value.x)*100
+  
+  x
+}
