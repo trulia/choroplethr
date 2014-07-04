@@ -27,7 +27,6 @@ Imports:
     stringr
 Suggests:
     testthat,
-    maps,
     zipcode,
     knitr
 Depends:
