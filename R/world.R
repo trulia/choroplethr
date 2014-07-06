@@ -63,11 +63,11 @@ world_choropleth_auto = function(df,
   if (!is.null(countries))
   {
     data(country.names, package="choroplethr", envir=environment())
-    stopifnot(countries %in% country.names)
+    stopifnot(countries %in% country.names$region)
     stopifnot(!any(duplicated(countries)))
   } else {
     data(country.names, package="choroplethr", envir=environment())
-    countries = country.names
+    countries = country.names$region
   }
   
   df$region = tolower(df$region)

@@ -2,11 +2,13 @@
 \docType{data}
 \name{country.names}
 \alias{country.names}
-\title{Names of all counties on the map.world data.frame}
+\title{Names of all counties on the map.world data.frame. A data.frame that includes both English names and
+their iso2c equivalents.}
 \usage{
 data(country.names)
 }
 \description{
-Names of all counties on the map.world data.frame
+Names of all counties on the map.world data.frame. A data.frame that includes both English names and
+their iso2c equivalents.
 }
 

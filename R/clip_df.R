@@ -53,7 +53,7 @@ clip_df = function(df, lod, states=state.abb, countries=NULL)
 clip_df_world = function(df, countries)
 {
   data(country.names, package="choroplethr", envir=environment())
-  stopifnot(countries %in% country.names)
+  stopifnot(countries %in% country.names$region)
   stopifnot(!any(duplicated(countries)))
   
   df = df[df$region %in% countries, ]

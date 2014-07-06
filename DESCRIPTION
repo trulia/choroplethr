@@ -24,7 +24,8 @@ Imports:
     Hmisc,
     grid,
     acs,
-    stringr
+    stringr,
+    WDI
 Suggests:
     testthat,
     zipcode,

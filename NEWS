@@ -4,6 +4,10 @@ choroplethr 1.7.99
 FEATURE
   -Add a function percent_change which, given two choroplethr objects, returns the percent change between them
   -Remove dependency on maps package
+  -Add dependency on WDI package
+  -Add choroplethr_wdi function, which generates choropleths from World Bank data.  See the documentation 
+of the WDI package for details.
+  -Change country.names from being a vector of English words to a data.frame with 2 columns: one named region (which contains English words), and one named "iso2c", which contains the iso2c equivalent names.
 
 BUG FIX
   -with character input for values inset maps were not having consistent scales with main map. Fix this by converting character input to factors early on.

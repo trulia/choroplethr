@@ -177,7 +177,8 @@ NULL
 #' @usage data(map.world)
 NULL
 
-#' Names of all counties on the map.world data.frame
+#' Names of all counties on the map.world data.frame. A data.frame that includes both English names and
+#' their iso2c equivalents.
 #' @name country.names
 #' @usage data(country.names)
 #' @docType data
