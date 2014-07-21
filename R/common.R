@@ -163,7 +163,7 @@ discretize_values = function(values, num_buckets)
   ret
 }
 
-discretize_df = function(df, num_buckets)
+discretize = function(df, num_buckets)
 {
   stopifnot(is.data.frame(df))
   stopifnot("value" %in% colnames(df))

@@ -4,8 +4,52 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("map.counties", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
+county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
+{
+  # technically a county fips should always be 5 characters, but in practice people often
+  # drop the leading 0. See http://en.wikipedia.org/wiki/FIPS_county_code
+  ret = logical(0)
+  
+  for (fips in county.fips)
+  {
+    stopifnot(nchar(fips) == 4 || nchar(fips) == 5)
+    if (nchar(fips) == 4) {
+      state = substr(fips, 1, 1)
+    } else {
+      state = substr(fips, 1, 2)
+    }
+    ret = c(ret, state %in% vector.of.valid.state.fips)
+  }
+  
+  ret
+}
+
+county_clip = function(df, states)
+{
+  # if someone gives us county fips codes with leading 0's, remove them.
+  # although leading 0's are correct, some people do not use them.  It is easier to 
+  # convert to numeric than character - converting to numeric is not ambiguous.
+  if (is.factor(df$region))
+  {
+    df$region = as.character(df$region)
+  }  
+  if (is.character(df$region))
+  {
+    df$region = as.numeric(df$region)
+  }    
+  
+  # remove values that are not on our map at all
+  data(map.counties, package="choroplethr", envir=environment())
+  df = df[df$region %in% map.counties$county.fips.numeric, ]
+  
+  data(state.names, package="choroplethr", envir=environment())
+  state.fips.to.render = state.names[state.names$abb %in% states, "fips.numeric"]
+  
+  df[county_fips_has_valid_state(df$region, state.fips.to.render), ]
+}
+
 #' @importFrom plyr rename join
-bind_df_to_county_map = function(df, warn_na = TRUE)
+county_bind = function(df, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   stopifnot(class(df$region) %in% c("character", "numeric", "integer"))
@@ -31,7 +75,7 @@ bind_df_to_county_map = function(df, warn_na = TRUE)
   choropleth
 }
 
-print_county_choropleth = function(choropleth.df, state.df, scaleName, theme, min, max)
+county_render_helper = function(choropleth.df, state.df, scaleName, theme, min, max)
 {
   # maps with numeric values are mapped with a continuous scale
   if (is.numeric(choropleth.df$value))
@@ -52,7 +96,7 @@ print_county_choropleth = function(choropleth.df, state.df, scaleName, theme, mi
   }
 }
 
-render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb, renderAsInsets=TRUE)
+county_render = function(choropleth.df, title, scaleName, states, renderAsInsets)
 {
   # only show the states the user asked
   choropleth.df = choropleth.df[choropleth.df$STATE %in% get_state_fips_from_abb(states), ]
@@ -77,14 +121,14 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
     alaska.df       = choropleth.df[choropleth.df$STATE==get_state_fips_from_abb("AK"), ]
     alaska.state.df = choropleth.df[choropleth.df$region=='alaska',]
 
-    alaska.ggplot = print_county_choropleth(alaska.df, alaska.state.df, "", theme_inset(), min_val, max_val)    
+    alaska.ggplot = county_render_helper(alaska.df, alaska.state.df, "", theme_inset(), min_val, max_val)    
     alaska.grob   = ggplotGrob(alaska.ggplot)
     
     # subset HI and render it
     hawaii.df       = choropleth.df[choropleth.df$STATE==get_state_fips_from_abb("HI"), ]
     hawaii.state.df = choropleth.df[choropleth.df$region=='hawaii',]
     
-    hawaii.ggplot = print_county_choropleth(hawaii.df, hawaii.state.df, "", theme_inset(), min_val, max_val)
+    hawaii.ggplot = county_render_helper(hawaii.df, hawaii.state.df, "", theme_inset(), min_val, max_val)
     hawaii.grob   = ggplotGrob(hawaii.ggplot)
     
     # remove AK and HI from the "real" df
@@ -92,7 +136,7 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
     state.df      = state.df[!state.df$region %in% c("alaska", "hawaii"),]
   }
   
-  choropleth = print_county_choropleth(choropleth.df, state.df, scaleName, theme_clean(), min_val, max_val) + ggtitle(title)
+  choropleth = county_render_helper(choropleth.df, state.df, scaleName, theme_clean(), min_val, max_val) + ggtitle(title)
   
   if (states == state.abb && renderAsInsets)
   {
@@ -104,12 +148,18 @@ render_county_choropleth = function(choropleth.df, title="", scaleName="", state
   choropleth
 }
 
-# this needs to be called from the main choroplethr function
-county_choropleth_auto = function(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
+#' @export
+county_choropleth = function(df, 
+                             num_buckets    = 7, 
+                             title          = "", 
+                             scaleName      = "", 
+                             states         = state.abb, 
+                             renderAsInsets = TRUE, 
+                             warn_na        = TRUE)
 {
-  df = clip_df(df, "county", states) # remove elements we won't be rendering
-  df = discretize_df(df, num_buckets) # if user requested, discretize the values
+  df = county_clip(df, states) # remove elements we won't be rendering
+  df = discretize(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = bind_df_to_county_map(df, warn_na) # bind df to map
-  render_county_choropleth(choropleth.df, title, scaleName, states, renderAsInsets) # render map
+  choropleth.df = county_bind(df, warn_na) # bind df to map
+  county_render(choropleth.df, title, scaleName, states, renderAsInsets) # render map
 }

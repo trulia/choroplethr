@@ -4,7 +4,7 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("map.states", "county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-state_clip_df = function(df, states)
+state_clip = function(df, states)
 {
   # remove anything not a state in the 50 states
   df$region = normalize_state_names(df$region)
@@ -16,7 +16,7 @@ state_clip_df = function(df, states)
 }
 
 #' @importFrom plyr rename join
-state_bind_df_to_map = function(df, warn_na = TRUE)
+state_bind = function(df, warn_na = TRUE)
 {
   stopifnot(c("region", "value") %in% colnames(df))
  
@@ -125,9 +125,9 @@ state_choropleth = function(df,
                             renderAsInsets = TRUE,
                             warn_na        = TRUE)
 {
-  df = state_clip_df(df, states) # remove elements we won't be rendering
-  df = discretize_df(df, num_buckets) # if user requested, discretize the values
+  df = state_clip(df, states) # remove elements we won't be rendering
+  df = discretize(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = state_bind_df_to_map(df, warn_na) # bind df to map
+  choropleth.df = state_bind(df, warn_na) # bind df to map
   state_render(choropleth.df, title, scaleName, showLabels, states, renderAsInsets) # render map
 }

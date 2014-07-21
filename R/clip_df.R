@@ -60,52 +60,6 @@ clip_df_world = function(df, countries)
   df
 }
 
-
-
-county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
-{
-  # technically a county fips should always be 5 characters, but in practice people often
-  # drop the leading 0. See http://en.wikipedia.org/wiki/FIPS_county_code
-  ret = logical(0)
-  
-  for (fips in county.fips)
-  {
-    stopifnot(nchar(fips) == 4 || nchar(fips) == 5)
-    if (nchar(fips) == 4) {
-      state = substr(fips, 1, 1)
-    } else {
-      state = substr(fips, 1, 2)
-    }
-    ret = c(ret, state %in% vector.of.valid.state.fips)
-  }
-  
-  ret
-}
-
-clip_df_county = function(df, states)
-{
-  # if someone gives us county fips codes with leading 0's, remove them.
-  # although leading 0's are correct, some people do not use them.  It is easier to 
-  # convert to numeric than character - converting to numeric is not ambiguous.
-  if (is.factor(df$region))
-  {
-    df$region = as.character(df$region)
-  }  
-  if (is.character(df$region))
-  {
-    df$region = as.numeric(df$region)
-  }    
-
-  # remove values that are not on our map at all
-  data(map.counties, package="choroplethr", envir=environment())
-  df = df[df$region %in% map.counties$county.fips.numeric, ]
-  
-  data(state.names, package="choroplethr", envir=environment())
-  state.fips.to.render = state.names[state.names$abb %in% states, "fips.numeric"]
-  
-  df[county_fips_has_valid_state(df$region, state.fips.to.render), ]
-}
-
 clip_df_zip = function(df, states)
 {
   # list of all zips in listed states
