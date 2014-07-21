@@ -176,19 +176,6 @@ discretize_df = function(df, num_buckets)
   df
 }
 
-discretize_df = function(df, num_buckets)
-{
-  stopifnot(is.data.frame(df))
-  stopifnot(c("value","region") %in% colnames(df))
-  stopifnot(is.numeric(num_buckets) && num_buckets > 0 && num_buckets < 10)
-  
-  if (is.numeric(df$value) && num_buckets > 1) {
-    df$value = discretize_values(df$value, num_buckets)
-  }
-  
-  df
-}
-
 stop_if_not_valid_choroplethr_object = function(x)
 {
   stopifnot(is.data.frame(x))
