@@ -150,12 +150,12 @@ county_render = function(choropleth.df, title, scaleName, states, renderAsInsets
 
 #' @export
 county_choropleth = function(df, 
-                             num_buckets    = 7, 
                              title          = "", 
                              scaleName      = "", 
+                             num_buckets    = 7,
+                             warn_na        = FALSE,
                              states         = state.abb, 
-                             renderAsInsets = TRUE, 
-                             warn_na        = TRUE)
+                             renderAsInsets = TRUE)
 {
   df = county_clip(df, states) # remove elements we won't be rendering
   df = discretize(df, num_buckets) # if user requested, discretize the values

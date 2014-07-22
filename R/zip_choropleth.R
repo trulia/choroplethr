@@ -4,7 +4,16 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
-bind_df_to_zip_map = function(df)
+zip_clip = function(df, states)
+{
+  # list of all zips in listed states
+  data(zipcode, package="zipcode", envir=environment())
+  zipcode = zipcode[zipcode$state %in% states, ]
+  
+  df[df$region %in% zipcode$zip, ]
+}
+
+zip_bind = function(df)
 {
   stopifnot(c("region", "value") %in% colnames(df))
   df = rename(df, replace=c("region" = "zip"))
@@ -18,7 +27,7 @@ bind_df_to_zip_map = function(df)
 }
 
 #' @importFrom plyr arrange
-print_zip_choropleth = function(choropleth.df, states, scaleName, theme, min, max)
+zip_render_helper = function(choropleth.df, states, scaleName, theme, min, max)
 {
   stopifnot(states %in% state.abb)
   
@@ -46,7 +55,7 @@ print_zip_choropleth = function(choropleth.df, states, scaleName, theme, min, ma
   }   
 }
 
-render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb, renderAsInsets=TRUE)
+zip_render = function(choropleth.df, title="", scaleName="", states=state.abb, renderAsInsets=TRUE)
 {  
   # only render the states the user requested
   choropleth.df = choropleth.df[choropleth.df$state %in% states, ]
@@ -70,35 +79,42 @@ render_zip_choropleth = function(choropleth.df, title="", scaleName="", states=s
   {
     # subset AK and render it
     alaska.df     = choropleth.df[choropleth.df$state=="AK",]
-    alaska.ggplot = print_zip_choropleth(alaska.df, "AK", "", theme_inset(), min_val, max_val)    
+    alaska.ggplot = zip_render_helper(alaska.df, "AK", "", theme_inset(), min_val, max_val)    
     alaska.grob   = ggplotGrob(alaska.ggplot)
     
     # subset HI and render it
     hawaii.df     = choropleth.df[choropleth.df$state=="HI",]
-    hawaii.ggplot = print_zip_choropleth(hawaii.df, "HI", "", theme_inset(), min_val, max_val)
+    hawaii.ggplot = zip_render_helper(hawaii.df, "HI", "", theme_inset(), min_val, max_val)
     hawaii.grob   = ggplotGrob(hawaii.ggplot)
     
     # remove AK and HI from the "real" df
     choropleth.df = choropleth.df[!choropleth.df$state %in% c("AK", "HI"), ]
-    choropleth = print_zip_choropleth(choropleth.df, setdiff(state.abb, c("AK", "HI")), scaleName, theme_clean(), min_val, max_val) + ggtitle(title)
+    choropleth = zip_render_helper(choropleth.df, setdiff(state.abb, c("AK", "HI")), scaleName, theme_clean(), min_val, max_val) + ggtitle(title)
     
     choropleth = choropleth + 
       annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
       annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)    
     
   } else {
-    choropleth = print_zip_choropleth(choropleth.df, states, scaleName, theme_clean(), min_val, max_val) + ggtitle(title)    
+    choropleth = zip_render_helper(choropleth.df, states, scaleName, theme_clean(), min_val, max_val) + ggtitle(title)    
   }
   
   choropleth
 }
 
 #' @importFrom ggplot2 geom_point scale_color_continuous
-zip_choropleth_auto = function(df, num_buckets = 9, title = "", scaleName = "", states, renderAsInsets)
+#' @export
+zip_choropleth = function(df, 
+                          title          = "", 
+                          scaleName      = "", 
+                          num_buckets    = 7, 
+                          warn_na        = FALSE,
+                          states         = state.abb, 
+                          renderAsInsets = TRUE)
 {
-  df = clip_df(df, "zip", states) # remove elements we won't be rendering
-  df = discretize_df(df, num_buckets) # if user requested, discretize the values
+  df = zip_clip(df, states) # remove elements we won't be rendering
+  df = discretize(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = bind_df_to_zip_map(df) # bind df to map
-  render_zip_choropleth(choropleth.df, title, scaleName, states, renderAsInsets) # render map
+  choropleth.df = zip_bind(df) # bind df to map
+  zip_render(choropleth.df, title, scaleName, states, renderAsInsets) # render map
 }

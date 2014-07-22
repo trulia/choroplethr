@@ -117,13 +117,13 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
 
 #' @export
 state_choropleth = function(df, 
-                            num_buckets    = 7, 
                             title          = "", 
                             scaleName      = "",
-                            showLabels     = TRUE,
+                            num_buckets    = 7, 
+                            warn_na        = FALSE,
                             states         = state.abb,
-                            renderAsInsets = TRUE,
-                            warn_na        = TRUE)
+                            showLabels     = TRUE,
+                            renderAsInsets = TRUE)
 {
   df = state_clip(df, states) # remove elements we won't be rendering
   df = discretize(df, num_buckets) # if user requested, discretize the values

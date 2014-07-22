@@ -2,7 +2,17 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("map.world", "country.names"))
 }
 
-bind_df_to_world_map = function(df, warn_na = TRUE)
+country_clip = function(df, countries)
+{
+  data(country.names, package="choroplethr", envir=environment())
+  stopifnot(countries %in% country.names$region)
+  stopifnot(!any(duplicated(countries)))
+  
+  df = df[df$region %in% countries, ]
+  df
+}
+
+country_bind = function(df, warn_na)
 {
   stopifnot(c("region", "value") %in% colnames(df))
  
@@ -24,7 +34,7 @@ bind_df_to_world_map = function(df, warn_na = TRUE)
   choropleth
 }
 
-render_world_choropleth = function(choropleth.df, title="", scaleName="", countries)
+render_country = function(choropleth.df, title, scaleName, countries)
 {
   # only show the states the user asked
   choropleth.df = choropleth.df[choropleth.df$region %in% countries, ]
@@ -50,12 +60,12 @@ render_world_choropleth = function(choropleth.df, title="", scaleName="", countr
   choropleth
 }
 
-world_choropleth_auto = function(df, 
-                            num_buckets = 9, 
-                            title = "", 
-                            scaleName = "",
-                            countries,
-                            warn_na)
+country_choropleth = function(df, 
+                              title       = "", 
+                              scaleName   = "",
+                              num_buckets = 7,
+                              warn_na     = FALSE,
+                              countries   = NULL)
 {
   stopifnot(!any(duplicated(df$region)))
   
