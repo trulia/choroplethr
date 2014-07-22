@@ -43,20 +43,20 @@ subset_map = function(lod, states=state.abb, countries=NULL)
   # get specified map
   if (lod == "state")
   {
-    data(map.states, package="choroplethr", envir = environment())
-    df = map.states
+    data(state.map, package="choroplethr", envir = environment())
+    df = state.map
     
     # subset 
     states = normalize_state_names(states);
     df = df[df$region %in% states, ]
     
   } else if (lod == "county") {
-    data(map.counties, package="choroplethr", envir = environment())
-    df = map.counties
+    data(county.map, package="choroplethr", envir = environment())
+    df = county.map
     
     # subset
     df = df[df$STATE %in% get_state_fips_from_abb(states), ]
-  } else if (lod == "world") {
+  } else if (lod == "county") {
     df = df[df$region %in% countries, ]
   }
   

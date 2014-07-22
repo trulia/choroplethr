@@ -1,7 +1,7 @@
 # This is unfortunately necessary to have R CMD check not throw out spurious NOTEs when using ggplot2
 # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("map.counties", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
+  utils::globalVariables(c("county.map", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
 county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
@@ -39,8 +39,8 @@ county_clip = function(df, states)
   }    
   
   # remove values that are not on our map at all
-  data(map.counties, package="choroplethr", envir=environment())
-  df = df[df$region %in% map.counties$county.fips.numeric, ]
+  data(county.map, package="choroplethr", envir=environment())
+  df = df[df$region %in% county.map$county.fips.numeric, ]
   
   data(state.names, package="choroplethr", envir=environment())
   state.fips.to.render = state.names[state.names$abb %in% states, "fips.numeric"]
@@ -57,8 +57,8 @@ county_bind = function(df, warn_na = TRUE)
   df$region = as.numeric(df$region)
   df = rename(df, replace=c("region" = "county.fips.numeric"))
   
-  data(map.counties, package="choroplethr", envir=environment())
-  choropleth = join(map.counties, df, by="county.fips.numeric", type="left")
+  data(county.map, package="choroplethr", envir=environment())
+  choropleth = join(county.map, df, by="county.fips.numeric", type="left")
   missing_fips = unique(choropleth[is.na(choropleth$value), ]$county.fips);
   # county FIPS code 11001 is Washington DC, which choroplethr currently does not support
   # because it is not part of state.abb. However, it's in the map so it always triggers a warning

@@ -1,4 +1,4 @@
-#' A world map
+#' A map of most countries in the world
 #' 
 #' This data.frame corresponds to version 2.0.0 of the "Admin 0 - Countries" map from naturalearthdata.com
 #' The data.frame was modified by removing columns with non-ASCII characters. Also, 
@@ -10,8 +10,8 @@
 #'  
 #' @references Taken from http://www.naturalearthdata.com/downloads/110m-cultural-vectors/
 #' @docType data
-#' @name map.world
-#' @usage data(map.world)
+#' @name country.map
+#' @usage data(country.map)
 NULL
 
 #' Names of all counties on the map.world data.frame. A data.frame that includes both English names and

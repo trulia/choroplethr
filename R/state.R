@@ -1,7 +1,7 @@
 # This is unfortunately necessary to have R CMD check not throw out spurious NOTEs when using ggplot2
 # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("map.states", "county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
+  utils::globalVariables(c("state.map", "county.fips", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
 state_clip = function(df, states)
@@ -22,8 +22,8 @@ state_bind = function(df, warn_na = TRUE)
  
   df$region = normalize_state_names(df$region)
   
-  data(map.states, package="choroplethr", envir=environment())
-  state_map_df = map.states
+  data(state.map, package="choroplethr", envir=environment())
+  state_map_df = state.map
   state_map_df$region = tolower(state_map_df$region)
   
   choropleth = join(state_map_df, df, by="region", type="left")

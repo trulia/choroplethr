@@ -8,8 +8,8 @@
 #' first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters 4) some columns were added for convenience.
 #'
 #' @docType data
-#' @name map.counties
-#' @usage data(map.counties)
+#' @name county.map
+#' @usage data(county.map)
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 

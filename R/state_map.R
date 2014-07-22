@@ -7,8 +7,8 @@
 #' crossed the antimeridian 3) renamed column "STATE" to "region".
 #'
 #' @docType data
-#' @name map.states
-#' @usage data(map.states)
+#' @name state.map
+#' @usage data(state.map)
 #' @references Taken from the US Census 2010
 #' Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 #' The resolutions is 20m (20m = 1:20,000,000). 
