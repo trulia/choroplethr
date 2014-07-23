@@ -1,0 +1,62 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{Level of detail: Creating State, County and ZIP maps}
+-->
+
+Level of detail: Creating State, County and ZIP maps
+========================================================
+
+The main function in the choroplethr package is called `choroplethr` (`?choroplethr`). It has two required parameters: 
+  1. `df` A data.frame which contains one column named `region` and one column named `value`.  df can have other columns, too - but choroplethr only cares about these columns.  
+  2. `lod` A string which says the geographic level of detail of the data.  Must be either `state`, `county` or `zip`.
+ 
+As the following example shows, the choice of level of detail is important.
+  
+## State lod
+
+choroplethr comes with a dataset, `df_pop_state`, which contains 2012 population estimates for US states.
+```{r}
+library(choroplethr)
+data(choroplethr)
+
+head(df_pop_state)
+```
+
+When calling `choroplethr` with state level data, `region` must contain state names (e.g. "California" or "CA").
+
+```{r}
+choroplethr(df_pop_state, "state", title="2012 State Population Estimates")
+```
+
+choroplethr renders state choropleths of the lower 48 states.  An optional parameter, `showLabels`, determines whether to include state abbreviations in the image.
+
+## County lod
+
+choroplethr comes with a dataset, `df_pop_county`, which contains 2012 population estimates for US counties.
+```{r}
+head(df_pop_county)
+```
+
+When calling `choroplethr` with county level data, `region` must contain [county FIPS codes](http://en.wikipedia.org/wiki/FIPS_county_code).
+
+```{r}
+choroplethr(df_pop_county, "county", title="2012 County Population Estimates")
+```
+
+choroplethr renders county maps with an outline of state boundaries.  There are over 3,000 counties in the lower 48 states.  
+
+## ZIP lod
+
+`choroplethr` comes with a dataset, `df_pop_zip`, which contains 2012 population estimates for US [ZIP Code Tabulated Areas (ZCTAs)](https://www.census.gov/geo/reference/zctas.html).  ZCTAs are created and maintained by the US Census Bureau and can be considered approximations of US Postal Codes.
+
+```{r}
+head(df_pop_zip)
+```
+
+When calling `choroplethr` with ZIP level data, `region` must contain 5 digit ZIP codes.
+
+```{r}
+choroplethr(df_pop_zip, "zip", title="2012 ZIP Code Tabulated Area (ZCTA) Population Estimates")
+```
+
+choroplethr renders ZIP level maps as scatterplots.  The longitude and latitude of each ZIP code comes from the [zipcode](http://cran.r-project.org/web/packages/zipcode/index.html) package.  These are technically not choropleth maps because they do not show the boundaries of the ZIP codes.  

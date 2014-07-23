@@ -1,5 +1,5 @@
 if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("map.world", "country.names"))
+  utils::globalVariables(c("country.map", "country.names"))
 }
 
 country_clip = function(df, countries)
@@ -18,8 +18,8 @@ country_bind = function(df, warn_na)
  
   df$region = tolower(df$region)
 
-  data(map.world, package="choroplethr", envir=environment())
-  choropleth = merge(map.world, df, all.x=TRUE)
+  data(country.map, package="choroplethr", envir=environment())
+  choropleth = merge(country.map, df, all.x=TRUE)
   
   missing_countries = unique(choropleth[is.na(choropleth$value), ]$region);
   if (warn_na && length(missing_countries) > 0)
@@ -34,7 +34,7 @@ country_bind = function(df, warn_na)
   choropleth
 }
 
-render_country = function(choropleth.df, title, scaleName, countries)
+country_render = function(choropleth.df, title, scaleName, countries)
 {
   # only show the states the user asked
   choropleth.df = choropleth.df[choropleth.df$region %in% countries, ]
@@ -60,6 +60,7 @@ render_country = function(choropleth.df, title, scaleName, countries)
   choropleth
 }
 
+#' @export
 country_choropleth = function(df, 
                               title       = "", 
                               scaleName   = "",
@@ -82,9 +83,9 @@ country_choropleth = function(df,
   
   df$region = tolower(df$region)
   
-  df = clip_df(df, "world", countries=countries) # remove elements we won't be rendering
-  df = discretize_df(df, num_buckets) # if user requested, discretize the values
+  df = country_clip(df, countries=countries) # remove elements we won't be rendering
+  df = discretize(df, num_buckets) # if user requested, discretize the values
   
-  choropleth.df = bind_df_to_world_map(df, warn_na) # bind df to map
-  render_world_choropleth(choropleth.df, title, scaleName, countries) # render map
+  choropleth.df = country_bind(df, warn_na) # bind df to map
+  country_render(choropleth.df, title, scaleName, countries) # render map
 }
