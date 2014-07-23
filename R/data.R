@@ -7,7 +7,7 @@
 #' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
-#' choroplethr(df_president, "state", title="Results from the 2012 US Presidential Election")
+#' state_choropleth(df_president, title="Results from the 2012 US Presidential Election")
 NULL
 
 #' A data.frame containing population estimates for US States in 2012.   
@@ -20,7 +20,7 @@ NULL
 #' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
-#' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
+#' state_choropleth(df_pop_state, title="2012 Population Estimates")
 NULL
 
 #' A data.frame containing population estimates for US Counties in 2012.   
@@ -33,7 +33,7 @@ NULL
 #' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
-#' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
+#' county_choropleth(df_pop_county, title="2012 Population Estimates")
 NULL
 
 #' A data.frame containing population estimates for US Zip Code Tabulated Areas (ZCTAs) in 2012.   
@@ -48,7 +48,7 @@ NULL
 #' @usage data(choroplethr)
 #' @examples
 #' data(choroplethr)
-#' choroplethr(df_pop_state, "state", title="2012 Population Estimates")
+#' zip_choropleth(df_pop_zip, title="2012 Population Estimates")
 NULL
 
 #' A data.frame containing all US presdiential election results from 1789 to 2012

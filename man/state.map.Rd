@@ -14,26 +14,26 @@ Puerto Rico and 2) remove islands off of Alaska that
 crossed the antimeridian 3) renamed column "STATE" to "region".
 }
 \examples{
-data(map.states)
+data(state.map)
 require(ggplot2)
 require(grid)
 
 # simple map of all states.
-ggplot(map.states, aes(long, lat,group=group)) + geom_polygon()
+ggplot(state.map, aes(long, lat,group=group)) + geom_polygon()
 
 # render Alaska and Hawaii as insets on a map of the contiguous 48 states.
 
 # render lower 48 as a ggplot
-states.48 = map.states[!map.states$region \%in\% c("alaska", "hawaii"), ]
+states.48 = state.map[!state.map$region \%in\% c("alaska", "hawaii"), ]
 base_map     = ggplot(states.48, aes(long, lat,group=group)) + geom_polygon() + theme_clean()
 
 # subset AK and render it
-alaska.df     = map.states[map.states$region=='alaska',]
+alaska.df     = state.map[state.map$region=='alaska',]
 alaska.ggplot = ggplot(alaska.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 alaska.grob   = ggplotGrob(alaska.ggplot)
 
 # subset HI and render it
-hawaii.df     = map.states[map.states$region=='hawaii',]
+hawaii.df     = state.map[state.map$region=='hawaii',]
 hawaii.ggplot = ggplot(hawaii.df, aes(long, lat, group=group)) + geom_polygon() + theme_clean()
 hawaii.grob   = ggplotGrob(hawaii.ggplot)
 

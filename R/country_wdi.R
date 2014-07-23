@@ -33,5 +33,5 @@ choroplethr_wdi = function(code="NY.GNS.ICTR.GN.ZS", year=2012, title=NULL, coun
   data = merge(data, country.names)
   data$value = data[, names(data) == code] # choroplethr requires value column to be named "valued"
 
-  choroplethr(data, "world", title=title, countries=countries, num_buckets=num_buckets)
+  country_choropleth(data, title=title, countries=countries, num_buckets=num_buckets)
 }

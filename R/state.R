@@ -115,13 +115,42 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
   choropleth
 }
 
+#' Create a choropleth of US States
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Region must contain state names or abbreviations (e.g. "California" or "CA").  
+#' @param title An optional title for the map.  
+#' @param scaleName An optional label for the legend.
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
+#' example, 2 will show values above or below the median, and 9 will show the maximum
+#' resolution.
+#' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
+#' @param states A vector of states to render.  Defaults to state.abb.
+#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
+#' Defaults to T. 
+#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @return A choropleth.
+#' 
+#' @keywords choropleth
+#' 
+#' @examples
+#' data(choroplethr)
+#'
+#' # 2012 US Presidential results
+#' state_choropleth(df_president, title="2012 US Presidential Results")
+#'
+#' # 2012 state population estimates - continuous vs. discrete scale
+#' state_choropleth(df_pop_state, num_buckets=1, title="2012 State Population Estimates")
+#' state_choropleth(df_pop_state, num_buckets=9, title="2012 State Population Estimates") 
+#' 
 #' @export
+#' @seealso \code{\link{state.map}} which contains information about the state map and \code{\link{state.names}} which contains the names of the regions in the map.
 #' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom plyr arrange rename
 #' @importFrom scales comma
 #' @importFrom Hmisc cut2
-
 state_choropleth = function(df, 
                             title          = "", 
                             scaleName      = "",

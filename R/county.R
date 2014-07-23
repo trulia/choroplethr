@@ -1,7 +1,7 @@
 # This is unfortunately necessary to have R CMD check not throw out spurious NOTEs when using ggplot2
 # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
 if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("county.map", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
+  utils::globalVariables(c("state.names", "county.map", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
 }
 
 county_fips_has_valid_state = function(county.fips, vector.of.valid.state.fips)
@@ -148,7 +148,38 @@ county_render = function(choropleth.df, title, scaleName, states, renderAsInsets
   choropleth
 }
 
+#' Create a choropleth of US Counties
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Region must contain county FIPS codes.  
+#' @param title An optional title for the map.  
+#' @param scaleName An optional label for the legend.
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
+#' example, 2 will show values above or below the median, and 9 will show the maximum
+#' resolution.
+#' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
+#' @param states A vector of states to render.  Defaults to state.abb.
+#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @return A choropleth.
+#' 
+#' @keywords choropleth
+#' 
+#' @examples
+#' data(choroplethr)
+#'
+#' # 2012 county population estimates - continuous vs. discrete scale
+#' county_choropleth(df_pop_county, num_buckets=1, title="2012 County Population Estimates")
+#' county_choropleth(df_pop_county, num_buckets=9, title="2012 County Population Estimates") 
+#' 
 #' @export
+#' @seealso \code{\link{county.map}} which contains information about the county map and \code{\link{county.names}} which contains the names of the regions in the map.
+
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom plyr arrange rename
+#' @importFrom scales comma
+#' @importFrom Hmisc cut2
 county_choropleth = function(df, 
                              title          = "", 
                              scaleName      = "", 

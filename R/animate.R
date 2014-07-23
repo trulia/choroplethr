@@ -6,8 +6,8 @@
 #' \item Write a file called "animated_choropleth.html" which contains a viewer which animates them.
 #' }
 #'
-#' @param choropleths A list of choropleths represented as ggplot2 objects.  Created by, for example, \code{\link{choroplethr}} 
-#' or \code{\link{choroplethr_acs}}.
+#' @param choropleths A list of choropleths represented as ggplot2 objects.  Created by, for example, \code{\link{state_choropleth}} 
+#' or \code{\link{county_choropleth}}.
 #' @return Nothing.  However, a variable number of files are written to the current working directory.
 #' 
 #' @keywords choropleth animation
@@ -27,14 +27,14 @@
 #'   df           = df_president_ts[, c(1, i)]
 #'   colnames(df) = c("region", "value")
 #'   title        = paste0("Presidential Election Results: ", colnames(df_president_ts)[i])
-#'   choropleths[[i-1]] = choroplethr(df, "state", title=title) 
+#'   choropleths[[i-1]] = state_choropleth(df, title=title) 
 #' }
 #'
 #' # set working directory and animate
 #' setwd("~/Desktop")
-#' choroplethr_animate(choropleths)
+#' animate(choropleths)
 #' }
-choroplethr_animate = function(choropleths)
+animate = function(choropleths)
 {
   stopifnot(is.list(choropleths))
   print(paste0("All files will be written to the current working directory: ", getwd(), " . To change this use setwd()"))
