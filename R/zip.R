@@ -102,6 +102,38 @@ zip_render = function(choropleth.df, title="", scaleName="", states=state.abb, r
   choropleth
 }
 
+#' Create a colored scatterplot, with state borders, of US ZIP codes 
+#' 
+#' While the function is named zip_choropleth for the same of consistency with other functions in choropleth, the
+#' output is not technically a choropleth map because the borders of the ZIP codes are not drawn.
+#'
+#' @param df A data.frame with a column named "region" and a column named "value".  Region must 5 digit zipcodes as defined in the "zipcode" package.
+#' @param title An optional title for the map.  
+#' @param scaleName An optional label for the legend.
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
+#' example, 2 will show values above or below the median, and 9 will show the maximum
+#' resolution.
+#' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
+#' @param states A vector of states to render.  Defaults to state.abb.
+#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @return A choropleth.
+#' 
+#' @examples
+#' library(zipcode)
+#' data(zipcode)
+#' head(zipcode)
+#'
+#' df = data.frame(region=zipcode$zip, value=sample.int(nrow(zipcode)))
+#' zip_choropleth(df)
+#' 
+#' @seealso The "zipcode" package
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom plyr arrange rename
+#' @importFrom scales comma
+#' @importFrom Hmisc cut2
 #' @importFrom ggplot2 geom_point scale_color_continuous
 #' @export
 zip_choropleth = function(df, 
