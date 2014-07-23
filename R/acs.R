@@ -2,10 +2,13 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("state.fips"))
 }
 
-#' Returns a data.frame representing American Community Survey estimates.
+#' Returns a data.frame representing US Census American Community Survey (ACS) estimates.
 #' 
+#' For a walkthru on the ACS, see the vignette "Mapping Census Data".
 #' Requires the acs package to be installed, and a Census API Key to be set with the 
 #' acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
+#' The resulting data.frame is in a format which can be accepted by the functions state_choropleth, 
+#' county_choropleth and zip_choropleth.
 #'
 #' @param tableId The id of an ACS table.
 #' @param lod The level of geographic detail for the data.frame.  Must be one of "state", "county" or "zip". 
@@ -18,29 +21,29 @@ if (base::getRversion() >= "2.15.1") {
 #' @importFrom acs acs.fetch geography estimate geo.make
 #' @examples
 #' \dontrun{
+#' 
+#' # some simple examples - note that table B01003 is population
+#' state_choropleth(get_acs_df("B01003", "state"))
+#' county_choropleth(get_acs_df("B01003", "county"))
+#' 
+#' # compare states with >1M people with counties with >1M people
 #' library(Hmisc) # for cut2
-#' # States with greater than 1M residents
-#' df     = get_acs_df("B01003", "state") # population
-#' df.map = bind_df_to_map(df, "state")
-#' df.map$value = cut2(df.map$value, cuts=c(0,1000000,Inf))
-#' render_choropleth(df.map, "state", "States with a population over 1M", "Population")
+#' df = get_acs_df("B01003", "state") 
+#' df$value = cut2(df$value,cuts=c(0,1000000,Inf))
+#' state_choropleth(df, "States with a population over 1M", "Population")
 #'
-#' # Counties with greater than or greater than 1M residents
-#' df     = get_acs_df("B01003", "county") # population
-#' df.map = bind_df_to_map(df, "county")
-#' df.map$value = cut2(df.map$value, cuts=c(0,1000000,Inf))
-#' render_choropleth(df.map, "county", "Counties with a population over 1M", "Population")
+#' df = get_acs_df("B01003", "county") 
+#' df$value = cut2(df$value, cuts=c(0,1000000,Inf))
+#' county_choropleth(df, "Counties with a population over 1M", "Population")
 #' 
 #' # ZIP codes in California where median age is between 20 and 30
 #' df       = get_acs_df("B01002", "zip") # median age
 #' df       = df[df$value >= 20 & df$value <= 30, ]
 #' df$value = cut2(df$value, g=3) # 3 equally-sized groups
-#' df.map   = bind_df_to_map(df, "zip")
-#' render_choropleth(df.map, 
-#'                  "zip", 
-#'                  title = "CA Zip Codes by Age",
-#'                  scaleName = "Median Age",
-#'                  states = "CA") 
+#' zip_choropleth(df, 
+#'                title = "CA Zip Codes by Age",
+#'               scaleName = "Median Age",
+#'               states = "CA") 
 #' }
 get_acs_df = function(tableId, lod, endyear=2012, span=5, column_idx = -1)
 {
