@@ -17,5 +17,5 @@ Despite these problems, a great deal of data is aggregated at the ZIP level.  ch
 ```{r}
 library(choroplethr)
 data(choroplethr)
-choroplethr(df_pop_zip, "zip", title="ZIP Code Tabulated Area Population Estimates, 2012")
+zip_choropleth(df_pop_zip, title="ZIP Code Tabulated Area Population Estimates, 2012")
 ```

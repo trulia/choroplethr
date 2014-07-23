@@ -25,7 +25,7 @@ head(df_pop_state)
 When calling `choroplethr` with state level data, `region` must contain state names (e.g. "California" or "CA").
 
 ```{r}
-choroplethr(df_pop_state, "state", title="2012 State Population Estimates")
+state_choropleth(df_pop_state, title="2012 State Population Estimates")
 ```
 
 choroplethr renders state choropleths of the lower 48 states.  An optional parameter, `showLabels`, determines whether to include state abbreviations in the image.
@@ -40,7 +40,7 @@ head(df_pop_county)
 When calling `choroplethr` with county level data, `region` must contain [county FIPS codes](http://en.wikipedia.org/wiki/FIPS_county_code).
 
 ```{r}
-choroplethr(df_pop_county, "county", title="2012 County Population Estimates")
+county_choropleth(df_pop_county, title="2012 County Population Estimates")
 ```
 
 choroplethr renders county maps with an outline of state boundaries.  There are over 3,000 counties in the lower 48 states.  
@@ -56,7 +56,7 @@ head(df_pop_zip)
 When calling `choroplethr` with ZIP level data, `region` must contain 5 digit ZIP codes.
 
 ```{r}
-choroplethr(df_pop_zip, "zip", title="2012 ZIP Code Tabulated Area (ZCTA) Population Estimates")
+zip_choropleth(df_pop_zip, title="2012 ZIP Code Tabulated Area (ZCTA) Population Estimates")
 ```
 
 choroplethr renders ZIP level maps as scatterplots.  The longitude and latitude of each ZIP code comes from the [zipcode](http://cran.r-project.org/web/packages/zipcode/index.html) package.  These are technically not choropleth maps because they do not show the boundaries of the ZIP codes.  

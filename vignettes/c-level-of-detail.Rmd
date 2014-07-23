@@ -15,7 +15,7 @@ Here is a choropleth map of US state populations using a continuous scale.
 ```{r}
 library(choroplethr)
 data(choroplethr)
-choroplethr(df_pop_state, "state", num_buckets=1, title="2012 State Population Estimates, Continuous Scale") 
+state_choropleth(df_pop_state, title="2012 State Population Estimates, Continuous Scale", num_buckets=1) 
 ```
 
 One striking feature of this map is how much brighter California is than all its neighbors.  Indeed, in the western half of the map only California and Texas stand out at all.  The reason for this can be seen by looking at a boxplot of state populations; California (37M) and Texas (25M) are the two largest outliers:
@@ -36,7 +36,7 @@ This is both the blessing and curse of choropleths which use a continuous scale:
 Setting `num_buckets` to a value between 2 and 9 will color the regions in equally sized buckets.  By default `num_buckets = 9`.  
 
 ```{r}
-choroplethr(df_pop_state, "state", num_buckets=9, title="2012 State Population Estimates, 9 Buckets") 
+state_choropleth(df_pop_state, title="2012 State Population Estimates, 9 Buckets", num_buckets=9) 
 ```
 
 Here California and Texas still stand out.  But there are clear differences in the remaining states in the western half of the US.  In particular, there are a cluster of low population states in northwest.
@@ -44,7 +44,7 @@ Here California and Texas still stand out.  But there are clear differences in t
 A common misconception is to think that more buckets is always better.  For example, using two buckets highlights regions above and below the median value, which is itself quite informative.
 
 ```{r}
-choroplethr(df_pop_state, "state", num_buckets=2, title="2012 State Population Estimates, 2 Buckets") 
+state_choropleth(df_pop_state, title="2012 State Population Estimates, 2 Buckets", num_buckets=2) 
 ```
 
 ## Manual Scales
@@ -54,5 +54,5 @@ Oftentimes when analyzing spatial data you want to manually decide the values of
 ```{r}
 library(Hmisc) # for cut2
 df_pop_state$value = cut2(df_pop_state$value, cuts=c(0,1000000,Inf))
-choroplethr(df_pop_state, "state", title="States with Populations Above or Below 1 Million")
+state_choropleth(df_pop_state, title="States with Populations Above or Below 1 Million")
 ```
