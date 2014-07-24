@@ -1,19 +1,20 @@
-#' Create a country-level choropleth using data from the World Bank Development Indicators (WDI).
+#' Create a country choropleth using data from the World Bank Development Indicators (WDI).
 #' 
 #' @param code The WDI code to use.
 #' @param year The year of data to use.
 #' @param title A title for the map.  If not specified, automatically generated to include WDI code and year.
 #' @param countries If null, render all countries. Otherwise must be a vector of country names.  See ?country.names for a list of valid country names.
+#' Use the column "region" not "iso2c".
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 #' example, 2 will show values above or below the median, and 9 will show the maximum
-#' resolution.  Defaults to 9.
-
+#' resolution.  Defaults to 7.
+#'
 #' @return A choropleth.
 #' 
 #' @export
 #' @importFrom WDI WDI
-choroplethr_wdi = function(code="NY.GNS.ICTR.GN.ZS", year=2012, title=NULL, countries=NULL, num_buckets=9)
+country_wdi = function(code="NY.GNS.ICTR.GN.ZS", year=2012, title=NULL, countries=NULL, num_buckets=7)
 {
   if (is.null(title))
   {
@@ -31,7 +32,7 @@ choroplethr_wdi = function(code="NY.GNS.ICTR.GN.ZS", year=2012, title=NULL, coun
   
   data = WDI(country=country.names$iso2c, code, start=year, end=year) 
   data = merge(data, country.names)
-  data$value = data[, names(data) == code] # choroplethr requires value column to be named "valued"
+  data$value = data[, names(data) == code] # choroplethr requires value column to be named "value"
 
   country_choropleth(data, title=title, countries=countries, num_buckets=num_buckets)
 }
