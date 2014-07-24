@@ -202,3 +202,10 @@ percent_change = function(a, b)
   
   x
 }
+
+#' @importFrom scales comma
+#' @importFrom ggplot2 scale_fill_brewer
+get_default_discrete_scale = function(scaleName)
+{
+  scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black")
+}

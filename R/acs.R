@@ -22,7 +22,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @examples
 #' \dontrun{
 #' 
-#' # some simple examples - note that table B01003 is population
+#' # some simple examples - that table B01003 is population
 #' state_choropleth(get_acs_df("B01003", "state"))
 #' county_choropleth(get_acs_df("B01003", "county"))
 #' 

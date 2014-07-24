@@ -5,7 +5,7 @@
 \usage{
 state_choropleth(df, title = "", scaleName = "", num_buckets = 7,
   warn_na = FALSE, states = state.abb, showLabels = TRUE,
-  renderAsInsets = TRUE)
+  renderAsInsets = TRUE, scale = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Region must contain state names or abbreviations (e.g. "California" or "CA").}
