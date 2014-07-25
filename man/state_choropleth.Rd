@@ -21,7 +21,7 @@ resolution.}
 
 \item{states}{A vector of states to render.  Defaults to state.abb.}
 
-\item{ggplot_scale}{an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".}
+\item{ggplot_scale}{an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2, drop=FALSE)".}
 
 \item{warn_na}{If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.}
 

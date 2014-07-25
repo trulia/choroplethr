@@ -134,7 +134,7 @@ state_render = function(choropleth.df, title, scale_name, labels, states, insets
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.
 #' @param states A vector of states to render.  Defaults to state.abb.
-#' @param ggplot_scale an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".
+#' @param ggplot_scale an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2, drop=FALSE)".
 #' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
 #' @param labels If true, print state abbreviations.
 #' @param insets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
