@@ -209,3 +209,10 @@ get_default_discrete_scale = function(scaleName)
 {
   scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black")
 }
+
+#' @importFrom scales comma
+#' @importFrom ggplot2 scale_fill_brewer
+get_default_continuous_scale = function(scale_name, min, max)
+{
+  scale_fill_continuous(scale_name, labels=comma, na.value="black", limits=c(min, max))   
+}

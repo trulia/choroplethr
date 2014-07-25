@@ -96,7 +96,7 @@ county_render_helper = function(choropleth.df, state.df, scaleName, theme, min, 
   }
 }
 
-county_render = function(choropleth.df, title, scaleName, states, renderAsInsets)
+county_render = function(choropleth.df, title, scaleName, states, renderAsInsets, scale)
 {
   # only show the states the user asked
   choropleth.df = choropleth.df[choropleth.df$STATE %in% get_state_fips_from_abb(states), ]
@@ -161,6 +161,7 @@ county_render = function(choropleth.df, title, scaleName, states, renderAsInsets
 #' @param states A vector of states to render.  Defaults to state.abb.
 #' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @param scale an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".
 #' @return A choropleth.
 #' 
 #' @keywords choropleth
@@ -186,11 +187,12 @@ county_choropleth = function(df,
                              num_buckets    = 7,
                              warn_na        = FALSE,
                              states         = state.abb, 
-                             renderAsInsets = TRUE)
+                             renderAsInsets = TRUE,
+                             scale          = NULL)
 {
   df = county_clip(df, states) # remove elements we won't be rendering
   df = discretize(df, num_buckets) # if user requested, discretize the values
   
   choropleth.df = county_bind(df, warn_na) # bind df to map
-  county_render(choropleth.df, title, scaleName, states, renderAsInsets) # render map
+  county_render(choropleth.df, title, scaleName, states, renderAsInsets, scale) # render map
 }

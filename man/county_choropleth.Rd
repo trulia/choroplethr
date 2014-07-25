@@ -4,7 +4,8 @@
 \title{Create a choropleth of US Counties}
 \usage{
 county_choropleth(df, title = "", scaleName = "", num_buckets = 7,
-  warn_na = FALSE, states = state.abb, renderAsInsets = TRUE)
+  warn_na = FALSE, states = state.abb, renderAsInsets = TRUE,
+  scale = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Region must contain county FIPS codes.}
@@ -24,6 +25,8 @@ resolution.}
 
 \item{renderAsInsets}{If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.}
+
+\item{scale}{an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".}
 }
 \value{
 A choropleth.

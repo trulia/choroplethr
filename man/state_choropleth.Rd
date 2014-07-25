@@ -3,30 +3,31 @@
 \alias{state_choropleth}
 \title{Create a choropleth of US States}
 \usage{
-state_choropleth(df, title = "", scaleName = "", num_buckets = 7,
-  warn_na = FALSE, states = state.abb, showLabels = TRUE,
-  renderAsInsets = TRUE, scale = NULL)
+state_choropleth(df, title = "", scale_name = "", num_buckets = 7,
+  states = state.abb, ggplot_scale = NULL, warn_na = FALSE,
+  labels = TRUE, insets = TRUE)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Region must contain state names or abbreviations (e.g. "California" or "CA").}
 
 \item{title}{An optional title for the map.}
 
-\item{scaleName}{An optional label for the legend.}
+\item{scale_name}{An optional label for the legend.}
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 example, 2 will show values above or below the median, and 9 will show the maximum
 resolution.}
 
-\item{warn_na}{If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.}
-
 \item{states}{A vector of states to render.  Defaults to state.abb.}
 
-\item{showLabels}{For state choropleths, whether or not to show state abbreviations on the map.
-Defaults to T.}
+\item{ggplot_scale}{an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".}
 
-\item{renderAsInsets}{If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+\item{warn_na}{If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.}
+
+\item{labels}{If true, print state abbreviations.}
+
+\item{insets}{If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.}
 }
 \value{

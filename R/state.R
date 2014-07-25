@@ -41,34 +41,38 @@ state_bind = function(df, warn_na = TRUE)
   choropleth = choropleth[order(choropleth$order), ];
   choropleth
 }
-                                                                          choropleth_scale
-state_render_helper = function(choropleth.df, scaleName, theme, min, max, choropleth_scale)
+
+state_render_helper = function(choropleth.df, scale_name, theme, min, max, ggplot_scale)
 {
   # maps with numeric values are mapped with a continuous scale
   if (is.numeric(choropleth.df$value))
   {
+    if (is.null(ggplot_scale))
+    {
+      ggplot_scale = get_default_continuous_scale(scale_name, min, max)
+    }
     ggplot(choropleth.df, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-      scale_fill_continuous(scaleName, labels=comma, na.value="black", limits=c(min, max)) + # use a continuous scale
+      ggplot_scale +
       theme;
   } else { # assume character or factor
     stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
 
-    if (is.null(choropleth_scale))
+    if (is.null(ggplot_scale))
     {
-      choropleth_scale = get_default_discrete_scale(scaleName)
+      ggplot_scale = get_default_discrete_scale(scale_name)
     }
       
     ggplot(choropleth.df, aes(long, lat, group = group)) +
       geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-      choropleth_scale +  # scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black") + # use discrete scale for buckets
+      ggplot_scale +  
       theme;
   }   
 }
 
 #' @importFrom ggplot2 ggplotGrob annotation_custom
 #' @importFrom grid grobTree 
-state_render = function(choropleth.df, title, scaleName, showLabels, states, renderAsInsets, scale)
+state_render = function(choropleth.df, title, scale_name, labels, states, insets, ggplot_scale)
 {
   # only show the states the user asked
   choropleth.df = choropleth.df[choropleth.df$region %in% normalize_state_names(states), ]
@@ -84,25 +88,25 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
     max_val = max(choropleth.df$value)
   }
   
-  if (states == state.abb && renderAsInsets)
+  if (states == state.abb && insets)
   {
     # subset AK and render it
     alaska.df     = choropleth.df[choropleth.df$region=='alaska',]
-    alaska.ggplot = state_render_helper(alaska.df, scaleName, theme_inset(), min_val, max_val, choropleth_scale=scale)    
+    alaska.ggplot = state_render_helper(alaska.df, scale_name, theme_inset(), min_val, max_val, ggplot_scale)    
     alaska.grob   = ggplotGrob(alaska.ggplot)
     
     # subset HI and render it
     hawaii.df     = choropleth.df[choropleth.df$region=='hawaii',]
-    hawaii.ggplot = state_render_helper(hawaii.df, scaleName, theme_inset(), min_val, max_val, choropleth_scale=scale)
+    hawaii.ggplot = state_render_helper(hawaii.df, scale_name, theme_inset(), min_val, max_val, ggplot_scale)
     hawaii.grob   = ggplotGrob(hawaii.ggplot)
 
     # remove AK and HI from the "real" df
     choropleth.df = choropleth.df[!choropleth.df$region %in% c("alaska", "hawaii"), ]
   }
   
-  choropleth = state_render_helper(choropleth.df, scaleName, theme_clean(), min_val, max_val, choropleth_scale=scale) + ggtitle(title)
+  choropleth = state_render_helper(choropleth.df, scale_name, theme_clean(), min_val, max_val, ggplot_scale) + ggtitle(title)
   
-  if (states == state.abb && renderAsInsets)
+  if (states == state.abb && insets)
   {
     choropleth = choropleth + 
       annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -110,7 +114,7 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
   }
 
   # let's assume that people who want labels don't need them for AK and HI
-  if (showLabels) {
+  if (labels) {
       df_state_labels = data.frame(long = state.center$x, lat = state.center$y, label = state.abb)
       df_state_labels = df_state_labels[!df_state_labels$label %in% c("AK", "HI"), ]
       df_state_labels = df_state_labels[df_state_labels$label %in% states, ]
@@ -124,16 +128,16 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Region must contain state names or abbreviations (e.g. "California" or "CA").  
 #' @param title An optional title for the map.  
-#' @param scaleName An optional label for the legend.
+#' @param scale_name An optional label for the legend.
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.
-#' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
 #' @param states A vector of states to render.  Defaults to state.abb.
-#' @param showLabels For state choropleths, whether or not to show state abbreviations on the map.
-#' Defaults to T. 
-#' @param renderAsInsets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
+#' @param ggplot_scale an optional ggplot2 scale to use. For example "scale_fill_brewer(palette=2)".
+#' @param warn_na If true, choroplethr will emit a warning when a) you give it regions that it is ignoring and b) you do not supply regions that it is rendering.
+#' @param labels If true, print state abbreviations.
+#' @param insets If true, Alaska and Hawaii will be rendered as insets on the map.  If false, all 50 states will be rendered
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
 #' @return A choropleth.
 #' 
@@ -157,18 +161,18 @@ state_render = function(choropleth.df, title, scaleName, showLabels, states, ren
 #' @importFrom scales comma
 #' @importFrom Hmisc cut2
 state_choropleth = function(df, 
-                            title          = "", 
-                            scaleName      = "",
-                            num_buckets    = 7, 
-                            warn_na        = FALSE,
-                            states         = state.abb,
-                            showLabels     = TRUE,
-                            renderAsInsets = TRUE,
-                            scale          = NULL)
+                            title        = "", 
+                            scale_name   = "",
+                            num_buckets  = 7, 
+                            states       = state.abb,
+                            ggplot_scale = NULL,
+                            warn_na      = FALSE,
+                            labels       = TRUE,
+                            insets       = TRUE)
 {
   df = state_clip(df, states) # remove elements we won't be rendering
   df = discretize(df, num_buckets) # if user requested, discretize the values
   
   choropleth.df = state_bind(df, warn_na) # bind df to map
-  state_render(choropleth.df, title, scaleName, showLabels, states, renderAsInsets, scale) # render map
+  state_render(choropleth.df, title, scale_name, labels, states, insets, ggplot_scale) # render map
 }
