@@ -25,7 +25,8 @@ Imports:
     grid,
     acs,
     stringr,
-    WDI
+    WDI,
+    R6
 Suggests:
     testthat,
     zipcode,
