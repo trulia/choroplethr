@@ -9,10 +9,6 @@ data(choroplethr)
 \description{
 A data.frame containing election results from the 2012 US Presidential election.
 }
-\examples{
-data(choroplethr)
-state_choropleth(df_president, title="Results from the 2012 US Presidential Election")
-}
 \references{
 Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014.
 }
