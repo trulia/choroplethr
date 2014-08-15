@@ -147,35 +147,6 @@ format_levels = function(x, nsep=" to ")
   paste0(prefix, paste(v,collapse=nsep), suffix)
 }
 
-# for us, discretizing values means 
-# 1. breaking the values into num_buckets equal intervals
-# 2. formatting the intervals e.g. with commas
-#' @importFrom Hmisc cut2
-discretize_values = function(values, num_buckets)
-{
-  # if cut2 uses scientific notation,  our attempt to put in commas will fail
-  scipen_orig = getOption("scipen")
-  options(scipen=999)
-  ret = cut2(values, g = num_buckets)
-  options(scipen=scipen_orig)
-  
-  levels(ret) = sapply(levels(ret), format_levels)
-  ret
-}
-
-discretize = function(df, num_buckets)
-{
-  stopifnot(is.data.frame(df))
-  stopifnot("value" %in% colnames(df))
-  stopifnot(is.numeric(num_buckets) && num_buckets > 0 && num_buckets < 10)
-  
-  if (is.numeric(df$value) && num_buckets > 1) {
-    df$value = discretize_values(df$value, num_buckets)
-  }
-  
-  df
-}
-
 stop_if_not_valid_choroplethr_object = function(x)
 {
   stopifnot(is.data.frame(x))
@@ -201,18 +172,4 @@ percent_change = function(a, b)
   x$value = ((x$value.y - x$value.x) / x$value.x)*100
   
   x
-}
-
-#' @importFrom scales comma
-#' @importFrom ggplot2 scale_fill_brewer
-get_default_discrete_scale = function(scaleName)
-{
-  scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black")
-}
-
-#' @importFrom scales comma
-#' @importFrom ggplot2 scale_fill_brewer
-get_default_continuous_scale = function(scale_name, min, max)
-{
-  scale_fill_continuous(scale_name, labels=comma, na.value="black", limits=c(min, max))   
 }

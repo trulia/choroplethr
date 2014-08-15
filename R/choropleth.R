@@ -1,61 +1,57 @@
-Choropleth <- R6Class("Choropleth", 
+#' @importFrom R6 R6Class
+Choropleth = R6Class("Choropleth", 
   public = list(
-    # every choropleth map in this package needs to have these vars, and do this input validation
-    initialize = function(df,                    # input from user
-                          title        = "",     # title for map
-                          scale_name   = "",     # title for scale
-                          num_buckets  = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
-                          warn_na      = FALSE,  # warn user on clipped or missing values                      
-                          ggplot_scale = NULL)   # override default scale
+    title        = "",    # title for map
+    scale_name   = "",    # title for scale
+    warn         = FALSE, # warn user on clipped or missing values                      
+    ggplot_scale = NULL,  # override default scale
+    
+    # a choropleth map is defined by these 3 variables
+    # a data.frame from a user that columns called "region" and "value"
+    # a data.frame of a map
+    # a data.frame that lists names, as they appear in map.df
+    initialize = function(map.df, map.names, user.df)
     {
       # all input, regardless of map, is just a bunch of (region, value) pairs
-      stopifnot(is.data.frame(df))
-      stopifnot(c("region", "value") %in% colnames(df))
-      self$df = df
-      self$df = self$df[, c("region", "value")]
+      stopifnot(is.data.frame(user.df))
+      stopifnot(c("region", "value") %in% colnames(user.df))
+      private$user.df = user.df
+      private$user.df = private$user.df[, c("region", "value")]
       
-      self$title        = title
-      self$scale_name   = scale_name
-      stopifnot(is.numeric(num_buckets) && num_buckets > 0 && num_buckets < 10)
-      self$num_buckets  = num_buckets
-      self$warn_na      = warn_na
-      self$ggplot_scale = ggplot_scale
+      private$map.df    = map.df
+      private$map.names = map.names
+    },
+
+    # explain what num_buckets means
+    render = function(num_buckets=7) {
+      private::num_buckets = num_buckets
+      
+      self::prepare_map()
+      
+      # child classes will render the resulting data as they see fit
     }
-    
-    render = function() {}),
+  ),
   
   private = list(
-    # 
-    df            = NULL,   # input from user
-    choropleth.df = NULL    # result of binding user data with our map data
-
-    # visual appearance - users often want to tweak these options
-    title         = "",     # title for map
-    scale_name    = "",     # title for scale
+    # the key objects for this class
+    user.df       = NULL, # input from user
+    map.df        = NULL, # geometry of the map
+    choropleth.df = NULL, # result of binding user data with our map data
+    map.names     = NULL, # a helper object that lists various naming conventions for the regions
+    
     num_buckets   = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
     regions       = NULL,   # if not NULL, only render the regions listed
     
-    # less common options
-    warn_na       = FALSE,  # warn user on clipped or missing values                      
-    ggplot_scale  = NULL,   # override default scale
-
-    # information about the map
-    map.df        = NULL,
-    map.names     = NULL,
+    # If input comes in as "NY" but map uses "new york", rename the input to match the map
+    rename_regions = function()
+    {
+      stop("Base classes should override this function")
+    },    
     
-    
-{
-    df = NULL, # what user wants to visualize
-    title 
-    map = NULL, # geometry we're matching df to. Every child class needs to set this itself
-    warn = FALSE, # if true, emit warning when we clip values or user supplies NA values
-    num_buckets = NULL, # currently our only scaling option is to equally size buckets
-    
-    default_continuous_scale = scale_fill_continuous(scale_name, labels=comma, na.value="black", limits=c(min, max))   
-    default_discrete_scale =   scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black")
-
-    
-    clip = function() {},
+    # perhaps user only want to view, e.g., states on the west coast
+    clip = function() {
+      stop("Base classes should override")
+    },
     
     # for us, discretizing values means 
     # 1. breaking the values into num_buckets equal intervals
@@ -63,31 +59,41 @@ Choropleth <- R6Class("Choropleth",
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(self$df$value) && self$num_buckets > 1) {
-        self$df$value = discretize_values(df$value, num_buckets)
-      
+      if (is.numeric(private$user.df$value) && private$num_buckets > 1) {
+        
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        self$df$value = cut2(self$df$value, g = self$num_buckets)
+        private$user.df$value = cut2(private$user.df$value, g = private$num_buckets)
         options(scipen=scipen_orig)
         
-        levels(self$df$value) = sapply(levels(self$ret), format_levels)
+        levels(private$user.df$value) = sapply(levels(private$user.df$value), format_levels)
       }
     },
-    bind = function() {},
-                  
-    )
-                
-                continuous_scale= ...,
-                discrete_scale = ...,
-  ),
-  
-  methods = list(
-                initialize = function(x = 1) .self$x <- x,
-                clip = function() {},
-                discretize = function() {},
-                bind = function() {},
-                render = function() {}
-  )
+    
+    bind = function() {
+      stop("Base classes should override")
+    },
+    
+    prepare_map = function()
+    {
+      # before a map can really be rendered, you need to ...
+      private$rename_regions() # rename input regions (e.g. "NY") to match regions in map (e.g. "new york")
+      private$clip() # clip the input - e.g. remove value for Washington DC on a 50 state map
+      private$discretize() # discretize the input. normally people don't want a continuous scale
+      private$bind() # bind the input values to the map values
+    },
+    
+    get_scale = function()
+    {
+      if (!is.null(ggplot_scale)) 
+      {
+        ggplot_scale
+      } else if (private$num_buckets == 1) {
+        scale_fill_continuous(self::scale_name, labels=comma, na.value="black", limits=c(min, max))
+      } else {
+        scale_fill_brewer(self::scale_name, drop=FALSE, labels=comma, na.value="black")        
+      }
+    })
+    
 )
