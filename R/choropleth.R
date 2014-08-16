@@ -1,4 +1,5 @@
 #' @importFrom R6 R6Class
+#' @importFrom scales comma
 Choropleth = R6Class("Choropleth", 
   public = list(
     title        = "",    # title for map
@@ -15,29 +16,27 @@ Choropleth = R6Class("Choropleth",
       # all input, regardless of map, is just a bunch of (region, value) pairs
       stopifnot(is.data.frame(user.df))
       stopifnot(c("region", "value") %in% colnames(user.df))
-      private$user.df = user.df
-      private$user.df = private$user.df[, c("region", "value")]
+      self$user.df = user.df
+      self$user.df = self$user.df[, c("region", "value")]
       
-      private$map.df    = map.df
-      private$map.names = map.names
+      self$map.df    = map.df
+      self$map.names = map.names
     },
 
     # explain what num_buckets means
     render = function(num_buckets=7) 
     {
       stopifnot(num_buckets > 1 && num_buckets < 10)
-      private::num_buckets = num_buckets
+      self$num_buckets = num_buckets
       
-      private$prepare_map()
+      self$prepare_map()
       
-      ggplot(private$choropleth.df, aes(long, lat, group = group)) +
+      ggplot(self$choropleth.df, aes(long, lat, group = group)) +
         geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
         get_scale() +
         theme_clean()
-    }
-  ),
-  
-  private = list(
+    },
+
     # the key objects for this class
     user.df       = NULL, # input from user
     map.df        = NULL, # geometry of the map
@@ -64,15 +63,15 @@ Choropleth = R6Class("Choropleth",
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(private$user.df$value) && private$num_buckets > 1) {
+      if (is.numeric(self$user.df$value) && self$num_buckets > 1) {
         
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        private$user.df$value = cut2(private$user.df$value, g = private$num_buckets)
+        self$user.df$value = cut2(self$user.df$value, g = self$num_buckets)
         options(scipen=scipen_orig)
         
-        levels(private$user.df$value) = sapply(levels(private$user.df$value), format_levels)
+        levels(self$user.df$value) = sapply(levels(self$user.df$value), format_levels)
       }
     },
     
@@ -83,10 +82,10 @@ Choropleth = R6Class("Choropleth",
     prepare_map = function()
     {
       # before a map can really be rendered, you need to ...
-      private$rename_regions() # rename input regions (e.g. "NY") to match regions in map (e.g. "new york")
-      private$clip() # clip the input - e.g. remove value for Washington DC on a 50 state map
-      private$discretize() # discretize the input. normally people don't want a continuous scale
-      private$bind() # bind the input values to the map values
+      self$rename_regions() # rename input regions (e.g. "NY") to match regions in map (e.g. "new york")
+      self$clip() # clip the input - e.g. remove value for Washington DC on a 50 state map
+      self$discretize() # discretize the input. normally people don't want a continuous scale
+      self$bind() # bind the input values to the map values
     },
     
     get_scale = function()
@@ -94,7 +93,7 @@ Choropleth = R6Class("Choropleth",
       if (!is.null(ggplot_scale)) 
       {
         ggplot_scale
-      } else if (private$num_buckets == 1) {
+      } else if (self$num_buckets == 1) {
         scale_fill_continuous(self$scale_name, labels=comma, na.value="black", limits=c(min, max))
       } else {
         scale_fill_brewer(self$scale_name, drop=FALSE, labels=comma, na.value="black")        
@@ -118,6 +117,22 @@ Choropleth = R6Class("Choropleth",
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
-    }
-    )
+    },
+    
+    # like theme clean, but also remove the legend
+    theme_inset = function()
+    {
+      theme(
+        legend.position   = "none",
+        axis.title        = element_blank(),
+        axis.text         = element_blank(),
+        panel.background  = element_blank(),
+        panel.grid        = element_blank(),
+        axis.ticks.length = unit(0, "cm"),
+        axis.ticks.margin = unit(0, "cm"),
+        panel.margin      = unit(0, "lines"),
+        plot.margin       = unit(c(0, 0, 0, 0), "lines"),
+        complete          = TRUE
+      )
+    })
 )

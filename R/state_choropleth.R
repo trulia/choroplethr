@@ -10,10 +10,66 @@ StateChoropleth = R6Class("StateChoropleth",
       data(state.map)
       data(state.names)
       super$initialize(state.map, state.names, user.df)
-    }),
-  
-  private = list(
+    },
     
+    states = state.abb, # which states should I render?
+    show_labels = TRUE, # should I put e.g. "CA" over California?
+    
+    p=function() { prepare_map() },
+    
+    render = function(num_buckets = 7)
+    {
+      # only show the states the user asked
+      #choropleth.df = choropleth.df[choropleth.df$region %in% normalize_state_names(states), ]
+      
+      # if user requested to render all 50 states, 
+      # create separate data.frames for AK and HI and render them as separate images
+      # cache min, max value of entire data.frame to make scales consistent between all 3 images
+      min_val = 0
+      max_val = 0
+      if (is.numeric(self$choropleth.df$value))
+      {
+        min_val = min(self$choropleth.df$value)
+        max_val = max(self$choropleth.df$value)
+      }
+
+      if (all(self$states == state.abb))
+      {
+        # subset AK and render it
+        alaska.df     = self$choropleth.df[self$choropleth.df$region=='alaska',]
+        alaska.ggplot = self$print_state_choropleth(alaska.df, "", self$theme_inset(), min_val, max_val)    
+        alaska.grob   = ggplotGrob(alaska.ggplot)
+        
+        # subset HI and render it
+        hawaii.df     = self$choropleth.df[self$choropleth.df$region=='hawaii',]
+        hawaii.ggplot = self$print_state_choropleth(hawaii.df, "", self$theme_inset(), min_val, max_val)
+        hawaii.grob   = ggplotGrob(hawaii.ggplot)
+        
+        # remove AK and HI from the "real" df
+        self$choropleth.df = self$choropleth.df[!self$choropleth.df$region %in% c("alaska", "hawaii"), ]
+      }
+      
+      choropleth = self$print_state_choropleth(self$choropleth.df, self$scaleName, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
+      
+      if (all(states == state.abb))
+      {
+        choropleth = choropleth + 
+          annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
+          annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)    
+      }
+      
+      # let's assume that people who want labels don't need them for AK and HI
+      if (self$show_labels) {
+        df_state_labels = data.frame(long = state.center$x, lat = state.center$y, label = state.abb)
+        df_state_labels = df_state_labels[!df_state_labels$label %in% c("AK", "HI"), ]
+        df_state_labels = df_state_labels[df_state_labels$label %in% states, ]
+        choropleth = choropleth + geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
+      }
+      
+      choropleth
+      
+    },
+      
     # There are several ways that people might call a state.  E.g. "New York", "NY", etc.
     # Convert common namings to "new york", which is what the map.df uses
     rename_regions = function()
@@ -22,20 +78,20 @@ StateChoropleth = R6Class("StateChoropleth",
       # fips codes are integers (at least in state.fips$fips), which might be a bug since technically
       # they should have leading 0's.
       # TODO: emit warnings for states that are not present
-      if (is.factor(private$user.df$region))
+      if (is.factor(self$user.df$region))
       {
-        private$user.df$region = as.character(private$user.df$region)
+        self$user.df$region = as.character(self$user.df$region)
       }
       
-      if (is.character(private$user.df$region))
+      if (is.character(self$user.df$region))
       {
-        if (all(nchar(private$user.df$region) == 2))
+        if (all(nchar(self$user.df$region) == 2))
         {
-          private$user.df$region = toupper(private$user.df$region) # "Ny" -> "NY"
-          private$user.df$region = tolower(state.name[match(private$user.df$region, state.abb)])
+          self$user.df$region = toupper(self$user.df$region) # "Ny" -> "NY"
+          self$user.df$region = tolower(state.name[match(self$user.df$region, state.abb)])
         } else {      
           # otherwise assume "New York", "new york", etc.
-          private$user.df$region = tolower(private$user.df$region);
+          self$user.df$region = tolower(self$user.df$region);
         }
       }
     },
@@ -43,13 +99,13 @@ StateChoropleth = R6Class("StateChoropleth",
     clip = function()
     {
       choroplethr.state.names = tolower(state.name)
-      private$user.df = private$user.df[private$user.df$region %in% choroplethr.state.names, ]
+      self$user.df = self$user.df[self$user.df$region %in% choroplethr.state.names, ]
     },
     
     bind = function()
     {      
-      private$choropleth.df = left_join(private$map.df, private$user.df, by="region")
-      missing_states = unique(private$choropleth.df[is.na(private$choropleth.df$value), ]$region)
+      self$choropleth.df = left_join(self$map.df, self$user.df, by="region")
+      missing_states = unique(self$choropleth.df[is.na(self$choropleth.df$value), ]$region)
       # while the map contains Washington, DC, choroplethr does not support it because it 
       # is not in state.abb and is not technically a state.
       missing_states = setdiff(missing_states, "district of columbia")
@@ -60,6 +116,26 @@ StateChoropleth = R6Class("StateChoropleth",
         print(warning_string);
       }
       
-      private$choropleth.df = private$choropleth.df[order(private$choropleth.df$order), ];
-    })
+      self$choropleth.df = self$choropleth.df[order(self$choropleth.df$order), ];
+    },
+    
+    print_state_choropleth = function(choropleth.df, scaleName, theme, min, max)
+    {
+      # maps with numeric values are mapped with a continuous scale
+      if (is.numeric(choropleth.df$value))
+      {
+        ggplot(choropleth.df, aes(long, lat, group = group)) +
+          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          scale_fill_continuous(scaleName, labels=comma, na.value="black", limits=c(min, max)) + # use a continuous scale
+          theme;
+      } else { # assume character or factor
+        stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
+        
+        ggplot(choropleth.df, aes(long, lat, group = group)) +
+          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          scale_fill_brewer(scaleName, drop=FALSE, labels=comma, na.value="black") + # use discrete scale for buckets
+          theme;
+      }   
+    }
+  )
 )
