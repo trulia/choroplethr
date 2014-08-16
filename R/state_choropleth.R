@@ -19,6 +19,8 @@ StateChoropleth = R6Class("StateChoropleth",
     
     render = function(num_buckets = 7)
     {
+      self$prepare_map()
+      
       # only show the states the user asked
       #choropleth.df = choropleth.df[choropleth.df$region %in% normalize_state_names(states), ]
       
