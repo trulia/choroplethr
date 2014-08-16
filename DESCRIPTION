@@ -20,7 +20,7 @@ License: BSD_3_clause + file LICENSE
 Imports:
     ggplot2,
     scales,
-    plyr,
+    dplyr,
     Hmisc,
     grid,
     acs,

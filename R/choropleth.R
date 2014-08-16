@@ -23,12 +23,17 @@ Choropleth = R6Class("Choropleth",
     },
 
     # explain what num_buckets means
-    render = function(num_buckets=7) {
+    render = function(num_buckets=7) 
+    {
+      stopifnot(num_buckets > 1 && num_buckets < 10)
       private::num_buckets = num_buckets
       
-      self::prepare_map()
+      private$prepare_map()
       
-      # child classes will render the resulting data as they see fit
+      ggplot(private$choropleth.df, aes(long, lat, group = group)) +
+        geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+        get_scale() +
+        theme_clean()
     }
   ),
   
@@ -90,10 +95,29 @@ Choropleth = R6Class("Choropleth",
       {
         ggplot_scale
       } else if (private$num_buckets == 1) {
-        scale_fill_continuous(self::scale_name, labels=comma, na.value="black", limits=c(min, max))
+        scale_fill_continuous(self$scale_name, labels=comma, na.value="black", limits=c(min, max))
       } else {
-        scale_fill_brewer(self::scale_name, drop=FALSE, labels=comma, na.value="black")        
+        scale_fill_brewer(self$scale_name, drop=FALSE, labels=comma, na.value="black")        
       }
-    })
+    },
     
+    #' Removes axes, margins and sets the background to white.
+    #' This code, with minor modifications, comes from section 13.19 
+    # "Making a Map with a Clean Background" of "R Graphics Cookbook" by Winston Chang.  
+    # Reused with permission. 
+    theme_clean = function()
+    {
+      theme(
+        axis.title        = element_blank(),
+        axis.text         = element_blank(),
+        panel.background  = element_blank(),
+        panel.grid        = element_blank(),
+        axis.ticks.length = unit(0, "cm"),
+        axis.ticks.margin = unit(0, "cm"),
+        panel.margin      = unit(0, "lines"),
+        plot.margin       = unit(c(0, 0, 0, 0), "lines"),
+        complete          = TRUE
+      )
+    }
+    )
 )

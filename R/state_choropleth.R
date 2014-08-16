@@ -1,25 +1,17 @@
+#' @export
+#' @importFrom dplyr left_join
 StateChoropleth = R6Class("StateChoropleth",
   inherit = Choropleth,
+  
   public = list(
+    # initialize with us state map
     initialize = function(user.df)
     {
       data(state.map)
       data(state.names)
       super$initialize(state.map, state.names, user.df)
-    },
-    
-    render = function(num_buckets=7)
-    {
-      stopifnot(num_buckets > 1 && num_buckets < 10)
-      private$num_buckets = num_buckets
-      
-      private$prepare_map()
-      
-      ggplot(private$choropleth.df, aes(long, lat, group = group)) +
-        geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-        ggplot_scale
-    }
-    ),
+    }),
+  
   private = list(
     
     # There are several ways that people might call a state.  E.g. "New York", "NY", etc.
@@ -54,7 +46,6 @@ StateChoropleth = R6Class("StateChoropleth",
       private$user.df = private$user.df[private$user.df$region %in% choroplethr.state.names, ]
     },
     
-    #' @importFrom dplyr inner_join
     bind = function()
     {      
       private$choropleth.df = left_join(private$map.df, private$user.df, by="region")
@@ -70,6 +61,5 @@ StateChoropleth = R6Class("StateChoropleth",
       }
       
       private$choropleth.df = private$choropleth.df[order(private$choropleth.df$order), ];
-    }
-    )
+    })
 )
