@@ -12,7 +12,6 @@ StateChoropleth = R6Class("StateChoropleth",
       super$initialize(state.map, state.names, user.df)
     },
     
-    states = state.abb, # which states should I render?
     show_labels = TRUE, # should I put e.g. "CA" over California?
     
     render = function(num_buckets = 7)
@@ -33,7 +32,7 @@ StateChoropleth = R6Class("StateChoropleth",
         max_val = max(self$choropleth.df$value)
       }
 
-      if (all(self$states == state.abb))
+      if (is.null(self$regions))
       {
         # subset AK and render it
         alaska.df     = self$choropleth.df[self$choropleth.df$region=='alaska',]
@@ -51,7 +50,7 @@ StateChoropleth = R6Class("StateChoropleth",
       
       choropleth = self$print_state_choropleth(self$choropleth.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
       
-      if (all(states == state.abb))
+      if (is.null(self$regions))
       {
         choropleth = choropleth + 
           annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -68,56 +67,7 @@ StateChoropleth = R6Class("StateChoropleth",
       
       choropleth    
     },
-      
-    # There are several ways that people might call a state.  E.g. "New York", "NY", etc.
-    # Convert common namings to "new york", which is what the map.df uses
-    rename_regions = function()
-    {
-      # TODO: handle FIPS codes for states
-      # fips codes are integers (at least in state.fips$fips), which might be a bug since technically
-      # they should have leading 0's.
-      # TODO: emit warnings for states that are not present
-      if (is.factor(self$user.df$region))
-      {
-        self$user.df$region = as.character(self$user.df$region)
-      }
-      
-      if (is.character(self$user.df$region))
-      {
-        if (all(nchar(self$user.df$region) == 2))
-        {
-          self$user.df$region = toupper(self$user.df$region) # "Ny" -> "NY"
-          self$user.df$region = tolower(state.name[match(self$user.df$region, state.abb)])
-        } else {      
-          # otherwise assume "New York", "new york", etc.
-          self$user.df$region = tolower(self$user.df$region);
-        }
-      }
-    },
-    
-    clip = function()
-    {
-      choroplethr.state.names = tolower(state.name)
-      self$user.df = self$user.df[self$user.df$region %in% choroplethr.state.names, ]
-    },
-    
-    bind = function()
-    {      
-      self$choropleth.df = left_join(self$map.df, self$user.df, by="region")
-      missing_states = unique(self$choropleth.df[is.na(self$choropleth.df$value), ]$region)
-      # while the map contains Washington, DC, choroplethr does not support it because it 
-      # is not in state.abb and is not technically a state.
-      missing_states = setdiff(missing_states, "district of columbia")
-      if (self$warn && length(missing_states) > 0)
-      {
-        missing_states = paste(missing_states, collapse = ", ");
-        warning_string = paste("The following regions were missing and are being set to NA:", missing_states);
-        print(warning_string);
-      }
-      
-      self$choropleth.df = self$choropleth.df[order(self$choropleth.df$order), ];
-    },
-    
+              
     print_state_choropleth = function(choropleth.df, scale_name, theme, min, max)
     {
       # maps with numeric values are mapped with a continuous scale

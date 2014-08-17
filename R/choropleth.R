@@ -46,15 +46,13 @@ Choropleth = R6Class("Choropleth",
     num_buckets   = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
     regions       = NULL,   # if not NULL, only render the regions listed
     
-    # If input comes in as "NY" but map uses "new york", rename the input to match the map
-    rename_regions = function()
-    {
-      stop("Base classes should override this function")
-    },    
-    
-    # perhaps user only want to view, e.g., states on the west coast
+    # support e.g. users just viewing states on the west coast
     clip = function() {
-      stop("Base classes should override")
+      if (!is.null(self$regions))
+      {
+        self$user.df = self$user.df[self$user.df$region %in% self$regions, ]
+        self$map.df  = self$map.df[self$map.df$region %in% self$regions, ]
+      }
     },
     
     # for us, discretizing values means 
@@ -76,13 +74,20 @@ Choropleth = R6Class("Choropleth",
     },
     
     bind = function() {
-      stop("Base classes should override")
+      self$choropleth.df = left_join(self$map.df, self$user.df, by="region")
+      missing_regions = unique(self$choropleth.df[is.na(self$choropleth.df$value), ]$region)
+      if (self$warn && length(missing_regions) > 0)
+      {
+        missing_regions = paste(missing_regions, collapse = ", ");
+        warning_string = paste("The following regions were missing and are being set to NA:", missing_regions);
+        print(warning_string);
+      }
+      
+      self$choropleth.df = self$choropleth.df[order(self$choropleth.df$order), ];
     },
     
     prepare_map = function()
     {
-      # before a map can really be rendered, you need to ...
-      self$rename_regions() # rename input regions (e.g. "NY") to match regions in map (e.g. "new york")
       self$clip() # clip the input - e.g. remove value for Washington DC on a 50 state map
       self$discretize() # discretize the input. normally people don't want a continuous scale
       self$bind() # bind the input values to the map values
