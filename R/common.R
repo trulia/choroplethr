@@ -63,9 +63,6 @@ subset_map = function(lod, states=state.abb, countries=NULL)
   df
 }
 
-
-
-
 #' Make the output of cut2 a bit easier to read
 #' 
 #' Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.

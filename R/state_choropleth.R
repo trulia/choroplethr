@@ -15,8 +15,6 @@ StateChoropleth = R6Class("StateChoropleth",
     states = state.abb, # which states should I render?
     show_labels = TRUE, # should I put e.g. "CA" over California?
     
-    p=function() { prepare_map() },
-    
     render = function(num_buckets = 7)
     {
       self$prepare_map()
@@ -68,8 +66,7 @@ StateChoropleth = R6Class("StateChoropleth",
         choropleth = choropleth + geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
       }
       
-      choropleth
-      
+      choropleth    
     },
       
     # There are several ways that people might call a state.  E.g. "New York", "NY", etc.
@@ -128,14 +125,14 @@ StateChoropleth = R6Class("StateChoropleth",
       {
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          scale_fill_continuous(scale_name, labels=comma, na.value="black", limits=c(min, max)) + # use a continuous scale
+          get_scale(min, max)
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          scale_fill_brewer(scale_name, drop=FALSE, labels=comma, na.value="black") + # use discrete scale for buckets
+          get_scale() + 
           theme;
       }   
     }

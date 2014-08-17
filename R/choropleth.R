@@ -88,12 +88,14 @@ Choropleth = R6Class("Choropleth",
       self$bind() # bind the input values to the map values
     },
     
-    get_scale = function()
+    #' @importFrom scales comma
+    get_scale = function(min=NA, max=NA)
     {
       if (!is.null(ggplot_scale)) 
       {
         ggplot_scale
       } else if (self$num_buckets == 1) {
+        stopifnot(!is.na(min) && !is.na(max))
         scale_fill_continuous(self$scale_name, labels=comma, na.value="black", limits=c(min, max))
       } else {
         scale_fill_brewer(self$scale_name, drop=FALSE, labels=comma, na.value="black")        
