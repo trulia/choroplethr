@@ -32,9 +32,9 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
 #' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
-#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
-#' @importFrom grid unit
+#' @importFrom grid unit grobTree
 country_choropleth = function(df, title="", legend_name="", num_buckets=7)
 {
   c = CountryChoropleth$new(df)
