@@ -1,3 +1,4 @@
+#' Create a state-level choropleth
 #' @export
 #' @importFrom dplyr left_join
 StateChoropleth = R6Class("StateChoropleth",
@@ -8,8 +9,7 @@ StateChoropleth = R6Class("StateChoropleth",
     initialize = function(user.df)
     {
       data(state.map)
-      data(state.names)
-      super$initialize(state.map, state.names, user.df)
+      super$initialize(state.map, user.df)
     },
     
     show_labels = TRUE, # should I put e.g. "CA" over California?

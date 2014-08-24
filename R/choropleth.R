@@ -3,24 +3,24 @@
 Choropleth = R6Class("Choropleth", 
   public = list(
     title        = "",    # title for map
-    scale_name   = "",    # title for scale
+    legend_name  = "",    # title for legend
     warn         = FALSE, # warn user on clipped or missing values                      
     ggplot_scale = NULL,  # override default scale
     
-    # a choropleth map is defined by these 3 variables
-    # a data.frame from a user that columns called "region" and "value"
+    # a choropleth map is defined by these two variables
     # a data.frame of a map
-    # a data.frame that lists names, as they appear in map.df
-    initialize = function(map.df, map.names, user.df)
+    # a data.frame that expresses values for regions of each map
+    initialize = function(map.df, user.df)
     {
+      stopifnot(is.data.frame(map.df))
+      stopifnot("region" %in% colnames(map.df))
+      self$map.df = map.df
+      
       # all input, regardless of map, is just a bunch of (region, value) pairs
       stopifnot(is.data.frame(user.df))
       stopifnot(c("region", "value") %in% colnames(user.df))
       self$user.df = user.df
       self$user.df = self$user.df[, c("region", "value")]
-      
-      self$map.df    = map.df
-      self$map.names = map.names
     },
 
     # explain what num_buckets means
@@ -46,6 +46,8 @@ Choropleth = R6Class("Choropleth",
     num_buckets   = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
     regions       = NULL,   # if not NULL, only render the regions listed
     
+    # TODO: What if self$regions is NULL and user enters "puerto rico"?
+    # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
       if (!is.null(self$regions))
@@ -101,9 +103,9 @@ Choropleth = R6Class("Choropleth",
         ggplot_scale
       } else if (self$num_buckets == 1) {
         stopifnot(!is.na(min) && !is.na(max))
-        scale_fill_continuous(self$scale_name, labels=comma, na.value="black", limits=c(min, max))
+        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min, max))
       } else {
-        scale_fill_brewer(self$scale_name, drop=FALSE, labels=comma, na.value="black")        
+        scale_fill_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
       }
     },
     
@@ -141,5 +143,49 @@ Choropleth = R6Class("Choropleth",
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
+    },
+  
+    #' Make the output of cut2 a bit easier to read
+    #' 
+    #' Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.
+    #' 
+    #' @param x A factor with levels created via Hmisc::cut2.
+    #' @param nsep A separator which you wish to use.  Defaults to " to ".
+    #' 
+    #' @export
+    #' @examples
+    #' data(choroplethr)
+    #'
+    #' x = Hmisc::cut2(df_pop_state$value, g=3)
+    #' levels(x)
+    #' # [1] "[ 562803, 2851183)" "[2851183, 6353226)" "[6353226,37325068]"
+    #' levels(x) = sapply(levels(x), format_levels)
+    #' levels(x)
+    #' # [1] "[562,803 to 2,851,183)"    "[2,851,183 to 6,353,226)"  "[6,353,226 to 37,325,068]"
+    #'
+    #' @seealso \url{http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/}, which this implementation is based on.
+    #' @importFrom stringr str_extract_all
+    format_levels = function(x, nsep=" to ") 
+    {
+      n = str_extract_all(x, "[-+]?[0-9]*\\.?[0-9]+")[[1]]  # extract numbers
+      v = format(as.numeric(n), big.mark=",", trim=TRUE) # change format
+      x = as.character(x)
+      
+      # preserve starting [ or ( if appropriate
+      prefix = ""
+      if (substring(x, 1, 1) %in% c("[", "("))
+      {
+        prefix = substring(x, 1, 1)
+      }
+      
+      # preserve ending ] or ) if appropriate
+      suffix = ""
+      if (substring(x, nchar(x), nchar(x)) %in% c("]", ")"))
+      {
+        suffix = substring(x, nchar(x), nchar(x))
+      }
+      
+      # recombine
+      paste0(prefix, paste(v,collapse=nsep), suffix)
     })
 )

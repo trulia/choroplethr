@@ -10,7 +10,7 @@ data(choroplethr)
 ZCTAs are intended to be roughly analogous to postal ZIP codes.
 }
 \references{
-Taken from the US American Community Survey (ACS) 5 year estimates with \link{get_acs_df} using table B01003.
+Taken from the US American Community Survey (ACS) 5 year estimates.
 ZCTAs, and their realationship to ZIP codes, are explained here \url{https://www.census.gov/geo/reference/zctas.html}.
 }
 \keyword{data}

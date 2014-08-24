@@ -10,7 +10,7 @@ data(choroplethr)
 A data.frame containing population estimates for US States in 2012.
 }
 \references{
-Taken from the US American Community Survey (ACS) 5 year estimates with \link{get_acs_df} using table B01003.
+Taken from the US American Community Survey (ACS) 5 year estimates.
 }
 \keyword{data}
 
