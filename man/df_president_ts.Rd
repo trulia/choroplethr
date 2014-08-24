@@ -4,7 +4,7 @@
 \alias{df_president_ts}
 \title{A data.frame containing all US presdiential election results from 1789 to 2012}
 \usage{
-data(choroplethr)
+data(df_president_ts)
 }
 \description{
 Legend:

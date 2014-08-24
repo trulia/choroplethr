@@ -4,7 +4,7 @@
 \alias{df_pop_state}
 \title{A data.frame containing population estimates for US States in 2012.}
 \usage{
-data(choroplethr)
+data(df_pop_state)
 }
 \description{
 A data.frame containing population estimates for US States in 2012.

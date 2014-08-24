@@ -101,7 +101,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' 
 #' @examples
-#' data(choroplethr)
+#' data(df_pop_state)
 #' state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
 #'
 #' @export
