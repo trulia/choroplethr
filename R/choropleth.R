@@ -34,7 +34,8 @@ Choropleth = R6Class("Choropleth",
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
         geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
         get_scale() +
-        theme_clean()
+        theme_clean() + 
+        ggtitle(self$title)
     },
 
     # the key objects for this class

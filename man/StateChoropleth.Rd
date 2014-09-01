@@ -7,28 +7,28 @@
  $ new       :function (...)  
  $ classname : chr "StateChoropleth"
  $ public    :List of 22
-  ..$ title                 : chr ""
-  ..$ legend_name           : chr ""
-  ..$ warn                  : logi FALSE
-  ..$ ggplot_scale          : NULL
-  ..$ user.df               : NULL
-  ..$ map.df                : NULL
-  ..$ choropleth.df         : NULL
-  ..$ map.names             : NULL
-  ..$ num_buckets           : num 7
-  ..$ regions               : NULL
-  ..$ clip                  :function ()  
-  ..$ discretize            :function ()  
-  ..$ bind                  :function ()  
-  ..$ prepare_map           :function ()  
-  ..$ get_scale             :function (min = NA, max = NA)  
-  ..$ theme_clean           :function ()  
-  ..$ theme_inset           :function ()  
-  ..$ format_levels         :function (x, nsep = " to ")  
-  ..$ initialize            :function (user.df)  
-  ..$ show_labels           : logi TRUE
-  ..$ render                :function (num_buckets = 7)  
-  ..$ print_state_choropleth:function (choropleth.df, scale_name, theme, min, max)  
+  ..$ title        : chr ""
+  ..$ legend_name  : chr ""
+  ..$ warn         : logi FALSE
+  ..$ ggplot_scale : NULL
+  ..$ user.df      : NULL
+  ..$ map.df       : NULL
+  ..$ choropleth.df: NULL
+  ..$ map.names    : NULL
+  ..$ num_buckets  : num 7
+  ..$ regions      : NULL
+  ..$ clip         :function ()  
+  ..$ discretize   :function ()  
+  ..$ bind         :function ()  
+  ..$ prepare_map  :function ()  
+  ..$ get_scale    :function (min = NA, max = NA)  
+  ..$ theme_clean  :function ()  
+  ..$ theme_inset  :function ()  
+  ..$ format_levels:function (x, nsep = " to ")  
+  ..$ initialize   :function (user.df)  
+  ..$ show_labels  : logi TRUE
+  ..$ render       :function (num_buckets = 7)  
+  ..$ render_helper:function (choropleth.df, scale_name, theme, min, max)  
  $ private   : NULL
  $ active    : NULL
  $ inherit   :List of 8
@@ -58,10 +58,10 @@
   ..$ private   : NULL
   ..$ active    : NULL
   ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7fb8622b3140> 
+  ..$ parent_env:<environment: 0x7fdd33fb5a68> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fb8622b3140> 
+ $ parent_env:<environment: 0x7fdd33fb5a68> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}
