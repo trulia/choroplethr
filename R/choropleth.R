@@ -5,7 +5,8 @@ Choropleth = R6Class("Choropleth",
     title        = "",    # title for map
     legend_name  = "",    # title for legend
     warn         = FALSE, # warn user on clipped or missing values                      
-    ggplot_scale = NULL,  # override default scale
+    ggplot_scale = NULL,  # override default scale.
+                          # warning, you need to set "drop=FALSE" for insets to render correctly
     
     # a choropleth map is defined by these two variables
     # a data.frame of a map

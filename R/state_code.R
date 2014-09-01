@@ -12,8 +12,6 @@ StateChoropleth = R6Class("StateChoropleth",
       super$initialize(state.map, user.df)
     },
     
-    show_labels = TRUE, # should I put e.g. "CA" over California?
-    
     # render the map, with AK and HI as insets
     render = function(num_buckets=7)
     {
@@ -45,10 +43,9 @@ StateChoropleth = R6Class("StateChoropleth",
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$region %in% c("alaska", "hawaii"), ]
+      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
       
-      choropleth = render_helper(self$choropleth.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
-      
-      choropleth + 
+      continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
         annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) +   
         ggtitle(self$title)
@@ -61,14 +58,14 @@ StateChoropleth = R6Class("StateChoropleth",
       {
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          scale_fill_continuous(scale_name, labels=comma, na.value="black", limits=c(min, max)) + # use a continuous scale
+          get_scale() + 
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          scale_fill_brewer(scale_name, drop=FALSE, labels=comma, na.value="black") + # use discrete scale for buckets
+          get_scale() + 
           theme;
       }
     }
