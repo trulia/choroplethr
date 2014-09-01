@@ -1,0 +1,102 @@
+#' Create a county-level choropleth
+#' @export
+#' @importFrom dplyr left_join
+CountyChoropleth = R6Class("CountyChoropleth",
+  inherit = Choropleth,
+  
+  public = list(
+    # initialize with us state map
+    initialize = function(user.df)
+    {
+      data(state.map)
+      super$initialize(state.map, user.df)
+    },
+    
+    # render the map, with AK and HI as insets
+    render = function(num_buckets=7)
+    {
+      stopifnot(num_buckets > 1 && num_buckets < 10)
+      self$num_buckets = num_buckets
+      
+      self$prepare_map()
+      
+      # if user requested to render all 50 states, 
+      # create separate data.frames for AK and HI and render them as separate images
+      # cache min, max value of entire data.frame to make scales consistent between all 3 images
+      min_val = 0
+      max_val = 0
+      if (is.numeric(self$choropleth.df$value))
+      {
+        min_val = min(self$choropleth.df$value)
+        max_val = max(self$choropleth.df$value)
+      }
+      
+      # subset AK and render it
+      alaska.df     = self$choropleth.df[self$choropleth.df$region=='alaska',]
+      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)    
+      alaska.grob   = ggplotGrob(alaska.ggplot)
+      
+      # subset HI and render it
+      hawaii.df     = self$choropleth.df[self$choropleth.df$region=='hawaii',]
+      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset(), min_val, max_val)
+      hawaii.grob   = ggplotGrob(hawaii.ggplot)
+      
+      # remove AK and HI from the "real" df
+      continental.df = self$choropleth.df[!self$choropleth.df$region %in% c("alaska", "hawaii"), ]
+      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
+      
+      continental.ggplot + 
+        annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
+        annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) +   
+        ggtitle(self$title)
+    },
+    
+    render_helper = function(choropleth.df, scale_name, theme, min, max)
+    {
+      # maps with numeric values are mapped with a continuous scale
+      if (is.numeric(choropleth.df$value))
+      {
+        ggplot(choropleth.df, aes(long, lat, group = group)) +
+          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          get_scale() + 
+          theme;
+      } else { # assume character or factor
+        stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
+        
+        ggplot(choropleth.df, aes(long, lat, group = group)) +
+          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          get_scale() + 
+          theme;
+      }
+    }
+  )
+)
+
+
+#' Create a choropleth of USA States with sensible defaults.
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  
+#' @param title An optional title for the map.  
+#' @param legend_name An optional name for the legend.  
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' 
+#' @examples
+#' data(df_pop_state)
+#' state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
+#'
+#' @export
+#' @importFrom Hmisc cut2
+#' @importFrom stringr str_extract_all
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom scales comma
+#' @importFrom grid unit
+state_choropleth = function(df, title="", legend_name="", num_buckets=7)
+{
+  c = StateChoropleth$new(df)
+  c$title       = title
+  c$legend_name = legend_name
+  
+  c$render(num_buckets)
+}
