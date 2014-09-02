@@ -18,4 +18,8 @@ will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 \description{
 Create a choropleth of USA Counties with sensible defaults.
 }
+\examples{
+data(df_pop_county)
+county_choropleth(df_pop_county, title="US 2012 Population Estimates", legend_name="Population")
+}
 

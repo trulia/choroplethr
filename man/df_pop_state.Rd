@@ -3,11 +3,11 @@
 \name{df_pop_state}
 \alias{df_pop_state}
 \title{A data.frame containing population estimates for US States in 2012.}
+\usage{
+data(df_pop_state)
+}
 \description{
 A data.frame containing population estimates for US States in 2012.
-}
-\examples{
-data(df_pop_state)
 }
 \references{
 Taken from the US American Community Survey (ACS) 5 year estimates.

@@ -3,6 +3,9 @@
 \name{df_president_ts}
 \alias{df_president_ts}
 \title{A data.frame containing all US presdiential election results from 1789 to 2012}
+\usage{
+data(df_president_ts)
+}
 \description{
 Legend:
 \itemize{
@@ -26,9 +29,6 @@ Legend:
  \item N = Nullifier
  \item SP = Split evenly
 }
-}
-\examples{
-data(df_president_ts)
 }
 \references{
 Taken from \url{http://en.wikipedia.org/wiki/List_of_United_States_presidential_election_results_by_state} 3/20/2014.
