@@ -19,7 +19,7 @@ StateChoropleth = R6Class("StateChoropleth",
       self$num_buckets = num_buckets
       
       self$prepare_map()
-      
+
       # if user requested to render all 50 states, 
       # create separate data.frames for AK and HI and render them as separate images
       # cache min, max value of entire data.frame to make scales consistent between all 3 images
