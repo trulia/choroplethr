@@ -6,19 +6,12 @@
 and FIPS codes both as characters and numbers (i.e. with and without a leading 0).}
 \usage{
 data(state.names)
-
-data(state.names)
 }
 \description{
 A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
 and FIPS codes both as characters and numbers (i.e. with and without a leading 0).
-
-A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
-and FIPS codes both as characters and numbers (i.e. with and without a leading 0).
 }
 \references{
-Taken from http://www.epa.gov/envirofw/html/codes/state.html
-
 Taken from http://www.epa.gov/envirofw/html/codes/state.html
 }
 
