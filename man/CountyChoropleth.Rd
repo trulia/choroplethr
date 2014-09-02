@@ -9,7 +9,7 @@
  $ public    :List of 21
   ..$ title        : chr ""
   ..$ legend_name  : chr ""
-  ..$ warn         : logi FALSE
+  ..$ warn         : logi TRUE
   ..$ ggplot_scale : NULL
   ..$ user.df      : NULL
   ..$ map.df       : NULL
@@ -36,7 +36,7 @@
   ..$ public    :List of 20
   .. ..$ title        : chr ""
   .. ..$ legend_name  : chr ""
-  .. ..$ warn         : logi FALSE
+  .. ..$ warn         : logi TRUE
   .. ..$ ggplot_scale : NULL
   .. ..$ initialize   :function (map.df, user.df)  
   .. ..$ render       :function (num_buckets = 7)  
@@ -57,10 +57,10 @@
   ..$ private   : NULL
   ..$ active    : NULL
   ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7fbfe1a58180> 
+  ..$ parent_env:<environment: 0x7f90beb11430> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fbfe1a58180> 
+ $ parent_env:<environment: 0x7f90beb11430> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}
