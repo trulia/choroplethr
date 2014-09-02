@@ -3,15 +3,15 @@
 \name{state.map}
 \alias{state.map}
 \title{Map of the 50 US states plus the district of columbia.}
-\usage{
-data(state.map)
-}
 \description{
 A data.frame which contains a map of all 50 US States plus
 the District of Columbia.  The shapefile
 was modified using QGIS in order to 1) remove
 Puerto Rico and 2) remove islands off of Alaska that
 crossed the antimeridian 3) renamed column "STATE" to "region".
+}
+\examples{
+data(state.map)
 }
 \references{
 Taken from the US Census 2010
