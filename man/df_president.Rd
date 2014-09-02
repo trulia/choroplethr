@@ -5,11 +5,17 @@
 \title{A data.frame containing election results from the 2012 US Presidential election.}
 \usage{
 data(df_president)
+
+data(df_president)
 }
 \description{
 A data.frame containing election results from the 2012 US Presidential election.
+
+A data.frame containing election results from the 2012 US Presidential election.
 }
 \references{
+Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014.
+
 Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014.
 }
 \keyword{data}

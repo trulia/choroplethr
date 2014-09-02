@@ -4,8 +4,19 @@
 \title{Create a choropleth of USA States with sensible defaults.}
 \usage{
 state_choropleth(df, title = "", legend_name = "", num_buckets = 7)
+
+state_choropleth(df, title = "", legend_name = "", num_buckets = 7)
 }
 \arguments{
+\item{df}{A data.frame with a column named "region" and a column named "value".}
+
+\item{title}{An optional title for the map.}
+
+\item{legend_name}{An optional name for the legend.}
+
+\item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
+will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+
 \item{df}{A data.frame with a column named "region" and a column named "value".}
 
 \item{title}{An optional title for the map.}
@@ -17,8 +28,12 @@ will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 }
 \description{
 Create a choropleth of USA States with sensible defaults.
+
+Create a choropleth of USA States with sensible defaults.
 }
 \examples{
+data(df_pop_state)
+state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
 data(df_pop_state)
 state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
 }

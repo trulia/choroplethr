@@ -5,6 +5,8 @@
 \title{Map of the 50 US states plus the district of columbia.}
 \usage{
 data(state.map)
+
+data(state.map)
 }
 \description{
 A data.frame which contains a map of all 50 US States plus
@@ -12,8 +14,18 @@ the District of Columbia.  The shapefile
 was modified using QGIS in order to 1) remove
 Puerto Rico and 2) remove islands off of Alaska that
 crossed the antimeridian 3) renamed column "STATE" to "region".
+
+A data.frame which contains a map of all 50 US States plus
+the District of Columbia.  The shapefile
+was modified using QGIS in order to 1) remove
+Puerto Rico and 2) remove islands off of Alaska that
+crossed the antimeridian 3) renamed column "STATE" to "region".
 }
 \references{
+Taken from the US Census 2010
+Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
+The resolutions is 20m (20m = 1:20,000,000).
+
 Taken from the US Census 2010
 Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.
 The resolutions is 20m (20m = 1:20,000,000).

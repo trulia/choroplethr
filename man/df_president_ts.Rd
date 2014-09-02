@@ -5,6 +5,8 @@
 \title{A data.frame containing all US presdiential election results from 1789 to 2012}
 \usage{
 data(df_president_ts)
+
+data(df_president_ts)
 }
 \description{
 Legend:
@@ -29,8 +31,33 @@ Legend:
  \item N = Nullifier
  \item SP = Split evenly
 }
+
+Legend:
+\itemize{
+ \item R = Republican
+ \item D = Democratic
+ \item DR = Democratic-Republican
+ \item W = Whig
+ \item F = Federalist
+ \item GW = George Washington
+ \item NR = National Republican
+ \item SD = Southern Democrat
+ \item PR = Progressive
+ \item AI = American Independent
+ \item SR = States' Rights
+ \item PO = Populist
+ \item CU = Constitutional Union
+ \item I = Independent
+ \item ND = Northern Democrat
+ \item KN = Know Nothing
+ \item AM = Anti-Masonic
+ \item N = Nullifier
+ \item SP = Split evenly
+}
 }
 \references{
+Taken from \url{http://en.wikipedia.org/wiki/List_of_United_States_presidential_election_results_by_state} 3/20/2014.
+
 Taken from \url{http://en.wikipedia.org/wiki/List_of_United_States_presidential_election_results_by_state} 3/20/2014.
 }
 \keyword{data}
