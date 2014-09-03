@@ -6,11 +6,12 @@
 \format{\preformatted{List of 8
  $ new       :function (...)  
  $ classname : chr "StateChoropleth"
- $ public    :List of 21
+ $ public    :List of 20
   ..$ title        : chr ""
   ..$ legend_name  : chr ""
   ..$ warn         : logi TRUE
   ..$ ggplot_scale : NULL
+  ..$ render       :function (num_buckets = 7)  
   ..$ user.df      : NULL
   ..$ map.df       : NULL
   ..$ choropleth.df: NULL
@@ -26,8 +27,6 @@
   ..$ theme_inset  :function ()  
   ..$ format_levels:function (x, nsep = " to ")  
   ..$ initialize   :function (user.df)  
-  ..$ render       :function (num_buckets = 7)  
-  ..$ render_helper:function (choropleth.df, scale_name, theme, min, max)  
  $ private   : NULL
  $ active    : NULL
  $ inherit   :List of 8
@@ -57,10 +56,10 @@
   ..$ private   : NULL
   ..$ active    : NULL
   ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7fae5a72c408> 
+  ..$ parent_env:<environment: 0x7febe6ce7f40> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fae5a72c408> 
+ $ parent_env:<environment: 0x7febe6ce7f40> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}

@@ -2,13 +2,16 @@
 #' @export
 #' @importFrom dplyr left_join
 CountyChoropleth = R6Class("CountyChoropleth",
-  inherit = Choropleth,
+  inherit = USAChoropleth,
   
   public = list(
     # initialize with us state map
     initialize = function(user.df)
     {
       data(county.map)
+      county.map$state = merge(county.map, county.names, by.x="region", by.y="county.fips.numeric")$state.name
+#print(head(county.map))
+      county.map = county.map[order(county.map$order), ]
       super$initialize(county.map, user.df)
     }
     

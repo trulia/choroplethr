@@ -3,6 +3,7 @@
 export(CountryChoropleth)
 export(CountyChoropleth)
 export(StateChoropleth)
+export(USAChoropleth)
 export(country_choropleth)
 export(county_choropleth)
 export(state_choropleth)
