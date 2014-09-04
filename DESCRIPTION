@@ -31,3 +31,12 @@ Suggests:
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
+Collate:
+    'choropleth.R'
+    'country.R'
+    'country_data.R'
+    'usa.R'
+    'county.R'
+    'county_data.R'
+    'state.R'
+    'state_data.R'

@@ -1,22 +1,22 @@
-#' Create a state-level choropleth
+#' An R6 object for creating country-level choropleths.
 #' @export
 #' @importFrom dplyr left_join
-StateChoropleth = R6Class("StateChoropleth",
-  inherit = USAChoropleth,
-  
+#' @importFrom R6 R6Class
+#' @include choropleth.R
+CountryChoropleth = R6Class("CountryChoropleth",
+  inherit = Choropleth,
   public = list(
-    # initialize with us state map
+    
+    # initialize with a world map
     initialize = function(user.df)
     {
-      data(state.map)
-      state.map$state = state.map$region
-      super$initialize(state.map, user.df)
+      data(country.map)
+      super$initialize(country.map, user.df)
     }
   )
 )
 
-
-#' Create a choropleth of USA States with sensible defaults.
+#' Create a country-level choropleth
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  
 #' @param title An optional title for the map.  
@@ -25,19 +25,20 @@ StateChoropleth = R6Class("StateChoropleth",
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' 
 #' @examples
-#' data(df_pop_state)
-#' state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
-#'
+#' data(country.names)
+#' data(country.map)
+#' df = data.frame(region=country.names$region, value=sample(1:nrow(country.names)))
+#' country_choropleth(df)
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
 #' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
-#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
-#' @importFrom grid unit
-state_choropleth = function(df, title="", legend_name="", num_buckets=7)
+#' @importFrom grid unit grobTree
+country_choropleth = function(df, title="", legend_name="", num_buckets=7)
 {
-  c = StateChoropleth$new(df)
+  c = CountryChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
   

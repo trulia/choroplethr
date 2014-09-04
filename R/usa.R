@@ -2,6 +2,7 @@
 #' In addition to a columns named "region" and "value", also requires a column named "state".
 #' @export
 #' @importFrom dplyr left_join
+#' @include choropleth.R
 USAChoropleth = R6Class("USAChoropleth",
   inherit = Choropleth,
   

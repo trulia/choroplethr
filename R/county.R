@@ -1,6 +1,7 @@
 #' Create a county-level choropleth
 #' @export
 #' @importFrom dplyr left_join
+#' @include usa.R
 CountyChoropleth = R6Class("CountyChoropleth",
   inherit = USAChoropleth,
   

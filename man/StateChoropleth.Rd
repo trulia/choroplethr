@@ -6,12 +6,11 @@
 \format{\preformatted{List of 8
  $ new       :function (...)  
  $ classname : chr "StateChoropleth"
- $ public    :List of 20
+ $ public    :List of 21
   ..$ title        : chr ""
   ..$ legend_name  : chr ""
   ..$ warn         : logi TRUE
   ..$ ggplot_scale : NULL
-  ..$ render       :function (num_buckets = 7)  
   ..$ user.df      : NULL
   ..$ map.df       : NULL
   ..$ choropleth.df: NULL
@@ -26,19 +25,19 @@
   ..$ theme_clean  :function ()  
   ..$ theme_inset  :function ()  
   ..$ format_levels:function (x, nsep = " to ")  
+  ..$ render       :function (num_buckets = 7)  
+  ..$ render_helper:function (choropleth.df, scale_name, theme, min, max)  
   ..$ initialize   :function (user.df)  
  $ private   : NULL
  $ active    : NULL
  $ inherit   :List of 8
   ..$ new       :function (...)  
-  ..$ classname : chr "Choropleth"
-  ..$ public    :List of 20
+  ..$ classname : chr "USAChoropleth"
+  ..$ public    :List of 21
   .. ..$ title        : chr ""
   .. ..$ legend_name  : chr ""
   .. ..$ warn         : logi TRUE
   .. ..$ ggplot_scale : NULL
-  .. ..$ initialize   :function (map.df, user.df)  
-  .. ..$ render       :function (num_buckets = 7)  
   .. ..$ user.df      : NULL
   .. ..$ map.df       : NULL
   .. ..$ choropleth.df: NULL
@@ -53,13 +52,45 @@
   .. ..$ theme_clean  :function ()  
   .. ..$ theme_inset  :function ()  
   .. ..$ format_levels:function (x, nsep = " to ")  
+  .. ..$ initialize   :function (map.df, user.df)  
+  .. ..$ render       :function (num_buckets = 7)  
+  .. ..$ render_helper:function (choropleth.df, scale_name, theme, min, max)  
   ..$ private   : NULL
   ..$ active    : NULL
-  ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7febe6ce7f40> 
+  ..$ inherit   :List of 8
+  .. ..$ new       :function (...)  
+  .. ..$ classname : chr "Choropleth"
+  .. ..$ public    :List of 20
+  .. .. ..$ title        : chr ""
+  .. .. ..$ legend_name  : chr ""
+  .. .. ..$ warn         : logi TRUE
+  .. .. ..$ ggplot_scale : NULL
+  .. .. ..$ initialize   :function (map.df, user.df)  
+  .. .. ..$ render       :function (num_buckets = 7)  
+  .. .. ..$ user.df      : NULL
+  .. .. ..$ map.df       : NULL
+  .. .. ..$ choropleth.df: NULL
+  .. .. ..$ map.names    : NULL
+  .. .. ..$ num_buckets  : num 7
+  .. .. ..$ regions      : NULL
+  .. .. ..$ clip         :function ()  
+  .. .. ..$ discretize   :function ()  
+  .. .. ..$ bind         :function ()  
+  .. .. ..$ prepare_map  :function ()  
+  .. .. ..$ get_scale    :function (min = NA, max = NA)  
+  .. .. ..$ theme_clean  :function ()  
+  .. .. ..$ theme_inset  :function ()  
+  .. .. ..$ format_levels:function (x, nsep = " to ")  
+  .. ..$ private   : NULL
+  .. ..$ active    : NULL
+  .. ..$ inherit   : NULL
+  .. ..$ parent_env:<environment: 0x7f86b6b91dc8> 
+  .. ..$ lock      : logi TRUE
+  .. ..- attr(*, "class")= chr "R6ClassGenerator"
+  ..$ parent_env:<environment: 0x7f86b6b91dc8> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7febe6ce7f40> 
+ $ parent_env:<environment: 0x7f86b6b91dc8> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}
