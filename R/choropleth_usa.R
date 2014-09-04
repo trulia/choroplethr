@@ -34,13 +34,11 @@ USAChoropleth = R6Class("USAChoropleth",
       
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.df     = alaska.df[order(alaska.df$order), ]
-      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)    
+      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.df     = hawaii.df[order(hawaii.df$order), ]
       hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset(), min_val, max_val)
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
