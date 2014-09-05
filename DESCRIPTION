@@ -40,3 +40,5 @@ Collate:
     'county_data.R'
     'state.R'
     'state_data.R'
+    'zip.R'
+    'zip_data.R'

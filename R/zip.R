@@ -1,0 +1,126 @@
+#' Create a county-level choropleth
+#' @export
+#' @importFrom dplyr left_join
+#' @include usa.R
+ZipMap = R6Class("CountyChoropleth",
+  inherit = USAChoropleth,
+  
+  public = list(
+    # initialize with us state map
+    initialize = function(user.df)
+    {
+      # load zip code data, and rename variables so base class can process
+      data(zipcode, package="zipcode")
+      names(zipcode)[names(zipcode) == "zip"      ] = "region"
+      names(zipcode)[names(zipcode) == "longitude"] = "long"
+      names(zipcode)[names(zipcode) == "latitude" ] = "lat"
+
+      # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")
+      zipcode$state = tolower(state.name[match(zipcode$state, state.abb)])
+
+      super$initialize(zipcode, user.df)
+      
+      # there are lots of zips in the zipcode that are not "real" zips, and so 
+      # warning on them would likely do more harm than good
+      self$warn = FALSE 
+    },
+    
+    bind = function() {
+      self$choropleth.df = left_join(self$map.df, self$user.df, by="region")
+      missing_regions = unique(self$choropleth.df[is.na(self$choropleth.df$value), ]$region)
+      if (self$warn && length(missing_regions) > 0)
+      {
+        missing_regions = paste(missing_regions, collapse = ", ");
+        warning_string = paste("The following regions were missing and are being set to NA:", missing_regions);
+        print(warning_string);
+      }
+    },
+    
+    # render the map, with AK and HI as insets
+    render = function(num_buckets=7)
+    {
+      stopifnot(num_buckets > 1 && num_buckets < 10)
+      self$num_buckets = num_buckets
+      
+      self$prepare_map()
+      
+      # if user requested to render all 50 states, 
+      # create separate data.frames for AK and HI and render them as separate images
+      # cache min, max value of entire data.frame to make scales consistent between all 3 images
+      min_val = 0
+      max_val = 0
+      if (is.numeric(self$choropleth.df$value))
+      {
+        min_val = min(self$choropleth.df$value)
+        max_val = max(self$choropleth.df$value)
+      }
+      
+      # subset AK and render it
+      alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
+      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)
+      alaska.grob   = ggplotGrob(alaska.ggplot)
+      
+      # subset HI and render it
+      hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
+      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset(), min_val, max_val)
+      hawaii.grob   = ggplotGrob(hawaii.ggplot)
+      
+      # remove AK and HI from the "real" df
+      continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
+      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
+      
+      continental.ggplot + 
+        annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
+        annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) +   
+        ggtitle(self$title)
+    },
+  
+    
+    render_helper = function(choropleth.df, scale_name, theme, min, max)
+    {
+      if (is.numeric(choropleth.df$value))
+      {
+        ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
+          geom_point() +
+          get_scale() +
+          theme;
+      } else { # assume character or factor
+        stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
+        
+        ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
+          geom_point() + 
+          get_scale() +
+          theme;  
+      }   
+    }
+  )
+)
+
+#' Create a map visualizing US ZIP codes with sensible defaults.
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  
+#' @param title An optional title for the map.  
+#' @param legend_name An optional name for the legend.  
+#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' 
+#' @examples
+#' data(df_pop_zip)
+#' zip_map(df_pop_zip, title="US 2012 Population Estimates", legend_name="Population")
+#'
+#' @export
+#' @importFrom Hmisc cut2
+#' @importFrom stringr str_extract_all
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer geom_point
+#' @importFrom scales comma
+#' @importFrom grid unit
+#'@include choropleth.R
+zip_map = function(df, title="", legend_name="", num_buckets=7)
+{
+  m = ZipMap$new(df)
+  m$title       = title
+  m$legend_name = legend_name
+  
+  m$render(num_buckets)
+}
