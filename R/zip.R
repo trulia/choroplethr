@@ -9,8 +9,16 @@ ZipMap = R6Class("CountyChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
-      # load zip code data, and rename variables so base class can process
+      # load zip code data 
       data(zipcode, package="zipcode")
+      
+      # only include states
+      zipcode = zipcode[zipcode$state %in% state.abb, ]
+      # remove bad data.
+      # it has two zips in NY and VA in the atlantic/europe
+      zipcode = zipcode[zipcode$longitude < -10, ]
+      
+      # rename variables so base class can process
       names(zipcode)[names(zipcode) == "zip"      ] = "region"
       names(zipcode)[names(zipcode) == "longitude"] = "long"
       names(zipcode)[names(zipcode) == "latitude" ] = "lat"
@@ -39,7 +47,7 @@ ZipMap = R6Class("CountyChoropleth",
     # render the map, with AK and HI as insets
     render = function(num_buckets=7)
     {
-      stopifnot(num_buckets > 1 && num_buckets < 10)
+      stopifnot(num_buckets > 0 && num_buckets < 10)
       self$num_buckets = num_buckets
       
       self$prepare_map()
@@ -82,16 +90,31 @@ ZipMap = R6Class("CountyChoropleth",
       {
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() +
-          get_scale() +
+          get_scale(min, max) +
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() + 
-          get_scale() +
+          get_scale(min, max) +
           theme;  
       }   
+    },
+    
+    # we need to override this
+    #' @importFrom scales comma
+    get_scale = function(min=NA, max=NA)
+    {
+      if (!is.null(ggplot_scale)) 
+      {
+        ggplot_scale
+      } else if (self$num_buckets == 1) {
+        stopifnot(!is.na(min) && !is.na(max))
+        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min, max))
+      } else {
+        scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
+      }
     }
   )
 )

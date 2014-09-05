@@ -17,7 +17,7 @@ USAChoropleth = R6Class("USAChoropleth",
     # render the map, with AK and HI as insets
     render = function(num_buckets=7)
     {
-      stopifnot(num_buckets > 1 && num_buckets < 10)
+      stopifnot(num_buckets > 0 && num_buckets < 10)
       self$num_buckets = num_buckets
       
       self$prepare_map()

@@ -27,7 +27,7 @@ Choropleth = R6Class("Choropleth",
     # explain what num_buckets means
     render = function(num_buckets=7) 
     {
-      stopifnot(num_buckets > 1 && num_buckets < 10)
+      stopifnot(num_buckets > 0 && num_buckets < 10)
       self$num_buckets = num_buckets
       
       self$prepare_map()
