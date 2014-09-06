@@ -6,6 +6,9 @@ CountyChoropleth = R6Class("CountyChoropleth",
   inherit = USAChoropleth,
   
   public = list(
+    # this map looks better with an outline of the states added
+    add_state_outline = TRUE, 
+    
     # initialize with us state map
     initialize = function(user.df)
     {

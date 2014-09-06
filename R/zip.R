@@ -6,6 +6,9 @@ ZipMap = R6Class("CountyChoropleth",
   inherit = USAChoropleth,
   
   public = list(
+    # this map looks better with an outline of the states added
+#    add_state_outline = TRUE, 
+    
     # there are lots of ZIPs in the official list that don't exist in any meaningful sense.
     # because of that, just delete them by default
     rm_na = TRUE, 

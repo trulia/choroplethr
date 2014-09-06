@@ -7,6 +7,8 @@ USAChoropleth = R6Class("USAChoropleth",
   inherit = Choropleth,
   
   public = list(
+    add_state_outline = FALSE,
+    
     initialize = function(map.df, user.df)
     {
       super$initialize(map.df, user.df)
@@ -25,16 +27,31 @@ USAChoropleth = R6Class("USAChoropleth",
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
       alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
+      
+      if (self$add_state_outline)
+      {
+        alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
+      }
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
       hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
+      if (self$add_state_outline)
+      {
+        hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
+      }
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
+      if (self$add_state_outline)
+      {
+        data(state.names)
+        continental.names = subset(state.names$name, state.names$name!="alaska" & state.names$name!="hawaii")
+        continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
+      }
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -59,6 +76,17 @@ USAChoropleth = R6Class("USAChoropleth",
           self$get_scale() + 
           theme;
       }
+    },
+    
+    render_state_outline = function(states)
+    {
+      data(state.map  , package="choroplethr", envir=environment())
+      data(state.names, package="choroplethr", envir=environment())
+      
+      stopifnot(states %in% state.names$name)
+      
+      df = state.map[state.map$region %in% states, ]
+      geom_polygon(data=df, color = "black", fill = NA, size = 0.2);
     }
   )
 )
