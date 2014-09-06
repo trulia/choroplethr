@@ -6,6 +6,10 @@ ZipMap = R6Class("CountyChoropleth",
   inherit = USAChoropleth,
   
   public = list(
+    # there are lots of ZIPs in the official list that don't exist in any meaningful sense.
+    # because of that, just delete them by default
+    rm_na = TRUE, 
+    
     # initialize with us state map
     initialize = function(user.df)
     {
@@ -30,7 +34,7 @@ ZipMap = R6Class("CountyChoropleth",
       
       # there are lots of zips in the zipcode that are not "real" zips, and so 
       # warning on them would likely do more harm than good
-      self$warn = FALSE 
+      self$warn = FALSE
     },
     
     bind = function() {
@@ -41,6 +45,11 @@ ZipMap = R6Class("CountyChoropleth",
         missing_regions = paste(missing_regions, collapse = ", ");
         warning_string = paste("The following regions were missing and are being set to NA:", missing_regions);
         print(warning_string);
+      }
+      
+      if (self$rm_na)
+      {
+        self$choropleth.df = na.omit(self$choropleth.df)
       }
     },
     
