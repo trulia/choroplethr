@@ -52,30 +52,19 @@ ZipMap = R6Class("CountyChoropleth",
       
       self$prepare_map()
       
-      # if user requested to render all 50 states, 
-      # create separate data.frames for AK and HI and render them as separate images
-      # cache min, max value of entire data.frame to make scales consistent between all 3 images
-      min_val = 0
-      max_val = 0
-      if (is.numeric(self$choropleth.df$value))
-      {
-        min_val = min(self$choropleth.df$value)
-        max_val = max(self$choropleth.df$value)
-      }
-      
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)
+      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset())
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset(), min_val, max_val)
+      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset())
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
-      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
+      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -84,34 +73,39 @@ ZipMap = R6Class("CountyChoropleth",
     },
   
     
-    render_helper = function(choropleth.df, scale_name, theme, min, max)
+    render_helper = function(choropleth.df, scale_name, theme)
     {
       if (is.numeric(choropleth.df$value))
       {
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() +
-          get_scale(min, max) +
+          get_scale() +
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() + 
-          get_scale(min, max) +
+          get_scale() +
           theme;  
       }   
     },
     
     # we need to override this
     #' @importFrom scales comma
-    get_scale = function(min=NA, max=NA)
+    get_scale = function()
     {
       if (!is.null(ggplot_scale)) 
       {
         ggplot_scale
       } else if (self$num_buckets == 1) {
-        stopifnot(!is.na(min) && !is.na(max))
-        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min, max))
+        
+        min_value = min(self$choropleth.df$value)
+        max_value = max(self$choropleth.df$value)
+        stopifnot(!is.na(min_value) && !is.na(max_value))
+        
+        stopifnot(!is.na(min_value) && !is.na(max_value))
+        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
         scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
       }

@@ -22,30 +22,19 @@ USAChoropleth = R6Class("USAChoropleth",
       
       self$prepare_map()
       
-      # if user requested to render all 50 states, 
-      # create separate data.frames for AK and HI and render them as separate images
-      # cache min, max value of entire data.frame to make scales consistent between all 3 images
-      min_val = 0
-      max_val = 0
-      if (is.numeric(self$choropleth.df$value))
-      {
-        min_val = min(self$choropleth.df$value)
-        max_val = max(self$choropleth.df$value)
-      }
-      
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset(), min_val, max_val)
+      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset())
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset(), min_val, max_val)
+      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset())
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
-      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean(), min_val, max_val) + ggtitle(self$title)
+      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -53,7 +42,7 @@ USAChoropleth = R6Class("USAChoropleth",
         ggtitle(self$title)
     },
     
-    render_helper = function(choropleth.df, scale_name, theme, min, max)
+    render_helper = function(choropleth.df, scale_name, theme)
     {
       # maps with numeric values are mapped with a continuous scale
       if (is.numeric(choropleth.df$value))

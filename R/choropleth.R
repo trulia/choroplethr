@@ -98,14 +98,18 @@ Choropleth = R6Class("Choropleth",
     },
     
     #' @importFrom scales comma
-    get_scale = function(min=NA, max=NA)
+    get_scale = function()
     {
       if (!is.null(ggplot_scale)) 
       {
         ggplot_scale
       } else if (self$num_buckets == 1) {
-        stopifnot(!is.na(min) && !is.na(max))
-        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min, max))
+        
+        min_value = min(self$choropleth.df$value)
+        max_value = max(self$choropleth.df$value)
+        stopifnot(!is.na(min_value) && !is.na(max_value))
+
+        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
         scale_fill_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
       }
