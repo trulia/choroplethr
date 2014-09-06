@@ -24,17 +24,17 @@ USAChoropleth = R6Class("USAChoropleth",
       
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset())
+      alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset())
+      hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
-      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
+      continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -49,14 +49,14 @@ USAChoropleth = R6Class("USAChoropleth",
       {
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          get_scale() + 
+          self$get_scale() + 
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(long, lat, group = group)) +
           geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-          get_scale() + 
+          self$get_scale() + 
           theme;
       }
     }

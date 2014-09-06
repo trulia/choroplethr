@@ -3,65 +3,8 @@
 \name{CountryChoropleth}
 \alias{CountryChoropleth}
 \title{An R6 object for creating country-level choropleths.}
-\format{\preformatted{List of 8
- $ new       :function (...)  
- $ classname : chr "CountryChoropleth"
- $ public    :List of 20
-  ..$ title        : chr ""
-  ..$ legend_name  : chr ""
-  ..$ warn         : logi TRUE
-  ..$ ggplot_scale : NULL
-  ..$ render       :function (num_buckets = 7)  
-  ..$ user.df      : NULL
-  ..$ map.df       : NULL
-  ..$ choropleth.df: NULL
-  ..$ map.names    : NULL
-  ..$ num_buckets  : num 7
-  ..$ regions      : NULL
-  ..$ clip         :function ()  
-  ..$ discretize   :function ()  
-  ..$ bind         :function ()  
-  ..$ prepare_map  :function ()  
-  ..$ get_scale    :function (min = NA, max = NA)  
-  ..$ theme_clean  :function ()  
-  ..$ theme_inset  :function ()  
-  ..$ format_levels:function (x, nsep = " to ")  
-  ..$ initialize   :function (user.df)  
- $ private   : NULL
- $ active    : NULL
- $ inherit   :List of 8
-  ..$ new       :function (...)  
-  ..$ classname : chr "Choropleth"
-  ..$ public    :List of 20
-  .. ..$ title        : chr ""
-  .. ..$ legend_name  : chr ""
-  .. ..$ warn         : logi TRUE
-  .. ..$ ggplot_scale : NULL
-  .. ..$ initialize   :function (map.df, user.df)  
-  .. ..$ render       :function (num_buckets = 7)  
-  .. ..$ user.df      : NULL
-  .. ..$ map.df       : NULL
-  .. ..$ choropleth.df: NULL
-  .. ..$ map.names    : NULL
-  .. ..$ num_buckets  : num 7
-  .. ..$ regions      : NULL
-  .. ..$ clip         :function ()  
-  .. ..$ discretize   :function ()  
-  .. ..$ bind         :function ()  
-  .. ..$ prepare_map  :function ()  
-  .. ..$ get_scale    :function (min = NA, max = NA)  
-  .. ..$ theme_clean  :function ()  
-  .. ..$ theme_inset  :function ()  
-  .. ..$ format_levels:function (x, nsep = " to ")  
-  ..$ private   : NULL
-  ..$ active    : NULL
-  ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7f8ca4230ea8> 
-  ..$ lock      : logi TRUE
-  ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7f8ca4230ea8> 
- $ lock      : logi TRUE
- - attr(*, "class")= chr "R6ClassGenerator"
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fdb37814aa8> 
+ - attr(*, "name")= chr "CountryChoropleth_generator"
 }}
 \usage{
 CountryChoropleth

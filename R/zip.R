@@ -54,17 +54,17 @@ ZipMap = R6Class("CountyChoropleth",
       
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.ggplot = render_helper(alaska.df, "", self$theme_inset())
+      alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.ggplot = render_helper(hawaii.df, "", self$theme_inset())
+      hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
-      continental.ggplot = render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
+      continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
@@ -79,14 +79,14 @@ ZipMap = R6Class("CountyChoropleth",
       {
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() +
-          get_scale() +
+          self$get_scale() +
           theme;
       } else { # assume character or factor
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(x=long, y=lat, color=value)) +
           geom_point() + 
-          get_scale() +
+          self$get_scale() +
           theme;  
       }   
     },
@@ -95,16 +95,15 @@ ZipMap = R6Class("CountyChoropleth",
     #' @importFrom scales comma
     get_scale = function()
     {
-      if (!is.null(ggplot_scale)) 
+      if (!is.null(self$ggplot_scale)) 
       {
-        ggplot_scale
+        self$ggplot_scale
       } else if (self$num_buckets == 1) {
         
-        min_value = min(self$choropleth.df$value)
-        max_value = max(self$choropleth.df$value)
+        min_value = min(self$choropleth.df$value, na.rm=TRUE)
+        max_value = max(self$choropleth.df$value, na.rm=TRUE)
         stopifnot(!is.na(min_value) && !is.na(max_value))
         
-        stopifnot(!is.na(min_value) && !is.na(max_value))
         scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
         scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
@@ -129,7 +128,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
 #' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
-#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer geom_point
+#' @importFrom ggplot2 scale_fill_continuous scale_color_brewer geom_point
 #' @importFrom scales comma
 #' @importFrom grid unit
 #'@include choropleth.R

@@ -34,8 +34,8 @@ Choropleth = R6Class("Choropleth",
       
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
         geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-        get_scale() +
-        theme_clean() + 
+        self$get_scale() +
+        self$theme_clean() + 
         ggtitle(self$title)
     },
 
@@ -73,7 +73,7 @@ Choropleth = R6Class("Choropleth",
         self$user.df$value = cut2(self$user.df$value, g = self$num_buckets)
         options(scipen=scipen_orig)
         
-        levels(self$user.df$value) = sapply(levels(self$user.df$value), format_levels)
+        levels(self$user.df$value) = sapply(levels(self$user.df$value), self$format_levels)
       }
     },
     
@@ -100,9 +100,9 @@ Choropleth = R6Class("Choropleth",
     #' @importFrom scales comma
     get_scale = function()
     {
-      if (!is.null(ggplot_scale)) 
+      if (!is.null(self$ggplot_scale)) 
       {
-        ggplot_scale
+        self$ggplot_scale
       } else if (self$num_buckets == 1) {
         
         min_value = min(self$choropleth.df$value)
