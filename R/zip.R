@@ -129,7 +129,7 @@ ZipMap = R6Class("CountyChoropleth",
         max_value = max(self$choropleth.df$value, na.rm=TRUE)
         stopifnot(!is.na(min_value) && !is.na(max_value))
         
-        scale_fill_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
+        scale_color_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
         scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
       }
