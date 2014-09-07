@@ -17,6 +17,8 @@ branches:
   - /-expt$/
 notifications:
   email:
+    recipients:
+      - arilamstein@gmail.com
     on_success: change
     on_failure: change
     - arilamstein@gmail.com
