@@ -129,7 +129,10 @@ ZipMap = R6Class("CountyChoropleth",
         max_value = max(self$choropleth.df$value, na.rm=TRUE)
         stopifnot(!is.na(min_value) && !is.na(max_value))
         
-        scale_color_continuous(self$legend_name, labels=comma, na.value="black", limits=c(min_value, max_value))
+        # by default, scale_fill_continuous uses a light value for high values and a dark value for low values
+        # however, this is the opposite of how choropleths are normally colored (see wikipedia)
+        # these low and high values are from the 7 color brewer blue scale (see colorbrewer.org)
+        scale_color_continuous(self$legend_name, low="#eff3ff", high="#084594", labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
         scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
       }
