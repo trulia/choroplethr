@@ -3,7 +3,7 @@
 \name{CountyChoropleth}
 \alias{CountyChoropleth}
 \title{Create a county-level choropleth}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fe3f5dd8230> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fa6fd57aa38> 
  - attr(*, "name")= chr "CountyChoropleth_generator"
 }}
 \usage{
