@@ -27,7 +27,6 @@ USAChoropleth = R6Class("USAChoropleth",
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
       alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
-      
       if (self$add_state_outline)
       {
         alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
@@ -86,7 +85,7 @@ USAChoropleth = R6Class("USAChoropleth",
       stopifnot(states %in% state.names$name)
       
       df = state.map[state.map$region %in% states, ]
-      geom_polygon(data=df, color = "black", fill = NA, size = 0.2);
+      geom_polygon(data=df, aes(long, lat, group = group), color = "black", fill = NA, size = 0.2);
     }
   )
 )

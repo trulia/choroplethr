@@ -7,7 +7,7 @@ ZipMap = R6Class("CountyChoropleth",
   
   public = list(
     # this map looks better with an outline of the states added
-#    add_state_outline = TRUE, 
+    add_state_outline = TRUE, 
     
     # there are lots of ZIPs in the official list that don't exist in any meaningful sense.
     # because of that, just delete them by default
@@ -67,23 +67,36 @@ ZipMap = R6Class("CountyChoropleth",
       # subset AK and render it
       alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
       alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
+      if (self$add_state_outline)
+      {
+        alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
+      }
       alaska.grob   = ggplotGrob(alaska.ggplot)
       
       # subset HI and render it
       hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
       hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
+      if (self$add_state_outline)
+      {
+        hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
+      }
       hawaii.grob   = ggplotGrob(hawaii.ggplot)
       
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
+      if (self$add_state_outline)
+      {
+        data(state.names)
+        continental.names = subset(state.names$name, state.names$name!="alaska" & state.names$name!="hawaii")
+        continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
+      }
       
       continental.ggplot + 
         annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
         annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) +   
         ggtitle(self$title)
     },
-  
     
     render_helper = function(choropleth.df, scale_name, theme)
     {
