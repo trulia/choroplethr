@@ -19,6 +19,7 @@ notifications:
   email:
     on_success: change
     on_failure: change
+    - arilamstein@gmail.com
 env:
   global:
     secure: dJg3yqT+n5oTkRM1PzPhLy2cPzbKG/LPMvqdpNER298KzivMHnMjTOPz2NTc+TfeCfB6s0UROeaqMoCl6OkVqS6zXhnQkisdkJP8SsYZ+Pf5GTExSyeE3NEX/SNmjD+c9wufv8Un9T3CYzVh68VK4Ql5/VXAeTAIP2GqWOBLciY=
