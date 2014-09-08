@@ -1,0 +1,56 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{b) Built-in Choropleths}
+-->
+
+Built-in Choropleths
+========================================================
+
+`choroplethr` ships with four built-in choropleths
+
+### US State Choropleths
+
+To create a state level choropleth with your own data you need to call `?state_choropleth` with a data.frame. 
+
+```{r}
+    library(choroplethr)
+    data(df_pop_state)
+
+    state_choropleth(df_pop_state, 
+                     title="2012 State Population Estimates",
+                     legend_name="Population")
+```
+
+The data.frame must have two columns: one named _region_ and one named _value_. Region must be lower-case state names. Mention specifics of region. Mention `state.names`.
+
+### US County Choropleths
+
+To create a state level choropleth with your own data you need to call `?state_choropleth` with a data.frame. 
+
+```{r}
+    library(choroplethr)
+    data(df_pop_county)
+
+    county_choropleth(df_pop_county, 
+                     title="2012 County Population Estimates",
+                     legend_name="Population")
+```
+
+The data.frame must have two columns: one named _region_ and one named _value_. Mention specifics of region. Mention `county.names`.
+
+
+### US ZIP Maps
+
+...
+```{r}
+    library(choroplethr)
+    data(df_pop_zip)
+
+    zip_map(df_pop_zip, 
+           title="2012 ZIP Population Estimates",
+           legend_name="Population")
+```
+
+The data.frame must have two columns: one named _region_ and one named _value_. Mention specifics of region. 
+
+### Country Choropleths (World Map)

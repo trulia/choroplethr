@@ -1,9 +1,9 @@
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{a) What is a choropleth? What is choroplethr?}
+%\VignetteIndexEntry{a) Introduction}
 -->
 
-What is a choropleth? What is choroplethr?
+Introduction
 ========================================================
 
 ### What is a Choropleth?
@@ -19,7 +19,7 @@ Choropleths are useful for visualizing data which has a strong spatial component
     library(choroplethr)
     data(df_pop_state)
 
-    state_choropleth(df_pop_state, title="2012 State Population Estimates")
+    state_choropleth(df_pop_state)
 ```
 
 ### What is choroplethr? 
@@ -29,7 +29,7 @@ Choropleths are useful for visualizing data which has a strong spatial component
 1. It provides ready-made functions for easily creating 4 different maps:
   - For US States, see `?state_choropleth`.
   - For US Counties, see `?county_choropleth`.
-  - For US ZIPs, see `?zip_map`. Note that due to the size of of rendering ZIP boundaries at a national level, choroplethr renders ZIP maps as colored scatterplots. This means that they are not technically choropleths, since the boundaries are not drawn.
+  - For US ZIPs, see `?zip_map`. Note that due to the size of of rendering ZIP boundaries at a national level, `choroplethr` renders ZIP maps as colored scatterplots. This means that they are not technically choropleths, since the boundaries are not drawn.
   - For Country choropleths, see `?country_choropleth`.
 2. It provides API connections to interesting data sources for making choropleths.
   - US Census American Community Survey (ACS). See `?get_acs_df'.

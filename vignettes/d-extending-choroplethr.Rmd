@@ -1,0 +1,12 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{d) Extending choroplethr}
+-->
+
+### Extending choroplethr
+
+An example like the world map. Showing the code
+
+Also need to show things like changing the ggplot scale, warning and so on.
+
+Perhaps show in 2 
