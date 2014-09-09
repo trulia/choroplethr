@@ -55,7 +55,7 @@ choroplethr = function(df,
                        num_buckets = 9, 
                        title = "", 
                        scaleName = "",
-                       showLabels = TRUE,
+                       showLabels = TRUE, 
                        states = state.abb,
                        renderAsInsets = TRUE,
                        warn_na = TRUE,
@@ -78,14 +78,12 @@ choroplethr = function(df,
   }
   
   if (lod == "state") {
-#    c = StateChoropleth$new(df)
-#    c$title       = title
-##    c$legend_name = legend_name
-#    c$scale_name  = scaleName
-#    c$regions     = states
-    
-#    state_choropleth(
-#    state_choropleth_auto(df, num_buckets, title, showLabels, scaleName, states, renderAsInsets, warn_na);
+    # NEED TO ADD
+    # showLabels = TRUE, 
+    # renderAsInsets = TRUE,
+    # warn_na = TRUE,
+    # states
+    state_choropleth(df, title, scaleName, num_buckets)
   } else if (lod == "county") {
 #    county_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
   } else if (lod == "zip") {
