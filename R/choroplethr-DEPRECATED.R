@@ -85,7 +85,12 @@ choroplethr = function(df,
     # states
     state_choropleth(df, title, scaleName, num_buckets)
   } else if (lod == "county") {
-#    county_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
+    # NEED TO ADD
+    # showLabels = TRUE, 
+    # renderAsInsets = TRUE,
+    # warn_na = TRUE,
+    # states
+    county_choropleth(df, title, scaleName, num_buckets)
   } else if (lod == "zip") {
 #    zip_choropleth_auto(df, num_buckets, title, scaleName, states, renderAsInsets)
   } else if (lod == "world") {
