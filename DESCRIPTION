@@ -23,8 +23,8 @@ Imports:
     stringr,
     ggplot2,
     dplyr,
-    acs,
-    R6
+    R6,
+    WDI
 Suggests:
     testthat,
     zipcode,
@@ -35,6 +35,7 @@ VignetteBuilder: knitr
 Collate:
     'choropleth.R'
     'choroplethr-DEPRECATED.R'
+    'choroplethr_wdi.R'
     'country.R'
     'country_data.R'
     'usa.R'

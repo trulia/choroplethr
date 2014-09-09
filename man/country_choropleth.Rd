@@ -24,9 +24,7 @@ correspond to the "region" column of country.names.}
 Create a country-level choropleth
 }
 \examples{
-data(country.names)
-data(country.map)
-df = data.frame(region=country.names$region, value=sample(1:nrow(country.names)))
-country_choropleth(df)
+data(df_pop_country)
+country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 }
 

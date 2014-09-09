@@ -49,6 +49,10 @@
 #' # Zip Code Tabulated Area (ZCTA) population estimates.  
 #' data(df_pop_zip)
 #' choroplethr(df_pop_zip, "zip", title="2012 Population of each ZIP Code Tabulated Area (ZCTA)")
+#' 
+#' # Country population estimates
+#' data(df_pop_country)
+#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 #' }
 choroplethr = function(df, 
                        lod, 

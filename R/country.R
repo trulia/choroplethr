@@ -28,10 +28,8 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' correspond to the "region" column of country.names.
 
 #' @examples
-#' data(country.names)
-#' data(country.map)
-#' df = data.frame(region=country.names$region, value=sample(1:nrow(country.names)))
-#' country_choropleth(df)
+#' data(df_pop_country)
+#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
