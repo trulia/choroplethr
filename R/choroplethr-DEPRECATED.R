@@ -99,6 +99,9 @@ choroplethr = function(df,
     # states
     zip_map(df, title, scaleName, num_buckets)
   } else if (lod == "world") {
-#    world_choropleth_auto(df, num_buckets, title, scaleName, countries, warn_na)    
+    # NEED TO ADD
+    # warn_na = TRUE,
+    # countries
+     country_choropleth(df, title, scaleName, num_buckets)    
   }
 }
