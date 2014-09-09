@@ -106,8 +106,8 @@ Choropleth = R6Class("Choropleth",
         self$ggplot_scale
       } else if (self$num_buckets == 1) {
         
-        min_value = min(self$choropleth.df$value)
-        max_value = max(self$choropleth.df$value)
+        min_value = min(self$choropleth.df$value, na.rm = TRUE)
+        max_value = max(self$choropleth.df$value, na.rm = TRUE)
         stopifnot(!is.na(min_value) && !is.na(max_value))
 
         # by default, scale_fill_continuous uses a light value for high values and a dark value for low values
