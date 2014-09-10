@@ -36,6 +36,7 @@ VignetteBuilder: knitr
 Collate:
     'choropleth.R'
     'choroplethr-DEPRECATED.R'
+    'choroplethr_acs.R'
     'choroplethr_wdi.R'
     'country.R'
     'country_data.R'
