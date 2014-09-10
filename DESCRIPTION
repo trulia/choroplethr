@@ -24,6 +24,7 @@ Imports:
     ggplot2,
     dplyr,
     R6,
+    acs,
     WDI
 Suggests:
     testthat,
