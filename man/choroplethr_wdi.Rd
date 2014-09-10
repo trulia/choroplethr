@@ -4,7 +4,7 @@
 \title{Create a country-level choropleth using data from the World Bank Development Indicators (WDI).}
 \usage{
 choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = NULL,
-  countries = NULL, num_buckets = 9)
+  countries = NULL, num_buckets = 7)
 }
 \arguments{
 \item{code}{The WDI code to use.}
@@ -25,5 +25,20 @@ A choropleth.
 }
 \description{
 Create a country-level choropleth using data from the World Bank Development Indicators (WDI).
+}
+\examples{
+\dontrun{
+# See http://data.worldbank.org/indicator/SP.POP.TOTL
+choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Per Capita Income", num_buckets=1)
+
+# See http://data.worldbank.org/indicator/SP.DYN.LE00.IN
+choroplethr_wdi(code="SP.DYN.LE00.IN", year=2012, title="2012 Life Expectancy Estimates")
+
+# See http://data.worldbank.org/indicator/NY.GDP.PCAP.CD
+choroplethr_wdi(code="NY.GDP.PCAP.CD", year=2012, title="2012 Per Capita Income")
+}
+}
+\references{
+Uses the WDI function from the WDI package by Vincent Arel-Bundock.
 }
 
