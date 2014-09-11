@@ -16,6 +16,21 @@ USAChoropleth = R6Class("USAChoropleth",
       stopifnot("state" %in% colnames(map.df)) 
     },
     
+    # TODO: What if self$regions is NULL and user enters "puerto rico"?
+    # TODO: need to WARN here!
+    # support e.g. users just viewing states on the west coast
+    clip = function() {
+      if (!is.null(self$regions))
+      {
+        # user.df has county FIPS codes for regions, but subsetting happens at the state level
+        self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
+        self$user.df = self$user.df[self$user.df$state %in% self$regions, ]
+        self$user.df$state = NULL
+        
+        self$map.df  = self$map.df[self$map.df$state %in% self$regions, ]
+      }
+    },
+    
     # render the map, with AK and HI as insets
     render = function(num_buckets=7)
     {
@@ -23,38 +38,45 @@ USAChoropleth = R6Class("USAChoropleth",
       self$num_buckets = num_buckets
       
       self$prepare_map()
-      
-      # subset AK and render it
-      alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-      alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
-      if (self$add_state_outline)
-      {
-        alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
-      }
-      alaska.grob   = ggplotGrob(alaska.ggplot)
-      
-      # subset HI and render it
-      hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-      hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
-      if (self$add_state_outline)
-      {
-        hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
-      }
-      hawaii.grob   = ggplotGrob(hawaii.ggplot)
-      
+            
       # remove AK and HI from the "real" df
       continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-        data(state.names)
-        continental.names = subset(state.names$name, state.names$name!="alaska" & state.names$name!="hawaii")
+        continental.names = subset(self$regions, self$regions!="alaska" & self$regions!="hawaii")
         continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
       }
       
-      continental.ggplot + 
-        annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
-        annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30) +   
+      ret = continental.ggplot
+
+      # subset AK and render it
+      if (is.null(self$regions) || 'alaska' %in% self$regions)
+      {
+        alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
+        alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
+        if (self$add_state_outline)
+        {
+          alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
+        }
+        alaska.grob = ggplotGrob(alaska.ggplot)
+        ret = ret + annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)
+      }
+      
+      # subset HI and render it
+      if (is.null(self$regions) || 'hawaii' %in% self$regions)
+      {
+        hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
+        hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
+        if (self$add_state_outline)
+        {
+          hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
+        }
+        hawaii.grob = ggplotGrob(hawaii.ggplot)
+        ret = ret + annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5)
+      }
+      
+      ret +
         ggtitle(self$title)
     },
     

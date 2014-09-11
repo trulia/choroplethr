@@ -3,7 +3,8 @@
 \alias{county_choropleth}
 \title{Create a choropleth of USA Counties with sensible defaults.}
 \usage{
-county_choropleth(df, title = "", legend_name = "", num_buckets = 7)
+county_choropleth(df, title = "", legend_name = "", num_buckets = 7,
+  states = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".}
