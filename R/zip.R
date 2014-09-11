@@ -44,6 +44,25 @@ ZipMap = R6Class("CountyChoropleth",
       self$warn = FALSE
     },
     
+    # TODO: What if self$regions is NULL and user enters "puerto rico"?
+    # TODO: need to WARN here!
+    # support e.g. users just viewing states on the west coast
+    clip = function() {
+      if (!is.null(self$regions))
+      {
+        # user.df has zip codes, but subsetting happens at the state level
+        data(zipcode, package="zipcode")
+        # zipcode to state abbreviation
+        self$user.df$state = merge(self$user.df, zipcode, sort=FALSE, all.x=TRUE, by.x="region", by.y="zip")$state
+        # state abbrevoation to "region" - lowercase full state name
+        self$user.df$state = tolower(state.name[match(self$user.df$state, state.abb)])
+        self$user.df = self$user.df[self$user.df$state %in% self$regions, ]
+        self$user.df$state = NULL
+        
+        self$map.df  = self$map.df[self$map.df$state %in% self$regions, ]
+      }
+    },
+    
     bind = function() {
       self$choropleth.df = left_join(self$map.df, self$user.df, by="region")
       missing_regions = unique(self$choropleth.df[is.na(self$choropleth.df$value), ]$region)
@@ -91,8 +110,7 @@ ZipMap = R6Class("CountyChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-        data(state.names)
-        continental.names = subset(state.names$name, state.names$name!="alaska" & state.names$name!="hawaii")
+        continental.names = subset(self$regions, self$regions!="alaska" & self$regions!="hawaii")
         continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
       }
       
@@ -151,7 +169,9 @@ ZipMap = R6Class("CountyChoropleth",
 #' @param legend_name An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' 
+#' @param states An optional list of states to zoom in on. Must come from the "name" column in
+#' ?state.names.
+#'  
 #' @examples
 #' data(df_pop_zip)
 #' zip_map(df_pop_zip, title="US 2012 Population Estimates", legend_name="Population")
@@ -164,11 +184,12 @@ ZipMap = R6Class("CountyChoropleth",
 #' @importFrom scales comma
 #' @importFrom grid unit
 #'@include choropleth.R
-zip_map = function(df, title="", legend_name="", num_buckets=7)
+zip_map = function(df, title="", legend_name="", num_buckets=7, states=NULL)
 {
   m = ZipMap$new(df)
   m$title       = title
   m$legend_name = legend_name
+  m$regions     = states
   
   m$render(num_buckets)
 }

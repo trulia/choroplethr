@@ -16,21 +16,6 @@ USAChoropleth = R6Class("USAChoropleth",
       stopifnot("state" %in% colnames(map.df)) 
     },
     
-    # TODO: What if self$regions is NULL and user enters "puerto rico"?
-    # TODO: need to WARN here!
-    # support e.g. users just viewing states on the west coast
-    clip = function() {
-      if (!is.null(self$regions))
-      {
-        # user.df has county FIPS codes for regions, but subsetting happens at the state level
-        self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
-        self$user.df = self$user.df[self$user.df$state %in% self$regions, ]
-        self$user.df$state = NULL
-        
-        self$map.df  = self$map.df[self$map.df$state %in% self$regions, ]
-      }
-    },
-    
     # render the map, with AK and HI as insets
     render = function(num_buckets=7)
     {

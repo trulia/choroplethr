@@ -3,7 +3,8 @@
 \alias{zip_map}
 \title{Create a map visualizing US ZIP codes with sensible defaults.}
 \usage{
-zip_map(df, title = "", legend_name = "", num_buckets = 7)
+zip_map(df, title = "", legend_name = "", num_buckets = 7,
+  states = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".}
@@ -14,6 +15,9 @@ zip_map(df, title = "", legend_name = "", num_buckets = 7)
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+
+\item{states}{An optional list of states to zoom in on. Must come from the "name" column in
+?state.names.}
 }
 \description{
 Create a map visualizing US ZIP codes with sensible defaults.

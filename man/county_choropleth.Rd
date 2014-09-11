@@ -15,6 +15,9 @@ county_choropleth(df, title = "", legend_name = "", num_buckets = 7,
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+
+\item{states}{An optional list of states to zoom in on. Must come from the "name" column in
+?state.names.}
 }
 \description{
 Create a choropleth of USA Counties with sensible defaults.
