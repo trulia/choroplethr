@@ -6,12 +6,32 @@ StateChoropleth = R6Class("StateChoropleth",
   inherit = USAChoropleth,
   
   public = list(
+    show_labels = TRUE,
+    
     # initialize with us state map
     initialize = function(user.df)
     {
       data(state.map)
       state.map$state = state.map$region
       super$initialize(state.map, user.df)
+    },
+    
+    render = function(num_buckets=7)
+    {
+      choropleth = super$render(num_buckets)
+      
+      # by default, add labels for the lower 48 states
+      if (self$show_labels) {
+        df_state_labels = data.frame(long = state.center$x, lat = state.center$y, name=tolower(state.name), label = state.abb)
+        df_state_labels = df_state_labels[!df_state_labels$name %in% c("alaska", "hawaii"), ]
+        if (!is.null(self$regions))
+        {
+          df_state_labels = df_state_labels[df_state_labels$name %in% self$regions, ]
+        }
+        choropleth = choropleth + geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
+      }
+      
+      choropleth
     }
   )
 )
