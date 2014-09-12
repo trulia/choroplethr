@@ -44,12 +44,11 @@ Choropleth = R6Class("Choropleth",
     user.df       = NULL, # input from user
     map.df        = NULL, # geometry of the map
     choropleth.df = NULL, # result of binding user data with our map data
-    map.names     = NULL, # a helper object that lists various naming conventions for the regions
     
     num_buckets   = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
-    regions       = NULL,   # if not NULL, only render the regions listed
+    regions          = NULL,   # a vector of regions to zoom in on. if not NULL, show all
     
-    # TODO: What if self$regions is NULL and user enters "puerto rico"?
+    # TODO: What if self$zoom is NULL and user enters "puerto rico"?
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
