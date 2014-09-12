@@ -2,7 +2,8 @@
 #' @importFrom scales comma
 #' @importFrom ggplot2 scale_color_continuous
 Choropleth = R6Class("Choropleth", 
-  public = list(
+                     
+  public = list(    
     title        = "",    # title for map
     legend_name  = "",    # title for legend
     warn         = TRUE,  # warn user on clipped or missing values                      
@@ -45,17 +46,23 @@ Choropleth = R6Class("Choropleth",
     map.df        = NULL, # geometry of the map
     choropleth.df = NULL, # result of binding user data with our map data
     
-    num_buckets   = 7,      # number of equally-sized buckets for scale. use continuous scale if 1
-    regions          = NULL,   # a vector of regions to zoom in on. if not NULL, show all
+    num_buckets   = 7,    # number of equally-sized buckets for scale. use continuous scale if 1
+    
+    set_zoom = function(zoom)
+    {
+      stopifnot(is.null(zoom) || all(zoom %in% unique(private$map.df$region)))
+      private$zoom = zoom
+    },
+    get_zoom = function() { private$zoom },
     
     # TODO: What if self$zoom is NULL and user enters "puerto rico"?
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
-      if (!is.null(self$regions))
+      if (!is.null(self$zoom))
       {
-        self$user.df = self$user.df[self$user.df$region %in% self$regions, ]
-        self$map.df  = self$map.df[self$map.df$region %in% self$regions, ]
+        self$user.df = self$user.df[self$user.df$region %in% self$zoom, ]
+        self$map.df  = self$map.df[self$map.df$region %in% self$zoom, ]
       }
     },
     
@@ -196,5 +203,12 @@ Choropleth = R6Class("Choropleth",
       
       # recombine
       paste0(prefix, paste(v,collapse=nsep), suffix)
-    })
+    }
+  ),
+  
+  private = list(
+    zoom = NULL # a vector of regions to zoom in on. if NULL, show all
+  )
+  
+  
 )
