@@ -3,7 +3,12 @@
 #' @importFrom ggplot2 scale_color_continuous
 Choropleth = R6Class("Choropleth", 
                      
-  public = list(    
+  public = list(
+    # the key objects for this class
+    user.df       = NULL, # input from user
+    map.df        = NULL, # geometry of the map
+    choropleth.df = NULL, # result of binding user data with our map data
+            
     title        = "",    # title for map
     legend_name  = "",    # title for legend
     warn         = TRUE,  # warn user on clipped or missing values                      
@@ -24,14 +29,13 @@ Choropleth = R6Class("Choropleth",
       stopifnot(c("region", "value") %in% colnames(user.df))
       self$user.df = user.df
       self$user.df = self$user.df[, c("region", "value")]
+      
+      # initialize the map to the max zoom - i.e. all regions
+      self$set_zoom(unique(private$map.df$region))
     },
 
-    # explain what num_buckets means
-    render = function(num_buckets=7) 
-    {
-      stopifnot(num_buckets > 0 && num_buckets < 10)
-      self$num_buckets = num_buckets
-      
+    render = function() 
+    {      
       self$prepare_map()
       
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
@@ -40,21 +44,7 @@ Choropleth = R6Class("Choropleth",
         self$theme_clean() + 
         ggtitle(self$title)
     },
-
-    # the key objects for this class
-    user.df       = NULL, # input from user
-    map.df        = NULL, # geometry of the map
-    choropleth.df = NULL, # result of binding user data with our map data
-    
-    num_buckets   = 7,    # number of equally-sized buckets for scale. use continuous scale if 1
-    
-    set_zoom = function(zoom)
-    {
-      stopifnot(is.null(zoom) || all(zoom %in% unique(private$map.df$region)))
-      private$zoom = zoom
-    },
-    get_zoom = function() { private$zoom },
-    
+        
     # TODO: What if self$zoom is NULL and user enters "puerto rico"?
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
@@ -72,12 +62,12 @@ Choropleth = R6Class("Choropleth",
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(self$user.df$value) && self$num_buckets > 1) {
+      if (is.numeric(self$user.df$value) && private$num_buckets > 1) {
         
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        self$user.df$value = cut2(self$user.df$value, g = self$num_buckets)
+        self$user.df$value = cut2(self$user.df$value, g = private$num_buckets)
         options(scipen=scipen_orig)
         
         levels(self$user.df$value) = sapply(levels(self$user.df$value), self$format_levels)
@@ -110,7 +100,7 @@ Choropleth = R6Class("Choropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (self$num_buckets == 1) {
+      } else if (private$num_buckets == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm = TRUE)
         max_value = max(self$choropleth.df$value, na.rm = TRUE)
@@ -203,12 +193,31 @@ Choropleth = R6Class("Choropleth",
       
       # recombine
       paste0(prefix, paste(v,collapse=nsep), suffix)
+    },
+    
+    set_zoom = function(zoom)
+    {
+      stopifnot(is.null(zoom) || all(zoom %in% unique(private$map.df$region)))
+      private$zoom = zoom
+    },
+    get_zoom = function() { private$zoom },
+    
+    set_num_buckets = function(num_buckets)
+    {
+      # if R's ?is.integer actually tested if a value was an integer, we could replace the 
+      # first 2 tests with is.integer(num_buckets)
+      stopifnot(is.numeric(num_buckets) 
+                && num_buckets%%1 == 0 
+                && num_buckets > 0 
+                && num_buckets < 10)
+      
+      private$num_buckets = num_buckets      
     }
   ),
   
   private = list(
-    zoom = NULL # a vector of regions to zoom in on. if NULL, show all
+    zoom        = NULL, # a vector of regions to zoom in on. if NULL, show all
+    num_buckets = 7     # number of equally-sized buckets for scale. if 1 then use a continuous scale
+    
   )
-  
-  
 )

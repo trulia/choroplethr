@@ -16,9 +16,9 @@ StateChoropleth = R6Class("StateChoropleth",
       super$initialize(state.map, user.df)
     },
     
-    render = function(num_buckets=7)
+    render = function()
     {
-      choropleth = super$render(num_buckets)
+      choropleth = super$render()
       
       # by default, add labels for the lower 48 states
       if (self$show_labels) {
@@ -63,10 +63,10 @@ state_choropleth = function(df, title="", legend_name="", num_buckets=7, zoom=NU
   c = StateChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
-
+  c$set_num_buckets(num_buckets)
   if (!is.null(zoom))
   {
     c$set_zoom(zoom)
   }
-  c$render(num_buckets)
+  c$render()
 }

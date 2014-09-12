@@ -8,16 +8,13 @@ In addition to a columns named "region" and "value", also requires a column name
  $ new       :function (...)  
  $ classname : chr "USAChoropleth"
  $ public    :List of 23
+  ..$ user.df             : NULL
+  ..$ map.df              : NULL
+  ..$ choropleth.df       : NULL
   ..$ title               : chr ""
   ..$ legend_name         : chr ""
   ..$ warn                : logi TRUE
   ..$ ggplot_scale        : NULL
-  ..$ user.df             : NULL
-  ..$ map.df              : NULL
-  ..$ choropleth.df       : NULL
-  ..$ num_buckets         : num 7
-  ..$ set_zoom            :function (zoom)  
-  ..$ get_zoom            :function ()  
   ..$ clip                :function ()  
   ..$ discretize          :function ()  
   ..$ bind                :function ()  
@@ -26,46 +23,51 @@ In addition to a columns named "region" and "value", also requires a column name
   ..$ theme_clean         :function ()  
   ..$ theme_inset         :function ()  
   ..$ format_levels       :function (x, nsep = " to ")  
+  ..$ set_zoom            :function (zoom)  
+  ..$ get_zoom            :function ()  
+  ..$ set_num_buckets     :function (num_buckets)  
   ..$ add_state_outline   : logi FALSE
   ..$ initialize          :function (map.df, user.df)  
-  ..$ render              :function (num_buckets = 7)  
+  ..$ render              :function ()  
   ..$ render_helper       :function (choropleth.df, scale_name, theme)  
   ..$ render_state_outline:function (states)  
- $ private   :List of 1
-  ..$ zoom: NULL
+ $ private   :List of 2
+  ..$ zoom       : NULL
+  ..$ num_buckets: num 7
  $ active    : NULL
  $ inherit   :List of 8
   ..$ new       :function (...)  
   ..$ classname : chr "Choropleth"
   ..$ public    :List of 20
-  .. ..$ title        : chr ""
-  .. ..$ legend_name  : chr ""
-  .. ..$ warn         : logi TRUE
-  .. ..$ ggplot_scale : NULL
-  .. ..$ initialize   :function (map.df, user.df)  
-  .. ..$ render       :function (num_buckets = 7)  
-  .. ..$ user.df      : NULL
-  .. ..$ map.df       : NULL
-  .. ..$ choropleth.df: NULL
-  .. ..$ num_buckets  : num 7
-  .. ..$ set_zoom     :function (zoom)  
-  .. ..$ get_zoom     :function ()  
-  .. ..$ clip         :function ()  
-  .. ..$ discretize   :function ()  
-  .. ..$ bind         :function ()  
-  .. ..$ prepare_map  :function ()  
-  .. ..$ get_scale    :function ()  
-  .. ..$ theme_clean  :function ()  
-  .. ..$ theme_inset  :function ()  
-  .. ..$ format_levels:function (x, nsep = " to ")  
-  ..$ private   :List of 1
-  .. ..$ zoom: NULL
+  .. ..$ user.df        : NULL
+  .. ..$ map.df         : NULL
+  .. ..$ choropleth.df  : NULL
+  .. ..$ title          : chr ""
+  .. ..$ legend_name    : chr ""
+  .. ..$ warn           : logi TRUE
+  .. ..$ ggplot_scale   : NULL
+  .. ..$ initialize     :function (map.df, user.df)  
+  .. ..$ render         :function ()  
+  .. ..$ clip           :function ()  
+  .. ..$ discretize     :function ()  
+  .. ..$ bind           :function ()  
+  .. ..$ prepare_map    :function ()  
+  .. ..$ get_scale      :function ()  
+  .. ..$ theme_clean    :function ()  
+  .. ..$ theme_inset    :function ()  
+  .. ..$ format_levels  :function (x, nsep = " to ")  
+  .. ..$ set_zoom       :function (zoom)  
+  .. ..$ get_zoom       :function ()  
+  .. ..$ set_num_buckets:function (num_buckets)  
+  ..$ private   :List of 2
+  .. ..$ zoom       : NULL
+  .. ..$ num_buckets: num 7
   ..$ active    : NULL
   ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7fd80896a7c0> 
+  ..$ parent_env:<environment: 0x7fd70843b5c8> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fd80896a7c0> 
+ $ parent_env:<environment: 0x7fd70843b5c8> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}

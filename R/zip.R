@@ -80,11 +80,8 @@ ZipMap = R6Class("CountyChoropleth",
     },
     
     # render the map, with AK and HI as insets
-    render = function(num_buckets=7)
+    render = function()
     {
-      stopifnot(num_buckets > 0 && num_buckets < 10)
-      self$num_buckets = num_buckets
-      
       self$prepare_map()
       
       # subset AK and render it
@@ -145,7 +142,7 @@ ZipMap = R6Class("CountyChoropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (self$num_buckets == 1) {
+      } else if (private$num_buckets == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm=TRUE)
         max_value = max(self$choropleth.df$value, na.rm=TRUE)
@@ -189,10 +186,10 @@ zip_map = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
   m = ZipMap$new(df)
   m$title       = title
   m$legend_name = legend_name
-
+  m$set_num_buckets(num_buckets)
   if (!is.null(zoom))
   {
     m$set_zoom(zoom)
   }
-  m$render(num_buckets)
+  m$render()
 }

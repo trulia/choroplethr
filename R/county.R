@@ -64,10 +64,10 @@ county_choropleth = function(df, title="", legend_name="", num_buckets=7, zoom=N
   c = CountyChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
-
+  c$set_num_buckets(num_buckets)
   if (!is.null(zoom))
   {
     c$set_zoom(zoom)
   }
-  c$render(num_buckets)
+  c$render()
 }
