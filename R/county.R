@@ -17,6 +17,10 @@ CountyChoropleth = R6Class("CountyChoropleth",
       # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")
       county.map$state = merge(county.map, county.names, sort=FALSE, by.x="region", by.y="county.fips.numeric")$state.name
       super$initialize(county.map, user.df)
+      
+      # by default, show all states on the map
+      data(state.map)
+      private$zoom = unique(state.map$region)
     },
     
     # TODO: What if private$zoom is NULL and user enters "puerto rico"?

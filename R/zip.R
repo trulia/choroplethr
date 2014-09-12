@@ -42,6 +42,10 @@ ZipMap = R6Class("CountyChoropleth",
       # there are lots of zips in the zipcode that are not "real" zips, and so 
       # warning on them would likely do more harm than good
       self$warn = FALSE
+      
+      # by default, show all states on the map
+      data(state.map)
+      private$zoom = unique(state.map$region)      
     },
     
     # TODO: What if private$zoom is NULL and user enters "puerto rico"?
@@ -107,7 +111,9 @@ ZipMap = R6Class("CountyChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
+print(private$zoom)
         continental.names = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
+print(continental.names)
         continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
       }
       
