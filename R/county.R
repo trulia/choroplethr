@@ -19,18 +19,18 @@ CountyChoropleth = R6Class("CountyChoropleth",
       super$initialize(county.map, user.df)
     },
     
-    # TODO: What if self$regions is NULL and user enters "puerto rico"?
+    # TODO: What if private$zoom is NULL and user enters "puerto rico"?
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
-      if (!is.null(self$regions))
+      if (!is.null(private$zoom))
       {
         # user.df has county FIPS codes for regions, but subsetting happens at the state level
         self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
-        self$user.df = self$user.df[self$user.df$state %in% self$regions, ]
+        self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
         self$user.df$state = NULL
         
-        self$map.df  = self$map.df[self$map.df$state %in% self$regions, ]
+        self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
       }
     }
   )
@@ -64,7 +64,7 @@ county_choropleth = function(df, title="", legend_name="", num_buckets=7, states
   c = CountyChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
-  c$regions     = states
-  
+
+  c$set_zoom(states)
   c$render(num_buckets)
 }

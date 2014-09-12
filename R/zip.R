@@ -189,7 +189,7 @@ zip_map = function(df, title="", legend_name="", num_buckets=7, states=NULL)
   m = ZipMap$new(df)
   m$title       = title
   m$legend_name = legend_name
-  m$regions     = states
-  
+
+  m$set_zoom(states)
   m$render(num_buckets)
 }

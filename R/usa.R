@@ -29,14 +29,14 @@ USAChoropleth = R6Class("USAChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-        continental.names = subset(self$regions, self$regions!="alaska" & self$regions!="hawaii")
+        continental.names = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
         continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
       }
       
       ret = continental.ggplot
 
       # subset AK and render it
-      if (is.null(self$regions) || 'alaska' %in% self$regions)
+      if (is.null(private$zoom) || 'alaska' %in% private$zoom)
       {
         alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
         alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
@@ -49,7 +49,7 @@ USAChoropleth = R6Class("USAChoropleth",
       }
       
       # subset HI and render it
-      if (is.null(self$regions) || 'hawaii' %in% self$regions)
+      if (is.null(private$zoom) || 'hawaii' %in% private$zoom)
       {
         hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
         hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())

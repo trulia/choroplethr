@@ -42,7 +42,7 @@ country_choropleth = function(df, title="", legend_name="", num_buckets=7, count
   c = CountryChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
-  c$regions     = countries
-  
+
+  c$set_zoom(countries)
   c$render(num_buckets)
 }

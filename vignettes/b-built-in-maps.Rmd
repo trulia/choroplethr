@@ -59,7 +59,7 @@ The data.frame must have two columns: one named _region_ and one named _value_. 
     library(choroplethr)
     data(df_pop_country)
 
-    zip_map(df_pop_zip, 
-           title="2012 Country Population Estimates from the World Bank",
-           legend_name="Population")
+    country_choropleth(df_pop_country, 
+                      title="2012 Country Population Estimates from the World Bank",
+                      legend_name="Population")
 ```
