@@ -15,9 +15,9 @@
   ..$ user.df      : NULL
   ..$ map.df       : NULL
   ..$ choropleth.df: NULL
-  ..$ map.names    : NULL
   ..$ num_buckets  : num 7
-  ..$ regions      : NULL
+  ..$ set_zoom     :function (zoom)  
+  ..$ get_zoom     :function ()  
   ..$ clip         :function ()  
   ..$ discretize   :function ()  
   ..$ bind         :function ()  
@@ -27,7 +27,8 @@
   ..$ theme_inset  :function ()  
   ..$ format_levels:function (x, nsep = " to ")  
   ..$ initialize   :function (user.df)  
- $ private   : NULL
+ $ private   :List of 1
+  ..$ zoom: NULL
  $ active    : NULL
  $ inherit   :List of 8
   ..$ new       :function (...)  
@@ -42,9 +43,9 @@
   .. ..$ user.df      : NULL
   .. ..$ map.df       : NULL
   .. ..$ choropleth.df: NULL
-  .. ..$ map.names    : NULL
   .. ..$ num_buckets  : num 7
-  .. ..$ regions      : NULL
+  .. ..$ set_zoom     :function (zoom)  
+  .. ..$ get_zoom     :function ()  
   .. ..$ clip         :function ()  
   .. ..$ discretize   :function ()  
   .. ..$ bind         :function ()  
@@ -53,13 +54,14 @@
   .. ..$ theme_clean  :function ()  
   .. ..$ theme_inset  :function ()  
   .. ..$ format_levels:function (x, nsep = " to ")  
-  ..$ private   : NULL
+  ..$ private   :List of 1
+  .. ..$ zoom: NULL
   ..$ active    : NULL
   ..$ inherit   : NULL
-  ..$ parent_env:<environment: 0x7fd66ca66e38> 
+  ..$ parent_env:<environment: 0x7fd80896a7c0> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fd66ca66e38> 
+ $ parent_env:<environment: 0x7fd80896a7c0> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}

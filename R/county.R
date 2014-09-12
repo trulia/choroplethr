@@ -44,7 +44,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @param legend_name An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param states An optional list of states to zoom in on. Must come from the "name" column in
+#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.names.
 #' 
 #' @examples
@@ -59,12 +59,15 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @importFrom scales comma
 #' @importFrom grid unit
 
-county_choropleth = function(df, title="", legend_name="", num_buckets=7, states=NULL)
+county_choropleth = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
 {
   c = CountyChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
 
-  c$set_zoom(states)
+  if (!is.null(zoom))
+  {
+    c$set_zoom(zoom)
+  }
   c$render(num_buckets)
 }

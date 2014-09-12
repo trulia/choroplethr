@@ -4,7 +4,7 @@
 \title{Create a country-level choropleth}
 \usage{
 country_choropleth(df, title = "", legend_name = "", num_buckets = 7,
-  countries = NULL)
+  zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".}
@@ -16,9 +16,8 @@ country_choropleth(df, title = "", legend_name = "", num_buckets = 7,
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
-\item{countries}{Which countries of the map to show. If NULL, show all.
-Type "data(country.names); ?country.names" to see the list of countries. Countries must
-correspond to the "region" column of country.names.}
+\item{zoom}{An optional list of countries to zoom in on. Must come from the "name" column in
+?country.names}
 }
 \description{
 Create a country-level choropleth

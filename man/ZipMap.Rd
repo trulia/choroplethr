@@ -14,24 +14,25 @@
   ..$ user.df             : NULL
   ..$ map.df              : NULL
   ..$ choropleth.df       : NULL
-  ..$ map.names           : NULL
   ..$ num_buckets         : num 7
-  ..$ regions             : NULL
+  ..$ set_zoom            :function (zoom)  
+  ..$ get_zoom            :function ()  
   ..$ discretize          :function ()  
   ..$ prepare_map         :function ()  
   ..$ theme_clean         :function ()  
   ..$ theme_inset         :function ()  
   ..$ format_levels       :function (x, nsep = " to ")  
-  ..$ clip                :function ()  
   ..$ render_state_outline:function (states)  
   ..$ add_state_outline   : logi TRUE
   ..$ rm_na               : logi TRUE
   ..$ initialize          :function (user.df)  
+  ..$ clip                :function ()  
   ..$ bind                :function ()  
   ..$ render              :function (num_buckets = 7)  
   ..$ render_helper       :function (choropleth.df, scale_name, theme)  
   ..$ get_scale           :function ()  
- $ private   : NULL
+ $ private   :List of 1
+  ..$ zoom: NULL
  $ active    : NULL
  $ inherit   :List of 8
   ..$ new       :function (...)  
@@ -44,9 +45,10 @@
   .. ..$ user.df             : NULL
   .. ..$ map.df              : NULL
   .. ..$ choropleth.df       : NULL
-  .. ..$ map.names           : NULL
   .. ..$ num_buckets         : num 7
-  .. ..$ regions             : NULL
+  .. ..$ set_zoom            :function (zoom)  
+  .. ..$ get_zoom            :function ()  
+  .. ..$ clip                :function ()  
   .. ..$ discretize          :function ()  
   .. ..$ bind                :function ()  
   .. ..$ prepare_map         :function ()  
@@ -56,11 +58,11 @@
   .. ..$ format_levels       :function (x, nsep = " to ")  
   .. ..$ add_state_outline   : logi FALSE
   .. ..$ initialize          :function (map.df, user.df)  
-  .. ..$ clip                :function ()  
   .. ..$ render              :function (num_buckets = 7)  
   .. ..$ render_helper       :function (choropleth.df, scale_name, theme)  
   .. ..$ render_state_outline:function (states)  
-  ..$ private   : NULL
+  ..$ private   :List of 1
+  .. ..$ zoom: NULL
   ..$ active    : NULL
   ..$ inherit   :List of 8
   .. ..$ new       :function (...)  
@@ -75,9 +77,9 @@
   .. .. ..$ user.df      : NULL
   .. .. ..$ map.df       : NULL
   .. .. ..$ choropleth.df: NULL
-  .. .. ..$ map.names    : NULL
   .. .. ..$ num_buckets  : num 7
-  .. .. ..$ regions      : NULL
+  .. .. ..$ set_zoom     :function (zoom)  
+  .. .. ..$ get_zoom     :function ()  
   .. .. ..$ clip         :function ()  
   .. .. ..$ discretize   :function ()  
   .. .. ..$ bind         :function ()  
@@ -86,16 +88,17 @@
   .. .. ..$ theme_clean  :function ()  
   .. .. ..$ theme_inset  :function ()  
   .. .. ..$ format_levels:function (x, nsep = " to ")  
-  .. ..$ private   : NULL
+  .. ..$ private   :List of 1
+  .. .. ..$ zoom: NULL
   .. ..$ active    : NULL
   .. ..$ inherit   : NULL
-  .. ..$ parent_env:<environment: 0x7fd66ca66e38> 
+  .. ..$ parent_env:<environment: 0x7fd80896a7c0> 
   .. ..$ lock      : logi TRUE
   .. ..- attr(*, "class")= chr "R6ClassGenerator"
-  ..$ parent_env:<environment: 0x7fd66ca66e38> 
+  ..$ parent_env:<environment: 0x7fd80896a7c0> 
   ..$ lock      : logi TRUE
   ..- attr(*, "class")= chr "R6ClassGenerator"
- $ parent_env:<environment: 0x7fd66ca66e38> 
+ $ parent_env:<environment: 0x7fd80896a7c0> 
  $ lock      : logi TRUE
  - attr(*, "class")= chr "R6ClassGenerator"
 }}

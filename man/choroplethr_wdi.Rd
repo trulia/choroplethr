@@ -4,7 +4,7 @@
 \title{Create a country-level choropleth using data from the World Bank Development Indicators (WDI).}
 \usage{
 choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
-  num_buckets = 7, countries = NULL)
+  num_buckets = 7, zoom = NULL)
 }
 \arguments{
 \item{code}{The WDI code to use.}
@@ -18,7 +18,8 @@ will use a continuous scale, and a value in [2, 9] will use that many buckets.  
 example, 2 will show values above or below the median, and 9 will show the maximum
 resolution.  Defaults to 9.}
 
-\item{countries}{If null, render all countries. Otherwise must be a vector of country names.  See ?country.names for a list of valid country names.}
+\item{zoom}{An optional list of countries to zoom in on. Must come from the "name" column in
+?country.names.}
 }
 \value{
 A choropleth.
