@@ -52,19 +52,16 @@ ZipMap = R6Class("CountyChoropleth",
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
-      if (!is.null(private$regions))
-      {
-        # user.df has zip codes, but subsetting happens at the state level
-        data(zipcode, package="zipcode")
-        # zipcode to state abbreviation
-        self$user.df$state = merge(self$user.df, zipcode, sort=FALSE, all.x=TRUE, by.x="region", by.y="zip")$state
-        # state abbrevoation to "region" - lowercase full state name
-        self$user.df$state = tolower(state.name[match(self$user.df$state, state.abb)])
-        self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
-        self$user.df$state = NULL
-        
-        self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
-      }
+      # user.df has zip codes, but subsetting happens at the state level
+      data(zipcode, package="zipcode")
+      # zipcode to state abbreviation
+      self$user.df$state = merge(self$user.df, zipcode, sort=FALSE, all.x=TRUE, by.x="region", by.y="zip")$state
+      # state abbrevoation to "region" - lowercase full state name
+      self$user.df$state = tolower(state.name[match(self$user.df$state, state.abb)])
+      self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
+      self$user.df$state = NULL
+      
+      self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
     },
     
     bind = function() {
@@ -111,9 +108,7 @@ ZipMap = R6Class("CountyChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-print(private$zoom)
         continental.names = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
-print(continental.names)
         continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
       }
       

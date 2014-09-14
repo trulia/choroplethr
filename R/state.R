@@ -24,10 +24,8 @@ StateChoropleth = R6Class("StateChoropleth",
       if (self$show_labels) {
         df_state_labels = data.frame(long = state.center$x, lat = state.center$y, name=tolower(state.name), label = state.abb)
         df_state_labels = df_state_labels[!df_state_labels$name %in% c("alaska", "hawaii"), ]
-        if (!is.null(self$zoom))
-        {
-          df_state_labels = df_state_labels[df_state_labels$name %in% self$zoom, ]
-        }
+        df_state_labels = df_state_labels[df_state_labels$name %in% private$zoom, ]
+
         choropleth = choropleth + geom_text(data = df_state_labels, aes(long, lat, label = label, group = NULL), color = 'black')
       }
       

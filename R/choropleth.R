@@ -49,11 +49,10 @@ Choropleth = R6Class("Choropleth",
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
-      if (!is.null(self$zoom))
-      {
-        self$user.df = self$user.df[self$user.df$region %in% self$zoom, ]
-        self$map.df  = self$map.df[self$map.df$region %in% self$zoom, ]
-      }
+      stopifnot(!is.null(private$zoom))
+      
+      self$user.df = self$user.df[self$user.df$region %in% private$zoom, ]
+      self$map.df  = self$map.df[self$map.df$region %in% private$zoom, ]
     },
     
     # for us, discretizing values means 

@@ -26,16 +26,15 @@ CountyChoropleth = R6Class("CountyChoropleth",
     # TODO: What if private$zoom is NULL and user enters "puerto rico"?
     # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
-    clip = function() {
-      if (!is.null(private$zoom))
-      {
-        # user.df has county FIPS codes for regions, but subsetting happens at the state level
-        self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
-        self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
-        self$user.df$state = NULL
+    clip = function() 
+    {
+      # user.df has county FIPS codes for regions, but subsetting happens at the state level
+      data(county.names, package="choroplethr")
+      self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
+      self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
+      self$user.df$state = NULL
         
-        self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
-      }
+      self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
     }
   )
 )
@@ -62,7 +61,6 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-
 county_choropleth = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
 {
   c = CountyChoropleth$new(df)

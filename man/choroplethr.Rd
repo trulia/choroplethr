@@ -5,10 +5,10 @@
 \usage{
 choroplethr(...)
 }
-\description{
-Creates a choropleth from a specified data.frame and level of detail.
+\arguments{
+\item{...}{All arguments are ignored.}
 }
-\details{
+\description{
 This function is deprecated as of choroplether version 2.0.0. Please use ?state_choropleth,
 ?county_choropleth, ?zip_map and ?country_choroplethr instead. The last version of choroplethr
 in which this function worked was version 1.7.0, which can be downloaded from CRAN
