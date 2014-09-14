@@ -25,3 +25,9 @@ test_that("west coast zoom returns ggplot", {
   expect_is(zip_map(df_pop_zip, zoom=c("california", "oregon", "washington")), "ggplot")
 })
 
+test_that("error on invalid zoom", {
+  data(df_pop_zip, package="choroplethr")
+  expect_error(zip_map(df_pop_zip, zoom="asdf"))  
+})
+
+

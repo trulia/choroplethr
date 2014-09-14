@@ -25,3 +25,8 @@ test_that("west coast zoom returns ggplot", {
   expect_is(country_choropleth(df_pop_country, zoom=c("united states of america", "mexico", "canada")), "ggplot")
 })
 
+test_that("error on invalid zoom", {
+  data(df_pop_country, package="choroplethr")
+  expect_error(country_choropleth(df_pop_country, zoom="asdf"))  
+})
+
