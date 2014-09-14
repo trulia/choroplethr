@@ -22,6 +22,6 @@ test_that("continuous scale returns ggplot", {
 
 test_that("west coast zoom returns ggplot", {
   data(df_pop_country, package="choroplethr")
-  expect_is(country_choropleth(df_pop_country, zoom=c("california", "oregon", "washington")), "ggplot")
+  expect_is(country_choropleth(df_pop_country, zoom=c("united states of america", "mexico", "canada")), "ggplot")
 })
 

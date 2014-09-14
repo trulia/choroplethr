@@ -90,6 +90,22 @@ USAChoropleth = R6Class("USAChoropleth",
       
       df = state.map[state.map$region %in% states, ]
       geom_polygon(data=df, aes(long, lat, group = group), color = "black", fill = NA, size = 0.2);
+    },
+    
+    # all maps of US states zoom at the unit of states.
+    set_zoom = function(zoom)
+    {
+      data(state.map)
+      all_states = unique(state.map$region)
+      
+      if (is.null(zoom))
+      {
+        # initialize the map to the max zoom - i.e. all regions
+        private$zoom = all_states     
+      } else {
+        stopifnot(all(zoom %in% all_states))
+        private$zoom = zoom
+      }
     }
   )
 )

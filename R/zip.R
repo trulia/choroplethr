@@ -193,9 +193,6 @@ zip_map = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
   m$title       = title
   m$legend_name = legend_name
   m$set_num_buckets(num_buckets)
-  if (!is.null(zoom))
-  {
-    m$set_zoom(zoom)
-  }
+  m$set_zoom(zoom)
   m$render()
 }

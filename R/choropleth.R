@@ -31,7 +31,7 @@ Choropleth = R6Class("Choropleth",
       self$user.df = self$user.df[, c("region", "value")]
       
       # initialize the map to the max zoom - i.e. all regions
-      self$set_zoom(unique(private$map.df$region))
+      self$set_zoom(NULL)
     },
 
     render = function() 
@@ -197,8 +197,14 @@ Choropleth = R6Class("Choropleth",
     
     set_zoom = function(zoom)
     {
-      stopifnot(is.null(zoom) || all(zoom %in% unique(private$map.df$region)))
-      private$zoom = zoom
+      if (is.null(zoom))
+      {
+        # initialize the map to the max zoom - i.e. all regions
+        private$zoom = unique(self$map.df$region)      
+      } else {
+        stopifnot(all(zoom %in% unique(self$map.df$region)))
+        private$zoom = zoom
+      }
     },
     get_zoom = function() { private$zoom },
     
