@@ -1,0 +1,49 @@
+US State Map
+===
+
+You can create a choropleth of US States with the function `state_choropleth`:
+
+```{r hold=TRUE}
+library(choroplethr)
+
+# 2012 US State Population Estimates
+data(df_pop_state)
+?df_pop_state
+
+state_choropleth(df_pop_state)
+?state_choropleth
+```
+
+As demonstrated above, the only requirement to `state_choropleth` is a data.frame that function allows you to set a title, name of the legend, explore various scaling/coloring schemes and zoom in on certain states.  For a full explanation of these options type `?state_choropleth`.  
+
+# Data Requirements
+
+In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_state` more closely.
+
+```{r}
+head(df_pop_state)
+```
+
+Note that there are two columns: "region" and "value". These two columns are requirement for all data given to choroplethr. In general, the "value" column can contain any format of data: numeric, factor or string. 
+
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame.  The state map is named `state.map`:
+
+```{r}
+
+data(state.map)
+?state.map
+
+head(state.map)
+
+head(unique(state.map$region))
+```
+
+## Formatting your Data
+
+choroplethr provides support for formatting your data with the `state.names` data.frame:
+
+```{r}
+data(state.names)
+head(state.names)
+```
+
