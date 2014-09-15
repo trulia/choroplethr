@@ -40,7 +40,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' @param df A data.frame with a column named "region" and a column named "value".  
 #' @param title An optional title for the map.  
 #' @param legend_name An optional name for the legend.  
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' @param scale The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.names.
@@ -56,12 +56,12 @@ StateChoropleth = R6Class("StateChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-state_choropleth = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
+state_choropleth = function(df, title="", legend_name="", scale=7, zoom=NULL)
 {
   c = StateChoropleth$new(df)
   c$title       = title
   c$legend_name = legend_name
-  c$set_num_buckets(num_buckets)
+  c$set_scale(scale)
   c$set_zoom(zoom)
   c$render()
 }

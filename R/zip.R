@@ -143,7 +143,7 @@ ZipMap = R6Class("CountyChoropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (private$num_buckets == 1) {
+      } else if (private$scale == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm=TRUE)
         max_value = max(self$choropleth.df$value, na.rm=TRUE)
@@ -165,7 +165,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' @param df A data.frame with a column named "region" and a column named "value".  
 #' @param title An optional title for the map.  
 #' @param legend_name An optional name for the legend.  
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' @param scale The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.names.
@@ -182,12 +182,12 @@ ZipMap = R6Class("CountyChoropleth",
 #' @importFrom scales comma
 #' @importFrom grid unit
 #'@include choropleth.R
-zip_map = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
+zip_map = function(df, title="", legend_name="", scale=7, zoom=NULL)
 {
   m = ZipMap$new(df)
   m$title       = title
   m$legend_name = legend_name
-  m$set_num_buckets(num_buckets)
+  m$set_scale(scale)
   m$set_zoom(zoom)
   m$render()
 }

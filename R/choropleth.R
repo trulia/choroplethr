@@ -56,17 +56,17 @@ Choropleth = R6Class("Choropleth",
     },
     
     # for us, discretizing values means 
-    # 1. breaking the values into num_buckets equal intervals
+    # 1. breaking the values into scale equal intervals
     # 2. formatting the intervals e.g. with commas
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(self$user.df$value) && private$num_buckets > 1) {
+      if (is.numeric(self$user.df$value) && private$scale > 1) {
         
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        self$user.df$value = cut2(self$user.df$value, g = private$num_buckets)
+        self$user.df$value = cut2(self$user.df$value, g = private$scale)
         options(scipen=scipen_orig)
         
         levels(self$user.df$value) = sapply(levels(self$user.df$value), self$format_levels)
@@ -99,7 +99,7 @@ Choropleth = R6Class("Choropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (private$num_buckets == 1) {
+      } else if (private$scale == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm = TRUE)
         max_value = max(self$choropleth.df$value, na.rm = TRUE)
@@ -207,22 +207,22 @@ Choropleth = R6Class("Choropleth",
     },
     get_zoom = function() { private$zoom },
     
-    set_num_buckets = function(num_buckets)
+    set_scale = function(scale)
     {
       # if R's ?is.integer actually tested if a value was an integer, we could replace the 
-      # first 2 tests with is.integer(num_buckets)
-      stopifnot(is.numeric(num_buckets) 
-                && num_buckets%%1 == 0 
-                && num_buckets > 0 
-                && num_buckets < 10)
+      # first 2 tests with is.integer(scale)
+      stopifnot(is.numeric(scale) 
+                && scale%%1 == 0 
+                && scale > 0 
+                && scale < 10)
       
-      private$num_buckets = num_buckets      
+      private$scale = scale      
     }
   ),
   
   private = list(
     zoom        = NULL, # a vector of regions to zoom in on. if NULL, show all
-    num_buckets = 7     # number of equally-sized buckets for scale. if 1 then use a continuous scale
+    scale = 7     # number of equally-sized buckets for scale. if 1 then use a continuous scale
     
   )
 )
