@@ -2,13 +2,13 @@
 Master: [![Build Status](https://travis-ci.org/trulia/choroplethr.png?branch=master)](https://travis-ci.org/trulia/choroplethr)
 Dev: [![Build Status](https://travis-ci.org/trulia/choroplethr.png?branch=dev)](https://travis-ci.org/trulia/choroplethr)
 
-`choroplethr` simplifies the creation of choropleths in R.  A choropleth is a thematic map where geographic regions such as states are colored according to some metric, such as which political party the state voted for.  `choroplethr` is built on top of the [ggplot2](http://ggplot2.org/) graphics library and is supports three levels of geographic resolution and three types of scales.  Common problems such as matching county data with map data, choosing and labeling discrete scales and creating a clean background are handled automatically. 
+`choroplethr` simplifies the creation of choropleths in R.  A choropleth is a thematic map where geographic regions, such as states, are colored according to some metric, such as the number of people who live in that state.  choroplethr provides:
 
-`choroplethr` provides native support for viewing data from the US Census's [American Community Survey (ACS)](https://www.census.gov/acs/www/).  
+2. An easy interface for creating choropleths using four popular maps (US States, US Counties, US Zips and Countries of the world).
+3. Support for creating choropleths from two popular APIs (US Census Bureau and World Bank)
+1. A framework for creating choropleths from arbitrary shapefiles.
 
-`choropleth` also supports animating choropleths, which is useful for seeing trends in regions over time, such as population changes.
-
-The `choroplethr` package is described more fully in the following wiki pages:
+j
 
 1. [What is a choropleth?  When should I use one?](https://github.com/trulia/choroplethr/wiki/What-is-a-choropleth%3F--When-should-I-use-one%3F)
 1. [Choosing a Level of Detail (lod)](https://github.com/trulia/choroplethr/wiki/Choosing-a-Level-of-Detail-%28lod%29)

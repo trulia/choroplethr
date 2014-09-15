@@ -1,4 +1,4 @@
-#' Create a country-level choropleth using data from the World Bank Development Indicators (WDI).
+#' Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI).
 #' 
 #' @param code The WDI code to use.
 #' @param year The year of data to use.
@@ -36,7 +36,7 @@ choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", num_buckets=
 
   data = WDI(country=country.names$iso2c, code, start=year, end=year) 
   data = merge(data, country.names)
-  data$value = data[, names(data) == code] # choroplethr requires value column to be named "valued"
+  data$value = data[, names(data) == code] # choroplethr requires value column to be named "value"
   
   country_choropleth(data, title, "", num_buckets, zoom)
 }
