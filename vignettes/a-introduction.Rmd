@@ -18,6 +18,7 @@ Choropleths are useful for visualizing data which has a strong spatial component
 ```{r}
     library(choroplethr)
     data(df_pop_state)
+    ?df_pop_state
 
     state_choropleth(df_pop_state)
 ```
@@ -32,6 +33,8 @@ Choropleths are useful for visualizing data which has a strong spatial component
   - For US ZIPs, see `?zip_map`. Note that due to the size of of rendering ZIP boundaries at a national level, `choroplethr` renders ZIP maps as colored scatterplots. This means that they are not technically choropleths, since the boundaries are not drawn.
   - For Country choropleths, see `?country_choropleth`.
 2. It provides API connections to interesting data sources for making choropleths.
-  - US Census American Community Survey (ACS). See `?get_acs_df'.
-  - World Bank data via their API. See `?choroplethr_wdi`.
+  - US Census American Community Survey (ACS). See `?choroplethr_acs'.
+  - World Bank Development Indicators (WDI). See `?choroplethr_wdi`.
 3. It provides a framework to facilitate creating choropleths from arbitrary shapefiles.
+
+The remaining vignettes explain these features in more detail.

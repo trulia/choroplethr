@@ -11,10 +11,9 @@ data(df_pop_state)
 ?df_pop_state
 
 state_choropleth(df_pop_state)
-?state_choropleth
 ```
 
-As demonstrated above, the only requirement to `state_choropleth` is a data.frame that function allows you to set a title, name of the legend, explore various scaling/coloring schemes and zoom in on certain states.  For a full explanation of these options type `?state_choropleth`.  
+As demonstrated above, the only required parameter to `state_choropleth` is a data.frame.  You can see other options by typing ?state_choropleth`.  
 
 # Data Requirements
 
@@ -24,7 +23,7 @@ In order for `state_choropleth` to work, your data must meet certain requirement
 head(df_pop_state)
 ```
 
-Note that there are two columns: "region" and "value". These two columns are requirement for all data given to choroplethr. In general, the "value" column can contain any format of data: numeric, factor or string. 
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as functions which map colors to regions on a map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
 
 There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame.  The state map is named `state.map`:
 
@@ -38,12 +37,16 @@ head(state.map)
 head(unique(state.map$region))
 ```
 
+Note that all regions the lower-case full name of the state.
+
 ## Formatting your Data
 
 choroplethr provides support for formatting your data with the `state.names` data.frame:
 
 ```{r}
 data(state.names)
+?state.names
 head(state.names)
 ```
 
+If your regions are encoded as state abbreviations, numeric FIPS codes or character FIPS codes, then you can use this table to extract the name that choroplethr requires.

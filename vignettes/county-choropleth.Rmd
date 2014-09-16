@@ -1,0 +1,52 @@
+US County Map
+===
+
+You can create a choropleth of US Counties with the function `county_choropleth`:
+
+```{r hold=TRUE}
+library(choroplethr)
+
+# 2012 US County Population Estimates
+data(df_pop_county)
+?df_pop_county
+
+county_choropleth(df_pop_county)
+```
+
+As demonstrated above, the only required parameter to `county_choropleth` is a data.frame.  You can see the optional options by typing ?county_choropleth`.  
+
+# Data Requirements
+
+In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_state` more closely.
+
+```{r}
+head(df_pop_county)
+```
+
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as functions which map colors to regions on a map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
+
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `county.map`:
+
+```{r}
+
+data(county.map)
+?county.map
+
+head(county.map)
+
+head(unique(county.map$region))
+```
+
+Note that all regions are identified by the numeric county FIPS code (I.e. any leading zeros are dropped, and the value is numeric, and not a character string). 
+
+## Formatting your Data
+
+choroplethr provides support for formatting your data with the `county.names` data.frame:
+
+```{r}
+data(county.names)
+?county.names
+head(county.names)
+```
+
+If your regions are encoded as state abbreviations, numeric FIPS codes or character FIPS codes, then you can use this table to extract the name that choroplethr requires.
