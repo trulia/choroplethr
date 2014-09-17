@@ -1,31 +1,32 @@
-US County Map
+US ZIP Map
 ===
 
-You can create a choropleth of US Counties with the function `county_choropleth`:
+You can create a data scatterplot of US ZIP codes, where the value is mapped to a color, with the function `zip_map`
 
 ```{r hold=TRUE}
 library(choroplethr)
 
-# 2012 US County Population Estimates
-data(df_pop_county)
-?df_pop_county
+# 2012 US ZIP Population Estimates
+data(df_pop_zip)
+?df_pop_zip
 
-county_choropleth(df_pop_county)
+zip_map(df_pop_zip)
 ```
 
-As demonstrated above, the only required parameter to `county_choropleth` is a data.frame.  You can see the optional options by typing ?county_choropleth`.  
+As demonstrated above, the only required parameter to `zip_map` is a data.frame.  You can see the optional options by typing 
+`?zip_map`.  For a discussion of the problems associated with mapping ZIP codes, see [Zip Codes are Not Areas](http://www.georeference.org/doc/zip_codes_are_not_areas.htm)
 
 # Data Requirements
 
-In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_state` more closely.
+In order for `zip_map` to work, your data must meet certain requirements. Let's take a look at `df_pop_zip` more closely.
 
 ```{r}
-head(df_pop_county)
+head(df_pop_zip)
 ```
 
 Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as mapping (region, value) pairs to a colored map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
 
-There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `county.map`:
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The zip map is named `zip.map`:
 
 ```{r}
 

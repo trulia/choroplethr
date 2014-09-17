@@ -23,7 +23,7 @@ In order for `state_choropleth` to work, your data must meet certain requirement
 head(df_pop_state)
 ```
 
-Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as functions which map colors to regions on a map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as mapping (region, value) pairs to a colored map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
 
 There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame.  The state map is named `state.map`:
 
