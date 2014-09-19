@@ -30,6 +30,12 @@ Choropleth = R6Class("Choropleth",
       self$user.df = user.df
       self$user.df = self$user.df[, c("region", "value")]
       
+      # things like insets won't color properly if they are characters, and not factors
+      if (is.character(self$user.df$value))
+      {
+        self$user.df$value = as.factor(self$user.df$value)
+      }
+      
       # initialize the map to the max zoom - i.e. all regions
       self$set_zoom(NULL)
     },
