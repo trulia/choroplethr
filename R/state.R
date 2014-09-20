@@ -35,20 +35,49 @@ StateChoropleth = R6Class("StateChoropleth",
 )
 
 
-#' Create a choropleth of USA States with sensible defaults.
+#' Create a choropleth of US States with sensible defaults.
 #' 
-#' @param df A data.frame with a column named "region" and a column named "value".  
+#' The map used is ?state.map.
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
+#' the "region" column must exactly match how regions are named in the "region" column in ?state.map.
+#' See ?state.names for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend_name An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.names.
+#' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' match the names of states as they appear in the "region" column of ?state.names.
 #' 
 #' @examples
+#' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_state)
 #' state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
 #'
+#' # demonstrate continuous scale and zoom
+#' data(df_pop_state)
+#' state_choropleth(df_pop_state, 
+#'                  title="US 2012 Population Estimates", 
+#'                  legend_name="Population", 
+#'                  num_buckets=1,
+#'                  zoom=c("california", "oregon", "washington"))
+#' 
+#' # demonstrate how choroplethr handles character and factor values
+#' # demonstrate user creating their own discretization of the input
+#' data(df_pop_state)
+#' df_pop_state$str = ""
+#' for (i in 1:nrow(df_pop_state))
+#' {
+#'   if (df_pop_state[i,"value"] < 1000000)
+#'   {
+#'     df_pop_state[i,"str"] = "< 1M"
+#'   } else {
+#'     df_pop_state[i,"str"] = "> 1M"
+#'   }
+#' }
+#' df_pop_state$value = df_pop_state$str
+#' state_choropleth(df_pop_state, title="Which states have less than 1M people?")
+#' 
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all

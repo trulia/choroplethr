@@ -5,8 +5,12 @@
 
 ### Extending choroplethr
 
+2 main ways to extend choroplethr: new maps, new data
+
+
 An example like the world map. Showing the code
 
+maybe anotther vignette: advanced options?
 Also need to show things like changing the ggplot scale, warning and so on.
 
 Perhaps show in 2 

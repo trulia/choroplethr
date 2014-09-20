@@ -1,0 +1,50 @@
+US County Map
+===
+
+You can create a choropleth of US Counties with the function `county_choropleth`:
+
+```{r hold=TRUE}
+library(choroplethr)
+
+# 2012 US County Population Estimates
+data(df_pop_county)
+?df_pop_county
+
+?county_choropleth
+county_choropleth(df_pop_county)
+```
+
+As demonstrated above, the only required parameter to `county_choropleth` is a data.frame.  You can see the optional options by typing ?county_choropleth`.  
+
+# Data Requirements
+
+In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_state` more closely.
+
+```{r}
+head(df_pop_county)
+```
+
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. The "value" column can contain be of any type: numeric, factor or string.
+
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `country.map`:
+
+```{r}
+
+data(country.map)
+?country.map
+
+head(country.map)
+
+head(unique(country.map$region))
+```
+
+
+## Formatting your Data
+
+choroplethr provides support for formatting your data with the `country.names` data.frame:
+
+```{r}
+data(country.names)
+?country.names
+head(country.names)
+```

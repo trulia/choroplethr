@@ -3,7 +3,7 @@
 \name{CountryChoropleth}
 \alias{CountryChoropleth}
 \title{An R6 object for creating country-level choropleths.}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fb435ad6628> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fcb342ecb78> 
  - attr(*, "name")= chr "CountryChoropleth_generator"
 }}
 \usage{

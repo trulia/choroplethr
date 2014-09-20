@@ -42,18 +42,47 @@ CountyChoropleth = R6Class("CountyChoropleth",
 
 #' Create a choropleth of USA Counties with sensible defaults.
 #' 
-#' @param df A data.frame with a column named "region" and a column named "value".  
+#' The map used is ?county.map.
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
+#' the "region" column must exactly match how regions are named in the "region" column in ?county.map.
+#' See ?county.names for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend_name An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.names.
+#' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' match the names of states as they appear in the "region" column of ?state.names.
 #' 
 #' @examples
+#' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_county)
 #' county_choropleth(df_pop_county, title="US 2012 Population Estimates", legend_name="Population")
 #'
+#'#' # demonstrate continuous scale and zoom
+#' data(df_pop_county)
+#' county_choropleth(df_pop_county, 
+#'                  title="US 2012 Population Estimates", 
+#'                  legend_name="Population", 
+#'                  num_buckets=1, 
+#'                  zoom=c("california", "oregon", "washington"))
+#'
+#' # demonstrate how choroplethr handles character and factor values
+#' # demonstrate user creating their own discretization of the input
+#' data(df_pop_county)
+#' df_pop_county$str = ""
+#' for (i in 1:nrow(df_pop_county))
+#' {
+#'   if (df_pop_county[i,"value"] < 1000000)
+#'   {
+#'     df_pop_county[i,"str"] = "< 1M"
+#'   } else {
+#'     df_pop_county[i,"str"] = "> 1M"
+#'   }
+#' }
+#' df_pop_county$value = df_pop_county$str
+#' county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
+
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all

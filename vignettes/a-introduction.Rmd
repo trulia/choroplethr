@@ -13,7 +13,7 @@ A choropleth is a map which
   1. Shows geographic boundaries.
   2. Colors those regions based on some metric.
 
-Choropleths are useful for visualizing data which has a strong spatial component.  For example, here is a choropleth that shows 2012 Population Estimates in US States:
+Choropleths are useful for visualizing data where geographic boundaries are a natural unit of aggregation.  For example, here is a choropleth that shows 2012 Population Estimates in US States:
 
 ```{r}
     library(choroplethr)
@@ -27,13 +27,13 @@ Choropleths are useful for visualizing data which has a strong spatial component
 
 `choroplethr` facilitates the creation of choropleth maps in R. It does this in 3 ways.
 
-1. It provides ready-made functions for easily creating 4 different maps:
-  - For US States, see `?state_choropleth`.
-  - For US Counties, see `?county_choropleth`.
-  - For US ZIPs, see `?zip_map`. Note that due to the size of of rendering ZIP boundaries at a national level, `choroplethr` renders ZIP maps as colored scatterplots. This means that they are not technically choropleths, since the boundaries are not drawn.
+1. It provides ready-made functions for creating choropleths with four different maps:
+  - US States (`?state_choropleth`).
+  - US Counties (`?county_choropleth`).
+  - US ZIPs (`?zip_map`). Note that due to the size of of rendering ZIP boundaries at a national level, `choroplethr` renders ZIP maps as colored scatterplots. This means that they are not technically choropleths, since the boundaries are not drawn.
   - For Country choropleths, see `?country_choropleth`.
 2. It provides API connections to interesting data sources for making choropleths.
-  - US Census American Community Survey (ACS). See `?choroplethr_acs'.
+  - US Census American Community Survey (ACS). See `?choroplethr_acs`.
   - World Bank Development Indicators (WDI). See `?choroplethr_wdi`.
 3. It provides a framework to facilitate creating choropleths from arbitrary shapefiles.
 
