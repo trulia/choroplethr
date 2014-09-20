@@ -27,12 +27,12 @@ The map used is ?state.map.
 \examples{
 # demonstrate default parameters - visualization using 7 equally sized buckets
 data(df_pop_state)
-state_choropleth(df_pop_state, title="US 2012 Population Estimates", legend_name="Population")
+state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend_name="Population")
 
 # demonstrate continuous scale and zoom
 data(df_pop_state)
 state_choropleth(df_pop_state,
-                 title="US 2012 Population Estimates",
+                 title="US 2012 State Population Estimates",
                  legend_name="Population",
                  num_buckets=1,
                  zoom=c("california", "oregon", "washington"))

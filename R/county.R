@@ -57,12 +57,12 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @examples
 #' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_county)
-#' county_choropleth(df_pop_county, title="US 2012 Population Estimates", legend_name="Population")
+#' county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend_name="Population")
 #'
 #'#' # demonstrate continuous scale and zoom
 #' data(df_pop_county)
 #' county_choropleth(df_pop_county, 
-#'                  title="US 2012 Population Estimates", 
+#'                  title="US 2012 County Population Estimates", 
 #'                  legend_name="Population", 
 #'                  num_buckets=1, 
 #'                  zoom=c("california", "oregon", "washington"))

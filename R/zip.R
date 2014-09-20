@@ -160,20 +160,34 @@ ZipMap = R6Class("CountyChoropleth",
   )
 )
 
-#' Create a map visualizing US ZIP codes with sensible defaults.
+#' Create a map visualizing US ZIP codes with sensible defaults. 
 #' 
-#' @param df A data.frame with a column named "region" and a column named "value".  
+#' ZIPs are rendered as scatterplots against and outline of US States. 
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Values of the 
+#' "region" column must be valid 5-digit zip codes.
 #' @param title An optional title for the map.  
 #' @param legend_name An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.names.
+#' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' match the names of states as they appear in the "region" column of ?state.names.
 #'  
 #' @examples
+#' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_zip)
-#' zip_map(df_pop_zip, title="US 2012 Population Estimates", legend_name="Population")
+#' zip_map(df_pop_zip, title="US 2012 ZCTA Population Estimates", legend_name="Population")
 #'
+#' # demonstrate continuous scale and zoom
+#' data(df_pop_zip)
+#' zip_map(df_pop_zip, 
+#'         title="US 2012 ZCTA Population Estimates", 
+#'         legend_name="Population", 
+#'         num_buckets=1, 
+#'         zoom=c("california", "oregon", "washington"))
+#'
+#' @note The longitude and latitude of ZIPs come from the "zipcode" package. The state outlines come 
+#' from ?state.map.
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all

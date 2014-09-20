@@ -3,7 +3,7 @@
 \name{ZipMap}
 \alias{ZipMap}
 \title{Create a county-level choropleth}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fcb34195a30> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7fdba17c8f78> 
  - attr(*, "name")= chr "CountyChoropleth_generator"
 }}
 \usage{
