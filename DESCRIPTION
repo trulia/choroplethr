@@ -34,10 +34,10 @@ Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
 Collate:
-    'animate.R'
     'choropleth.R'
     'choroplethr.R'
     'choroplethr_acs.R'
+    'choroplethr_animate.R'
     'choroplethr_wdi.R'
     'country.R'
     'country_data.R'

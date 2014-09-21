@@ -14,7 +14,7 @@ data(df_pop_state)
 state_choropleth(df_pop_state)
 ```
 
-As demonstrated above, the only required parameter to `state_choropleth` is a data.frame.  You can see other options by typing `?state_choropleth`.  
+As demonstrated above, the only required parameter to `state_choropleth` is a data.frame.  You can see the optional parameters by typing `?state_choropleth`.  
 
 # Data Requirements
 
@@ -50,4 +50,4 @@ data(state.names)
 head(state.names)
 ```
 
-If your regions are encoded as state abbreviations, numeric FIPS codes or character FIPS codes, then you can use this table to extract the name that choroplethr requires.
+If your regions are encoded as state abbreviations, numeric FIPS codes or character FIPS codes, then you can use this table to convert to the format that choroplethr requires.

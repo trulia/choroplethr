@@ -14,37 +14,40 @@ data(df_pop_county)
 county_choropleth(df_pop_county)
 ```
 
-As demonstrated above, the only required parameter to `county_choropleth` is a data.frame.  You can see the optional options by typing ?county_choropleth`.  
+As demonstrated above, the only required parameter to `county_choropleth` is a data.frame.  You can see the optional parameters by typing `?county_choropleth`.  
 
 # Data Requirements
 
-In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_state` more closely.
+In order for `state_choropleth` to work, your data must meet certain requirements. Let's take a look at `df_pop_county` more closely.
 
 ```{r}
 head(df_pop_county)
 ```
 
-Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. The "value" column can contain be of any type: numeric, factor or string.
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. The "value" column can be of any type: numeric, factor or string.
 
-There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `country.map`:
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `county.map`:
 
 ```{r}
 
-data(country.map)
-?country.map
+data(county.map)
+?county.map
 
-head(country.map)
+head(county.map, 4)
 
-head(unique(country.map$region))
+head(unique(county.map$region))
 ```
 
+choroplethr treats county region names as numeric county FIPS codes. According to the strict definition of county FIPS codes they should be character strings - i.e., leading zeroes should be preserved. However, I have found that the numeric form of county FIPS codes are so widely used, and the conversion from string to numeric so much easier than numeric to string, that I have decided to adopt the numeric convention.
 
 ## Formatting your Data
 
-choroplethr provides support for formatting your data with the `country.names` data.frame:
+choroplethr provides support for formatting your data with the `county.names` data.frame:
 
 ```{r}
-data(country.names)
-?country.names
-head(country.names)
+data(county.names)
+?county.names
+head(county.names)
 ```
+
+If your regions as anything other than numeric county FIPS codes then you can use this data.frame to convert to the format that choroplethr requires.
