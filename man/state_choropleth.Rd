@@ -3,7 +3,7 @@
 \alias{state_choropleth}
 \title{Create a choropleth of US States with sensible defaults.}
 \usage{
-state_choropleth(df, title = "", legend_name = "", num_buckets = 7,
+state_choropleth(df, title = "", legend = "", num_buckets = 7,
   zoom = NULL)
 }
 \arguments{
@@ -13,7 +13,7 @@ See ?state.names for an object which can help you coerce your regions into the r
 
 \item{title}{An optional title for the map.}
 
-\item{legend_name}{An optional name for the legend.}
+\item{legend}{An optional name for the legend.}
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
@@ -27,13 +27,13 @@ The map used is ?state.map.
 \examples{
 # demonstrate default parameters - visualization using 7 equally sized buckets
 data(df_pop_state)
-state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend_name="Population")
+state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
 
 # demonstrate continuous scale and zoom
 data(df_pop_state)
 state_choropleth(df_pop_state,
                  title="US 2012 State Population Estimates",
-                 legend_name="Population",
+                 legend="Population",
                  num_buckets=1,
                  zoom=c("california", "oregon", "washington"))
 

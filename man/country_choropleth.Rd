@@ -3,7 +3,7 @@
 \alias{country_choropleth}
 \title{Create a country-level choropleth}
 \usage{
-country_choropleth(df, title = "", legend_name = "", num_buckets = 7,
+country_choropleth(df, title = "", legend = "", num_buckets = 7,
   zoom = NULL)
 }
 \arguments{
@@ -13,7 +13,7 @@ See ?country.names for an object which can help you coerce your regions into the
 
 \item{title}{An optional title for the map.}
 
-\item{legend_name}{An optional name for the legend.}
+\item{legend}{An optional name for the legend.}
 
 \item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}

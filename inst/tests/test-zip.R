@@ -10,9 +10,9 @@ test_that("setting title returns ggplot", {
   expect_is(zip_map(df_pop_zip, title="test title"), "ggplot")
 })
 
-test_that("setting legend_name returns ggplot", {
+test_that("setting legend returns ggplot", {
   data(df_pop_zip, package="choroplethr")
-  expect_is(zip_map(df_pop_zip, legend_name="test legend_name"), "ggplot")
+  expect_is(zip_map(df_pop_zip, legend="test legend"), "ggplot")
 })
 
 test_that("continuous scale returns ggplot", {

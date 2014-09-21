@@ -10,9 +10,9 @@ test_that("setting title returns ggplot", {
   expect_is(state_choropleth(df_pop_state, title="test title"), "ggplot")
 })
 
-test_that("setting legend_name returns ggplot", {
+test_that("setting legend returns ggplot", {
   data(df_pop_state, package="choroplethr")
-  expect_is(state_choropleth(df_pop_state, legend_name="test legend_name"), "ggplot")
+  expect_is(state_choropleth(df_pop_state, legend="test legend"), "ggplot")
 })
 
 test_that("continuous scale returns ggplot", {

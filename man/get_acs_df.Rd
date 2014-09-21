@@ -29,18 +29,18 @@ library(Hmisc) # for cut2
 # States with greater than 1M residents
 df       = get_acs_df("B01003", "state") # population
 df$value = cut2(df$value, cuts=c(0,1000000,Inf))
-state_choropleth(df, title="States with a population over 1M", legend_name="Population")
+state_choropleth(df, title="States with a population over 1M", legend="Population")
 
 # Counties with greater than or greater than 1M residents
 df       = get_acs_df("B01003", "county") # population
 df$value = cut2(df$value, cuts=c(0,1000000,Inf))
-county_choropleth(df, title="Counties with a population over 1M", legend_name="Population")
+county_choropleth(df, title="Counties with a population over 1M", legend="Population")
 
 # ZIP codes in California where median age is between 20 and 30
 df       = get_acs_df("B01002", "zip") # median age
 df       = df[df$value >= 20 & df$value <= 30, ]
 df$value = cut2(df$value, g=3) # 3 equally-sized groups
-zip_map(df, title="CA Zip Codes by Age", legend_name="Median Age", zoom="california")
+zip_map(df, title="CA Zip Codes by Age", legend="Median Age", zoom="california")
 }
 }
 \seealso{

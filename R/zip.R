@@ -152,9 +152,9 @@ ZipMap = R6Class("CountyChoropleth",
         # by default, scale_fill_continuous uses a light value for high values and a dark value for low values
         # however, this is the opposite of how choropleths are normally colored (see wikipedia)
         # these low and high values are from the 7 color brewer blue scale (see colorbrewer.org)
-        scale_color_continuous(self$legend_name, low="#eff3ff", high="#084594", labels=comma, na.value="black", limits=c(min_value, max_value))
+        scale_color_continuous(self$legend, low="#eff3ff", high="#084594", labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
-        scale_color_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
+        scale_color_brewer(self$legend, drop=FALSE, labels=comma, na.value="black")        
       }
     }
   )
@@ -167,7 +167,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' @param df A data.frame with a column named "region" and a column named "value".  Values of the 
 #' "region" column must be valid 5-digit zip codes.
 #' @param title An optional title for the map.  
-#' @param legend_name An optional name for the legend.  
+#' @param legend An optional name for the legend.  
 #' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
@@ -176,13 +176,13 @@ ZipMap = R6Class("CountyChoropleth",
 #' @examples
 #' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_zip)
-#' zip_map(df_pop_zip, title="US 2012 ZCTA Population Estimates", legend_name="Population")
+#' zip_map(df_pop_zip, title="US 2012 ZCTA Population Estimates", legend="Population")
 #'
 #' # demonstrate continuous scale and zoom
 #' data(df_pop_zip)
 #' zip_map(df_pop_zip, 
 #'         title="US 2012 ZCTA Population Estimates", 
-#'         legend_name="Population", 
+#'         legend="Population", 
 #'         num_buckets=1, 
 #'         zoom=c("california", "oregon", "washington"))
 #'
@@ -196,11 +196,11 @@ ZipMap = R6Class("CountyChoropleth",
 #' @importFrom scales comma
 #' @importFrom grid unit
 #'@include choropleth.R
-zip_map = function(df, title="", legend_name="", num_buckets=7, zoom=NULL)
+zip_map = function(df, title="", legend="", num_buckets=7, zoom=NULL)
 {
   m = ZipMap$new(df)
   m$title       = title
-  m$legend_name = legend_name
+  m$legend = legend
   m$set_num_buckets(num_buckets)
   m$set_zoom(zoom)
   m$render()

@@ -10,7 +10,7 @@ Choropleth = R6Class("Choropleth",
     choropleth.df = NULL, # result of binding user data with our map data
             
     title        = "",    # title for map
-    legend_name  = "",    # title for legend
+    legend  = "",    # title for legend
     warn         = TRUE,  # warn user on clipped or missing values                      
     ggplot_scale = NULL,  # override default scale.
                           # warning, you need to set "drop=FALSE" for insets to render correctly
@@ -114,9 +114,9 @@ Choropleth = R6Class("Choropleth",
         # by default, scale_fill_continuous uses a light value for high values and a dark value for low values
         # however, this is the opposite of how choropleths are normally colored (see wikipedia)
         # these low and high values are from the 7 color brewer blue scale (see colorbrewer.org)
-        scale_fill_continuous(self$legend_name, low="#eff3ff", high="#084594", labels=comma, na.value="black", limits=c(min_value, max_value))
+        scale_fill_continuous(self$legend, low="#eff3ff", high="#084594", labels=comma, na.value="black", limits=c(min_value, max_value))
       } else {
-        scale_fill_brewer(self$legend_name, drop=FALSE, labels=comma, na.value="black")        
+        scale_fill_brewer(self$legend, drop=FALSE, labels=comma, na.value="black")        
       }
     },
     
