@@ -13,7 +13,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
 #' example, 2 will show values above or below the median, and 9 will show the maximum
 #' resolution.  Defaults to 9.
@@ -33,15 +33,15 @@ if (base::getRversion() >= "2.15.1") {
 #' choroplethr_acs("B01003", "state")
 #' 
 #' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' choroplethr_acs("B19301", "county", num_buckets=1, states=c("NY", "NJ", "CT"))
+#' choroplethr_acs("B19301", "county", buckets=1, states=c("NY", "NJ", "CT"))
 #'
 #' # median income, all zip codes
 #' choroplethr_acs("B19301", "zip") } 
 #' @importFrom acs acs.fetch geography estimate geo.make
-choroplethr_acs = function(tableId, map, endyear=2011, span=5, num_buckets=7, zoom=NULL)
+choroplethr_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
 {
   stopifnot(map %in% c("state", "county", "zip"))
-  stopifnot(num_buckets > 0 && num_buckets < 10)
+  stopifnot(buckets > 0 && buckets < 10)
   
   acs.data   = acs.fetch(geography=make_geo(map), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
@@ -49,11 +49,11 @@ choroplethr_acs = function(tableId, map, endyear=2011, span=5, num_buckets=7, zo
   acs.df     = make_df(map, acs.data, column_idx) # choroplethr requires a df
   
   if (map=="state") {
-    state_choropleth(acs.df, title, "", num_buckets, zoom)
+    state_choropleth(acs.df, title, "", buckets, zoom)
   } else if (map=="county") {
-    county_choropleth(acs.df, title, "", num_buckets, zoom)
+    county_choropleth(acs.df, title, "", buckets, zoom)
   } else if (map=="zip") {
-    zip_map(acs.df, title, "", num_buckets, zoom)
+    zip_map(acs.df, title, "", buckets, zoom)
   }
 }
 

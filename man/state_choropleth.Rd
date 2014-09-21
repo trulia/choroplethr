@@ -3,8 +3,7 @@
 \alias{state_choropleth}
 \title{Create a choropleth of US States with sensible defaults.}
 \usage{
-state_choropleth(df, title = "", legend = "", num_buckets = 7,
-  zoom = NULL)
+state_choropleth(df, title = "", legend = "", buckets = 7, zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -15,7 +14,7 @@ See ?state.names for an object which can help you coerce your regions into the r
 
 \item{legend}{An optional name for the legend.}
 
-\item{num_buckets}{The number of equally sized buckets to places the values in.  A value of 1
+\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
@@ -34,7 +33,7 @@ data(df_pop_state)
 state_choropleth(df_pop_state,
                  title="US 2012 State Population Estimates",
                  legend="Population",
-                 num_buckets=1,
+                 buckets=1,
                  zoom=c("california", "oregon", "washington"))
 
 # demonstrate how choroplethr handles character and factor values

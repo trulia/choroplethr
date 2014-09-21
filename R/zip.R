@@ -143,7 +143,7 @@ ZipMap = R6Class("CountyChoropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (private$num_buckets == 1) {
+      } else if (private$buckets == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm=TRUE)
         max_value = max(self$choropleth.df$value, na.rm=TRUE)
@@ -168,7 +168,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' "region" column must be valid 5-digit zip codes.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.names.
@@ -183,7 +183,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' zip_map(df_pop_zip, 
 #'         title="US 2012 ZCTA Population Estimates", 
 #'         legend="Population", 
-#'         num_buckets=1, 
+#'         buckets=1, 
 #'         zoom=c("california", "oregon", "washington"))
 #'
 #' @note The longitude and latitude of ZIPs come from the "zipcode" package. The state outlines come 
@@ -196,12 +196,12 @@ ZipMap = R6Class("CountyChoropleth",
 #' @importFrom scales comma
 #' @importFrom grid unit
 #'@include choropleth.R
-zip_map = function(df, title="", legend="", num_buckets=7, zoom=NULL)
+zip_map = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   m = ZipMap$new(df)
   m$title       = title
   m$legend = legend
-  m$set_num_buckets(num_buckets)
+  m$set_buckets(buckets)
   m$set_zoom(zoom)
   m$render()
 }

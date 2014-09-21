@@ -25,7 +25,7 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' See ?country.names for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param num_buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of countries to zoom in on. Elements of this vector must exactly 
 #' match the names of countries as they appear in the "region" column of ?country.names
@@ -36,12 +36,12 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 #'
 #' # demonstrate continuous scale
-#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", num_buckets=1)
+#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", buckets=1)
 #'
 #' # demonstrate zooming
 #' country_choropleth(df_pop_country, 
 #'                    "2012 World Bank Population Estimates", 
-#'                    num_buckets=1,
+#'                    buckets=1,
 #'                    zoom=c("united states of america", "canada", "mexico"))
 
 #' @export
@@ -51,12 +51,12 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
 #' @importFrom grid unit grobTree
-country_choropleth = function(df, title="", legend="", num_buckets=7, zoom=NULL)
+country_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   c = CountryChoropleth$new(df)
   c$title       = title
   c$legend = legend
-  c$set_num_buckets(num_buckets)
+  c$set_buckets(buckets)
   c$set_zoom(zoom)
   c$render()
 }

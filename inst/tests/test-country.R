@@ -17,12 +17,12 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_country, package="choroplethr")
-  expect_is(country_choropleth(df_pop_country, num_buckets=1), "ggplot")
+  expect_is(country_choropleth(df_pop_country, buckets=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {
   data(df_pop_country, package="choroplethr")
-  expect_is(country_choropleth(df_pop_country, num_buckets=2, zoom=c("united states of america", "mexico", "canada")), "ggplot")
+  expect_is(country_choropleth(df_pop_country, buckets=2, zoom=c("united states of america", "mexico", "canada")), "ggplot")
 })
 
 test_that("error on invalid zoom", {

@@ -17,7 +17,7 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_zip, package="choroplethr")
-  expect_is(zip_map(df_pop_zip, num_buckets=1), "ggplot")
+  expect_is(zip_map(df_pop_zip, buckets=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {

@@ -1,31 +1,31 @@
-context("test num_buckets")
+context("test buckets")
 
-test_that("state num_buckets = 0 throws exception", {
+test_that("state buckets = 0 throws exception", {
   data(df_pop_state, package="choroplethr")
-  expect_error(state_choropleth(df_pop_state, num_buckets=0))
+  expect_error(state_choropleth(df_pop_state, buckets=0))
 })
 
-test_that("state num_buckets = 10 throws exception", {
+test_that("state buckets = 10 throws exception", {
   data(df_pop_state, package="choroplethr")
-  expect_error(state_choropleth(df_pop_state, num_buckets=10))
+  expect_error(state_choropleth(df_pop_state, buckets=10))
 })
 
-test_that("county float num_buckets throws exception", {
+test_that("county float buckets throws exception", {
   data(df_pop_state, package="choroplethr")
-  expect_error(state_choropleth(df_pop_state, num_buckets=1.5))
+  expect_error(state_choropleth(df_pop_state, buckets=1.5))
 })
 
-test_that("zip string num_buckets throws exception", {
+test_that("zip string buckets throws exception", {
   data(df_pop_state, package="choroplethr")
-  expect_error(state_choropleth(df_pop_state, num_buckets="hello"))
+  expect_error(state_choropleth(df_pop_state, buckets="hello"))
 })
 
-test_that("country num_buckets=1 returns ggplot", {
+test_that("country buckets=1 returns ggplot", {
   data(df_pop_state, package="choroplethr")
-  expect_is(state_choropleth(df_pop_state, num_buckets=1), "ggplot")
+  expect_is(state_choropleth(df_pop_state, buckets=1), "ggplot")
 })
 
-test_that("county num_buckets=5 returns ggplot", {
+test_that("county buckets=5 returns ggplot", {
   data(df_pop_state, package="choroplethr")
-  expect_is(state_choropleth(df_pop_state, num_buckets=1), "ggplot")
+  expect_is(state_choropleth(df_pop_state, buckets=1), "ggplot")
 })

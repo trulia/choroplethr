@@ -17,7 +17,7 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_county, package="choroplethr")
-  expect_is(county_choropleth(df_pop_county, num_buckets=1), "ggplot")
+  expect_is(county_choropleth(df_pop_county, buckets=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {
