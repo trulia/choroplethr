@@ -28,6 +28,9 @@ CountyChoropleth = R6Class("CountyChoropleth",
     # support e.g. users just viewing states on the west coast
     clip = function() 
     {
+      # remove regions not on the map before doing the merge
+      self$user.df = self$user.df[self$user.df$region %in% county.names$county.fips.numeric, ]
+      
       # user.df has county FIPS codes for regions, but subsetting happens at the state level
       data(county.names, package="choroplethr")
       self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
@@ -93,7 +96,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 county_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   c = CountyChoropleth$new(df)
-  c$title       = title
+  c$title  = title
   c$legend = legend
   c$set_buckets(buckets)
   c$set_zoom(zoom)
