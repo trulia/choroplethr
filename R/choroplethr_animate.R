@@ -173,6 +173,9 @@ choroplethr_animate = function(choropleths)
   * Start animation traversing through all images in order
   */
   $scope.play = function() {
+  if (Number($scope.dateValue) >= Number($scope.maxValue)) {
+  $scope.dateValue = $scope.minValue;
+  }
   $scope.intervalRef = $window.setInterval($scope.nextMap, 1000);
   };
   /**
