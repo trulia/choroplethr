@@ -10,7 +10,7 @@ Choropleth = R6Class("Choropleth",
     choropleth.df = NULL, # result of binding user data with our map data
             
     title        = "",    # title for map
-    legend  = "",    # title for legend
+    legend       = "",    # title for legend
     warn         = TRUE,  # warn user on clipped or missing values                      
     ggplot_scale = NULL,  # override default scale.
                           # warning, you need to set "drop=FALSE" for insets to render correctly
@@ -38,6 +38,21 @@ Choropleth = R6Class("Choropleth",
       
       # initialize the map to the max zoom - i.e. all regions
       self$set_zoom(NULL)
+      
+      # if the user's data contains values which are not on the map, 
+      # then emit a warning if appropriate
+      if (self$warn)
+      {
+        all_regions = unique(self$map.df$region)
+        user_regions = unique(self$user.df$region)
+        invalid_regions = setdiff(user_regions, all_regions)
+        if (length(invalid_regions) > 0)
+        {
+          invalid_regions = paste(invalid_regions, collapse = ", ")
+          warning(paste0("Your data.frame contains the following regions which are not mappable: ", invalid_regions))
+        }
+      }
+      
     },
 
     render = function() 
@@ -51,8 +66,6 @@ Choropleth = R6Class("Choropleth",
         ggtitle(self$title)
     },
         
-    # TODO: What if self$zoom is NULL and user enters "puerto rico"?
-    # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
       stopifnot(!is.null(private$zoom))
@@ -227,8 +240,8 @@ Choropleth = R6Class("Choropleth",
   ),
   
   private = list(
-    zoom        = NULL, # a vector of regions to zoom in on. if NULL, show all
-    buckets = 7     # number of equally-sized buckets for scale. if 1 then use a continuous scale
-    
+    zoom    = NULL, # a vector of regions to zoom in on. if NULL, show all
+    buckets = 7,     # number of equally-sized buckets for scale. if 1 then use a continuous scale
+    has_invalid_regions = FALSE
   )
 )

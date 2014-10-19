@@ -14,6 +14,11 @@ StateChoropleth = R6Class("StateChoropleth",
       data(state.map)
       state.map$state = state.map$region
       super$initialize(state.map, user.df)
+      
+      if (private$has_invalid_regions)
+      {
+        warning("Please see ?state.names for a list of mappable regions")
+      }
     },
     
     render = function()
@@ -88,7 +93,7 @@ StateChoropleth = R6Class("StateChoropleth",
 state_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   c = StateChoropleth$new(df)
-  c$title       = title
+  c$title  = title
   c$legend = legend
   c$set_buckets(buckets)
   c$set_zoom(zoom)

@@ -48,8 +48,6 @@ ZipMap = R6Class("CountyChoropleth",
       private$zoom = unique(state.map$region)      
     },
     
-    # TODO: What if private$zoom is NULL and user enters "puerto rico"?
-    # TODO: need to WARN here!
     # support e.g. users just viewing states on the west coast
     clip = function() {
       # user.df has zip codes, but subsetting happens at the state level

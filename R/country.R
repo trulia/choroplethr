@@ -12,6 +12,11 @@ CountryChoropleth = R6Class("CountryChoropleth",
     {
       data(country.map)
       super$initialize(country.map, user.df)
+      
+      if (private$has_invalid_regions)
+      {
+        warning("Please see ?country.names for a list of mappable regions")
+      }
     }
   )
 )

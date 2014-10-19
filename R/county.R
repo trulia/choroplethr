@@ -21,17 +21,20 @@ CountyChoropleth = R6Class("CountyChoropleth",
       # by default, show all states on the map
       data(state.map)
       private$zoom = unique(state.map$region)
+      
+      if (private$has_invalid_regions)
+      {
+        warning("Please see ?county.names for a list of mappable regions")
+      }
+      
     },
     
-    # TODO: What if private$zoom is NULL and user enters "puerto rico"?
-    # TODO: need to WARN here!
-    # support e.g. users just viewing states on the west coast
+    # user.df has county FIPS codes for regions, but subsetting happens at the state level
     clip = function() 
     {
       # remove regions not on the map before doing the merge
       self$user.df = self$user.df[self$user.df$region %in% county.names$county.fips.numeric, ]
       
-      # user.df has county FIPS codes for regions, but subsetting happens at the state level
       data(county.names, package="choroplethr")
       self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
       self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
