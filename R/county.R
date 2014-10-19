@@ -1,115 +1,107 @@
-# This is unfortunately necessary to have R CMD check not throw out spurious NOTEs when using ggplot2
-# http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("map.counties", "long", "lat", "group", "value", "label", "zipcode", "longitude", "latitude", "value"))
-}
-
-#' @importFrom plyr rename join
-bind_df_to_county_map = function(df, warn_na = TRUE)
-{
-  stopifnot(c("region", "value") %in% colnames(df))
-  stopifnot(class(df$region) %in% c("character", "numeric", "integer"))
-
-  df$region = as.numeric(df$region)
-  df = rename(df, replace=c("region" = "county.fips.numeric"))
+#' Create a county-level choropleth
+#' @export
+#' @importFrom dplyr left_join
+#' @include usa.R
+CountyChoropleth = R6Class("CountyChoropleth",
+  inherit = USAChoropleth,
   
-  data(map.counties, package="choroplethr", envir=environment())
-  choropleth = join(map.counties, df, by="county.fips.numeric", type="left")
-  missing_fips = unique(choropleth[is.na(choropleth$value), ]$county.fips);
-  # county FIPS code 11001 is Washington DC, which choroplethr currently does not support
-  # because it is not part of state.abb. However, it's in the map so it always triggers a warning
-  missing_fips = setdiff(missing_fips, "11001") 
-  if (warn_na && length(missing_fips) > 0)
-  {
-    missing_fips = paste(missing_fips, collapse = ", ");
-    warning_string = paste("The following counties were missing and are being set to NA:", missing_fips);
-    print(warning_string);
-  }
-
-  choropleth = choropleth[order(choropleth$order), ];
-  
-  choropleth
-}
-
-print_county_choropleth = function(choropleth.df, state.df, scaleName, theme, min, max)
-{
-  # maps with numeric values are mapped with a continuous scale
-  if (is.numeric(choropleth.df$value))
-  {
-    ggplot(choropleth.df, aes(long, lat, group = group)) +
-      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-      geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
-      scale_fill_continuous(scaleName, labels=comma, na.value="black") + # use a continuous scale
-      theme;
-  } else { # assume character or factor
-    stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
+  public = list(
+    # this map looks better with an outline of the states added
+    add_state_outline = TRUE, 
     
-    ggplot(choropleth.df, aes(long, lat, group = group)) +
-      geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
-      geom_polygon(data = state.df, color = "black", fill = NA, size = 0.2) +
-      scale_fill_brewer(scaleName, labels=comma, na.value="black") + # use discrete scale for buckets
-      theme;
-  }
-}
+    # initialize with us state map
+    initialize = function(user.df)
+    {
+      data(county.map)
+      data(county.names)
+      # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")
+      county.map$state = merge(county.map, county.names, sort=FALSE, by.x="region", by.y="county.fips.numeric")$state.name
+      super$initialize(county.map, user.df)
+      
+      # by default, show all states on the map
+      data(state.map)
+      private$zoom = unique(state.map$region)
+      
+      if (private$has_invalid_regions)
+      {
+        warning("Please see ?county.names for a list of mappable regions")
+      }
+      
+    },
+    
+    # user.df has county FIPS codes for regions, but subsetting happens at the state level
+    clip = function() 
+    {
+      # remove regions not on the map before doing the merge
+      self$user.df = self$user.df[self$user.df$region %in% county.names$county.fips.numeric, ]
+      
+      data(county.names, package="choroplethr")
+      self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="county.fips.numeric")$state.name
+      self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
+      self$user.df$state = NULL
+        
+      self$map.df  = self$map.df[self$map.df$state %in% private$zoom, ]
+    }
+  )
+)
 
-render_county_choropleth = function(choropleth.df, title="", scaleName="", states=state.abb, renderAsInsets=TRUE)
+
+#' Create a choropleth of USA Counties with sensible defaults.
+#' 
+#' The map used is ?county.map.
+#' 
+#' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
+#' the "region" column must exactly match how regions are named in the "region" column in ?county.map.
+#' See ?county.names for an object which can help you coerce your regions into the required format.
+#' @param title An optional title for the map.  
+#' @param legend An optional name for the legend.  
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' match the names of states as they appear in the "region" column of ?state.names.
+#' 
+#' @examples
+#' # demonstrate default parameters - visualization using 7 equally sized buckets
+#' data(df_pop_county)
+#' county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
+#'
+#'#' # demonstrate continuous scale and zoom
+#' data(df_pop_county)
+#' county_choropleth(df_pop_county, 
+#'                  title="US 2012 County Population Estimates", 
+#'                  legend="Population", 
+#'                  buckets=1, 
+#'                  zoom=c("california", "oregon", "washington"))
+#'
+#' # demonstrate how choroplethr handles character and factor values
+#' # demonstrate user creating their own discretization of the input
+#' data(df_pop_county)
+#' df_pop_county$str = ""
+#' for (i in 1:nrow(df_pop_county))
+#' {
+#'   if (df_pop_county[i,"value"] < 1000000)
+#'   {
+#'     df_pop_county[i,"str"] = "< 1M"
+#'   } else {
+#'     df_pop_county[i,"str"] = "> 1M"
+#'   }
+#' }
+#' df_pop_county$value = df_pop_county$str
+#' county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
+
+#' @export
+#' @importFrom Hmisc cut2
+#' @importFrom stringr str_extract_all
+#' @importFrom ggplot2 ggplot aes geom_polygon scale_fill_brewer ggtitle theme theme_grey element_blank geom_text
+#' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
+#' @importFrom scales comma
+#' @importFrom grid unit
+county_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
-  # only show the states the user asked
-  choropleth.df = choropleth.df[choropleth.df$STATE %in% get_state_fips_from_abb(states), ]
-  
-  # county maps really need state backgrounds
-  state.df = subset_map("state", states);
-  
-  # if user requested to render all 50 states, 
-  # create separate data.frames for AK and HI and render them as separate images
-  # cache min, max value of entire data.frame to make scales consistent between all insets s
-  min_val = 0
-  max_val = 0
-  if (is.numeric(choropleth.df$value))
-  {
-    min_val = min(choropleth.df$value)
-    max_val = max(choropleth.df$value)
-  }
-  
-  if (states == state.abb && renderAsInsets)
-  {
-    # subset AK and render it
-    alaska.df       = choropleth.df[choropleth.df$STATE==get_state_fips_from_abb("AK"), ]
-    alaska.state.df = choropleth.df[choropleth.df$region=='alaska',]
-
-    alaska.ggplot = print_county_choropleth(alaska.df, alaska.state.df, "", theme_inset(), min_val, max_val)    
-    alaska.grob   = ggplotGrob(alaska.ggplot)
-    
-    # subset HI and render it
-    hawaii.df       = choropleth.df[choropleth.df$STATE==get_state_fips_from_abb("HI"), ]
-    hawaii.state.df = choropleth.df[choropleth.df$region=='hawaii',]
-    
-    hawaii.ggplot = print_county_choropleth(hawaii.df, hawaii.state.df, "", theme_inset(), min_val, max_val)
-    hawaii.grob   = ggplotGrob(hawaii.ggplot)
-    
-    # remove AK and HI from the "real" df
-    choropleth.df = choropleth.df[!choropleth.df$STATE %in% get_state_fips_from_abb(c("AK", "HI")), ]
-    state.df      = state.df[!state.df$region %in% c("alaska", "hawaii"),]
-  }
-  
-  choropleth = print_county_choropleth(choropleth.df, state.df, scaleName, theme_clean(), min_val, max_val) + ggtitle(title)
-  
-  if (states == state.abb && renderAsInsets)
-  {
-    choropleth = choropleth + 
-      annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5) +
-      annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)    
-  }
-  
-  choropleth
-}
-
-# this needs to be called from the main choroplethr function
-county_choropleth_auto = function(df, num_buckets, title, scaleName, states, renderAsInsets, warn_na)
-{
-  df = clip_df(df, "county", states) # remove elements we won't be rendering
-  df = discretize_df(df, num_buckets) # if user requested, discretize the values
-  
-  choropleth.df = bind_df_to_county_map(df, warn_na) # bind df to map
-  render_county_choropleth(choropleth.df, title, scaleName, states, renderAsInsets) # render map
+  c = CountyChoropleth$new(df)
+  c$title  = title
+  c$legend = legend
+  c$set_buckets(buckets)
+  c$set_zoom(zoom)
+  c$render()
 }

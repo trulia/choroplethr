@@ -18,16 +18,16 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' data(choroplethr)
+#' data(df_president_ts)
 #' ?df_president_ts # time series of all US presidential elections 1789-2012
-#' 
+#'
 #' # create a list of choropleths of presidential election results for each year
 #' choropleths = list()
-#' for (i in 2:ncol(df_president_ts)) {
-#'   df           = df_president_ts[, c(1, i)]
+#' for (i in 1:(ncol(df_president_ts)-1)) {
+#'   df           = df_president_ts[, c(ncol(df_president_ts), i)]
 #'   colnames(df) = c("region", "value")
 #'   title        = paste0("Presidential Election Results: ", colnames(df_president_ts)[i])
-#'   choropleths[[i-1]] = choroplethr(df, "state", title=title) 
+#'  choropleths[[i]] = state_choropleth(df, title=title)
 #' }
 #'
 #' # set working directory and animate
@@ -50,8 +50,8 @@ choroplethr_animate = function(choropleths)
   # this is the html for an animated map
   # you need to replace {{minMaps}} and {{maxMaps}} with the min and max indices of frames
   txt = '
-<html>
-<head>
+  <html>
+  <head>
   <title>Choroplethr Playr</title>
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap-theme.min.css">
@@ -153,21 +153,21 @@ choroplethr_animate = function(choropleths)
   * @type {string}
   */
   $scope.mapURL = function() {
-    return $scope.urlTemplate({dateValue: $scope.dateValue});
+  return $scope.urlTemplate({dateValue: $scope.dateValue});
   }
   /**
   * Increment the date
   */
   $scope.plusValue = function() {
   if ($scope.dateValue < $scope.maxValue)
-    $scope.dateValue++;
+  $scope.dateValue++;
   }
   /**
   * Decrement the date
   */
   $scope.minusValue = function() {
   if ($scope.dateValue > $scope.minValue)
-    $scope.dateValue--;
+  $scope.dateValue--;
   }
   /**
   * Start animation traversing through all images in order

@@ -1,0 +1,50 @@
+World Map
+===
+
+You can create a choropleth of counties of the world the function `county_choropleth`:
+
+```{r hold=TRUE}
+library(choroplethr)
+
+# 2012 Country Population Estimates
+data(df_pop_country)
+?df_pop_country
+
+country_choropleth(df_pop_country)
+```
+
+As demonstrated above, the only required parameter to `country_choropleth` is a data.frame.  You can see the optional options by typing ?country_choropleth`.  
+
+# Data Requirements
+
+In order for `country` to work, your data must meet certain requirements. Let's take a look at `df_pop_country` more closely.
+
+```{r}
+head(df_pop_country)
+```
+
+Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as mapping (region, value) pairs to a colored map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
+
+There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The county map is named `county.map`:
+
+```{r}
+
+data(county.map)
+?county.map
+
+head(county.map)
+
+head(unique(county.map$region))
+```
+
+Note that all regions are identified by the numeric county FIPS code (I.e. any leading zeros are dropped, and the value is numeric, and not a character string). 
+
+## Formatting your Data
+
+choroplethr provides support for formatting your data with the `county.names` data.frame:
+
+```{r}
+data(county.names)
+?county.names
+head(county.names)
+```

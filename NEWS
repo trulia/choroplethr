@@ -1,16 +1,26 @@
-choroplethr 1.7.99
+choroplethr 2.0.0
 ----------------------------------------------------------------
 
-FEATURE
-  -Add a function percent_change which, given two choroplethr objects, returns the percent change between them
-  -Remove dependency on maps package
-  -Add dependency on WDI package
-  -Add choroplethr_wdi function, which generates choropleths from World Bank data.  See the documentation 
-of the WDI package for details.
-  -Change country.names from being a vector of English words to a data.frame with 2 columns: one named region (which contains English words), and one named "iso2c", which contains the iso2c equivalent names.
+-Change dependencies (remove dependencies on maps, grid, plyr->dplyr, add R6, add WDI)
+-Create R6 objects to simplify map creation
+  -Base Choropleth object
+	-CountryChoropleth inherits directly from Choropleth
+	-Create USAChoropleth object to handle similar issues for all USA maps, such as insets and state boundaries
+	-StateChoropleth, CountyChoropleth, ZipMap all inherit from those USAChoropleth
+	-From a user's perspective, the only important functions on Choropleth are: new()/initialize() and render(). 
+	-From a developer's perspective, you care about three additional functions: clip(), discretize() and bind(). If you are using choroplethr as a framework to create your own choropleth, you might want to override those functions.  Those functions are all called by prepare_map(). So in some sense, you just need to care about prepare_map() and render().
+-Create helper functions for creating the 4 maps.  See ?state_choropleth, ?county_choropleth, ?zip_map, ?country_choropleth for details. Importantly, all those functions have the five exact same parameters, four of which are optional.
+-Remove some functions that I think no one was using (see NAMESPACE diff for details)
+-Change some parameters on choroplethr_acs for consistency.
+-Break up the "data(choroplethr)" object. Now just say the object you actually want (e.g. "data(df_pop_state)"). This makes maintenance much easier.
+-Add choroplethr_wdi function, which generates choropleths from World Bank data.  See the documentation of the WDI package for details.
+-Update function documentation and examples.
+-Update tests.
+-Change country.names from being a vector of English words to a data.frame with 2 columns: one named region (which contains English words), and one named "iso2c", which contains the iso2c equivalent names.
 
 BUG FIX
   -with character input for values inset maps were not having consistent scales with main map. Fix this by converting character input to factors early on.
+  -setting custom scales and having the values work across insets (e.g. AK and HI) now works if you create a Choropleth object and set the ggplot_scale field to the scale you want.
 
 choroplethr 1.7.0
 ----------------------------------------------------------------
