@@ -14,8 +14,9 @@
 #' The resolutions is 20m (20m = 1:20,000,000). 
 NULL
 
-#' A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
-#' and FIPS codes both as characters and numbers (i.e. with and without a leading 0).
+#' A data.frame consisting of all 50 state names plus their postal code abbreviations and FIPS codes.
+#' 
+#' choroplethr requires you to use the naming convention in the "region" column.
 #' 
 #' @docType data
 #' @name state.names

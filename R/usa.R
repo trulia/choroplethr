@@ -86,7 +86,7 @@ USAChoropleth = R6Class("USAChoropleth",
       data(state.map  , package="choroplethr", envir=environment())
       data(state.names, package="choroplethr", envir=environment())
       
-      stopifnot(states %in% state.names$name)
+      stopifnot(states %in% state.names$region)
       
       df = state.map[state.map$region %in% states, ]
       geom_polygon(data=df, aes(long, lat, group = group), color = "black", fill = NA, size = 0.2);
