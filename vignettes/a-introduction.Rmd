@@ -25,10 +25,10 @@ Choropleths are useful for visualizing data where geographic boundaries are a na
 
 ### What is choroplethr? 
 
-`choroplethr` facilitates the creation of choropleth maps in R. It does this in 3 ways.
+`choroplethr` is an R package that facilitates the creation of choropleth maps in R. It does this in 3 ways.
 
-1. It provides ready-made functions for creating choropleths with four different maps (US States, US Counties, US ZIPs and Countries of the world).
+1. It provides ready-made functions for creating choropleths with four different maps. 
 2. It provides API connections to interesting data sources for making choropleths.
-3. It provides a framework for creating from arbitrary shapefiles.
+3. It provides a framework for creating choropleths from arbitrary shapefiles.
 
 The remaining vignettes explain these features in more detail.
