@@ -16,7 +16,7 @@ NULL
 
 #' A data.frame consisting of all 50 state names plus their postal code abbreviations and FIPS codes.
 #' 
-#' choroplethr requires you to use the naming convention in the "region" column.
+#' choroplethr requires you to use the naming convention in the "region" column (i.e. all lowercase, full name).
 #' 
 #' @docType data
 #' @name state.names

@@ -25,8 +25,10 @@ NULL
 #' The resolutions is 20m (20m = 1:20,000,000). 
 NULL
 
-#' A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
-#' the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).
+#' A data.frame consisting of the name of each county in the US as well as their FIPS codes and state names.
+#' 
+#' choroplethr requires you to use the naming convention in the "region" column (i.e. the numeric version of 
+#' the FIPS code - no leading zero).
 #'  
 #' @docType data
 #' @name county.names
