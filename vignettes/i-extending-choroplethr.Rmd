@@ -1,16 +1,65 @@
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{i) Extending choroplethr}
+%\VignetteIndexEntry{i) Creating Your Own Maps}
 -->
 
-### Extending choroplethr
+Creating Your Own Maps
+===
 
-2 main ways to extend choroplethr: new maps, new data
+choroplethr uses object oriented programming to support users creating choropleths with their maps. If you are interested in this functionality then I recommend you read two articles before proceeding:
 
+ * [Mapmaking for R Programmers](https://github.com/trulia/choroplethr/wiki/Mapmaking-for-R-Programmers). In this page I discuss the basics of acquiring and manipulating shapefiles, as well as importing them into R. If you are interested in creating your own maps, then you should become familiar with this information first.
+ * [Introduction to R6 Classes](http://rpubs.com/wch/24456). choroplethr uses R6 to implement object-oriented programming. Any map you create should inherit from the base `Choropleth` class. You should understand the basics of what this means.
 
-An example like the world map. Showing the code
+## The Choropleth base class
 
-maybe anotther vignette: advanced options?
-Also need to show things like changing the ggplot scale, warning and so on.
+A key component of object oriented programming is recognizing common functionality and placing it in a base class. The base class in version 2.0 of the choroplethr package is called Choropleth and has five main functions:
 
-Perhaps show in 2 
+1. `initialize(map.df, user.df)`. This is the constructor. map.df is a data.frame representation of a shapefile and needs a column called "region". user.df is the user's data and needs columns called "region" and "value".
+
+2. `clip()`. This function removes elements from user.df which refer to regions not present on the map. For example, you might have data for the 50 states plus Puerto Rico and Washington, DC. But if the map does not render those regions, you should remove them and warn the user before calling discretize().
+
+3. `discretize()`. You need to take numeric values, such as population counts per state, and turn them into discrete buckets so that they can be rendered. For example, you might want to assign each state to one of seven unique colors based on their population.
+
+4. `bind()`. Finally, you need to bind the discretized values to the map. You might also want to warn the user if their data set does not include all values on your map.
+
+5. `render()`. The last step is to render the results. Rendering the final result might be easy, or complex. For example, rendering all US 50 States to scale is fairly straightforward. But rendering Alaska and Hawaii as insets can be tricky.
+
+## Example: World Map
+
+Using the base Choropleth functionality, you can easily create a country-level choropleth. Type `data(country.map); ?country.map` for details about the map.
+
+```{r}
+library(choroplethr)
+library(R6)
+
+# create the class, inheriting from the base Choropleth object
+CountryChoropleth = R6Class("CountryChoropleth",
+  inherit = choroplethr:::Choropleth,
+  public = list(
+    
+    # initialize with a world map
+    initialize = function(user.df)
+    {
+      data(country.map)
+      super$initialize(country.map, user.df)
+    }
+  )
+)
+
+# create some sample data and then render it
+data(country.names)
+df = data.frame(region=country.names$region, value=sample(1:nrow(country.names)))
+
+c = CountryChoropleth$new(df)
+c$render()
+```
+
+In this case, the default behavior of the base class is exactly what we want. We just needed to initialize a child class with the map we want.
+
+Note that using the base Choropleth gives you a lot of functionality for free:
+
+* Error checking on input.
+* Ability to zoom in on a subset of regions with the `zoom` parameter.
+* Ability to explore the data visually with the `buckets` parameter.
+* Easy labelling of the title and legend with the `title` and `legend` parameters.
