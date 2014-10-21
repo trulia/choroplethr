@@ -59,7 +59,7 @@ CountryChoropleth = R6Class("CountryChoropleth",
 country_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   c = CountryChoropleth$new(df)
-  c$title       = title
+  c$title  = title
   c$legend = legend
   c$set_buckets(buckets)
   c$set_zoom(zoom)

@@ -197,7 +197,7 @@ ZipMap = R6Class("CountyChoropleth",
 zip_map = function(df, title="", legend="", buckets=7, zoom=NULL)
 {
   m = ZipMap$new(df)
-  m$title       = title
+  m$title  = title
   m$legend = legend
   m$set_buckets(buckets)
   m$set_zoom(zoom)
