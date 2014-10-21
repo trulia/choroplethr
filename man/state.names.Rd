@@ -2,14 +2,12 @@
 \docType{data}
 \name{state.names}
 \alias{state.names}
-\title{A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
-and FIPS codes both as characters and numbers (i.e. with and without a leading 0).}
+\title{A data.frame consisting of all 50 state names plus their postal code abbreviations and FIPS codes.}
 \usage{
 data(state.names)
 }
 \description{
-A data.frame consisting of all 50 state names (plus the District of Columbia), postal codes,
-and FIPS codes both as characters and numbers (i.e. with and without a leading 0).
+choroplethr requires you to use the naming convention in the "region" column (i.e. all lowercase, full name).
 }
 \references{
 Taken from http://www.epa.gov/envirofw/html/codes/state.html

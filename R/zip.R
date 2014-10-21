@@ -20,6 +20,10 @@ ZipMap = R6Class("CountyChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
+      # there are lots of zips in the zipcode that are not "real" zips, and so 
+      # warning on them would likely do more harm than good
+      self$warn = FALSE
+      
       # load zip code data 
       data(zipcode, package="zipcode")
       
@@ -38,11 +42,7 @@ ZipMap = R6Class("CountyChoropleth",
       zipcode$state = tolower(state.name[match(zipcode$state, state.abb)])
 
       super$initialize(zipcode, user.df)
-      
-      # there are lots of zips in the zipcode that are not "real" zips, and so 
-      # warning on them would likely do more harm than good
-      self$warn = FALSE
-      
+            
       # by default, show all states on the map
       data(state.map)
       private$zoom = unique(state.map$region)      

@@ -1,0 +1,34 @@
+<!--
+%\VignetteEngine{knitr}
+%\VignetteIndexEntry{a) Introduction}
+-->
+
+Introduction
+========================================================
+
+### What is a Choropleth?
+
+A choropleth is a map which 
+
+  1. Shows geographic boundaries.
+  2. Colors those regions based on some metric.
+
+Choropleths are useful for visualizing data where geographic boundaries are a natural unit of aggregation.  For example, here is a choropleth that shows 2012 US State Population Estimates:
+
+```{r}
+    library(choroplethr)
+    data(df_pop_state)
+    ?df_pop_state
+
+    state_choropleth(df_pop_state, title="2012 US State Population Estimates", legend="Population")
+```
+
+### What is choroplethr? 
+
+`choroplethr` facilitates the creation of choropleth maps in R. It does this in 3 ways.
+
+1. It provides ready-made functions for creating choropleths with four different maps (US States, US Counties, US ZIPs and Countries of the world).
+2. It provides API connections to interesting data sources for making choropleths.
+3. It provides a framework for creating from arbitrary shapefiles.
+
+The remaining vignettes explain these features in more detail.

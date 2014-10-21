@@ -1,4 +1,10 @@
-US County Map
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{c) US County Choropleths}
+-->
+
+US County Chropleths
+
 ===
 
 You can create a choropleth of US Counties with the function `county_choropleth`:

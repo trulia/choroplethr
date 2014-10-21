@@ -14,6 +14,9 @@ Puerto Rico 2) remove islands off of Alaska that
 crossed the antimeridian 3) renamed the county "Dona Ana" (which is properly written with a tilde over the
 first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters 4) some columns were added for convenience.
 }
+\details{
+Note that because of (2) above, county FIPS code 2016 (Aleutians West Census Area, Alaska) is not a part of this map.
+}
 \references{
 Taken from the US Census 2010
 Cartographic Boundary shapefiles page (https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html) in May 2014.

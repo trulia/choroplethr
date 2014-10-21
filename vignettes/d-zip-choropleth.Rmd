@@ -1,54 +1,65 @@
-US ZIP Map
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{d) US ZIP Maps}
+-->
+
+US ZIP Maps
+
 ===
 
-You can create a data scatterplot of US ZIP codes, where the value is mapped to a color, with the function `zip_map`
+You can create a visualization of US ZIP codes with the function `zip_map`:
 
 ```{r hold=TRUE}
 library(choroplethr)
 
-# 2012 US ZIP Population Estimates
-data(df_pop_zip)
 ?df_pop_zip
+data(df_pop_zip)
 
 ?zip_map
 zip_map(df_pop_zip)
 ```
 
-As demonstrated above, the only required parameter to `zip_map` is a data.frame.  You can see the optional options by typing 
-`?zip_map`.  For a discussion of the problems associated with mapping ZIP codes, see [Zip Codes are Not Areas](http://www.georeference.org/doc/zip_codes_are_not_areas.htm)
+As demonstrated above, the only required parameter to `zip_map` is a data.frame.  You can see the optional parameters by typing `?zip_map`.  
+
+Note that this visualization is a scatterplot where the position of each dot represents the longitude and latitude of the zip code and the value is expressed as a color. Also, boundaries of the states are drawn. But because boundaries of the zip codes are not drawn, this visualization is not technically a choropleth.
 
 # Data Requirements
 
-In order for `zip_map` to work, your data must meet certain requirements. Let's take a look at `df_pop_zip` more closely.
+The data.frame that you provide to `zip_map` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how zip codes are named in the `zipcode` package, which is how choroplethr gets the longitude and latitude of the zip codes:
 
 ```{r}
-head(df_pop_zip)
+library(zipcode)
+
+?zipcode
+data(zipcode)
+head(zipcode)
 ```
 
-Note that there are two columns: "region" and "value". These two columns are a requirement for all data given to choroplethr. In general, choropleths can be viewed as mapping (region, value) pairs to a colored map. Your data must reflect this. The "value" column can contain any format of data: numeric, factor or string. 
+That is, you must use a five digit character representation of the ZIP code.
 
-There are much more restrictions placed on the "region" column. In particular, entries in the "region" column must **exactly** match how the regions are named in the "region" column of the map data.frame. The zip map is named `zip.map`:
+# Exploring Data
+
+The `zip_map` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.names`.  
+
+As an example, here is how you can use choroplethr to show the population of US ZIP codes on the West Coast.
 
 ```{r}
-
-data(county.map)
-?county.map
-
-head(county.map)
-
-head(unique(county.map$region))
+zip_map(df_pop_zip,
+        title   = "2012 Population Estimates",
+        legend  = "Population",
+        buckets = 1,
+        zoom    = c("california", "washington", "oregon"))
 ```
 
-Note that all regions are identified by the numeric county FIPS code (I.e. any leading zeros are dropped, and the value is numeric, and not a character string). 
+# Advanced Options
 
-## Formatting your Data
-
-choroplethr provides support for formatting your data with the `county.names` data.frame:
+Any customization outside the optional parameters presented above will require you to create a `ZipMap` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` on the base Choropleth object to customize the palette used.
 
 ```{r}
-data(county.names)
-?county.names
-head(county.names)
-```
+library(ggplot2)
 
-If your regions are encoded as state abbreviations, numeric FIPS codes or character FIPS codes, then you can use this table to extract the name that choroplethr requires.
+choro = ZipMap$new(df_pop_zip)
+choro$title = "2012 Population Estimates"
+choro$ggplot_scale = scale_color_brewer(name="Population", palette=2)
+choro$render()
+```

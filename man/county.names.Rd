@@ -2,13 +2,15 @@
 \docType{data}
 \name{county.names}
 \alias{county.names}
-\title{A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
-the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).}
+\title{A data.frame consisting of the name of each county in the map county.map as well as their FIPS codes and state names.}
 \usage{
 data(county.names)
 }
 \description{
-A data.frame consisting of the name of each county in the US as well as the county FIPS code (as both a character and integer),
-the state name (as both a full name and an abbreviation) as well as the state FIPS code (as both a character and an integer).
+choroplethr requires you to use the naming convention in the "region" column (i.e. the numeric version of
+the FIPS code - no leading zero).
+}
+\seealso{
+?county.map
 }
 

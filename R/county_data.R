@@ -17,6 +17,8 @@ NULL
 #' crossed the antimeridian 3) renamed the county "Dona Ana" (which is properly written with a tilde over the
 #' first "n") to "Dona Ana" because R CMD check emits a warning if data contains non-ASCII characters 4) some columns were added for convenience.
 #'
+#' Note that because of (2) above, county FIPS code 2016 (Aleutians West Census Area, Alaska) is not a part of this map.
+#'
 #' @docType data
 #' @name county.map
 #' @usage data(county.map)
@@ -25,10 +27,12 @@ NULL
 #' The resolutions is 20m (20m = 1:20,000,000). 
 NULL
 
-#' A data.frame consisting of the name of each county in the US as well as their FIPS codes and state names.
+#' A data.frame consisting of the name of each county in the map county.map as well as their FIPS codes and state names.
 #' 
 #' choroplethr requires you to use the naming convention in the "region" column (i.e. the numeric version of 
 #' the FIPS code - no leading zero).
+#' 
+#' @seealso ?county.map
 #'  
 #' @docType data
 #' @name county.names

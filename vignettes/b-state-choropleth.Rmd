@@ -1,4 +1,9 @@
-US State Map
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{b) US State Choropleths}
+-->
+
+US State Chropleths
 ===
 
 You can create a choropleth of US States with the function `state_choropleth`:
