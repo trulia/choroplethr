@@ -34,6 +34,9 @@ library(choroplethr)
 library(R6)
 library(Hmisc)
 library(stringr)
+library(dplyr)
+library(scales)
+library(ggplot2)
 
 # create the class, inheriting from the base Choropleth object
 CountryChoropleth = R6Class("CountryChoropleth",
