@@ -14,9 +14,7 @@ choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
 \item{title}{A title for the map.  If not specified, automatically generated to include WDI code and year.}
 
 \item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
-example, 2 will show values above or below the median, and 9 will show the maximum
-resolution.  Defaults to 9.}
+will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional list of countries to zoom in on. Must come from the "name" column in
 ?country.names.}

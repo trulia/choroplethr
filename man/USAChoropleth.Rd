@@ -4,7 +4,7 @@
 \alias{USAChoropleth}
 \title{Normal choropleth that draws Alaska and Hawaii as insets.
 In addition to a columns named "region" and "value", also requires a column named "state".}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7f9ca0a6b478> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7f9f7facd518> 
  - attr(*, "name")= chr "USAChoropleth_generator"
 }}
 \usage{

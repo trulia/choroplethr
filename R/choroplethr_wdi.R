@@ -4,9 +4,7 @@
 #' @param year The year of data to use.
 #' @param title A title for the map.  If not specified, automatically generated to include WDI code and year.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
-#' example, 2 will show values above or below the median, and 9 will show the maximum
-#' resolution.  Defaults to 9.
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of countries to zoom in on. Must come from the "name" column in
 #' ?country.names.
 #'
@@ -29,6 +27,7 @@
 #' @importFrom WDI WDI
 choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", buckets=7, zoom=NULL)
 {
+  data(country.names, package="choroplethr")
   if (is.null(title))
   {
     title = paste0("WDI Indicator ", code, " for year ", year)    
