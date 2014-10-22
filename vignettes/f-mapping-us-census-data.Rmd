@@ -40,3 +40,4 @@ Here is how to view population estimates for each state from the 2012 5-year ACS
 ```{r}
 # choroplethr_acs("B01003", "state", endyear=2012, span=5)
 ```
+![](https://raw.githubusercontent.com/trulia/choroplethr/master/wiki-images/v20/acs-example.png)

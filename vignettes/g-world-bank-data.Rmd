@@ -30,7 +30,7 @@ choroplethr_wdi(code="SP.DYN.LE00.IN", year=2012, title="2012 Life Expectancy")
 
 ### Example: Per Capita Income
 
-Here is a choropleth of the population of countries in the world.  See [here](http://data.worldbank.org/indicator/NY.GDP.PCAP.CD) for more information on code NY.GDP.PCAP.CD.
+Here is a choropleth of the Per-Capita Income of countries in the world.  See [here](http://data.worldbank.org/indicator/NY.GDP.PCAP.CD) for more information on code NY.GDP.PCAP.CD.
 
 ```{r, hold=TRUE, warning=FALSE, message=FALSE}
 choroplethr_wdi(code="NY.GDP.PCAP.CD", year=2012, title="2012 Per Capita Income")
