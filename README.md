@@ -11,8 +11,8 @@ choroplethr simplifies the creation of choropleth maps in R. Choropleths are the
 Please see the following pages for more details.
 
 1. [Introduction](https://github.com/trulia/choroplethr/wiki/Introduction)
-1. [US State Choropleths](https://github.com/trulia/choroplethr/wiki/US-State-Chroopleths)
-1. [US County Choropleths]()
+1. [US State Choropleths](https://github.com/trulia/choroplethr/wiki/US-State-Choropleths)
+1. [US County Choropleths](https://github.com/trulia/choroplethr/wiki/US-County-Choropleths)
 1. [US ZIP Maps]()
 1. [Country Choropleths]()
 1. [Mapping US Census Data](https://github.com/trulia/choroplethr/wiki/Mapping-Census-Data)
