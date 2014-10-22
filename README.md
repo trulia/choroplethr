@@ -18,7 +18,7 @@ Please see the following pages for more details.
 1. [Mapping US Census Data](https://github.com/trulia/choroplethr/wiki/Mapping-Census-Data)
 1. [Mapping World Bank WDI Data](https://github.com/trulia/choroplethr/wiki/Mapping-World-Bank-Data)
 1. [Animated Choropleths](https://github.com/trulia/choroplethr/wiki/Animated-Choropleths)
-1. [Creating Your Own Maps]()
+1. [Creating Your Own Maps](https://github.com/trulia/choroplethr/wiki/Creating-Your-Own-Maps)
 
 ## Installation
 
