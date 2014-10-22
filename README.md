@@ -16,7 +16,7 @@ Please see the following pages for more details.
 1. [US ZIP Maps](https://github.com/trulia/choroplethr/wiki/US-ZIP-Maps)
 1. [Country Choropleths](https://github.com/trulia/choroplethr/wiki/Country-Choropleths)
 1. [Mapping US Census Data](https://github.com/trulia/choroplethr/wiki/Mapping-Census-Data)
-1. [Mapping World Bank WDI Data]()
+1. [Mapping World Bank WDI Data](https://github.com/trulia/choroplethr/wiki/Mapping-World-Bank-Data)
 1. [Animated Choropleths](https://github.com/trulia/choroplethr/wiki/Animated-Choropleths)
 1. [Creating Your Own Maps]()
 
