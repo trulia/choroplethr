@@ -14,7 +14,7 @@ Please see the following pages for more details.
 1. [US State Choropleths]()
 1. [US County Choropleths]()
 1. [US ZIP Maps]()
-1. [County Choropleths]()
+1. [Country Choropleths]()
 1. [Mapping US Census Data](https://github.com/trulia/choroplethr/wiki/Mapping-Census-Data)
 1. [Mapping World Bank WDI Data]()
 1. [Animated Choropleths](https://github.com/trulia/choroplethr/wiki/Animated-Choropleths)
