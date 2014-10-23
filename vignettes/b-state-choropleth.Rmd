@@ -25,6 +25,8 @@ As demonstrated above, the only required parameter to `state_choropleth` is a da
 The data.frame that you provide to `state_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `state.names`:
 
 ```{r}
+library(choroplethrMaps)
+
 ?state.names
 data(state.names)
 head(state.names)

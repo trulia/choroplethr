@@ -26,6 +26,8 @@ As demonstrated above, the only required parameter to `county_choropleth` is a d
 The data.frame that you provide to `county_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `county.names`:
 
 ```{r}
+library(choroplethrMaps)
+
 ?county.names
 data(county.names)
 head(county.names)

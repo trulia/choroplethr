@@ -14,9 +14,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets.  For
-#' example, 2 will show values above or below the median, and 9 will show the maximum
-#' resolution.  Defaults to 9.
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.names.
 #' @return A choropleth.
@@ -33,7 +31,7 @@ if (base::getRversion() >= "2.15.1") {
 #' choroplethr_acs("B01003", "state")
 #' 
 #' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' choroplethr_acs("B19301", "county", buckets=1, states=c("NY", "NJ", "CT"))
+#' choroplethr_acs("B19301", "county", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
 #'
 #' # median income, all zip codes
 #' choroplethr_acs("B19301", "zip") } 

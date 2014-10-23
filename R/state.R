@@ -11,7 +11,7 @@ StateChoropleth = R6Class("StateChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
-      data(state.map)
+      data(state.map, package="choroplethrMaps")
       state.map$state = state.map$region
       super$initialize(state.map, user.df)
       
@@ -48,7 +48,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in ?state.map.
 #' See ?state.names for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
-#' @param legend An optional name for the legend.  
+#' @param legend An optional name for the legend.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 

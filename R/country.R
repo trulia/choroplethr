@@ -10,7 +10,7 @@ CountryChoropleth = R6Class("CountryChoropleth",
     # initialize with a world map
     initialize = function(user.df)
     {
-      data(country.map)
+      data(country.map, package="choroplethrMaps")
       super$initialize(country.map, user.df)
       
       if (private$has_invalid_regions)

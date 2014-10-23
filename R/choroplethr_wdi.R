@@ -27,7 +27,7 @@
 #' @importFrom WDI WDI
 choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", buckets=7, zoom=NULL)
 {
-  data(country.names, package="choroplethr")
+  data(country.names, package="choroplethrMaps")
   if (is.null(title))
   {
     title = paste0("WDI Indicator ", code, " for year ", year)    

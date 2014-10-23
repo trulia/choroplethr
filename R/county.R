@@ -12,14 +12,14 @@ CountyChoropleth = R6Class("CountyChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
-      data(county.map)
-      data(county.names)
+      data(county.map, package="choroplethrMaps")
+      data(county.names, package="choroplethrMaps")
       # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")
       county.map$state = merge(county.map, county.names, sort=FALSE, by.x="region", by.y="region")$state.name
       super$initialize(county.map, user.df)
       
       # by default, show all states on the map
-      data(state.map)
+      data(state.map, package="choroplethrMaps")
       private$zoom = unique(state.map$region)
       
       if (private$has_invalid_regions)
@@ -35,7 +35,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
       # remove regions not on the map before doing the merge
       self$user.df = self$user.df[self$user.df$region %in% county.names$region, ]
       
-      data(county.names, package="choroplethr")
+      data(county.names, package="choroplethrMaps")
       self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="region")$state.name
       self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
       self$user.df$state = NULL
