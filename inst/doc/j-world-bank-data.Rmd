@@ -1,7 +1,0 @@
-<!--
-%\VignetteEngine{knitr}
-%\VignetteIndexEntry{c) Data Sources}
--->
-
-
-### World Bank Data

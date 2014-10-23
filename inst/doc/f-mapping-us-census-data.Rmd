@@ -1,0 +1,43 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{d) Mapping Census Data}
+-->
+  
+Mapping Census Data
+========================================================
+  
+choroplethr provides native support for creating choropleths from US Census data. This functionality is available with the `choroplethr_acs` function (`?choroplethr_acs`).  The data which choroplethr supports comes from [The American Community Survey (ACS)](https://www.census.gov/acs/www/). To get a feel for this data you might want to view a list of [questions](https://www.census.gov/acs/www/methodology/questionnaire_archive/) asked on it.  
+
+## How it Works
+
+choroplethr does not store any data locally.  Rather, it uses the R [acs package](http://cran.r-project.org/web/packages/acs/index.html) to get ACS data via the Census API.  This means a few things for users of choroplethr
+
+2. You must have a [Census API Key](http://www.census.gov/developers/tos/key_request.html) to use this functionality.  It's free and easy to get. When you get it type 
+```
+library(acs); 
+api.key.install('<your census api key>');
+```
+
+1. You will have access to the latest data as soon as it becomes available.
+
+3. You only have access to data from 2010 onwards, because the Census Bureau does not provide historic data via its API.
+
+## Navigating ACS Data
+
+1.  [Learn](http://www.census.gov/acs/www/guidance_for_data_users/estimates/) about the difference between the 1, 3 and 5 year estimates.
+
+2. [Select](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS) a survey to visualize.
+
+3. [Select](http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=dataset&id=dataset.en.ACS_12_5YR) a table to visualize.  When you click thru to a particular survey, you will likely be surprised at just how much data is available.  Here are some popular tables to gets you started:
+  * B01003: total population
+  * B01002: median age by sex
+  * B19001: household income in the last 12 months
+
+## Example
+
+Here is how to view population estimates for each state from the 2012 5-year ACS. Notice that the title is automatically created for you from the name of the table.  Note that it is commented out because CRAN's servers do not have a US Census API key installed.
+
+```{r}
+# choroplethr_acs("B01003", "state", endyear=2012, span=5)
+```
+![](https://raw.githubusercontent.com/trulia/choroplethr/master/wiki-images/v20/acs-example.png)

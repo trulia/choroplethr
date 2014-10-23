@@ -1,0 +1,67 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{b) US State Choropleths}
+-->
+
+US State Chropleths
+===
+
+You can create a choropleth of US States with the function `state_choropleth`:
+
+```{r hold=TRUE}
+library(choroplethr)
+
+?df_pop_state
+data(df_pop_state)
+
+?state_choropleth
+state_choropleth(df_pop_state)
+```
+
+As demonstrated above, the only required parameter to `state_choropleth` is a data.frame.  You can see the optional parameters by typing `?state_choropleth`.  
+
+# Data Requirements
+
+The data.frame that you provide to `state_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `state.regions`:
+
+```{r}
+library(choroplethrMaps)
+
+?state.regions
+data(state.regions)
+head(state.regions)
+```
+
+In order to use choroplethr, you must use the naming convention in the "region" column of state.regions. That is, you must use full names in all lowercase letters.
+
+# Exploring Data
+
+The `state_choropleth` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of states in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all states are shown. You can set it to be a vector of valid regions.  
+
+As an example, here is how you can use choroplethr to show the population of US States on the West Coast.
+
+```{r}
+state_choropleth(df_pop_state,
+                 title   = "2012 Population Estimates",
+                 legend  = "Population",
+                 buckets = 1,
+                 zoom    = c("california", "washington", "oregon"))
+```
+
+# Advanced Options
+
+Any customization outside the optional parameters presented above will require you to create a `StateChoropleth` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` on the base Choropleth object to customize the palette used.
+
+This dataset is the 2012 US Presidential Election results. Normally in this map Democratic states appear blue and Republican states appear red.
+
+```{r}
+library(ggplot2)
+
+?df_president 
+data(df_president)
+
+choro = StateChoropleth$new(df_president)
+choro$title = "2012 Election Results"
+choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red"))
+choro$render()
+```

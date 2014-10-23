@@ -220,8 +220,8 @@ hr {
 <p>Choropleths are useful for visualizing data where geographic boundaries are a natural unit of aggregation.  For example, here is a choropleth that shows 2012 US State Population Estimates:</p>
 
 <pre><code class="r">    library(choroplethr)
-    data(df_pop_state)
     ?df_pop_state
+    data(df_pop_state)
 
     state_choropleth(df_pop_state, title=&quot;2012 US State Population Estimates&quot;, legend=&quot;Population&quot;)
 </code></pre>
@@ -230,12 +230,12 @@ hr {
 
 <h3>What is choroplethr?</h3>
 
-<p><code>choroplethr</code> facilitates the creation of choropleth maps in R. It does this in 3 ways.</p>
+<p><code>choroplethr</code> is an R package that facilitates the creation of choropleth maps in R. It does this in 3 ways.</p>
 
 <ol>
-<li>It provides ready-made functions for creating choropleths with four different maps (US States, US Counties, US ZIPs and Countries of the world).</li>
+<li>It provides ready-made functions for creating choropleths with four different maps. </li>
 <li>It provides API connections to interesting data sources for making choropleths.</li>
-<li>It provides a framework for creating from arbitrary shapefiles.</li>
+<li>It provides a framework for creating choropleths from arbitrary shapefiles.</li>
 </ol>
 
 <p>The remaining vignettes explain these features in more detail.</p>
