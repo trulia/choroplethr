@@ -26,8 +26,8 @@ USAChoropleth = R6Class("USAChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-        continental.names = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
-        continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
+        continental.regions = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
+        continental.ggplot = continental.ggplot + self$render_state_outline(continental.regions)
       }
       
       ret = continental.ggplot
@@ -84,9 +84,9 @@ USAChoropleth = R6Class("USAChoropleth",
     render_state_outline = function(states)
     {
       data(state.map, package="choroplethrMaps")
-      data(state.names, package="choroplethrMaps")
+      data(state.regions, package="choroplethrMaps")
       
-      stopifnot(states %in% state.names$region)
+      stopifnot(states %in% state.regions$region)
       
       df = state.map[state.map$region %in% states, ]
       geom_polygon(data=df, aes(long, lat, group = group), color = "black", fill = NA, size = 0.2);

@@ -13,9 +13,9 @@ CountyChoropleth = R6Class("CountyChoropleth",
     initialize = function(user.df)
     {
       data(county.map, package="choroplethrMaps")
-      data(county.names, package="choroplethrMaps")
+      data(county.regions, package="choroplethrMaps")
       # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")
-      county.map$state = merge(county.map, county.names, sort=FALSE, by.x="region", by.y="region")$state.name
+      county.map$state = merge(county.map, county.regions, sort=FALSE, by.x="region", by.y="region")$state.name
       super$initialize(county.map, user.df)
       
       # by default, show all states on the map
@@ -24,7 +24,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
       
       if (private$has_invalid_regions)
       {
-        warning("Please see ?county.names for a list of mappable regions")
+        warning("Please see ?county.regions for a list of mappable regions")
       }
       
     },
@@ -33,10 +33,10 @@ CountyChoropleth = R6Class("CountyChoropleth",
     clip = function() 
     {
       # remove regions not on the map before doing the merge
-      self$user.df = self$user.df[self$user.df$region %in% county.names$region, ]
+      self$user.df = self$user.df[self$user.df$region %in% county.regions$region, ]
       
-      data(county.names, package="choroplethrMaps")
-      self$user.df$state = merge(self$user.df, county.names, sort=FALSE, all=TRUE, by.x="region", by.y="region")$state.name
+      data(county.regions, package="choroplethrMaps")
+      self$user.df$state = merge(self$user.df, county.regions, sort=FALSE, all=TRUE, by.x="region", by.y="region")$state.name
       self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
       self$user.df$state = NULL
         
@@ -52,13 +52,13 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
 #' the "region" column must exactly match how regions are named in the "region" column in ?county.map.
-#' See ?county.names for an object which can help you coerce your regions into the required format.
+#' See ?county.regions for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
-#' match the names of states as they appear in the "region" column of ?state.names.
+#' match the names of states as they appear in the "region" column of ?state.regions.
 #' 
 #' @examples
 #' # demonstrate default parameters - visualization using 7 equally sized buckets

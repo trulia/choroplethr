@@ -1,5 +1,5 @@
 if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("country.names"))
+  utils::globalVariables(c("country.regions"))
 }
 
 #' Create a county-level choropleth
@@ -106,8 +106,8 @@ ZipMap = R6Class("CountyChoropleth",
       continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
       if (self$add_state_outline)
       {
-        continental.names = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
-        continental.ggplot = continental.ggplot + self$render_state_outline(continental.names)
+        continental.regions = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
+        continental.ggplot = continental.ggplot + self$render_state_outline(continental.regions)
       }
       
       continental.ggplot + 
@@ -169,7 +169,7 @@ ZipMap = R6Class("CountyChoropleth",
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
-#' match the names of states as they appear in the "region" column of ?state.names.
+#' match the names of states as they appear in the "region" column of ?state.regions.
 #'  
 #' @examples
 #' # demonstrate default parameters - visualization using 7 equally sized buckets

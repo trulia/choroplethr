@@ -24,17 +24,17 @@ This map demonstrates another feature of choroplethr: regions for which no value
 
 # Data Requirements
 
-The data.frame that you provide to `country_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `country.names`:
+The data.frame that you provide to `country_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `country.regions`:
 
 ```{r}
 library(choroplethrMaps)
 
-?country.names
-data(country.names)
-head(country.names)
+?country.regions
+data(country.regions)
+head(country.regions)
 ```
 
-In order to use choroplethr, you must use the naming convention in the "region" column of country.names. That is, you must use full names in all lowercase letters.
+In order to use choroplethr, you must use the naming convention in the "region" column of country.regions. That is, you must use full names in all lowercase letters.
 
 # Exploring Data
 

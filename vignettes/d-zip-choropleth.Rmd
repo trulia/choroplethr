@@ -4,7 +4,6 @@
 -->
 
 US ZIP Maps
-
 ===
 
 You can create a visualization of US ZIP codes with the function `zip_map`:
@@ -39,7 +38,7 @@ That is, you must use a five digit character representation of the ZIP code.
 
 # Exploring Data
 
-The `zip_map` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.names`.  
+The `zip_map` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.regions`.  
 
 As an example, here is how you can use choroplethr to show the population of US ZIP codes on the West Coast.
 

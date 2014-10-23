@@ -22,17 +22,17 @@ As demonstrated above, the only required parameter to `state_choropleth` is a da
 
 # Data Requirements
 
-The data.frame that you provide to `state_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `state.names`:
+The data.frame that you provide to `state_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `state.regions`:
 
 ```{r}
 library(choroplethrMaps)
 
-?state.names
-data(state.names)
-head(state.names)
+?state.regions
+data(state.regions)
+head(state.regions)
 ```
 
-In order to use choroplethr, you must use the naming convention in the "region" column of state.names. That is, you must use full names in all lowercase letters.
+In order to use choroplethr, you must use the naming convention in the "region" column of state.regions. That is, you must use full names in all lowercase letters.
 
 # Exploring Data
 

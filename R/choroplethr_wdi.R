@@ -6,7 +6,7 @@
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of countries to zoom in on. Must come from the "name" column in
-#' ?country.names.
+#' ?country.regions.
 #'
 #' @examples
 #' \dontrun{
@@ -27,14 +27,14 @@
 #' @importFrom WDI WDI
 choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", buckets=7, zoom=NULL)
 {
-  data(country.names, package="choroplethrMaps")
+  data(country.regions, package="choroplethrMaps")
   if (is.null(title))
   {
     title = paste0("WDI Indicator ", code, " for year ", year)    
   }
 
-  data = WDI(country=country.names$iso2c, code, start=year, end=year) 
-  data = merge(data, country.names)
+  data = WDI(country=country.regions$iso2c, code, start=year, end=year) 
+  data = merge(data, country.regions)
   data$value = data[, names(data) == code] # choroplethr requires value column to be named "value"
   
   country_choropleth(data, title, "", buckets, zoom)

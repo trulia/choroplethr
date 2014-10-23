@@ -15,7 +15,7 @@ CountryChoropleth = R6Class("CountryChoropleth",
       
       if (private$has_invalid_regions)
       {
-        warning("Please see ?country.names for a list of mappable regions")
+        warning("Please see ?country.regions for a list of mappable regions")
       }
     }
   )
@@ -27,13 +27,13 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
 #' the "region" column must exactly match how regions are named in the "region" column in ?country.map.
-#' See ?country.names for an object which can help you coerce your regions into the required format.
+#' See ?country.regions for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of countries to zoom in on. Elements of this vector must exactly 
-#' match the names of countries as they appear in the "region" column of ?country.names
+#' match the names of countries as they appear in the "region" column of ?country.regions
 
 #' @examples
 #' # demonstrate default options

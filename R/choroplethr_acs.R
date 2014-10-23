@@ -16,7 +16,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.names.
+#' ?state.regions.
 #' @return A choropleth.
 #' 
 #' @keywords choropleth, acs

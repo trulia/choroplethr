@@ -17,7 +17,7 @@ StateChoropleth = R6Class("StateChoropleth",
       
       if (private$has_invalid_regions)
       {
-        warning("Please see ?state.names for a list of mappable regions")
+        warning("Please see ?state.regions for a list of mappable regions")
       }
     },
     
@@ -46,13 +46,13 @@ StateChoropleth = R6Class("StateChoropleth",
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
 #' the "region" column must exactly match how regions are named in the "region" column in ?state.map.
-#' See ?state.names for an object which can help you coerce your regions into the required format.
+#' See ?state.regions for an object which can help you coerce your regions into the required format.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
-#' match the names of states as they appear in the "region" column of ?state.names.
+#' match the names of states as they appear in the "region" column of ?state.regions.
 #' 
 #' @examples
 #' # demonstrate default parameters - visualization using 7 equally sized buckets

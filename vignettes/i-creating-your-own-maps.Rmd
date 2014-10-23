@@ -54,8 +54,8 @@ CountryChoropleth = R6Class("CountryChoropleth",
 )
 
 # create some sample data and then render it
-data(country.names, package="choroplethrMaps")
-df = data.frame(region=country.names$region, value=sample(1:nrow(country.names)))
+data(country.regions, package="choroplethrMaps")
+df = data.frame(region=country.regions$region, value=sample(1:nrow(country.regions)))
 c  = CountryChoropleth$new(df)
 c$render()
 ```

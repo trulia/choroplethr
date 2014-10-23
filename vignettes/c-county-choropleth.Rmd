@@ -4,7 +4,6 @@
 -->
 
 US County Chropleths
-
 ===
 
 You can create a choropleth of US Counties with the function `county_choropleth`:
@@ -23,21 +22,21 @@ As demonstrated above, the only required parameter to `county_choropleth` is a d
 
 # Data Requirements
 
-The data.frame that you provide to `county_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `county.names`:
+The data.frame that you provide to `county_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `county.regions`:
 
 ```{r}
 library(choroplethrMaps)
 
-?county.names
-data(county.names)
-head(county.names)
+?county.regions
+data(county.regions)
+head(county.regions)
 ```
 
-In order to use choroplethr, you must use the naming convention in the "region" column of county.names. That is, you must use the numeric version of the county FIPS code - i.e. you must drop any leading zeroes.
+In order to use choroplethr, you must use the naming convention in the "region" column of county.regions. That is, you must use the numeric version of the county FIPS code - i.e. you must drop any leading zeroes.
 
 # Exploring Data
 
-The `county_choropleth` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.names`.  
+The `county_choropleth` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.regions`.  
 
 As an example, here is how you can use choroplethr to show the population of US Counties on the West Coast.
 
