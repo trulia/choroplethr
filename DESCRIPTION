@@ -29,7 +29,8 @@ Imports:
 Suggests:
     testthat,
     zipcode,
-    knitr
+    knitr,
+    choroplethrMaps
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
