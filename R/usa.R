@@ -20,46 +20,54 @@ USAChoropleth = R6Class("USAChoropleth",
     render = function()
     {
       self$prepare_map()
-            
-      # remove AK and HI from the "real" df
-      continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
-      continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
-      if (self$add_state_outline)
-      {
-        continental.regions = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
-        continental.ggplot = continental.ggplot + self$render_state_outline(continental.regions)
-      }
       
-      ret = continental.ggplot
-
-      # subset AK and render it
-      if (is.null(private$zoom) || 'alaska' %in% private$zoom)
-      {
-        alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
-        alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
+      if (private$zoom == "alaska" || private$zoom == "hawaii") {
+        choro = self$render_helper(self$choropleth.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
         if (self$add_state_outline)
         {
-          alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
-        }
-        alaska.grob = ggplotGrob(alaska.ggplot)
-        ret = ret + annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)
-      }
-      
-      # subset HI and render it
-      if (is.null(private$zoom) || 'hawaii' %in% private$zoom)
-      {
-        hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
-        hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
+          choro + self$render_state_outline(private$zoom)
+        }        
+      } else {
+        # remove AK and HI from the "real" df
+        continental.df = self$choropleth.df[!self$choropleth.df$state %in% c("alaska", "hawaii"), ]
+        continental.ggplot = self$render_helper(continental.df, self$scale_name, self$theme_clean()) + ggtitle(self$title)
         if (self$add_state_outline)
         {
-          hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
+          continental.regions = subset(private$zoom, private$zoom!="alaska" & private$zoom!="hawaii")
+          continental.ggplot = continental.ggplot + self$render_state_outline(continental.regions)
         }
-        hawaii.grob = ggplotGrob(hawaii.ggplot)
-        ret = ret + annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5)
+        
+        ret = continental.ggplot
+  
+        # subset AK and render it
+        if (is.null(private$zoom) || 'alaska' %in% private$zoom)
+        {
+          alaska.df     = self$choropleth.df[self$choropleth.df$state=='alaska',]
+          alaska.ggplot = self$render_helper(alaska.df, "", self$theme_inset())
+          if (self$add_state_outline)
+          {
+            alaska.ggplot = alaska.ggplot + self$render_state_outline('alaska')
+          }
+          alaska.grob = ggplotGrob(alaska.ggplot)
+          ret = ret + annotation_custom(grobTree(alaska.grob), xmin=-125, xmax=-110, ymin=22.5, ymax=30)
+        }
+        
+        # subset HI and render it
+        if (is.null(private$zoom) || 'hawaii' %in% private$zoom)
+        {
+          hawaii.df     = self$choropleth.df[self$choropleth.df$state=='hawaii',]
+          hawaii.ggplot = self$render_helper(hawaii.df, "", self$theme_inset())
+          if (self$add_state_outline)
+          {
+            hawaii.ggplot = hawaii.ggplot + self$render_state_outline('hawaii')
+          }
+          hawaii.grob = ggplotGrob(hawaii.ggplot)
+          ret = ret + annotation_custom(grobTree(hawaii.grob), xmin=-107.5, xmax=-102.5, ymin=25, ymax=27.5)
+        }
+        
+        ret +
+          ggtitle(self$title)
       }
-      
-      ret +
-        ggtitle(self$title)
     },
     
     render_helper = function(choropleth.df, scale_name, theme)
