@@ -129,8 +129,9 @@ make_df = function(map, acs.data, column_idx)
   stopifnot(map %in% c("state", "county", "zip"))
   
   if (map == "state") {
-    data.frame(region = tolower(geography(acs.data)$NAME), 
-               value  = as.numeric(estimate(acs.data[,column_idx])));
+    df = data.frame(region = tolower(geography(acs.data)$NAME), 
+                    value  = as.numeric(estimate(acs.data[,column_idx])));
+    df[df$region != "puerto rico", ]
   } else if (map == "county") {
     # create fips code
     acs.data@geography$fips = paste(as.character(acs.data@geography$state), 
@@ -138,9 +139,10 @@ make_df = function(map, acs.data, column_idx)
                                     sep = "")
     # put in format for call to all_county_choropleth
     acs.data@geography$fips = as.numeric(acs.data@geography$fips)
-    data.frame(region = geography(acs.data)$fips, 
-               value  = as.numeric(estimate(acs.data[,column_idx])));
-    
+    df = data.frame(region = geography(acs.data)$fips, 
+                    value  = as.numeric(estimate(acs.data[,column_idx])));
+    # remove state fips code 72, which is Puerto Rico, which we don't map
+    df[df$region < 72000 | df$region > 72999, ]     
   } else if (map == "zip") {
     # put in format for call to choroplethr
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
