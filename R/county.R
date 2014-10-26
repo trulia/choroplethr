@@ -48,11 +48,12 @@ CountyChoropleth = R6Class("CountyChoropleth",
 
 #' Create a choropleth of USA Counties with sensible defaults.
 #' 
-#' The map used is ?county.map.
+#' The map used is county.map in the choroplethrMaps package.  See country.regions
+#' in the choroplethrMaps package for an object which can help you coerce your regions
+#' into the required format.
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
-#' the "region" column must exactly match how regions are named in the "region" column in ?county.map.
-#' See ?county.regions for an object which can help you coerce your regions into the required format.
+#' the "region" column must exactly match how regions are named in the "region" column in county.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 

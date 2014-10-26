@@ -42,11 +42,12 @@ StateChoropleth = R6Class("StateChoropleth",
 
 #' Create a choropleth of US States with sensible defaults.
 #' 
-#' The map used is ?state.map.
+#' The map used is state.map in the package choroplethrMaps.  See state.regions in 
+#' the choroplethrMaps package for a data.frame that can help you coerce your regions 
+#' into the required format.
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
-#' the "region" column must exactly match how regions are named in the "region" column in ?state.map.
-#' See ?state.regions for an object which can help you coerce your regions into the required format.
+#' the "region" column must exactly match how regions are named in the "region" column in state.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 

@@ -24,6 +24,8 @@ if (base::getRversion() >= "2.15.1") {
 #' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
 #' which contains a list of all ACS surveys.
+#' @references Uses the acs package created by Ezra Haber Glenn.
+
 #' @export
 #' @examples
 #' \dontrun{

@@ -7,8 +7,7 @@ county_choropleth(df, title = "", legend = "", buckets = 7, zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
-the "region" column must exactly match how regions are named in the "region" column in ?county.map.
-See ?county.regions for an object which can help you coerce your regions into the required format.}
+the "region" column must exactly match how regions are named in the "region" column in county.map.}
 
 \item{title}{An optional title for the map.}
 
@@ -21,7 +20,9 @@ will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 match the names of states as they appear in the "region" column of ?state.regions.}
 }
 \description{
-The map used is ?county.map.
+The map used is county.map in the choroplethrMaps package.  See country.regions
+in the choroplethrMaps package for an object which can help you coerce your regions
+into the required format.
 }
 \examples{
 # demonstrate default parameters - visualization using 7 equally sized buckets

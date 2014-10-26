@@ -3,7 +3,7 @@
 \name{StateChoropleth}
 \alias{StateChoropleth}
 \title{Create a state-level choropleth}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7faef3ac0b18> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x7ffd7fa0f720> 
  - attr(*, "name")= chr "StateChoropleth_generator"
 }}
 \usage{

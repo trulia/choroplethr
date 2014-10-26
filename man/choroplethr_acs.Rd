@@ -41,6 +41,9 @@ choroplethr_acs("B19301", "county", buckets=1, zoom=c("new york", "new jersey", 
 # median income, all zip codes
 choroplethr_acs("B19301", "zip") }
 }
+\references{
+Uses the acs package created by Ezra Haber Glenn.
+}
 \seealso{
 \code{api.key.install} in the acs package which sets an Census API key for the acs library
 
