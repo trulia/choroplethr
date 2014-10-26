@@ -6,8 +6,7 @@
 #' \item Write a file called "animated_choropleth.html" which contains a viewer which animates them.
 #' }
 #'
-#' @param choropleths A list of choropleths represented as ggplot2 objects.  Created by, for example, \code{\link{choroplethr}} 
-#' or \code{\link{choroplethr_acs}}.
+#' @param choropleths A list of choropleths represented as ggplot2 objects. 
 #' @return Nothing.  However, a variable number of files are written to the current working directory.
 #' 
 #' @keywords choropleth animation

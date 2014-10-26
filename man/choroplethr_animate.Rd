@@ -6,8 +6,7 @@
 choroplethr_animate(choropleths)
 }
 \arguments{
-\item{choropleths}{A list of choropleths represented as ggplot2 objects.  Created by, for example, \code{\link{choroplethr}}
-or \code{\link{choroplethr_acs}}.}
+\item{choropleths}{A list of choropleths represented as ggplot2 objects.}
 }
 \value{
 Nothing.  However, a variable number of files are written to the current working directory.
