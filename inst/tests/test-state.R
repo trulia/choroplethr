@@ -43,3 +43,9 @@ test_that("less than full states works", {
     suppressWarnings(state_choropleth(df)), 
     "ggplot")  
 })
+
+test_that("any duplicate regions trigger an error", {
+  data(df_pop_state)
+  df = rbind(df_pop_state, data.frame(region = "new york", value=1))
+  expect_error(state_choropleth(df))
+})

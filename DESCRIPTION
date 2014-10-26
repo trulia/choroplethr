@@ -1,13 +1,13 @@
 Package: choroplethr
 Title: Simplify the creation of choropleth maps in R.
-Description: choroplethr simplifies the creation of choropleth maps in R. 
-  Choropleths are thematic maps where geographic regions, such as states, are 
-  colored according to some metric, such as the number of people who live in 
-  that state.  choroplethr simplifies this process by
-    1. Providing ready-made functions for creating choropleths using four different maps.
-    2. Providing API connections to interesting data sources for making choropleths.
-    3. Providing a framework for creating choropleths from arbitrary shapefiles.
-  Please see the vignettes for more details.
+Description: choroplethr simplifies the creation of choropleth maps in R.
+    Choropleths are thematic maps where geographic regions, such as states, are
+    colored according to some metric, such as the number of people who live in
+    that state.  choroplethr simplifies this process by 1. Providing ready-made
+    functions for creating choropleths using four different maps. 2. Providing
+    API connections to interesting data sources for making choropleths. 3.
+    Providing a framework for creating choropleths from arbitrary shapefiles.
+    Please see the vignettes for more details.
 Version: 2.0.0
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
@@ -29,10 +29,10 @@ Imports:
 Suggests:
     testthat,
     zipcode,
-    knitr
-Depends:
-    R (>= 3.0.0),
+    knitr,
     choroplethrMaps
+Depends:
+    R (>= 3.0.0)
 VignetteBuilder: knitr
 Collate:
     'choropleth.R'

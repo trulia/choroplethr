@@ -17,7 +17,7 @@ choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional list of countries to zoom in on. Must come from the "name" column in
-?country.names.}
+?country.regions.}
 }
 \value{
 A choropleth.

@@ -17,7 +17,7 @@ zip_map(df, title = "", legend = "", buckets = 7, zoom = NULL)
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
-match the names of states as they appear in the "region" column of ?state.names.}
+match the names of states as they appear in the "region" column of ?state.regions.}
 }
 \description{
 ZIPs are rendered as scatterplots against and outline of US States.

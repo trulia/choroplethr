@@ -1,6 +1,7 @@
 choroplethr 2.0.0
 ----------------------------------------------------------------
 
+-Move the maps and their helper data.frames to a separate package, choroplethrMaps
 -Change dependencies (remove dependencies on maps, grid, plyr->dplyr, add R6, add WDI)
 -Create R6 objects to simplify map creation
   -Base Choropleth object

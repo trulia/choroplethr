@@ -3,7 +3,7 @@ context("test country_choropleth")
 # to avoid spurious warnings, use this df. df_pop_country is missing a few regions
 get_test_df = function()
 {
-  data(country.regions)
+  data(country.regions, package="choroplethrMaps")
   n = nrow(country.regions)
   data.frame(region=country.regions$region, value=sample(n))
 }
@@ -48,5 +48,18 @@ test_that("less than full countries works", {
   df = get_test_df()
   df = df[df$region != "angola", ]
   expect_is(suppressWarnings(country_choropleth(df)), "ggplot")
+})
+
+#####
+test_that("regions not on map emit warning", {
+  df = get_test_df()
+  df = rbind(df, data.frame(region="asdf", value=1))
+  expect_warning(country_choropleth(df))  
+})
+
+test_that("duplicate regions emit error", {
+  df = get_test_df()
+  df = rbind(df, data.frame(region="angola", value=1))
+  expect_error(country_choropleth(df))  
 })
 

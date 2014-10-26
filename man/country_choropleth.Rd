@@ -9,7 +9,7 @@ country_choropleth(df, title = "", legend = "", buckets = 7,
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
 the "region" column must exactly match how regions are named in the "region" column in ?country.map.
-See ?country.names for an object which can help you coerce your regions into the required format.}
+See ?country.regions for an object which can help you coerce your regions into the required format.}
 
 \item{title}{An optional title for the map.}
 
@@ -19,7 +19,7 @@ See ?country.names for an object which can help you coerce your regions into the
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional vector of countries to zoom in on. Elements of this vector must exactly
-match the names of countries as they appear in the "region" column of ?country.names}
+match the names of countries as they appear in the "region" column of ?country.regions}
 }
 \description{
 The map used is ?country.map.

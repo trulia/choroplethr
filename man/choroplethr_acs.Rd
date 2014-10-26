@@ -20,7 +20,7 @@ on the same longitude and latitude map to scale. This variable is only checked w
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
 \item{zoom}{An optional list of states to zoom in on. Must come from the "name" column in
-?state.names.}
+?state.regions.}
 }
 \value{
 A choropleth.
