@@ -36,7 +36,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
       self$user.df = self$user.df[self$user.df$region %in% county.regions$region, ]
       
       data(county.regions, package="choroplethrMaps")
-      self$user.df$state = merge(self$user.df, county.regions, sort=FALSE, all=TRUE, by.x="region", by.y="region")$state.name
+      self$user.df$state = merge(self$user.df, county.regions, sort=FALSE, all.X=TRUE, by.x="region", by.y="region")$state.name
       self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
       self$user.df$state = NULL
         

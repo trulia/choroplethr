@@ -99,7 +99,7 @@ Choropleth = R6Class("Choropleth",
       {
         missing_regions = paste(missing_regions, collapse = ", ");
         warning_string = paste("The following regions were missing and are being set to NA:", missing_regions);
-        print(warning_string);
+        warning(warning_string);
       }
       
       self$choropleth.df = self$choropleth.df[order(self$choropleth.df$order), ];
