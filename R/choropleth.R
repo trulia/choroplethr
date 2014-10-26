@@ -178,7 +178,7 @@ Choropleth = R6Class("Choropleth",
     #' 
     #' @export
     #' @examples
-    #' data(choroplethr)
+    #' data(df_pop_state)
     #'
     #' x = Hmisc::cut2(df_pop_state$value, g=3)
     #' levels(x)
