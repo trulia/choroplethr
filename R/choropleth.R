@@ -30,6 +30,8 @@ Choropleth = R6Class("Choropleth",
       self$user.df = user.df
       self$user.df = self$user.df[, c("region", "value")]
       
+      stopifnot(anyDuplicated(self$user.df$region) == 0)
+      
       # things like insets won't color properly if they are characters, and not factors
       if (is.character(self$user.df$value))
       {
