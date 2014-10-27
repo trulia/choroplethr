@@ -25,7 +25,7 @@ ZipMap = R6Class("CountyChoropleth",
       self$warn = FALSE
       
       # load zip code data 
-      data(zipcode, package="zipcode")
+      data(zipcode, package="zipcode", envir=environment())
       
       # only include states
       zipcode = zipcode[zipcode$state %in% state.abb, ]
@@ -51,7 +51,7 @@ ZipMap = R6Class("CountyChoropleth",
     # support e.g. users just viewing states on the west coast
     clip = function() {
       # user.df has zip codes, but subsetting happens at the state level
-      data(zipcode, package="zipcode")
+      data(zipcode, package="zipcode", envir=environment())
       # zipcode to state abbreviation
       self$user.df$state = merge(self$user.df, zipcode, sort=FALSE, all.x=TRUE, by.x="region", by.y="zip")$state
       # state abbrevoation to "region" - lowercase full state name

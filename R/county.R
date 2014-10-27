@@ -33,9 +33,9 @@ CountyChoropleth = R6Class("CountyChoropleth",
     clip = function() 
     {
       # remove regions not on the map before doing the merge
-      self$user.df = self$user.df[self$user.df$region %in% county.regions$region, ]
-      
       data(county.regions, package="choroplethrMaps", envir=environment())
+
+      self$user.df = self$user.df[self$user.df$region %in% county.regions$region, ]
       self$user.df$state = merge(self$user.df, county.regions, sort=FALSE, all.X=TRUE, by.x="region", by.y="region")$state.name
       self$user.df = self$user.df[self$user.df$state %in% private$zoom, ]
       self$user.df$state = NULL
@@ -62,6 +62,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' match the names of states as they appear in the "region" column of ?state.regions.
 #' 
 #' @examples
+#' \dontrun{
 #' # demonstrate default parameters - visualization using 7 equally sized buckets
 #' data(df_pop_county)
 #' county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
@@ -89,7 +90,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' }
 #' df_pop_county$value = df_pop_county$str
 #' county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
-
+#' }
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all

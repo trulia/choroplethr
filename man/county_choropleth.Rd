@@ -25,6 +25,7 @@ in the choroplethrMaps package for an object which can help you coerce your regi
 into the required format.
 }
 \examples{
+\dontrun{
 # demonstrate default parameters - visualization using 7 equally sized buckets
 data(df_pop_county)
 county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
@@ -52,5 +53,6 @@ for (i in 1:nrow(df_pop_county))
 }
 df_pop_county$value = df_pop_county$str
 county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
+}
 }
 
