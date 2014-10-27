@@ -44,7 +44,7 @@ ZipMap = R6Class("CountyChoropleth",
       super$initialize(zipcode, user.df)
             
       # by default, show all states on the map
-      data(state.map, package="choroplethrMaps")
+      data(state.map, package="choroplethrMaps", envir=environment())
       private$zoom = unique(state.map$region)      
     },
     

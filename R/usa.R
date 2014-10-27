@@ -91,8 +91,8 @@ USAChoropleth = R6Class("USAChoropleth",
     
     render_state_outline = function(states)
     {
-      data(state.map, package="choroplethrMaps")
-      data(state.regions, package="choroplethrMaps")
+      data(state.map, package="choroplethrMaps", envir=environment())
+      data(state.regions, package="choroplethrMaps", envir=environment())
       
       stopifnot(states %in% state.regions$region)
       
@@ -103,7 +103,7 @@ USAChoropleth = R6Class("USAChoropleth",
     # all maps of US states zoom at the unit of states.
     set_zoom = function(zoom)
     {
-      data(state.map, package="choroplethrMaps")
+      data(state.map, package="choroplethrMaps", envir=environment())
       all_states = unique(state.map$region)
       
       if (is.null(zoom))
