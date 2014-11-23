@@ -20,7 +20,22 @@ CountyZoomChoropleth = R6Class("CountyZoomChoropleth",
       {
         warning("Please see ?county.regions for a list of mappable regions")
       }
-     }     
+     },
+    
+    render = function()
+    {
+      if (length(private$zoom) > 1)
+      {
+        super$render()
+      } else {
+        self$prepare_map()
+        
+        ggplot(self$choropleth.df, aes(long, lat, group = group)) +
+          geom_path(color = "black", size = 1) + 
+          self$theme_clean() + 
+          ggtitle(self$title)  
+      }      
+    }
    )
 )
 

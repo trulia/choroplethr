@@ -45,6 +45,7 @@ Collate:
     'usa.R'
     'county.R'
     'county_data.R'
+    'county_zoom.R'
     'state.R'
     'state_data.R'
     'zip.R'

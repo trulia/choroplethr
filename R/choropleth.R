@@ -58,7 +58,7 @@ Choropleth = R6Class("Choropleth",
     },
 
     render = function() 
-    {      
+    {
       self$prepare_map()
       
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
