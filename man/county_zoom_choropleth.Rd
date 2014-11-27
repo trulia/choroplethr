@@ -17,8 +17,8 @@ the "region" column must exactly match how regions are named in the "region" col
 \item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
-\item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
-match the names of states as they appear in the "region" column of ?state.regions.}
+\item{zoom}{An optional vector of counties to zoom in on. Elements of this vector must exactly
+match the names of counties as they appear in the "region" column of ?county.regions.}
 }
 \description{
 The map used is county.map in the choroplethrMaps package.  See country.regions
@@ -28,14 +28,32 @@ into the required format.
 \examples{
 \dontrun{
 
-# show the population of the 5 counties (boroughs) that make up New York City.
+library(choroplethrMaps)
+data(county.regions)
 
-nyc_fips=c(36005, 36047, 36081, 36061, 36085)
- county_zoom_choropleth(df_pop_county,
-                        zoom=nyc_fips,
-                        buckets=1,
-                        title="Population of Counties in New York City",
-                        scale="Population")
+library(dplyr)
+
+# show the population of the 5 counties (boroughs) that make up New York City
+nyc_county_names=c("kings", "bronx", "new york", "queens", "richmond")
+nyc_county_fips = county.regions \%>\%
+  filter(state.name=="new york" & county.name \%in\% nyc_county_names) \%>\%
+  select(region)
+county_zoom_choropleth(df_pop_county,
+                       title="Population of Counties in New York City",
+                       legend="Population",
+                       buckets=1,
+                       zoom=nyc_county_fips$region)
+
+# population of the 9 counties in the san francisco bay area
+bay_area_county_names = c("alameda", "contra costa", "marin", "napa", "san francisco", "san mateo", "santa clara", "solano", "sonoma")
+bay_area_county_fips = county.regions \%>\%
+  filter(state.name=="california" & county.name \%in\% bay_area_county_names) \%>\%
+  select(region)
+county_zoom_choropleth(df_pop_county,
+                       title="Population of Counties in the San Francisco Bay Area",
+                       legend="Population",
+                       buckets=1,
+                       zoom=bay_area_county_fips$region)
 }
 }
 
