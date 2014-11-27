@@ -8,7 +8,7 @@ Description: choroplethr simplifies the creation of choropleth maps in R.
     API connections to interesting data sources for making choropleths. 3.
     Providing a framework for creating choropleths from arbitrary shapefiles.
     Please see the vignettes for more details.
-Version: 2.0.0
+Version: 2.1.0
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
@@ -45,6 +45,7 @@ Collate:
     'usa.R'
     'county.R'
     'county_data.R'
+    'county_zoom.R'
     'state.R'
     'state_data.R'
     'zip.R'
