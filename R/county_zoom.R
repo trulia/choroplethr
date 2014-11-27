@@ -74,7 +74,8 @@ CountyZoomChoropleth = R6Class("CountyZoomChoropleth",
 #'                        zoom=nyc_county_fips$region)
 #'                        
 #' # population of the 9 counties in the san francisco bay area
-#' bay_area_county_names = c("alameda", "contra costa", "marin", "napa", "san francisco", "san mateo", "santa clara", "solano", "sonoma")
+#' bay_area_county_names = c("alameda", "contra costa", "marin", "napa", "san francisco", 
+#'                           "san mateo", "santa clara", "solano", "sonoma")
 #' bay_area_county_fips = county.regions %>%
 #'   filter(state.name=="california" & county.name %in% bay_area_county_names) %>%
 #'   select(region)
