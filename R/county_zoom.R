@@ -43,14 +43,16 @@ CountyZoomChoropleth = R6Class("CountyZoomChoropleth",
 #' 
 #' The map used is county.map in the choroplethrMaps package.  See country.regions
 #' in the choroplethrMaps package for an object which can help you coerce your regions
-#' into the required format.
+#' into the required format. If you zoom in on a single county, only an outline of the 
+#' county is shown.
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
 #' the "region" column must exactly match how regions are named in the "region" column in county.map.
 #' @param title An optional title for the map.  
-#' @param legend An optional name for the legend.  
+#' @param legend An optional name for the legend.  Ignored if zooming in on a single county.
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. Ignored if 
+#' zooming in on a single county.
 #' @param zoom An optional vector of counties to zoom in on. Elements of this vector must exactly 
 #' match the names of counties as they appear in the "region" column of ?county.regions.
 #' 
@@ -72,6 +74,11 @@ CountyZoomChoropleth = R6Class("CountyZoomChoropleth",
 #'                        legend="Population",
 #'                        buckets=1,
 #'                        zoom=nyc_county_fips$region)
+#'                        
+#' # zooming in on a single county shows just an outline.
+#' county_zoom_choropleth(df_pop_county,
+#'                        title="Zoom of Manhattan",
+#'                        zoom=36061) # manhattan
 #'                        
 #' # population of the 9 counties in the san francisco bay area
 #' bay_area_county_names = c("alameda", "contra costa", "marin", "napa", "san francisco", 
