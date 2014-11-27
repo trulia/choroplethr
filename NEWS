@@ -2,6 +2,7 @@ choroplethr 2.1.0
 ----------------------------------------------------------------
 -Add function county_zoom_choropleth, which allows you to zoom in on counties, not states. If 
 an individual county is specified, render it with no fill color.
+-Updated and corrected the values of df_president. Thank you to Richard Careaga.
 
 choroplethr 2.0.0
 ----------------------------------------------------------------

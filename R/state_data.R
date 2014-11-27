@@ -3,8 +3,9 @@
 #' @name df_president
 #' @usage data(df_president)
 #' @docType data
-#' @references Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014. 
+#' @references Taken from the FEC website on 11/21/2014.
 #' @keywords data
+#' @author Ari Lamstein and Richard Careaga
 NULL
 
 #' A data.frame containing population estimates for US States in 2012.   

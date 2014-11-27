@@ -9,8 +9,11 @@ data(df_president)
 \description{
 A data.frame containing election results from the 2012 US Presidential election.
 }
+\author{
+Ari Lamstein and Richard Careaga
+}
 \references{
-Taken from \url{http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml} on 3/15/2014.
+Taken from the FEC website on 11/21/2014.
 }
 \keyword{data}
 
