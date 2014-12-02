@@ -1,0 +1,77 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{j) Creating Administrative Level 1 Maps}
+-->
+
+Creating Administrative Level 1 Maps
+===
+
+"Administrative Level 1" is the generic term for the largest subnational administrative unit of a country. This unit has different names depending on the country. For example, in the USA Admin 1 units are called "states", but in Japan they are called "prefectures". choroplethr ships with an Admin 1 map of all countries of the world, and support for creating choropleths of these maps. Here is information about the map:
+
+```{r}
+library(choroplethrMaps)
+?admin1.map
+```
+
+This vignette walks thru an example of using choroplethr to create an Admin 1 choropleth of Japan. The data we will use is 2010 population estimates from the Japanese Census Bureau:
+
+```{r}
+library(choroplethr)
+?df_japan_census
+data(df_japan_census)
+head(df_japan_census)
+```
+
+# Step 1: Understand the map
+
+In order to create a choropleth of our data we will first need to understand the naming conventions used in the map and our data.  If the names are not the same in both places, we will need to make adjustments to our data - otherwise the map will not render correctly.  (For example if the map says "Tōkyō" but our data says "Tokyo" the map will not render correctly).
+
+First let's see how the map spells the country:
+
+```{r}
+head(get_admin1_countries())
+```
+
+Here we can see that the map lists the country as "japan" (lowercase).  Now let's see how the map names the prefectures of Japan:
+
+```{r}
+head(get_admin1_regions("japan"))
+```
+
+They appear in all lower-case without a trailing "-ken". At this point if you would like to create a map of the prefectures of Japan you can do so like this:
+
+```{r}
+admin1_map("japan")
+```
+
+# Step 2: Prepare our data
+
+choroplethr requires our data to be in a specific format: a data.frame that contains one column named "region" and one column named "value". For admin1 maps the "region" column must exactly match how the regions are named in 
+
+```{r}
+df_japan_census$value = df_japan_census$pop_2010
+```
+
+# Step 3: Explore our data
+
+Now that our data is prepare for choroplethr, we can view the data with the function `admin1_choropleth`:
+
+```{r}
+?admin1_choropleth
+admin1_choropleth(country.name = "japan", 
+                  df           = df_japan_census, 
+                  title        = "2010 Japan Population Estimates", 
+                  legend       = "Population")
+```
+
+As with all choropleth functions, you can also zoom in and view You can also zoom in specific regions and change the scale.  Here is an example of zooming in on the Kansai region of Japan and using a continuous scale:
+
+```{r}
+kansai = c("mie", "nara", "wakayama", "kyoto", "osaka", "hyogo", "shiga")
+admin1_choropleth(country.name = "japan", 
+                  df           = df_japan_census, 
+                  title        = "2010 Japan Population Estimates - Kansai Region", 
+                  legend       = "Population", 
+                  buckets      = 1, 
+                  zoom         = kansai)
+```

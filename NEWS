@@ -4,6 +4,9 @@ choroplethr 2.1.0
 an individual county is specified, render it with no fill color.
 -Updated and corrected the values of df_president. Thank you to Richard Careaga.
 -Update vignettes about US maps. Specifically, provide information about custom scales to include warning about interactions with insets of AK and HI.
+-Add admin1_choropleth function which allows you to create an Administrative Level 1 choropleth of any
+country in the world.  (Administrative Level 1 is the generic term for states, provinces, etc.). Create
+a vignette demonstrating usage of this function.
 
 choroplethr 2.0.0
 ----------------------------------------------------------------

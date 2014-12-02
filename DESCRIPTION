@@ -35,8 +35,9 @@ Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
 Collate:
-    'admin1_data.R'
     'choropleth.R'
+    'admin1.R'
+    'admin1_data.R'
     'choroplethr.R'
     'choroplethr_acs.R'
     'choroplethr_animate.R'
