@@ -8,11 +8,11 @@ admin1_choropleth(country.name, df, title = "", legend = "", buckets = 7,
 }
 \arguments{
 \item{country.name}{The name of the country. Must exactly match how the country is named in the "country"
-column of ?admin1.regions in the choroplethrMaps package.}
+column of ?admin1.regions in the choroplethrAdmin1 package.}
 
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
 the "region" column must exactly match how regions are named in the "region" column in ?admin1.regions
-in the choroplethrMaps package}
+in the choroplethrAdmin1 package}
 
 \item{title}{An optional title for the map.}
 
@@ -25,8 +25,8 @@ will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 match the names of regions as they appear in the "region" column of ?admin1.regions.}
 }
 \description{
-The map used comes from ?admin1.map in the choroplethrMaps package. See ?get_admin_countries
-and ?get_admin_regions in the choroplethrMaps package for help with the spelling of regions.
+The map used comes from ?admin1.map in the choroplethrAdmin1 package. See ?get_admin_countries
+and ?get_admin_regions in the choroplethrAdmin1 package for help with the spelling of regions.
 }
 \examples{
 \dontrun{

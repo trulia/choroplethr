@@ -10,7 +10,7 @@ Creating Administrative Level 1 Maps
 "Administrative Level 1" is the generic term for the largest subnational administrative unit of a country. This unit has different names depending on the country. For example, in the USA Admin 1 units are called "states", but in Japan they are called "prefectures". choroplethr ships with an Admin 1 map of all countries of the world, and supports creating choropleths of these maps. To learn more about the map type tge following:
 
 ```{r}
-library(choroplethrMaps)
+library(choroplethrAdmin1)
 ?admin1.map
 ```
 
@@ -60,11 +60,12 @@ df_japan_census$value = df_japan_census$pop_2010
 Now that our data is prepared for choroplethr, we can view the data with the function `admin1_choropleth`:
 
 ```{r}
+library(choroplethr)
 ?admin1_choropleth
 admin1_choropleth(country.name = "japan", 
                   df           = df_japan_census, 
                   title        = "2010 Japan Population Estimates", 
-                  legend       = "Population")
+                  legend       = "Population", buckets=1)
 ```
 
 As with all choropleth functions, you can also zoom in to specific regions and change the scale.  Here is an example of zooming in on the Kansai region of Japan with a continuous scale:

@@ -2,7 +2,6 @@
 #' @export
 #' @importFrom dplyr left_join
 #' @importFrom R6 R6Class 
-#' @importFrom choroplethrMaps get_admin1_map
 #' @include choropleth.R
 Admin1Choropleth = R6Class("Admin1Choropleth",
   inherit = Choropleth,
@@ -11,6 +10,10 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
     # initialize with a map of the country
     initialize = function(country.name, user.df)
     {
+      if (!requireNamespace("choroplethrAdmin1", quietly = TRUE)) {
+        stop("Package choroplethrAdmin1 is needed for this function to work. Please install it.", call. = FALSE)
+      }
+      
       admin1.map = get_admin1_map(country.name)
       super$initialize(admin1.map, user.df)
       
@@ -24,14 +27,14 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
 
 #' Create an admin1-level choropleth for a specified country
 #' 
-#' The map used comes from ?admin1.map in the choroplethrMaps package. See ?get_admin_countries
-#' and ?get_admin_regions in the choroplethrMaps package for help with the spelling of regions.
+#' The map used comes from ?admin1.map in the choroplethrAdmin1 package. See ?get_admin_countries
+#' and ?get_admin_regions in the choroplethrAdmin1 package for help with the spelling of regions.
 #' 
 #' @param country.name The name of the country. Must exactly match how the country is named in the "country"
-#' column of ?admin1.regions in the choroplethrMaps package.
+#' column of ?admin1.regions in the choroplethrAdmin1 package.
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
 #' the "region" column must exactly match how regions are named in the "region" column in ?admin1.regions
-#' in the choroplethrMaps package
+#' in the choroplethrAdmin1 package
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
@@ -71,6 +74,9 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
 #' @importFrom grid unit grobTree
 admin1_choropleth = function(country.name, df, title="", legend="", buckets=7, zoom=NULL)
 {
+  if (!requireNamespace("choroplethrAdmin1", quietly = TRUE)) {
+    stop("Package choroplethrAdmin1 is needed for this function to work. Please install it.", call. = FALSE)
+  }
   c = Admin1Choropleth$new(country.name, df)
   c$title  = title
   c$legend = legend
