@@ -37,11 +37,19 @@ head(df_japan_census)
 df_japan_census$value=df_japan_census$pop_2010
 
 # default map of all of japan
-admin1_choropleth("japan", df_japan_census, "2010 Japan Population Estimates", "Population")
+admin1_choropleth("japan",
+                   df_japan_census,
+                   "2010 Japan Population Estimates",
+                   "Population")
 
 # zoom in on the Kansai region and use a continuous scale
-kansai = c("mie", "nara", "wakayama", "kyoto", "osaka", "hyogo", shiga")
-admin1_choropleth("japan", df_japan_census, "2010 Japan Population Estimates", "Population", 1, kansai)
+kansai = c("mie", "nara", "wakayama", "kyoto", "osaka", "hyogo", "shiga")
+admin1_choropleth("japan",
+                   df_japan_census,
+                   "2010 Japan Population Estimates",
+                   "Population",
+                   1,
+                   kansai)
 }
 }
 

@@ -25,12 +25,12 @@ Imports:
     dplyr,
     R6,
     acs,
-    WDI
+    WDI,
+    choroplethrMaps
 Suggests:
     testthat,
     zipcode,
-    knitr,
-    choroplethrMaps
+    knitr
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
