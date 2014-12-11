@@ -11,7 +11,7 @@
 #' @examples
 #' \dontrun{
 #' # See http://data.worldbank.org/indicator/SP.POP.TOTL
-#' choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Per Capita Income", buckets=1)
+#' choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population Estimates", buckets=1)
 #'
 #' # See http://data.worldbank.org/indicator/SP.DYN.LE00.IN 
 #' choroplethr_wdi(code="SP.DYN.LE00.IN", year=2012, title="2012 Life Expectancy Estimates")

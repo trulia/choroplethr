@@ -1,3 +1,8 @@
+choroplethr 2.1.1
+----------------------------------------------------------------
+-Bug fix: text for vignettes was for some reason not rebuilt into HTML.
+
+
 choroplethr 2.1.0
 ----------------------------------------------------------------
 -Add function county_zoom_choropleth, which allows you to zoom in on counties, not states. If 
