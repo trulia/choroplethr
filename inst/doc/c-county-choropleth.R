@@ -26,6 +26,6 @@ library(ggplot2)
 
 choro = CountyChoropleth$new(df_pop_county)
 choro$title = "2012 Population Estimates"
-choro$ggplot_scale = scale_fill_brewer(name="Population", palette=2)
+choro$ggplot_scale = scale_fill_brewer(name="Population", palette=2, drop=FALSE)
 choro$render()
 

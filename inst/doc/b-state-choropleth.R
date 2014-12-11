@@ -29,6 +29,6 @@ data(df_president)
 
 choro = StateChoropleth$new(df_president)
 choro$title = "2012 Election Results"
-choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red"))
+choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red"), drop=FALSE)
 choro$render()
 

@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{d) Mapping Census Data}
+%\VignetteIndexEntry{f) Mapping Census Data}
 -->
   
 Mapping Census Data

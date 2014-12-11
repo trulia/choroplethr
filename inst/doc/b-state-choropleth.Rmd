@@ -62,6 +62,13 @@ data(df_president)
 
 choro = StateChoropleth$new(df_president)
 choro$title = "2012 Election Results"
-choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red"))
+choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red"), drop=FALSE)
 choro$render()
 ```
+
+For additional options on the `StateChoropleth` object, please see the choroplethr [source code](https://github.com/trulia/choroplethr).
+
+**Note:** Care must be taken when manually setting the scale on `StateChoropleth` objects. In particular, choroplethr uses ggplot2 custom annotations to render Alaska and Hawaii as insets. This means that the scales of the insets and the main map will only be the same if you do the following
+
+1. for discrete scales, pass `drop=FALSE` to the scale (as above).
+2. for continuous scales, pass `limits` which encompass the minimum and maximum values for the entire dataset.

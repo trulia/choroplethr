@@ -59,6 +59,11 @@ library(ggplot2)
 
 choro = ZipMap$new(df_pop_zip)
 choro$title = "2012 Population Estimates"
-choro$ggplot_scale = scale_color_brewer(name="Population", palette=2)
+choro$ggplot_scale = scale_color_brewer(name="Population", palette=2, drop=FALSE)
 choro$render()
 ```
+
+**Note:** Care must be taken when manually setting the scale on `ZipMap` objects. In particular, choroplethr uses ggplot2 custom annotations to render Alaska and Hawaii as insets. This means that the scales of the insets and the main map will only be the same if you do the following
+
+1. for discrete scales, pass `drop=FALSE` to the scale (as above).
+2. for continuous scales, pass `limits` which encompass the minimum and maximum values for the entire dataset.
