@@ -91,6 +91,10 @@ USAChoropleth = R6Class("USAChoropleth",
     
     render_state_outline = function(states)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+      
       data(state.map, package="choroplethrMaps", envir=environment())
       data(state.regions, package="choroplethrMaps", envir=environment())
       
@@ -103,6 +107,10 @@ USAChoropleth = R6Class("USAChoropleth",
     # all maps of US states zoom at the unit of states.
     set_zoom = function(zoom)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+      
       data(state.map, package="choroplethrMaps", envir=environment())
       all_states = unique(state.map$region)
       
