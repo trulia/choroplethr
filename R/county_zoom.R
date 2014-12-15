@@ -9,6 +9,10 @@ CountyZoomChoropleth = R6Class("CountyZoomChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       data(county.map, package="choroplethrMaps", envir=environment())
       data(county.regions, package="choroplethrMaps", envir=environment())
       super$initialize(county.map, user.df)

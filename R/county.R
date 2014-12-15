@@ -12,6 +12,10 @@ CountyChoropleth = R6Class("CountyChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       data(county.map, package="choroplethrMaps", envir=environment())
       data(county.regions, package="choroplethrMaps", envir=environment())
       # USAChoropleth requires a column called "state" that has full lower case state name (e.g. "new york")

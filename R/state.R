@@ -11,6 +11,10 @@ StateChoropleth = R6Class("StateChoropleth",
     # initialize with us state map
     initialize = function(user.df)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       data(state.map, package="choroplethrMaps", envir=environment())
       state.map$state = state.map$region
       super$initialize(state.map, user.df)

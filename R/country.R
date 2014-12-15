@@ -10,6 +10,10 @@ CountryChoropleth = R6Class("CountryChoropleth",
     # initialize with a world map
     initialize = function(user.df)
     {
+      if (!requireNamespace("choroplethrMaps", quietly = TRUE)) {
+        stop("Package choroplethrMaps is needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       data(country.map, package="choroplethrMaps", envir=environment())
       super$initialize(country.map, user.df)
       
