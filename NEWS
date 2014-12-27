@@ -1,6 +1,7 @@
 choroplethr 2.2.0
 ----------------------------------------------------------------
 -Bug fix: zip_map wasn't working for zoom of HI or AK
+-Bug fix: documentation of choroplethr_animate() was not working
 
 
 choroplethr 2.1.1

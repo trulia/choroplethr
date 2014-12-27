@@ -19,7 +19,7 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
       
       if (private$has_invalid_regions)
       {
-        warning("Please see ?country.regions for a list of mappable regions")
+        warning("Please use ?get_admin1_regions in the chroplethrAdmin1 package to get a list of mappable regions")
       }
     }
   )
