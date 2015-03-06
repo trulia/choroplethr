@@ -2,42 +2,17 @@
 % Please edit documentation in R/zip.R
 \name{zip_map}
 \alias{zip_map}
-\title{Create a map visualizing US ZIP codes with sensible defaults.}
+\title{Create a map visualizing US ZIP codes with sensible defaults}
 \usage{
-zip_map(df, title = "", legend = "", buckets = 7, zoom = NULL)
+zip_map(...)
 }
 \arguments{
-\item{df}{A data.frame with a column named "region" and a column named "value".  Values of the
-"region" column must be valid 5-digit zip codes.}
-
-\item{title}{An optional title for the map.}
-
-\item{legend}{An optional name for the legend.}
-
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
-
-\item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
-match the names of states as they appear in the "region" column of ?state.regions.}
+\item{...}{All arguments are ignored.}
 }
 \description{
-ZIPs are rendered as scatterplots against and outline of US States.
-}
-\note{
-The longitude and latitude of ZIPs come from the "zipcode" package. The state outlines come
-from ?state.map.
-}
-\examples{
-# demonstrate default parameters - visualization using 7 equally sized buckets
-data(df_pop_zip)
-zip_map(df_pop_zip, title="US 2012 ZCTA Population Estimates", legend="Population")
-
-# demonstrate continuous scale and zoom
-data(df_pop_zip)
-zip_map(df_pop_zip,
-        title="US 2012 ZCTA Population Estimates",
-        legend="Population",
-        buckets=1,
-        zoom=c("california", "oregon", "washington"))
+This function is deprecated as of choroplether version 3.0.0. Please use ?zip_choropleth instead.
+The last version of choroplethr
+in which this function worked was version 2.1.1, which can be downloaded from CRAN
+here: http://cran.r-project.org/web/packages/choroplethr/index.html))
 }
 

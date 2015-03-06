@@ -27,7 +27,6 @@ Imports:
     WDI
 Suggests:
     testthat,
-    zipcode,
     knitr,
     choroplethrMaps,
     choroplethrAdmin1,
