@@ -150,6 +150,13 @@ make_df = function(map, acs.data, column_idx)
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
                         value  = as.numeric(estimate(acs.data[,column_idx])))
     
-    na.omit(acs.df) # surprisingly, this sometimes returns NA values
+    # I removed zips in e.g. puerto rico from the map, so remove them here too to avoid a
+    # "your data contains unmappable region" error later on
+    if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
+      stop("Package choroplethrZip is needed for this function to work. Please install it.", call. = FALSE)
+    }
+    
+    data(zip.regions, package="choroplethrZip", envir=environment())
+    acs.df[acs.df$region %in% unique(zip.regions$region), ]
   }
 }
