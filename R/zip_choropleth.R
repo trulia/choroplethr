@@ -79,6 +79,28 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' vector must exactly match the names of the state names as they appear in the "cbsa.title" column 
 #' of ?zip.regions.
 #'
+#' @examples
+#' \dontrun{
+#' library(choroplethrZip)
+#' data(df_pop_zip)
+#' ?df_pop_zip
+#'
+#' # demonstrate zooming on a state
+#' zip_choropleth(df_pop_zip, state_zoom="new york")
+#' 
+#' # demonstrate viewing on a set of counties
+#' # note we use numeric county FIPS codes
+#' nyc_fips = c(36005, 36047, 36061, 36081, 36085)
+#' zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
+#'
+#' # demonstrate zooming in on an msa
+#' zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
+#'
+#' # demonstrate zooming in on a few ZIPs
+#' manhattan_zips=c("10001", "10002", "10003", "10004", "10005", "10006", "10007")
+#' zip_choropleth(df_pop_zip, zip_zoom=manhattan_zips)
+#' 
+#' }
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
