@@ -57,6 +57,17 @@ choroplethr_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=N
   }
 }
 
+#' @export
+zip_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+{
+  acs.data   = acs.fetch(geography=make_geo("zip"), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
+  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  title      = acs.data@acs.colnames[column_idx] 
+  acs.df     = make_df("zip", acs.data, column_idx) # choroplethr requires a df
+  
+  zip_choropleth(acs.df, title, "", buckets,  zip_zoom, county_zoom, state_zoom, msa_zoom)
+}
+
 #' Returns a data.frame representing American Community Survey estimates.
 #' 
 #' Requires the acs package to be installed, and a Census API Key to be set with the 
