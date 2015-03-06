@@ -45,6 +45,10 @@ ZipChoropleth = R6Class("ZipChoropleth",
         stopifnot(all(state_zoom %in% unique(zip.regions$state.name)))
         zips = zip.regions[zip.regions$state.name %in% state_zoom, "region"]
         super$set_zoom(zips)        
+      } else if (!is.null(msa_zoom)) {
+        stopifnot(all(msa_zoom %in% unique(zip.regions$cbsa.title)))
+        zips = zip.regions[zip.regions$cbsa.title %in% msa_zoom, "region"]
+        super$set_zoom(zips)                
       }
     }
   )
