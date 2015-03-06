@@ -149,6 +149,7 @@ make_df = function(map, acs.data, column_idx)
     # put in format for call to choroplethr
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
                         value  = as.numeric(estimate(acs.data[,column_idx])))
+    acs.df$region = as.character(acs.df$region)
     
     # I removed zips in e.g. puerto rico from the map, so remove them here too to avoid a
     # "your data contains unmappable region" error later on
