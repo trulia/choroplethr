@@ -7,13 +7,13 @@ Description: Choropleths are thematic maps where geographic regions, such as
     Providing API connections to interesting data sources for making
     choropleths. 3. Providing a framework for creating choropleths from
     arbitrary shapefiles. Please see the vignettes for more details.
-Version: 2.3.0
+Version: 3.0.0
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
 URL: https://github.com/arilamstein/choroplethr/,
     https://groups.google.com/forum/#!forum/choroplethr
-BugReports: https://github.com/trulia/choroplethr/issues
+BugReports: https://github.com/arilamstein/choroplethr/issues
 Copyright: Trulia, Inc.
 License: BSD_3_clause + file LICENSE
 Imports:

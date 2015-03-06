@@ -4,7 +4,9 @@
 \alias{zip_choropleth}
 \title{Create a zip-level choropleth}
 \usage{
-zip_choropleth(df, title = "", legend = "", buckets = 7, zoom = NULL)
+zip_choropleth(df, title = "", legend = "", buckets = 7,
+  zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,
+  msa_zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -17,8 +19,20 @@ the "region" column must exactly match how regions are named in the "region" col
 \item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
-\item{zoom}{An optional vector of countries to zoom in on. Elements of this vector must exactly
-match the names of countries as they appear in the "region" column of ?zip.regions.}
+\item{zip_zoom}{An optional vector of zip codes to zoom in on. Elements of this vector must exactly
+match the names of zips as they appear in the "region" column of ?zip.regions.}
+
+\item{county_zoom}{An optional vector of county FIPS codes to zoom in on. Elements of this
+vector must exactly match the names of zips as they appear in the "county.fips.numeric" column
+of ?zip.regions.}
+
+\item{state_zoom}{An optional vector of State names to zoom in on. Elements of this
+vector must exactly match the names of the state names as they appear in the "state.name" column
+of ?zip.regions.}
+
+\item{msa_zoom}{An optional vector of MSA (Metroplitan/Micropolitan Statistical Area) names to zoom in on. Elements of this
+vector must exactly match the names of the state names as they appear in the "cbsa.title" column
+of ?zip.regions.}
 }
 \description{
 The map used is zip.map in the choroplethrZip package. See zip.regions for

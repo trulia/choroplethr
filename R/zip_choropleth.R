@@ -21,6 +21,27 @@ ZipChoropleth = R6Class("ZipChoropleth",
       {
         warning("Please see ?zip.regions for a list of mappable regions")
       }
+    },
+    
+    # All zooms, at the end of the day, are zip zooms. But often times it is more natural
+    # for users to specify the zoom in other geographical units
+    set_zoom = function(zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+    {
+      # user can only zoom in by one of the zoom options
+      num_zooms_selected = sum(!is.null(c(zip_zoom, county_zoom, state_zoom, msa_zoom)))
+      if (num_zooms_selected > 1) {
+        stop("You can only zoom in by one of zip_zoom, county_zoom, state_zoom or msa_zoom")
+      }
+      
+      # if no zooms selected, or if the zip_zoom field is selected, just do default behavior
+      if (num_zooms_selected == 0 || !is.null(zip_zoom)) {
+        super$set_zoom(zip_zoom)
+      # if county_zoom field is selected, extract zips from counties  
+      } else if (!is.null(county_zoom)) {
+          stopifnot(all(county_zoom %in% unique(zip.regions$county.fips.numeric)))
+          zips = zip.regions[zip.regions$county.fips.numeric %in% county_zoom, "region"]
+          super$set_zoom(zips)        
+      }
     }
   )
 )
@@ -36,8 +57,18 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @param legend An optional name for the legend.  
 #' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
 #' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional vector of countries to zoom in on. Elements of this vector must exactly 
-#' match the names of countries as they appear in the "region" column of ?zip.regions.
+#' @param zip_zoom An optional vector of zip codes to zoom in on. Elements of this vector must exactly 
+#' match the names of zips as they appear in the "region" column of ?zip.regions.
+#' @param county_zoom An optional vector of county FIPS codes to zoom in on. Elements of this 
+#' vector must exactly match the names of zips as they appear in the "county.fips.numeric" column 
+#' of ?zip.regions.
+#' @param state_zoom An optional vector of State names to zoom in on. Elements of this 
+#' vector must exactly match the names of the state names as they appear in the "state.name" column 
+#' of ?zip.regions.
+#' @param msa_zoom An optional vector of MSA (Metroplitan/Micropolitan Statistical Area) names to zoom in on. Elements of this 
+#' vector must exactly match the names of the state names as they appear in the "cbsa.title" column 
+#' of ?zip.regions.
+#'
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
@@ -45,12 +76,12 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
 #' @importFrom grid unit grobTree
-zip_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
+zip_choropleth = function(df, title="", legend="", buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
   c = ZipChoropleth$new(df)
   c$title  = title
   c$legend = legend
   c$set_buckets(buckets)
-  c$set_zoom(zoom)
+  c$set_zoom(zip_zoom, county_zoom, state_zoom, msa_zoom)
   c$render()
 }
