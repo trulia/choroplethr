@@ -33,6 +33,8 @@ ZipChoropleth = R6Class("ZipChoropleth",
         stop("You can only zoom in by one of zip_zoom, county_zoom, state_zoom or msa_zoom")
       }
       
+      data(zip.regions, package="choroplethrZip", envir=environment())
+      
       # if no zooms selected, or if the zip_zoom field is selected, just do default behavior
       if (num_zooms_selected == 0 || !is.null(zip_zoom)) {
         super$set_zoom(zip_zoom)
@@ -86,6 +88,10 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @importFrom grid unit grobTree
 zip_choropleth = function(df, title="", legend="", buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
+  if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
+    stop("Package choroplethrZip is needed for this function to work. Please install it.", call. = FALSE)
+  }
+
   c = ZipChoropleth$new(df)
   c$title  = title
   c$legend = legend

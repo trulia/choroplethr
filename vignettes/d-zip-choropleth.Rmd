@@ -1,0 +1,73 @@
+<!--
+  %\VignetteEngine{knitr}
+%\VignetteIndexEntry{d) US ZIP Choropleths}
+-->
+
+US ZIP Choropleths
+===
+
+You can create a choropleth of US ZIP codes with the function `zip_choropleth`. Here is a map of all zip codes in the state of New York:
+
+```{r hold=TRUE}
+library(choroplethr)
+library(choroplethrZip)
+
+?df_pop_zip
+data(df_pop_zip)
+
+?zip_choropleth
+zip_choropleth(df_pop_zip, state_zoom="new york")
+```
+
+The only required parameter to `zip_choropleth` is a data.frame.  You can see the optional parameters by typing `?zip_choropleth`.  
+
+# Data Requirements
+
+The data.frame that you provide to `zip_choropleth` must have one column named "region" and one column named "value". Your entries for "region" must **exactly** match how regions are named in the map which choroplethr uses.  These names are defined in the object `zip.regions`:
+
+```{r}
+library(choroplethrZip)
+
+?zip.regions
+data(zip.regions)
+head(zip.regions)
+```
+
+In order to use choroplethr, you must use the naming convention in the "region" column of 
+zip.regions. That is, you must use the string version of the ZIP code - i.e. you must include any leading zeroes.
+
+# Aggregating ZIP Codes
+
+For a statistical analysis it is rarely beneficial to view a map of all US ZIP codes - there are simply too many of them, and too many of them are too small to be viewed at that scale. Rather one often wants to view a subset of ZIP codes. The example above showed how to view all ZIP codes in a single state with the `zip_zoom` parameter.  
+
+```{r}
+# New York City is comprised of 5 counties: Bronx, Kings (Brooklyn), New York (Manhattan), 
+# Queens, Richmond (Staten Island). Their numeric FIPS codes are:
+nyc_fips = c(36005, 36047, 36061, 36081, 36085)
+zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
+```
+
+You can also view all ZIPs in a Metroplitan Statistical Area:
+
+```{r}
+zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
+```
+
+# Map Details
+
+Creating a map of Zip codes is difficult for several reasons:
+
+1. Zip codes are created and maintained by the US Postal Service for the purpose of improving the efficency of mail delivery. They are not created with political and statistical goals in mind.
+2. They frequently change.
+3. Legal boundaries (such as states and counties) do not cleanly decompose into postal codes. That is, many zip codes cross state and county boundaries.
+
+Despite this, the US Census Bureau has created ZIP Code Tabulated Areas (ZCTAs for short) which address many of these concerns. You can learn more about ZCTAs and their relationship with US Postal ZIP Codes [here](https://www.census.gov/geo/reference/zctas.html) and [here](http://en.wikipedia.org/wiki/ZIP_Code_Tabulation_Area). 
+
+The ZIP code map that choroplethr uses is the US Census 2013 Cartographic Boundary Shapefile ZCTAs - see `?zip.map` for details. The data frame `?zip.regions` had metadata for each ZCTA on the map such as the state name, county name, county FIPS code and, if applicable the Metropolitan Statistical Area (MSA) name. Note that each ZCTA appears once in `zip.regions` each time it crosses a state or county. For example, zip 42223 crosses Kentucky and Tennesse and so appears twice:
+
+```{r}
+data(zip.regions)
+zip.regions[zip.regions$region == 42223, ]
+```
+
+[MSA definitions](http://en.wikipedia.org/wiki/Metropolitan_statistical_area) are actually maintained by the OMB (Office of Managment and Budget), not the Census Bureau. They are built out of Core Based Statistical Areas (CBSAs). This is why `?zip.regions` contains columns title `cbsa` and `cbsa.title`. Note that a MSA can be both a "Metropolitan Statistical Area" as well as a "Micropolitan Statistical Area". When applicable, the column `metropolitan.micropolitan.statistical.area` has the appropriate text.
