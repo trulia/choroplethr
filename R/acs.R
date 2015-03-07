@@ -12,21 +12,111 @@ choroplethr_acs = function(...)
                 "from CRAN here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
 }
 
+#' Create a US State choropleth from ACS data.
+#' 
+#' Creates a choropleth of US States using the US Census' American Community Survey (ACS) data.  
+#' Requires the acs package to be installed, and a Census API Key to be set with 
+#' the acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
+#'
+#' @param tableId The id of an ACS table
+#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
+#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
+#' ?state.regions.
+#' @return A choropleth.
+#' 
+#' @keywords choropleth, acs
+#' 
+#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
+#' which contains a list of all ACS surveys.
+#' @references Uses the acs package created by Ezra Haber Glenn.
 #' @export
+#' @examples
+#' \dontrun{
+#' # population of all states
+#' state_choropleth_acs("B01003")
+#' 
+#' # median income, continuous scale, counties in New York, New Jersey and Connecticut
+#' state_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
+#' }
+#' @importFrom acs acs.fetch geography estimate geo.make
 state_choropleth_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
 {
   acs.data = get_acs_data("state", tableId, endyear, span)
   state_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
 }
 
+#' Create a US County choropleth from ACS data.
+#' 
+#' Creates a US County choropleth using the US Census' American Community Survey (ACS) data.  
+#' Requires the acs package to be installed, and a Census API Key to be set with 
+#' the acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
+#'
+#' @param tableId The id of an ACS table
+#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
+#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
+#' ?state.regions.
+#' @return A choropleth.
+#' 
+#' @keywords choropleth, acs
+#' 
+#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
+#' which contains a list of all ACS surveys.
+#' @references Uses the acs package created by Ezra Haber Glenn.
 #' @export
-county_choropleth_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
+#' @examples
+#' \dontrun{
+#' # population of all counties
+#' county_choropleth_acs("B01003")
+#' 
+#' # median income, continuous scale, counties in New York, New Jersey and Connecticut
+#' county_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
+#' }
+#' @importFrom acs acs.fetch geography estimate geo.make
+county_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=NULL)
 {
   acs.data = get_acs_data("county", tableId, endyear, span)
   county_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
 }
 
+#' Create a US ZIP choropleth from ACS data.
+#' 
+#' Creates a US ZIP choropleth using the US Census' American Community Survey (ACS) data.  
+#' Requires the acs package to be installed, and a Census API Key to be set with 
+#' the acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
+#'
+#' @param tableId The id of an ACS table
+#' @param map A string indicating which map the data is for.  Must be "state", "county" or "zip".
+#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
+#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
+#' ?state.regions.
+#' @return A choropleth.
+#' 
+#' @keywords choropleth, acs
+#' 
+#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
+#' which contains a list of all ACS surveys.
+#' @references Uses the acs package created by Ezra Haber Glenn.
 #' @export
+#' @examples
+#' \dontrun{
+#' # population of all ZIPs in NY State
+#' zip_choropleth_acs("B01003", state_zoom="new york")
+#' 
+#' } 
+#' @importFrom acs acs.fetch geography estimate geo.make
 zip_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
   acs.data = get_acs_data("zip", tableId, endyear, span)
