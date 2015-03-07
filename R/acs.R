@@ -1,71 +1,49 @@
-if (base::getRversion() >= "2.15.1") {
-  utils::globalVariables(c("state.fips"))
-}
-
 #' Create a choropleth from ACS data.
 #' 
-#' Creates a choropleth using the US Census' American Community Survey (ACS) data.  
-#' Requires the acs package to be installed, and a Census API Key to be set with 
-#' the acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
-#'
-#' @param tableId The id of an ACS table
-#' @param map A string indicating which map the data is for.  Must be "state", "county" or "zip".
-#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
-#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
-#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.regions.
-#' @return A choropleth.
-#' 
-#' @keywords choropleth, acs
-#' 
-#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
-#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
-#' which contains a list of all ACS surveys.
-#' @references Uses the acs package created by Ezra Haber Glenn.
+#' This function is deprecated as of choroplether version 3.0.0. Please use ?state_choropleth_acs, 
+#' ?county_choropleth_acs, ?zip_choropleth_acs. The last version of choroplethr 
+#' in which this function worked was version 2.1.1, which can be downloaded from CRAN 
+#' here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
+choroplethr_acs = function(...)
+{
+  warning(paste("This function is deprecated as of choroplether version 3.0.0.",
+                "Please use ?state_choropleth_acs, ?county_choropleth_acs and ?zip_choropleth_acs instead.",
+                "The last version of choroplethr in which this function worked was version 2.1.1, which can be downloaded",
+                "from CRAN here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
+}
 
 #' @export
-#' @examples
-#' \dontrun{
-#' # population of all states, 9 equally sized buckets
-#' choroplethr_acs("B01003", "state")
-#' 
-#' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' choroplethr_acs("B19301", "county", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
-#'
-#' # median income, all zip codes
-#' choroplethr_acs("B19301", "zip") } 
-#' @importFrom acs acs.fetch geography estimate geo.make
-choroplethr_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
+state_choropleth_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
 {
-  stopifnot(map %in% c("state", "county", "zip"))
-  stopifnot(buckets > 0 && buckets < 10)
-  
-  acs.data   = acs.fetch(geography=make_geo(map), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
-  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
-  title      = acs.data@acs.colnames[column_idx] 
-  acs.df     = make_df(map, acs.data, column_idx) # choroplethr requires a df
-  
-  if (map=="state") {
-    state_choropleth(acs.df, title, "", buckets, zoom)
-  } else if (map=="county") {
-    county_choropleth(acs.df, title, "", buckets, zoom)
-  } else if (map=="zip") {
-    zip_map(acs.df, title, "", buckets, zoom)
-  }
+  acs.data = get_acs_data("state", tableId, endyear, span)
+  state_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
+}
+
+#' @export
+county_choropleth_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
+{
+  acs.data = get_acs_data("county", tableId, endyear, span)
+  county_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
 }
 
 #' @export
 zip_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
-  acs.data   = acs.fetch(geography=make_geo("zip"), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
+  acs.data = get_acs_data("zip", tableId, endyear, span)
+  zip_choropleth(acs.data[['df']], acs.data[['title']], "", buckets,  zip_zoom, county_zoom, state_zoom, msa_zoom)
+}
+
+# given an American Community Survey (ACS) tableId, endyear and span
+# prompts user for the column id if there are multiple tables
+# returns the result as a data.frame with one column named region and one column named value
+# note: the regions are clipped to the maps that choroplethr uses. i.e., 
+get_acs_data = function(map, tableId, endyear, span)
+{
+  acs.data   = acs.fetch(geography=make_geo(map), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
-  acs.df     = make_df("zip", acs.data, column_idx) # choroplethr requires a df
-  
-  zip_choropleth(acs.df, title, "", buckets,  zip_zoom, county_zoom, state_zoom, msa_zoom)
+  df         = make_df(map, acs.data, column_idx) # choroplethr requires a df
+l=  list(df=df, title=title) # need to return 2 values here
 }
 
 #' Returns a data.frame representing American Community Survey estimates.
@@ -137,6 +115,10 @@ make_geo = function(map)
   }
 }
 
+# convert the acs.data to a data.frame in the format that choroplethr uses.
+# this is trickty for a few reasons. one of which is that acs.data is an S4 object.
+# another is that each map (state, county and zip) has a different naming convention for regions
+# another is that the census data needs to be clipped to the map (e.g. remove puerto rico)
 make_df = function(map, acs.data, column_idx) 
 {
   stopifnot(map %in% c("state", "county", "zip"))
