@@ -4,7 +4,7 @@
 \alias{state_choropleth_acs}
 \title{Create a US State choropleth from ACS data.}
 \usage{
-state_choropleth_acs(tableId, map, endyear = 2011, span = 5, buckets = 7,
+state_choropleth_acs(tableId, endyear = 2011, span = 5, buckets = 7,
   zoom = NULL)
 }
 \arguments{

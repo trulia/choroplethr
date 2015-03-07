@@ -43,7 +43,7 @@ choroplethr_acs = function(...)
 #' state_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
 #' }
 #' @importFrom acs acs.fetch geography estimate geo.make
-state_choropleth_acs = function(tableId, map, endyear=2011, span=5, buckets=7, zoom=NULL)
+state_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=NULL)
 {
   acs.data = get_acs_data("state", tableId, endyear, span)
   state_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
@@ -133,7 +133,7 @@ get_acs_data = function(map, tableId, endyear, span)
   column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
   df         = make_df(map, acs.data, column_idx) # choroplethr requires a df
-l=  list(df=df, title=title) # need to return 2 values here
+  list(df=df, title=title) # need to return 2 values here
 }
 
 #' Returns a data.frame representing American Community Survey estimates.
@@ -216,6 +216,7 @@ make_df = function(map, acs.data, column_idx)
   if (map == "state") {
     df = data.frame(region = tolower(geography(acs.data)$NAME), 
                     value  = as.numeric(estimate(acs.data[,column_idx])));
+    df$region = as.character(df$region)
     df[df$region != "puerto rico", ]
   } else if (map == "county") {
     # create fips code
