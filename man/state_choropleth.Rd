@@ -4,7 +4,8 @@
 \alias{state_choropleth}
 \title{Create a choropleth of US States with sensible defaults.}
 \usage{
-state_choropleth(df, title = "", legend = "", buckets = 7, zoom = NULL)
+state_choropleth(df, title = "", legend = "", num_colors = 7,
+  zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -14,8 +15,8 @@ the "region" column must exactly match how regions are named in the "region" col
 
 \item{legend}{An optional name for the legend.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
 match the names of states as they appear in the "region" column of ?state.regions.}
@@ -26,20 +27,20 @@ the choroplethrMaps package for a data.frame that can help you coerce your regio
 into the required format.
 }
 \examples{
-# demonstrate default parameters - visualization using 7 equally sized buckets
+# default parameters
 data(df_pop_state)
 state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
 
-# demonstrate continuous scale and zoom
+# continuous scale and zoom
 data(df_pop_state)
 state_choropleth(df_pop_state,
                  title="US 2012 State Population Estimates",
                  legend="Population",
-                 buckets=1,
+                 num_colors=1,
                  zoom=c("california", "oregon", "washington"))
 
-# demonstrate how choroplethr handles character and factor values
 # demonstrate user creating their own discretization of the input
+# demonstrate how choroplethr handles character and factor values
 data(df_pop_state)
 df_pop_state$str = ""
 for (i in 1:nrow(df_pop_state))

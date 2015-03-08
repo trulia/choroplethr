@@ -77,17 +77,17 @@ Choropleth = R6Class("Choropleth",
     },
     
     # for us, discretizing values means 
-    # 1. breaking the values into buckets equal intervals
+    # 1. assigning each value to one of num_colors colors
     # 2. formatting the intervals e.g. with commas
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(self$user.df$value) && private$buckets > 1) {
+      if (is.numeric(self$user.df$value) && private$num_colors > 1) {
         
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        self$user.df$value = cut2(self$user.df$value, g = private$buckets)
+        self$user.df$value = cut2(self$user.df$value, g = private$num_colors)
         options(scipen=scipen_orig)
         
         levels(self$user.df$value) = sapply(levels(self$user.df$value), self$format_levels)
@@ -120,7 +120,7 @@ Choropleth = R6Class("Choropleth",
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (private$buckets == 1) {
+      } else if (private$num_colors == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm = TRUE)
         max_value = max(self$choropleth.df$value, na.rm = TRUE)
@@ -228,22 +228,22 @@ Choropleth = R6Class("Choropleth",
     },
     get_zoom = function() { private$zoom },
     
-    set_buckets = function(buckets)
+    set_num_colors = function(num_colors)
     {
       # if R's ?is.integer actually tested if a value was an integer, we could replace the 
-      # first 2 tests with is.integer(buckets)
-      stopifnot(is.numeric(buckets) 
-                && buckets%%1 == 0 
-                && buckets > 0 
-                && buckets < 10)
+      # first 2 tests with is.integer(num_colors)
+      stopifnot(is.numeric(num_colors) 
+                && num_colors%%1 == 0 
+                && num_colors > 0 
+                && num_colors < 10)
       
-      private$buckets = buckets      
+      private$num_colors = num_colors      
     }
   ),
   
   private = list(
-    zoom    = NULL, # a vector of regions to zoom in on. if NULL, show all
-    buckets = 7,     # number of equally-sized buckets for scale. if 1 then use a continuous scale
+    zoom = NULL, # a vector of regions to zoom in on. if NULL, show all
+    num_colors = 7,     # number of colors to use on the map. if 1 then use a continuous scale
     has_invalid_regions = FALSE
   )
 )

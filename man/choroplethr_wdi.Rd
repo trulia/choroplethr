@@ -5,7 +5,7 @@
 \title{Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI).}
 \usage{
 choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
-  buckets = 7, zoom = NULL)
+  num_colors = 7, zoom = NULL)
 }
 \arguments{
 \item{code}{The WDI code to use.}
@@ -14,8 +14,8 @@ choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
 
 \item{title}{A title for the map.  If not specified, automatically generated to include WDI code and year.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors to use on the map.  A value of 1
+will use a continuous scale, and a value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional list of countries to zoom in on. Must come from the "name" column in
 ?country.regions.}
@@ -29,7 +29,7 @@ Create a country-level choropleth using data from the World Bank's World Develop
 \examples{
 \dontrun{
 # See http://data.worldbank.org/indicator/SP.POP.TOTL
-choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population Estimates", buckets=1)
+choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population Estimates", num_colors=1)
 
 # See http://data.worldbank.org/indicator/SP.DYN.LE00.IN
 choroplethr_wdi(code="SP.DYN.LE00.IN", year=2012, title="2012 Life Expectancy Estimates")

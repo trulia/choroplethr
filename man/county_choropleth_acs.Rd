@@ -4,7 +4,7 @@
 \alias{county_choropleth_acs}
 \title{Create a US County choropleth from ACS data.}
 \usage{
-county_choropleth_acs(tableId, endyear = 2011, span = 5, buckets = 7,
+county_choropleth_acs(tableId, endyear = 2011, span = 5, num_colors = 7,
   zoom = NULL)
 }
 \arguments{
@@ -14,8 +14,8 @@ county_choropleth_acs(tableId, endyear = 2011, span = 5, buckets = 7,
 
 \item{span}{The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional list of states to zoom in on. Must come from the "name" column in
 ?state.regions.}
@@ -34,7 +34,7 @@ the acs's api.key.install function.  Census API keys can be obtained at http://w
 county_choropleth_acs("B01003")
 
 # median income, continuous scale, counties in New York, New Jersey and Connecticut
-county_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
+county_choropleth_acs("B19301", num_colors=1, zoom=c("new york", "new jersey", "connecticut"))
 }
 }
 \references{

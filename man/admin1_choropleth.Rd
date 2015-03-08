@@ -4,8 +4,8 @@
 \alias{admin1_choropleth}
 \title{Create an admin1-level choropleth for a specified country}
 \usage{
-admin1_choropleth(country.name, df, title = "", legend = "", buckets = 7,
-  zoom = NULL)
+admin1_choropleth(country.name, df, title = "", legend = "",
+  num_colors = 7, zoom = NULL)
 }
 \arguments{
 \item{country.name}{The name of the country. Must exactly match how the country is named in the "country"
@@ -19,8 +19,8 @@ in the choroplethrAdmin1 package}
 
 \item{legend}{An optional name for the legend.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional vector of regions to zoom in on. Elements of this vector must exactly
 match the names of regions as they appear in the "region" column of ?admin1.regions.}

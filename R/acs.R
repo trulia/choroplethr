@@ -1,17 +1,3 @@
-#' Create a choropleth from ACS data.
-#' 
-#' This function is deprecated as of choroplether version 3.0.0. Please use ?state_choropleth_acs, 
-#' ?county_choropleth_acs, ?zip_choropleth_acs. The last version of choroplethr 
-#' in which this function worked was version 2.1.1, which can be downloaded from CRAN 
-#' here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
-choroplethr_acs = function(...)
-{
-  warning(paste("This function is deprecated as of choroplether version 3.0.0.",
-                "Please use ?state_choropleth_acs, ?county_choropleth_acs and ?zip_choropleth_acs instead.",
-                "The last version of choroplethr in which this function worked was version 2.1.1, which can be downloaded",
-                "from CRAN here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
-}
-
 #' Create a US State choropleth from ACS data.
 #' 
 #' Creates a choropleth of US States using the US Census' American Community Survey (ACS) data.  
@@ -21,8 +7,8 @@ choroplethr_acs = function(...)
 #' @param tableId The id of an ACS table
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors on the map. A value of 1 
+#' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.regions.
 #' @return A choropleth.
@@ -40,13 +26,13 @@ choroplethr_acs = function(...)
 #' state_choropleth_acs("B01003")
 #' 
 #' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' state_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
+#' state_choropleth_acs("B19301", num_colors=1, zoom=c("new york", "new jersey", "connecticut"))
 #' }
 #' @importFrom acs acs.fetch geography estimate geo.make
-state_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=NULL)
+state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoom=NULL)
 {
   acs.data = get_acs_data("state", tableId, endyear, span)
-  state_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
+  state_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
 }
 
 #' Create a US County choropleth from ACS data.
@@ -58,8 +44,8 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=N
 #' @param tableId The id of an ACS table
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors on the map. A value of 1 
+#' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.regions.
 #' @return A choropleth.
@@ -77,13 +63,13 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=N
 #' county_choropleth_acs("B01003")
 #' 
 #' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' county_choropleth_acs("B19301", buckets=1, zoom=c("new york", "new jersey", "connecticut"))
+#' county_choropleth_acs("B19301", num_colors=1, zoom=c("new york", "new jersey", "connecticut"))
 #' }
 #' @importFrom acs acs.fetch geography estimate geo.make
-county_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=NULL)
+county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoom=NULL)
 {
   acs.data = get_acs_data("county", tableId, endyear, span)
-  county_choropleth(acs.data[['df']], acs.data[['title']], "", buckets, zoom)
+  county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
 }
 
 #' Create a US ZIP choropleth from ACS data.
@@ -97,8 +83,8 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors on the map. A value of 1 
+#' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
 #' ?state.regions.
 #' @return A choropleth.
@@ -117,10 +103,10 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zoom=
 #' 
 #' } 
 #' @importFrom acs acs.fetch geography estimate geo.make
-zip_choropleth_acs = function(tableId, endyear=2011, span=5, buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+zip_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
   acs.data = get_acs_data("zip", tableId, endyear, span)
-  zip_choropleth(acs.data[['df']], acs.data[['title']], "", buckets,  zip_zoom, county_zoom, state_zoom, msa_zoom)
+  zip_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors,  zip_zoom, county_zoom, state_zoom, msa_zoom)
 }
 
 # given an American Community Survey (ACS) tableId, endyear and span

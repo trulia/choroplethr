@@ -67,8 +67,8 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in ?zip.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors on the map. A value of 1 
+#' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zip_zoom An optional vector of zip codes to zoom in on. Elements of this vector must exactly 
 #' match the names of zips as they appear in the "region" column of ?zip.regions.
 #' @param county_zoom An optional vector of county FIPS codes to zoom in on. Elements of this 
@@ -87,18 +87,18 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' data(df_pop_zip)
 #' ?df_pop_zip
 #'
-#' # demonstrate zooming on a state
+#' # zooming on a state
 #' zip_choropleth(df_pop_zip, state_zoom="new york")
 #' 
-#' # demonstrate viewing on a set of counties
+#' # viewing on a set of counties
 #' # note we use numeric county FIPS codes
 #' nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 #' zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
 #'
-#' # demonstrate zooming in on an msa
+#' # zooming in on an msa
 #' zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
 #'
-#' # demonstrate zooming in on a few ZIPs
+#' # zooming in on a few ZIPs
 #' manhattan_zips=c("10001", "10002", "10003", "10004", "10005", "10006", "10007")
 #' zip_choropleth(df_pop_zip, zip_zoom=manhattan_zips)
 #' 
@@ -110,12 +110,12 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
 #' @importFrom grid unit grobTree
-zip_choropleth = function(df, title="", legend="", buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+zip_choropleth = function(df, title="", legend="", num_colors=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
   c = ZipChoropleth$new(df)
   c$title  = title
   c$legend = legend
-  c$set_buckets(buckets)
+  c$set_num_colors(num_colors)
   c$set_zoom(zip_zoom, county_zoom, state_zoom, msa_zoom)
   c$render()
 }

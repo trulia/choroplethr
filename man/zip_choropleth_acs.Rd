@@ -4,7 +4,7 @@
 \alias{zip_choropleth_acs}
 \title{Create a US ZIP choropleth from ACS data.}
 \usage{
-zip_choropleth_acs(tableId, endyear = 2011, span = 5, buckets = 7,
+zip_choropleth_acs(tableId, endyear = 2011, span = 5, num_colors = 7,
   zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,
   msa_zoom = NULL)
 }
@@ -16,8 +16,8 @@ zip_choropleth_acs(tableId, endyear = 2011, span = 5, buckets = 7,
 \item{span}{The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{map}{A string indicating which map the data is for.  Must be "state", "county" or "zip".}
 

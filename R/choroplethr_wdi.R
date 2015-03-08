@@ -3,15 +3,15 @@
 #' @param code The WDI code to use.
 #' @param year The year of data to use.
 #' @param title A title for the map.  If not specified, automatically generated to include WDI code and year.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors to use on the map.  A value of 1 
+#' will use a continuous scale, and a value in [2, 9] will use that many colors. 
 #' @param zoom An optional list of countries to zoom in on. Must come from the "name" column in
 #' ?country.regions.
 #'
 #' @examples
 #' \dontrun{
 #' # See http://data.worldbank.org/indicator/SP.POP.TOTL
-#' choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population Estimates", buckets=1)
+#' choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population Estimates", num_colors=1)
 #'
 #' # See http://data.worldbank.org/indicator/SP.DYN.LE00.IN 
 #' choroplethr_wdi(code="SP.DYN.LE00.IN", year=2012, title="2012 Life Expectancy Estimates")
@@ -25,7 +25,7 @@
 #' @references Uses the WDI function from the WDI package by Vincent Arel-Bundock.
 #' @export
 #' @importFrom WDI WDI
-choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", buckets=7, zoom=NULL)
+choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", num_colors=7, zoom=NULL)
 {
   data(country.regions, package="choroplethrMaps", envir=environment())
   if (is.null(title))
@@ -37,5 +37,5 @@ choroplethr_wdi = function(code="SP.POP.TOTL", year=2012, title="", buckets=7, z
   data = merge(data, country.regions)
   data$value = data[, names(data) == code] # choroplethr requires value column to be named "value"
   
-  country_choropleth(data, title, "", buckets, zoom)
+  country_choropleth(data, title, "", num_colors, zoom)
 }

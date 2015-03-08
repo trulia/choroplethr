@@ -54,26 +54,26 @@ StateChoropleth = R6Class("StateChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in state.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors on the map. A value of 1 
+#' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.regions.
 #' 
 #' @examples
-#' # demonstrate default parameters - visualization using 7 equally sized buckets
+#' # default parameters
 #' data(df_pop_state)
 #' state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
 #'
-#' # demonstrate continuous scale and zoom
+#' # continuous scale and zoom
 #' data(df_pop_state)
 #' state_choropleth(df_pop_state, 
 #'                  title="US 2012 State Population Estimates", 
 #'                  legend="Population", 
-#'                  buckets=1,
+#'                  num_colors=1,
 #'                  zoom=c("california", "oregon", "washington"))
 #' 
-#' # demonstrate how choroplethr handles character and factor values
 #' # demonstrate user creating their own discretization of the input
+#' # demonstrate how choroplethr handles character and factor values
 #' data(df_pop_state)
 #' df_pop_state$str = ""
 #' for (i in 1:nrow(df_pop_state))
@@ -95,12 +95,12 @@ StateChoropleth = R6Class("StateChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-state_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
+state_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL)
 {
   c = StateChoropleth$new(df)
   c$title  = title
   c$legend = legend
-  c$set_buckets(buckets)
+  c$set_num_colors(num_colors)
   c$set_zoom(zoom)
   c$render()
 }

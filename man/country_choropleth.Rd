@@ -4,7 +4,7 @@
 \alias{country_choropleth}
 \title{Create a country-level choropleth}
 \usage{
-country_choropleth(df, title = "", legend = "", buckets = 7,
+country_choropleth(df, title = "", legend = "", num_colors = 7,
   zoom = NULL)
 }
 \arguments{
@@ -15,8 +15,8 @@ the "region" column must exactly match how regions are named in the "region" col
 
 \item{legend}{An optional name for the legend.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors to use on the map.  A value of 1
+will use a continuous scale, and a value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional vector of countries to zoom in on. Elements of this vector must exactly
 match the names of countries as they appear in the "region" column of ?country.regions}
@@ -31,12 +31,12 @@ data(df_pop_country)
 country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 
 # demonstrate continuous scale
-country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", buckets=1)
+country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", num_colors=1)
 
 # demonstrate zooming
 country_choropleth(df_pop_country,
                    "2012 World Bank Population Estimates",
-                   buckets=1,
+                   num_colors=1,
                    zoom=c("united states of america", "canada", "mexico"))
 }
 

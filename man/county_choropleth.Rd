@@ -4,7 +4,7 @@
 \alias{county_choropleth}
 \title{Create a choropleth of USA Counties with sensible defaults.}
 \usage{
-county_choropleth(df, title = "", legend = "", buckets = 7,
+county_choropleth(df, title = "", legend = "", num_colors = 7,
   state_zoom = NULL, county_zoom = NULL)
 }
 \arguments{
@@ -15,8 +15,8 @@ the "region" column must exactly match how regions are named in the "region" col
 
 \item{legend}{An optional name for the legend.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{state_zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
 match the names of states as they appear in the "region" column of ?state.regions.}
@@ -31,16 +31,16 @@ into the required format.
 }
 \examples{
 \dontrun{
-# demonstrate default parameters - visualization using 7 equally sized buckets
+# default parameters
 data(df_pop_county)
 county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
 
-# demonstrate continuous scale and state_zoom
+# continuous scale and state_zoom
 data(df_pop_county)
 county_choropleth(df_pop_county,
                  title="US 2012 County Population Estimates",
                  legend="Population",
-                 buckets=1,
+                 num_colors=1,
                  state_zoom=c("california", "oregon", "washington"))
 
 library(dplyr)
@@ -55,7 +55,7 @@ nyc_county_fips = county.regions \%>\%
 county_choropleth(df_pop_county,
                        title="Population of Counties in New York City",
                        legend="Population",
-                       buckets=1,
+                       num_colors=1,
                        county_zoom=nyc_county_fips$region)
 }
 }

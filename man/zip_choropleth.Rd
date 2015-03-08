@@ -4,7 +4,7 @@
 \alias{zip_choropleth}
 \title{Create a zip-level choropleth}
 \usage{
-zip_choropleth(df, title = "", legend = "", buckets = 7,
+zip_choropleth(df, title = "", legend = "", num_colors = 7,
   zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,
   msa_zoom = NULL)
 }
@@ -16,8 +16,8 @@ the "region" column must exactly match how regions are named in the "region" col
 
 \item{legend}{An optional name for the legend.}
 
-\item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
-will use a continuous scale, and a value in [2, 9] will use that many buckets.}
+\item{num_colors}{The number of colors on the map. A value of 1
+will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{zip_zoom}{An optional vector of zip codes to zoom in on. Elements of this vector must exactly
 match the names of zips as they appear in the "region" column of ?zip.regions.}
@@ -44,18 +44,18 @@ library(choroplethrZip)
 data(df_pop_zip)
 ?df_pop_zip
 
-# demonstrate zooming on a state
+# zooming on a state
 zip_choropleth(df_pop_zip, state_zoom="new york")
 
-# demonstrate viewing on a set of counties
+# viewing on a set of counties
 # note we use numeric county FIPS codes
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
 
-# demonstrate zooming in on an msa
+# zooming in on an msa
 zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
 
-# demonstrate zooming in on a few ZIPs
+# zooming in on a few ZIPs
 manhattan_zips=c("10001", "10002", "10003", "10004", "10005", "10006", "10007")
 zip_choropleth(df_pop_zip, zip_zoom=manhattan_zips)
 
