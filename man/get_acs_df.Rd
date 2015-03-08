@@ -2,7 +2,7 @@
 % Please edit documentation in R/acs.R
 \name{get_acs_df}
 \alias{get_acs_df}
-\title{Returns a data.frame representing American Community Survey estimates.}
+\title{Returns a data.frame representing American Community Survey estimates}
 \usage{
 get_acs_df(tableId, map, endyear = 2012, span = 5, column_idx = -1)
 }

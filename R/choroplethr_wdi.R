@@ -1,4 +1,4 @@
-#' Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI).
+#' Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI)
 #' 
 #' @param code The WDI code to use.
 #' @param year The year of data to use.

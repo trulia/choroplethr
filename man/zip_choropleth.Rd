@@ -2,11 +2,11 @@
 % Please edit documentation in R/zip_choropleth.R
 \name{zip_choropleth}
 \alias{zip_choropleth}
-\title{Create a zip-level choropleth}
+\title{Create a choropleth of US Zip Codes}
 \usage{
 zip_choropleth(df, title = "", legend = "", num_colors = 7,
-  zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,
-  msa_zoom = NULL)
+  state_zoom = NULL, county_zoom = NULL, msa_zoom = NULL,
+  zip_zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -19,46 +19,60 @@ the "region" column must exactly match how regions are named in the "region" col
 \item{num_colors}{The number of colors on the map. A value of 1
 will use a continuous scale. A value in [2, 9] will use that many colors.}
 
-\item{zip_zoom}{An optional vector of zip codes to zoom in on. Elements of this vector must exactly
-match the names of zips as they appear in the "region" column of ?zip.regions.}
+\item{state_zoom}{An optional vector of State names to zoom in on. Elements of this
+vector must exactly match the names of the state names as they appear in the "state.name" column
+of ?zip.regions.}
 
 \item{county_zoom}{An optional vector of county FIPS codes to zoom in on. Elements of this
 vector must exactly match the names of zips as they appear in the "county.fips.numeric" column
 of ?zip.regions.}
 
-\item{state_zoom}{An optional vector of State names to zoom in on. Elements of this
-vector must exactly match the names of the state names as they appear in the "state.name" column
-of ?zip.regions.}
-
 \item{msa_zoom}{An optional vector of MSA (Metroplitan/Micropolitan Statistical Area) names to zoom in on. Elements of this
 vector must exactly match the names of the state names as they appear in the "cbsa.title" column
 of ?zip.regions.}
+
+\item{zip_zoom}{An optional vector of zip codes to zoom in on. Elements of this vector must exactly
+match the names of zips as they appear in the "region" column of ?zip.regions.}
 }
 \description{
-The map used is zip.map in the choroplethrZip package. See zip.regions for
+Note that what is rendered are 2010 US Census Zip Code Tabulated Areas (ZCTAs), not USPS Zip Codes. The
+map used is zip.map in the choroplethrZip package. See zip.regions for
 an object which can help you coerce your regions into the required format.
 }
 \examples{
 \dontrun{
 library(choroplethrZip)
 data(df_pop_zip)
-?df_pop_zip
 
 # zooming on a state
-zip_choropleth(df_pop_zip, state_zoom="new york")
+zip_choropleth(df_pop_zip,
+               state_zoom="new york",
+               title="2012 New York State ZCTA Population Estimates",
+               legend="Population")
 
 # viewing on a set of counties
 # note we use numeric county FIPS codes
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
-zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
-
-# zooming in on an msa
-zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
+zip_choropleth(df_pop_zip,
+               county_zoom=nyc_fips,
+               title="2012 New York City ZCTA Population Estimates",
+               legend="Population")
 
 # zooming in on a few ZIPs
-manhattan_zips=c("10001", "10002", "10003", "10004", "10005", "10006", "10007")
-zip_choropleth(df_pop_zip, zip_zoom=manhattan_zips)
+manhattan_zips=c("10004", "10005", "10006", "10007", "10038", "10280")
+zip_choropleth(df_pop_zip,
+               zip_zoom=manhattan_zips,
+               title="2012 Lower Manhattan ZCTA Population Estimates",
+               legend="Population")
 
+# zooming in on an entire Metropolitan Statistical Area (MSA)
+zip_choropleth(df_pop_zip,
+               msa_zoom="New York-Newark-Jersey City, NY-NJ-PA",
+               title="2012 New York-Newark-Jersey City, NY-NJ-PA MSA MSA ZCTA Population Estimates",
+               legend="Population")
 }
+}
+\seealso{
+\url{https://www.census.gov/geo/reference/zctas.html} for an explanation of ZCTAs and how they relate to US Zip Codes.
 }
 

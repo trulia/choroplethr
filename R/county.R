@@ -50,7 +50,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 )
 
 
-#' Create a choropleth of USA Counties with sensible defaults.
+#' Create a choropleth of US Counties
 #' 
 #' The map used is county.map in the choroplethrMaps package.  See country.regions
 #' in the choroplethrMaps package for an object which can help you coerce your regions

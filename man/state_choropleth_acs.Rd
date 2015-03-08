@@ -2,7 +2,7 @@
 % Please edit documentation in R/acs.R
 \name{state_choropleth_acs}
 \alias{state_choropleth_acs}
-\title{Create a US State choropleth from ACS data.}
+\title{Create a US State choropleth from ACS data}
 \usage{
 state_choropleth_acs(tableId, endyear = 2011, span = 5, num_colors = 7,
   zoom = NULL)

@@ -1,4 +1,4 @@
-#' Animate a list of chropleths
+#' Animate a list of choropleths
 #' 
 #' Given a list of choropleths, represented as ggplot2 objects
 #' \enumerate{

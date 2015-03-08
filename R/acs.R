@@ -1,4 +1,4 @@
-#' Create a US State choropleth from ACS data.
+#' Create a US State choropleth from ACS data
 #' 
 #' Creates a choropleth of US States using the US Census' American Community Survey (ACS) data.  
 #' Requires the acs package to be installed, and a Census API Key to be set with 
@@ -35,7 +35,7 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoo
   state_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
 }
 
-#' Create a US County choropleth from ACS data.
+#' Create a US County choropleth from ACS data
 #' 
 #' Creates a US County choropleth using the US Census' American Community Survey (ACS) data.  
 #' Requires the acs package to be installed, and a Census API Key to be set with 
@@ -72,7 +72,7 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zo
   county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
 }
 
-#' Create a US ZIP choropleth from ACS data.
+#' Create a US ZIP choropleth from ACS data
 #' 
 #' Creates a US ZIP choropleth using the US Census' American Community Survey (ACS) data.  
 #' Requires the acs package to be installed, and a Census API Key to be set with 
@@ -122,7 +122,7 @@ get_acs_data = function(map, tableId, endyear, span)
   list(df=df, title=title) # need to return 2 values here
 }
 
-#' Returns a data.frame representing American Community Survey estimates.
+#' Returns a data.frame representing American Community Survey estimates
 #' 
 #' Requires the acs package to be installed, and a Census API Key to be set with the 
 #' acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.

@@ -25,10 +25,13 @@ ZipChoropleth = R6Class("ZipChoropleth",
     
     # All zooms, at the end of the day, are zip zooms. But often times it is more natural
     # for users to specify the zoom in other geographical units
-    set_zoom = function(zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+    # This function name is a bit of a hack - it seems like I cannot override the parent set_zoom directly
+    # because this function has a different number of parameters than that function, and the extra parameters
+    # seeming just disappear
+    set_zoom_zip = function(state_zoom, county_zoom, msa_zoom, zip_zoom)
     {
       # user must zoom by exactly one of the options
-      num_zooms_selected = sum(!is.null(c(zip_zoom, county_zoom, state_zoom, msa_zoom)))
+      num_zooms_selected = sum(!is.null(c(state_zoom, county_zoom, msa_zoom, zip_zoom)))
       if (num_zooms_selected == 0) {
         stop("Full zip choropleths are not supported. Please select one of zip_zoom, county_zoom, state_zoom or msa_zoom")
       } else if (num_zooms_selected > 1) {
@@ -37,8 +40,8 @@ ZipChoropleth = R6Class("ZipChoropleth",
       
       data(zip.regions, package="choroplethrZip", envir=environment())
       
-      # if no zooms selected, or if the zip_zoom field is selected, just do default behavior
-      if (num_zooms_selected == 0 || !is.null(zip_zoom)) {
+      # if the zip_zoom field is selected, just do default behavior
+      if (!is.null(zip_zoom)) {
         super$set_zoom(zip_zoom)
       # if county_zoom field is selected, extract zips from counties  
       } else if (!is.null(county_zoom)) {
@@ -58,9 +61,10 @@ ZipChoropleth = R6Class("ZipChoropleth",
   )
 )
 
-#' Create a zip-level choropleth
+#' Create a choropleth of US Zip Codes
 #' 
-#' The map used is zip.map in the choroplethrZip package. See zip.regions for
+#' Note that what is rendered are 2010 US Census Zip Code Tabulated Areas (ZCTAs), not USPS Zip Codes. The 
+#' map used is zip.map in the choroplethrZip package. See zip.regions for
 #' an object which can help you coerce your regions into the required format.
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  Elements in 
@@ -85,24 +89,35 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' \dontrun{
 #' library(choroplethrZip)
 #' data(df_pop_zip)
-#' ?df_pop_zip
 #'
 #' # zooming on a state
-#' zip_choropleth(df_pop_zip, state_zoom="new york")
+#' zip_choropleth(df_pop_zip, 
+#'                state_zoom="new york", 
+#'                title="2012 New York State ZCTA Population Estimates", 
+#'                legend="Population")
 #' 
 #' # viewing on a set of counties
 #' # note we use numeric county FIPS codes
 #' nyc_fips = c(36005, 36047, 36061, 36081, 36085)
-#' zip_choropleth(df_pop_zip, county_zoom=nyc_fips)
-#'
-#' # zooming in on an msa
-#' zip_choropleth(df_pop_zip, msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
+#' zip_choropleth(df_pop_zip, 
+#'                county_zoom=nyc_fips, 
+#'                title="2012 New York City ZCTA Population Estimates", 
+#'                legend="Population")
 #'
 #' # zooming in on a few ZIPs
-#' manhattan_zips=c("10001", "10002", "10003", "10004", "10005", "10006", "10007")
-#' zip_choropleth(df_pop_zip, zip_zoom=manhattan_zips)
-#' 
+#' manhattan_zips=c("10004", "10005", "10006", "10007", "10038", "10280")
+#' zip_choropleth(df_pop_zip, 
+#'                zip_zoom=manhattan_zips,
+#'                title="2012 Lower Manhattan ZCTA Population Estimates",
+#'                legend="Population")
+#'
+#' # zooming in on an entire Metropolitan Statistical Area (MSA)
+#' zip_choropleth(df_pop_zip, 
+#'                msa_zoom="New York-Newark-Jersey City, NY-NJ-PA", 
+#'                title="2012 New York-Newark-Jersey City, NY-NJ-PA MSA MSA ZCTA Population Estimates",
+#'                legend="Population")
 #' }
+#' @seealso \url{https://www.census.gov/geo/reference/zctas.html} for an explanation of ZCTAs and how they relate to US Zip Codes.
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
@@ -110,12 +125,12 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
 #' @importFrom grid unit grobTree
-zip_choropleth = function(df, title="", legend="", num_colors=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
+zip_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=NULL, county_zoom=NULL, msa_zoom=NULL, zip_zoom=NULL)
 {
   c = ZipChoropleth$new(df)
   c$title  = title
   c$legend = legend
   c$set_num_colors(num_colors)
-  c$set_zoom(zip_zoom, county_zoom, state_zoom, msa_zoom)
+  c$set_zoom_zip(state_zoom=state_zoom, county_zoom=county_zoom, msa_zoom=msa_zoom, zip_zoom=zip_zoom)
   c$render()
 }

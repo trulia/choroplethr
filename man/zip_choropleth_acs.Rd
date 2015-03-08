@@ -2,7 +2,7 @@
 % Please edit documentation in R/acs.R
 \name{zip_choropleth_acs}
 \alias{zip_choropleth_acs}
-\title{Create a US ZIP choropleth from ACS data.}
+\title{Create a US ZIP choropleth from ACS data}
 \usage{
 zip_choropleth_acs(tableId, endyear = 2011, span = 5, num_colors = 7,
   zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,

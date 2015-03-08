@@ -2,7 +2,7 @@
 % Please edit documentation in R/county.R
 \name{county_choropleth}
 \alias{county_choropleth}
-\title{Create a choropleth of USA Counties with sensible defaults.}
+\title{Create a choropleth of US Counties}
 \usage{
 county_choropleth(df, title = "", legend = "", num_colors = 7,
   state_zoom = NULL, county_zoom = NULL)

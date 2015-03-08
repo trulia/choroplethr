@@ -2,7 +2,7 @@
 % Please edit documentation in R/choroplethr_animate.R
 \name{choroplethr_animate}
 \alias{choroplethr_animate}
-\title{Animate a list of chropleths}
+\title{Animate a list of choropleths}
 \usage{
 choroplethr_animate(choropleths)
 }

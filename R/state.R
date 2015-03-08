@@ -44,7 +44,7 @@ StateChoropleth = R6Class("StateChoropleth",
 )
 
 
-#' Create a choropleth of US States with sensible defaults.
+#' Create a choropleth of US States
 #' 
 #' The map used is state.map in the package choroplethrMaps.  See state.regions in 
 #' the choroplethrMaps package for a data.frame that can help you coerce your regions 

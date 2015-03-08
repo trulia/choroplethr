@@ -2,7 +2,7 @@
 % Please edit documentation in R/choroplethr_wdi.R
 \name{choroplethr_wdi}
 \alias{choroplethr_wdi}
-\title{Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI).}
+\title{Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI)}
 \usage{
 choroplethr_wdi(code = "SP.POP.TOTL", year = 2012, title = "",
   num_colors = 7, zoom = NULL)
@@ -24,7 +24,7 @@ will use a continuous scale, and a value in [2, 9] will use that many colors.}
 A choropleth.
 }
 \description{
-Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI).
+Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI)
 }
 \examples{
 \dontrun{
