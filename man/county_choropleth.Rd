@@ -4,7 +4,8 @@
 \alias{county_choropleth}
 \title{Create a choropleth of USA Counties with sensible defaults.}
 \usage{
-county_choropleth(df, title = "", legend = "", buckets = 7, zoom = NULL)
+county_choropleth(df, title = "", legend = "", buckets = 7,
+  state_zoom = NULL, county_zoom = NULL)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -17,8 +18,11 @@ the "region" column must exactly match how regions are named in the "region" col
 \item{buckets}{The number of equally sized buckets to places the values in.  A value of 1
 will use a continuous scale, and a value in [2, 9] will use that many buckets.}
 
-\item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
+\item{state_zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
 match the names of states as they appear in the "region" column of ?state.regions.}
+
+\item{county_zoom}{An optional vector of counties to zoom in on. Elements of this vector must exactly
+match the names of counties as they appear in the "region" column of ?county.regions.}
 }
 \description{
 The map used is county.map in the choroplethrMaps package.  See country.regions
@@ -31,29 +35,28 @@ into the required format.
 data(df_pop_county)
 county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
 
-#' # demonstrate continuous scale and zoom
+# demonstrate continuous scale and state_zoom
 data(df_pop_county)
 county_choropleth(df_pop_county,
                  title="US 2012 County Population Estimates",
                  legend="Population",
                  buckets=1,
-                 zoom=c("california", "oregon", "washington"))
+                 state_zoom=c("california", "oregon", "washington"))
 
-# demonstrate how choroplethr handles character and factor values
-# demonstrate user creating their own discretization of the input
-data(df_pop_county)
-df_pop_county$str = ""
-for (i in 1:nrow(df_pop_county))
-{
-  if (df_pop_county[i,"value"] < 1000000)
-  {
-    df_pop_county[i,"str"] = "< 1M"
-  } else {
-    df_pop_county[i,"str"] = "> 1M"
-  }
-}
-df_pop_county$value = df_pop_county$str
-county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
+library(dplyr)
+library(choroplethrMaps)
+data(county.regions)
+
+# show the population of the 5 counties (boroughs) that make up New York City
+nyc_county_names=c("kings", "bronx", "new york", "queens", "richmond")
+nyc_county_fips = county.regions \%>\%
+  filter(state.name=="new york" & county.name \%in\% nyc_county_names) \%>\%
+  select(region)
+county_choropleth(df_pop_county,
+                       title="Population of Counties in New York City",
+                       legend="Population",
+                       buckets=1,
+                       county_zoom=nyc_county_fips$region)
 }
 }
 

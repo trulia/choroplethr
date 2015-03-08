@@ -110,10 +110,6 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' @importFrom grid unit grobTree
 zip_choropleth = function(df, title="", legend="", buckets=7, zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
 {
-  if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
-    stop("Package choroplethrZip is needed for this function to work. Please install it.", call. = FALSE)
-  }
-
   c = ZipChoropleth$new(df)
   c$title  = title
   c$legend = legend

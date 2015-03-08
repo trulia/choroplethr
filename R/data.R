@@ -1,3 +1,33 @@
+#' A data.frame containing basic demographic information about Japan.  
+#'
+#' @name df_japan_census
+#' @usage data(df_japan_census)
+#' @docType data
+#' @references Taken from the "Total Population" table from the Statistics Bureau of Japan website
+#' (\url{http://www.stat.go.jp/english/data/nenkan/1431-02.htm}) on 12/1/2014.
+#' @keywords data
+NULL
+
+#' A data.frame containing population estimates for Countries in 2012.   
+#'
+#' @name df_pop_country
+#' @docType data
+#' @references Taken from the WDI package with code SP.POP.TOTL for year 2012.
+#' 
+#' @keywords data
+#' @usage data(df_pop_country)
+NULL
+
+#' A data.frame containing population estimates for US Counties in 2012.   
+#'
+#' @name df_pop_county
+#' @docType data
+#' @references Taken from the US American Community Survey (ACS) 5 year estimates.
+#' 
+#' @keywords data
+#' @usage data(df_pop_county)
+NULL
+
 #' A data.frame containing election results from the 2012 US Presidential election.  
 #'
 #' @name df_president
@@ -48,3 +78,19 @@ NULL
 #' @name df_president_ts
 #' @usage data(df_president_ts)
 NULL
+
+#' A data.frame containing population estimates for US Zip Code Tabulated Areas (ZCTAs) in 2012.   
+#' 
+#' ZCTAs are intended to be roughly analogous to postal ZIP codes.
+#'
+#' @name df_pop_zip
+#' @docType data
+#' @references Taken from the US American Community Survey (ACS) 5 year estimates.
+#' ZCTAs, and their realationship to ZIP codes, are explained here \url{https://www.census.gov/geo/reference/zctas.html}.
+#' @keywords data
+#' @usage data(df_pop_zip)
+#' @examples
+#' data(df_pop_zip)
+#' zip_map(df_pop_zip, title="2012 Population Estimates")
+NULL
+
