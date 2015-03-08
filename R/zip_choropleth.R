@@ -27,9 +27,11 @@ ZipChoropleth = R6Class("ZipChoropleth",
     # for users to specify the zoom in other geographical units
     set_zoom = function(zip_zoom=NULL, county_zoom=NULL, state_zoom=NULL, msa_zoom=NULL)
     {
-      # user can only zoom in by one of the zoom options
+      # user must zoom by exactly one of the options
       num_zooms_selected = sum(!is.null(c(zip_zoom, county_zoom, state_zoom, msa_zoom)))
-      if (num_zooms_selected > 1) {
+      if (num_zooms_selected == 0) {
+        stop("Full zip choropleths are not supported. Please select one of zip_zoom, county_zoom, state_zoom or msa_zoom")
+      } else if (num_zooms_selected > 1) {
         stop("You can only zoom in by one of zip_zoom, county_zoom, state_zoom or msa_zoom")
       }
       
