@@ -105,11 +105,12 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #'                legend="Population")
 #'
 #' # zooming in on a few ZIPs
-#' manhattan_zips=c("10004", "10005", "10006", "10007", "10038", "10280")
-#' zip_choropleth(df_pop_zip, 
-#'                zip_zoom=manhattan_zips,
-#'                title="2012 Lower Manhattan ZCTA Population Estimates",
-#'                legend="Population")
+#' manhattan_les = c("10002", "10003", "10009")
+#' manhattan_ues = c("10021", "10028", "10044", "10128")
+#' zip_choropleth(df_pop_zip,
+#'               zip_zoom=c(manhattan_les, manhattan_ues),
+#'               title="2012 Lower and Upper East Side Zip Population Estimates",
+#'               legend="Population")
 #'
 #' # zooming in on an entire Metropolitan Statistical Area (MSA)
 #' zip_choropleth(df_pop_zip, 
