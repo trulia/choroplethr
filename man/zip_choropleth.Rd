@@ -47,7 +47,7 @@ data(df_pop_zip)
 # zooming on a state
 zip_choropleth(df_pop_zip,
                state_zoom="new york",
-               title="2012 New York State ZCTA Population Estimates",
+               title="2012 New York State Zip Population Estimates",
                legend="Population")
 
 # viewing on a set of counties
@@ -55,7 +55,7 @@ zip_choropleth(df_pop_zip,
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 zip_choropleth(df_pop_zip,
                county_zoom=nyc_fips,
-               title="2012 New York City ZCTA Population Estimates",
+               title="2012 New York City Zip Population Estimates",
                legend="Population")
 
 # zooming in on a few ZIPs
@@ -69,7 +69,7 @@ zip_choropleth(df_pop_zip,
 # zooming in on an entire Metropolitan Statistical Area (MSA)
 zip_choropleth(df_pop_zip,
                msa_zoom="New York-Newark-Jersey City, NY-NJ-PA",
-               title="2012 New York-Newark-Jersey City, NY-NJ-PA MSA MSA ZCTA Population Estimates",
+               title="2012 New York-Newark-Jersey City, NY-NJ-PA MSA MSA Zip Population Estimates",
                legend="Population")
 }
 }
