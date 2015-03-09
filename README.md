@@ -1,6 +1,5 @@
 # choroplethr
-Master: [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=master)](https://travis-ci.org/trulia/choroplethr)
-Dev: [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=dev)](https://travis-ci.org/trulia/choroplethr)
+Master: [![Build Status](https://travis-ci.org/arilamstein/choroplethr.png?branch=master)](https://travis-ci.org/arilamstein/choroplethr)
 
 choroplethr simplifies the creation of choropleth maps in R. Choropleths are thematic maps where geographic regions, such as states, are colored according to some metric, such as the number of people who live in that state.  choroplethr simplifies this process by
     
