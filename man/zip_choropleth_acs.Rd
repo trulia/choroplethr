@@ -5,8 +5,8 @@
 \title{Create a US ZIP choropleth from ACS data}
 \usage{
 zip_choropleth_acs(tableId, endyear = 2011, span = 5, num_colors = 7,
-  zip_zoom = NULL, county_zoom = NULL, state_zoom = NULL,
-  msa_zoom = NULL)
+  state_zoom = NULL, county_zoom = NULL, msa_zoom = NULL,
+  zip_zoom = NULL)
 }
 \arguments{
 \item{tableId}{The id of an ACS table}
@@ -19,10 +19,20 @@ on the same longitude and latitude map to scale. This variable is only checked w
 \item{num_colors}{The number of colors on the map. A value of 1
 will use a continuous scale. A value in [2, 9] will use that many colors.}
 
-\item{map}{A string indicating which map the data is for.  Must be "state", "county" or "zip".}
+\item{state_zoom}{An optional vector of State names to zoom in on. Elements of this
+vector must exactly match the names of the state names as they appear in the "state.name" column
+of ?zip.regions.}
 
-\item{zoom}{An optional list of states to zoom in on. Must come from the "name" column in
-?state.regions.}
+\item{county_zoom}{An optional vector of county FIPS codes to zoom in on. Elements of this
+vector must exactly match the names of zips as they appear in the "county.fips.numeric" column
+of ?zip.regions.}
+
+\item{msa_zoom}{An optional vector of MSA (Metroplitan/Micropolitan Statistical Area) names to zoom in on. Elements of this
+vector must exactly match the names of the state names as they appear in the "cbsa.title" column
+of ?zip.regions.}
+
+\item{zip_zoom}{An optional vector of zip codes to zoom in on. Elements of this vector must exactly
+match the names of zips as they appear in the "region" column of ?zip.regions.}
 }
 \value{
 A choropleth.
@@ -34,9 +44,20 @@ the acs's api.key.install function.  Census API keys can be obtained at http://w
 }
 \examples{
 \dontrun{
-# population of all ZIPs in NY State
-zip_choropleth_acs("B01003", state_zoom="new york")
+# Median income of all ZCTAs in New York State
+zip_choropleth_acs("B19301", state_zoom="new york")
 
+# zoom in on all ZCTAs in the 5 counties (boroughs) of New York City
+nyc_fips = c(36005, 36047, 36061, 36081, 36085)
+zip_choropleth_acs("B19301", county_zoom=nyc_fips)
+
+# compare Manhattan's Lower East Side and Upper East Side
+manhattan_les = c("10002", "10003", "10009")
+manhattan_ues = c("10021", "10028", "10044", "10128")
+zip_choropleth_acs("B19301", num_colors=1, zip_zoom=c(manhattan_les, manhattan_ues))
+
+# show all ZCTAs in the New York Metropolitan Statistical Area (MSA)
+zip_choropleth_acs("B19301", msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
 }
 }
 \references{

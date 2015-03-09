@@ -33,17 +33,17 @@ the acs's api.key.install function.  Census API keys can be obtained at http://w
 }
 \examples{
 \dontrun{
-# population of all counties
-county_choropleth_acs("B01003")
+# median income, all counties in US
+county_choropleth_acs("B19301")
 
-# median income, continuous scale, counties in New York, New Jersey and Connecticut
+# continuous scale, zooing in on all counties in New York, New Jersey and Connecticut
 county_choropleth_acs("B19301", num_colors=1, state_zoom=c("new york", "new jersey", "connecticut"))
 
+# zooming in on the 5 counties (boroughs) that make up New York City
 library(dplyr)
 library(choroplethrMaps)
 data(county.regions)
 
-# median income of the 5 counties (boroughs) that make up New York City
 nyc_county_names=c("kings", "bronx", "new york", "queens", "richmond")
 nyc_county_fips = county.regions \%>\%
   filter(state.name=="new york" & county.name \%in\% nyc_county_names) \%>\%

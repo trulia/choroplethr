@@ -30,10 +30,10 @@ the acs's api.key.install function.  Census API keys can be obtained at http://w
 }
 \examples{
 \dontrun{
-# population of all states
-state_choropleth_acs("B01003")
+# median income, default parameters
+state_choropleth_acs("B19301")
 
-# median income, continuous scale, counties in New York, New Jersey and Connecticut
+# continuous scale, zooming in on New York, New Jersey and Connecticut
 state_choropleth_acs("B19301", num_colors=1, zoom=c("new york", "new jersey", "connecticut"))
 }
 }
