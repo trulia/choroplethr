@@ -46,8 +46,10 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoo
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' @param num_colors The number of colors on the map. A value of 1 
 #' will use a continuous scale. A value in [2, 9] will use that many colors. 
-#' @param zoom An optional list of states to zoom in on. Must come from the "name" column in
-#' ?state.regions.
+#' @param state_zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' match the names of states as they appear in the "region" column of ?state.regions.
+#' @param county_zoom An optional vector of counties to zoom in on. Elements of this vector must exactly 
+#' match the names of counties as they appear in the "region" column of ?county.regions.
 #' @return A choropleth.
 #' 
 #' @keywords choropleth, acs
@@ -63,13 +65,24 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoo
 #' county_choropleth_acs("B01003")
 #' 
 #' # median income, continuous scale, counties in New York, New Jersey and Connecticut
-#' county_choropleth_acs("B19301", num_colors=1, zoom=c("new york", "new jersey", "connecticut"))
+#' county_choropleth_acs("B19301", num_colors=1, state_zoom=c("new york", "new jersey", "connecticut"))
+#' 
+#' library(dplyr)
+#' library(choroplethrMaps)
+#' data(county.regions)
+#'
+#' # median income of the 5 counties (boroughs) that make up New York City
+#' nyc_county_names=c("kings", "bronx", "new york", "queens", "richmond")
+#' nyc_county_fips = county.regions %>%
+#'   filter(state.name=="new york" & county.name %in% nyc_county_names) %>%
+#'   select(region)
+#' county_choropleth_acs("B19301", num_colors=1, county_zoom=nyc_county_fips$region)
 #' }
 #' @importFrom acs acs.fetch geography estimate geo.make
-county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoom=NULL)
+county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, state_zoom=NULL, county_zoom=NULL)
 {
   acs.data = get_acs_data("county", tableId, endyear, span)
-  county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
+  county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, state_zoom, county_zoom)
 }
 
 #' Create a US ZIP choropleth from ACS data

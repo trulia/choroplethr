@@ -91,10 +91,10 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #'   filter(state.name=="new york" & county.name %in% nyc_county_names) %>%
 #'   select(region)
 #' county_choropleth(df_pop_county, 
-#'                        title="Population of Counties in New York City",
-#'                        legend="Population",
-#'                        num_colors=1,
-#'                        county_zoom=nyc_county_fips$region)
+#'                   title="Population of Counties in New York City",
+#'                   legend="Population",
+#'                   num_colors=1,
+#'                   county_zoom=nyc_county_fips$region)
 #' }
 #' @export
 #' @importFrom Hmisc cut2
