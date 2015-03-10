@@ -6,12 +6,8 @@ ZIP Code Tabulated Area (ZCTA) shapefile, imported from the choroplethrZip packa
 -Merge the county_choropleth and county_choropleth_zoom functions. The resulting function now has two zoom parameters: state_zoom and county_zoom.
 -Break the choroplethr_acs function into three separate functions: state_choropleth_acs, county_choropleth_acs and zip_choropleth_acs. This is because each function now has different zoom parameters, so it didn't make sense to have one function with a large number of parameters, many of which cannot be set for any given function call.
 -Rename "buckets" parameter to "num_colors" to clarity the meaning for the user. During development it made sense to think of assigning values to buckets. But I think that it's easier for users to just think about how many colors they want on the map, and then see in the comments that each color has an equal number of regions assigned to it. Also, "num_colors=1" has a more natural relationship to a continuous scale than "buckets=1".
-
-choroplethr 2.2.0
-----------------------------------------------------------------
 -Bug fix: zip_map wasn't working for zoom of HI or AK
 -Bug fix: documentation of choroplethr_animate() was not working
-
 
 choroplethr 2.1.1
 ----------------------------------------------------------------
