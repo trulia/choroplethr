@@ -69,7 +69,7 @@ zip_choropleth(df_pop_zip,
 # zooming in on an entire Metropolitan Statistical Area (MSA)
 zip_choropleth(df_pop_zip,
                msa_zoom="New York-Newark-Jersey City, NY-NJ-PA",
-               title="2012 New York-Newark-Jersey City, NY-NJ-PA MSA MSA Zip Population Estimates",
+               title="2012 NY-Newark-Jersey City MSA\\nZip Population Estimates",
                legend="Population")
 }
 }
