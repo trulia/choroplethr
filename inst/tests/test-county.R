@@ -17,17 +17,17 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_county)
-  expect_is(county_choropleth(df_pop_county, buckets=1), "ggplot")
+  expect_is(county_choropleth(df_pop_county, num_colors=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {
   data(df_pop_county)
-  expect_is(county_choropleth(df_pop_county, zoom=c("california", "oregon", "washington")), "ggplot")
+  expect_is(county_choropleth(df_pop_county, state_zoom=c("california", "oregon", "washington")), "ggplot")
 })
 
 test_that("error on invalid zoom", {
   data(df_pop_county)
-  expect_error(county_choropleth(df_pop_county, zoom="asdf"))  
+  expect_error(county_choropleth(df_pop_county, state_zoom="asdf"))  
 })
 
 test_that("less than full counties emits warning", {

@@ -17,12 +17,12 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_state)
-  expect_is(state_choropleth(df_pop_state, buckets=1), "ggplot")
+  expect_is(state_choropleth(df_pop_state, num_colors=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {
   data(df_pop_state)
-  expect_is(state_choropleth(df_pop_state, zoom=c("california", "oregon", "washington"), buckets=1), "ggplot")
+  expect_is(state_choropleth(df_pop_state, zoom=c("california", "oregon", "washington"), num_colors=1), "ggplot")
 })
 
 test_that("error on invalid zoom", {

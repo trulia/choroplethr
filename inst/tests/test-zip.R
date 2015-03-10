@@ -5,24 +5,19 @@ test_that("state_zoom returns ggplot", {
   expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york")), "ggplot")
 })
 
-test_that("default parameters returns ggplot", {
-  data(df_pop_zip, package="choroplethr")
-  expect_is(zip_choropleth(df_pop_zip), state_zoom=c("new york")), "ggplot")
-})
-
 test_that("setting title returns ggplot", {
   data(df_pop_zip, package="choroplethr")
-  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york")), title="test title"), "ggplot")
+  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york"), title="test title"), "ggplot")
 })
 
 test_that("setting legend returns ggplot", {
   data(df_pop_zip, package="choroplethr")
-  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york")), legend="test legend"), "ggplot")
+  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york"), legend="test legend"), "ggplot")
 })
 
 test_that("continuous scale returns ggplot", {
   data(df_pop_zip, package="choroplethr")
-  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york")), num_colors=1), "ggplot")
+  expect_is(zip_choropleth(df_pop_zip, state_zoom=c("new york"), num_colors=1), "ggplot")
 })
 
 test_that("county_zoom returns ggplot", {
@@ -51,4 +46,3 @@ test_that("msa_zoom returns ggplot", {
                  title="2012 NY-Newark-Jersey City MSA\nZip Population Estimates",
                  legend="Population"), "ggplot")
 })
-

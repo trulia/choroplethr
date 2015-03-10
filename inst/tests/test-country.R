@@ -4,8 +4,10 @@ context("test country_choropleth")
 get_test_df = function()
 {
   data(country.regions, package="choroplethrMaps")
-  n = nrow(country.regions)
-  data.frame(region=country.regions$region, value=sample(n))
+  n   = nrow(country.regions)
+  ret = data.frame(region=as.character(country.regions$region), value=sample(n))
+  ret$region = as.character(ret$region)
+  ret
 }
 
 test_that("default parameters returns ggplot", {
@@ -25,12 +27,12 @@ test_that("setting legend returns ggplot", {
 
 test_that("continuous scale returns ggplot", {
   df = get_test_df()
-  expect_is(country_choropleth(df, buckets=1), "ggplot")
+  expect_is(country_choropleth(df, num_colors=1), "ggplot")
 })
 
 test_that("west coast zoom returns ggplot", {
   df = get_test_df()
-  expect_is(country_choropleth(df, buckets=2, zoom=c("united states of america", "mexico", "canada")), "ggplot")
+  expect_is(country_choropleth(df, num_colors=2, zoom=c("united states of america", "mexico", "canada")), "ggplot")
 })
 
 test_that("error on invalid zoom", {
