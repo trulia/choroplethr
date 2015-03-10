@@ -36,7 +36,7 @@ In order to use choroplethr, you must use the naming convention in the "region" 
 
 # Exploring Data
 
-The `county_choropleth` function provides three parameters to facilitate exploring data: `num_colors`, `state_zoom` and `county_zoom`.  `num_colors` defaults to 7, which means that there are 7 colors on the map. An equal number of regions is assigned to each color; a value of 1 uses a continuous scale. Both `state_zoom` and `county_zoom`  default to NULL, which means that all counties are shown. 
+The `county_choropleth` function provides three parameters to facilitate exploring data: `num_colors`, `state_zoom` and `county_zoom`.  `num_colors` defaults to 7, which means that there are 7 colors on the map. An equal number of regions is assigned to each color; a value of 1 uses a continuous scale. Both `state_zoom` and `county_zoom` default to NULL, which means that all counties are shown. 
 
 As an example of zooming by state with a continuous scale, here is code to create a map of the population of all US Counties on the West Coast. The outlier is Los Angeles County.
 
