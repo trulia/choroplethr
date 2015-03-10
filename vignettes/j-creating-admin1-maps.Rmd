@@ -65,7 +65,8 @@ library(choroplethr)
 admin1_choropleth(country.name = "japan", 
                   df           = df_japan_census, 
                   title        = "2010 Japan Population Estimates", 
-                  legend       = "Population", buckets=1)
+                  legend       = "Population", 
+                  num_colors   = 1)
 ```
 
 As with all choropleth functions, you can also zoom in to specific regions and change the scale.  Here is an example of zooming in on the Kansai region of Japan with a continuous scale:
@@ -76,6 +77,6 @@ admin1_choropleth(country.name = "japan",
                   df           = df_japan_census, 
                   title        = "2010 Japan Population Estimates - Kansai Region", 
                   legend       = "Population", 
-                  buckets      = 1, 
+                  num_colors   = 1, 
                   zoom         = kansai)
 ```

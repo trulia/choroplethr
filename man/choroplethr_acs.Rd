@@ -6,6 +6,9 @@
 \usage{
 choroplethr_acs(...)
 }
+\arguments{
+\item{...}{All arguments are ignored.}
+}
 \description{
 This function is deprecated as of choroplether version 3.0.0. Please use ?state_choropleth_acs,
 ?county_choropleth_acs, ?zip_choropleth_acs. The last version of choroplethr

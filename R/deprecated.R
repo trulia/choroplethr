@@ -43,6 +43,9 @@ zip_map = function(...)
 #' in which this function worked was version 2.1.1, which can be downloaded from CRAN 
 #' here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
 #' 
+#' @param
+#' ... All arguments are ignored.
+#' 
 #' @export
 county_zoom_choropleth = function(...)
 {
@@ -58,6 +61,11 @@ county_zoom_choropleth = function(...)
 #' ?county_choropleth_acs, ?zip_choropleth_acs. The last version of choroplethr 
 #' in which this function worked was version 2.1.1, which can be downloaded from CRAN 
 #' here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
+#'
+#' @param
+#' ... All arguments are ignored.
+#'
+#' @export
 choroplethr_acs = function(...)
 {
   warning(paste("This function is deprecated as of choroplether version 3.0.0.",

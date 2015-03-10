@@ -1,3 +1,7 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("zip.regions"))
+}
+
 #' Create a US State choropleth from ACS data
 #' 
 #' Creates a choropleth of US States using the US Census' American Community Survey (ACS) data.  

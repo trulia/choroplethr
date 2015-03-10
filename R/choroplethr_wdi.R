@@ -1,3 +1,7 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("country.regions"))
+}
+
 #' Create a country-level choropleth using data from the World Bank's World Development Indicators (WDI)
 #' 
 #' @param code The WDI code to use.

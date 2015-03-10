@@ -17,7 +17,7 @@ Here is a choropleth of the population of countries in the world, using a contin
 library(choroplethr)
 library(WDI) 
 
-choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population", buckets=1)
+choroplethr_wdi(code="SP.POP.TOTL", year=2012, title="2012 Population", num_colors=1)
 ```
 
 ### Example: Life Expectancy

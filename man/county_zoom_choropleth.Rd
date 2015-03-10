@@ -6,6 +6,9 @@
 \usage{
 county_zoom_choropleth(...)
 }
+\arguments{
+\item{...}{All arguments are ignored.}
+}
 \description{
 This function is deprecated as of choroplether version 3.0.0. Please use ?county_choropleth
 with the county_zoom parameter set instead.  The last version of choroplethr

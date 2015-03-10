@@ -72,5 +72,5 @@ Using the base Choropleth gives you a lot of functionality for free:
 
 * Error checking on input.
 * Ability to zoom in on a subset of regions with the `zoom` parameter.
-* Ability to explore the data visually with the `buckets` parameter.
+* Ability to explore the data visually with the `num_colors` parameter.
 * Easy labelling of the title and legend with the `title` and `legend` parameters.
