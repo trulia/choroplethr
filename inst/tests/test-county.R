@@ -25,6 +25,12 @@ test_that("west coast zoom returns ggplot", {
   expect_is(county_choropleth(df_pop_county, state_zoom=c("california", "oregon", "washington")), "ggplot")
 })
 
+test_that("nyc county zoom returns ggplot", {
+  data(df_pop_county)
+  nyc_county_fips = c(36005, 36047, 36061, 36081, 36085)
+  county_choropleth(df_pop_county, num_colors=1, county_zoom=nyc_county_fips)
+})
+
 test_that("error on invalid zoom", {
   data(df_pop_county)
   expect_error(county_choropleth(df_pop_county, state_zoom="asdf"))  
