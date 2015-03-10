@@ -36,19 +36,30 @@ In order to use choroplethr, you must use the naming convention in the "region" 
 
 # Exploring Data
 
-The `county_choropleth` function provides two parameters to facilitate exploring data: `buckets` and `zoom`.  buckets defaults to 7, which means that there are 7 colors, and an equal number of counties in each color. Valid values for buckets are integers betwen 1 and 7. If buckets is 1 then a continuous scale will be used. zoom defaults to NULL, which means that all counties are shown. You can set it to be a vector of states. You must name your states as defined in the "region" column of `?state.regions`.  
+The `county_choropleth` function provides three parameters to facilitate exploring data: `num_colors`, `state_zoom` and `county_zoom`.  `num_colors` defaults to 7, which means that there are 7 colors on the map. An equal number of regions is assigned to each color; a value of 1 uses a continuous scale. Both `state_zoom` and `county_zoom`  default to NULL, which means that all counties are shown. 
 
-As an example, here is how you can use choroplethr to show the population of US Counties on the West Coast.
+As an example of zooming by state with a continuous scale, here is code to create a map of the population of all US Counties on the West Coast. The outlier is Los Angeles County.
 
 ```{r}
 county_choropleth(df_pop_county,
-                 title   = "2012 Population Estimates",
-                 legend  = "Population",
-                 buckets = 1,
-                 zoom    = c("california", "washington", "oregon"))
+                 title      = "2012 Population Estimates",
+                 legend     = "Population",
+                 num_colors = 1,
+                 state_zoom = c("california", "washington", "oregon"))
 ```
 
-If you are interested in zooming in on individual counties, please see the function `?county_zoom_choropleth`.
+As an example of zooming by county, this code maps the population of the 9 Counties in the San Francisco Bay Area:
+
+```{r}
+# FIPS codes for Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, 
+# Solano, and Sonoma counties
+bay_area_counties = c(6001, 6013, 6041, 6055, 6075, 6081, 6085, 6095, 6097)
+county_choropleth(df_pop_county,
+                 title       = "2012 Population Estimates",
+                 legend      = "Population",
+                 num_colors  = 1,
+                 county_zoom = bay_area_counties)
+```
 
 # Advanced Options
 
