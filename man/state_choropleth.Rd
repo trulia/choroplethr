@@ -27,6 +27,7 @@ the choroplethrMaps package for a data.frame that can help you coerce your regio
 into the required format.
 }
 \examples{
+\dontrun{
 # default parameters
 data(df_pop_state)
 state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
@@ -54,5 +55,6 @@ for (i in 1:nrow(df_pop_state))
 }
 df_pop_state$value = df_pop_state$str
 state_choropleth(df_pop_state, title="Which states have less than 1M people?")
+}
 }
 

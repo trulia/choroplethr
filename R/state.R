@@ -60,6 +60,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' match the names of states as they appear in the "region" column of ?state.regions.
 #' 
 #' @examples
+#' \dontrun{
 #' # default parameters
 #' data(df_pop_state)
 #' state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
@@ -87,7 +88,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' }
 #' df_pop_state$value = df_pop_state$str
 #' state_choropleth(df_pop_state, title="Which states have less than 1M people?")
-#' 
+#' }
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
