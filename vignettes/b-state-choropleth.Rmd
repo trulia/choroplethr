@@ -50,7 +50,7 @@ state_choropleth(df_pop_state,
 
 # Advanced Options
 
-Any customization outside the optional parameters presented above will require you to create a `StateChoropleth` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` on the base Choropleth object to customize the palette used.
+Any customization outside the optional parameters presented above will require you to create a `StateChoropleth` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` variable on the base Choropleth object to customize the palette used.
 
 This dataset is the 2012 US Presidential Election results. Normally in this map Democratic states appear blue and Republican states appear red.
 
@@ -66,7 +66,7 @@ choro$ggplot_scale = scale_fill_manual(name="Candidate", values=c("blue", "red")
 choro$render()
 ```
 
-For additional options on the `StateChoropleth` object, please see the choroplethr [source code](https://github.com/trulia/choroplethr).
+For additional options on the `StateChoropleth` object, such as removing the state labels, please see the choroplethr [source code](https://github.com/arilamstein/choroplethr).
 
 **Note:** Care must be taken when manually setting the scale on `StateChoropleth` objects. In particular, choroplethr uses ggplot2 custom annotations to render Alaska and Hawaii as insets. This means that the scales of the insets and the main map will only be the same if you do the following
 

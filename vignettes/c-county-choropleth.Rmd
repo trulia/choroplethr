@@ -63,7 +63,7 @@ county_choropleth(df_pop_county,
 
 # Advanced Options
 
-Any customization outside the optional parameters presented above will require you to create a `CountyChoropleth` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` on the base Choropleth object to customize the palette used.
+Any customization outside the optional parameters presented above will require you to create a `CountyChoropleth` object.  choroplethr uses [R6](https://github.com/wch/R6) to take advantage of object-oriented programming.  Here is an example of using the `ggplot2_scale` variable on the base Choropleth object to customize the palette used.
 
 ```{r}
 library(ggplot2)

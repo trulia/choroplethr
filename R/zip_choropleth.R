@@ -93,7 +93,7 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' # zooming on a state
 #' zip_choropleth(df_pop_zip, 
 #'                state_zoom="new york", 
-#'                title="2012 New York State Zip Population Estimates", 
+#'                title="2012 New York State ZCTA Population Estimates", 
 #'                legend="Population")
 #' 
 #' # viewing on a set of counties
@@ -101,7 +101,7 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 #' zip_choropleth(df_pop_zip, 
 #'                county_zoom=nyc_fips, 
-#'                title="2012 New York City Zip Population Estimates", 
+#'                title="2012 New York City ZCTA Population Estimates", 
 #'                legend="Population")
 #'
 #' # zooming in on a few ZIPs
@@ -109,13 +109,13 @@ ZipChoropleth = R6Class("ZipChoropleth",
 #' manhattan_ues = c("10021", "10028", "10044", "10128")
 #' zip_choropleth(df_pop_zip,
 #'               zip_zoom=c(manhattan_les, manhattan_ues),
-#'               title="2012 Lower and Upper East Side Zip Population Estimates",
+#'               title="2012 Lower and Upper East Side ZCTA Population Estimates",
 #'               legend="Population")
 #'
 #' # zooming in on an entire Metropolitan Statistical Area (MSA)
 #' zip_choropleth(df_pop_zip, 
 #'                msa_zoom="New York-Newark-Jersey City, NY-NJ-PA", 
-#'                title="2012 NY-Newark-Jersey City MSA\nZip Population Estimates",
+#'                title="2012 NY-Newark-Jersey City MSA\nZCTA Population Estimates",
 #'                legend="Population")
 #' }
 #' @seealso \url{https://www.census.gov/geo/reference/zctas.html} for an explanation of ZCTAs and how they relate to US Zip Codes.

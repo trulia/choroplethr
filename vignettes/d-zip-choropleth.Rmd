@@ -6,9 +6,9 @@
 US ZIP Choropleths
 ===
 
-You can create a choropleth of US ZIP codes with the function `zip_choropleth`. Note that what is rendered are actually US Zip Code Tabulated Areas (ZCTAs) from the US Census Bureau.  See `?zip.map` in the package `choroplethrZip` for more details.
+You can create a choropleth of US ZIP codes with the function `zip_choropleth`. Note that what is rendered are actually US Zip Code Tabulated Areas (ZCTAs) from the US Census Bureau, not US Postal Service ZIP codes. [This page](https://www.census.gov/geo/reference/zctas.html) from the Census Bureau explains the differences. Also see `?zip.map` in the package `choroplethrZip` for more details.
 
-Here is a map of all zip codes in the state of New York:
+Here is a map of population estimates of all ZCTAs in New York state:
 
 ```{r hold=TRUE}
 library(choroplethr)
@@ -49,7 +49,7 @@ Like all choroplethr functions, `zip_choropleth` allows you to specify the scale
 nyc_fips = c(36005, 36047, 36061, 36081, 36085)
 zip_choropleth(df_pop_zip,
                county_zoom=nyc_fips,
-               title="2012 New York City Zip Population Estimates",
+               title="2012 New York City ZCTA Population Estimates",
                legend="Population")
 ```
 
@@ -59,7 +59,7 @@ manhattan_les = c("10002", "10003", "10009")
 manhattan_ues = c("10021", "10028", "10044", "10128")
 zip_choropleth(df_pop_zip,
               zip_zoom=c(manhattan_les, manhattan_ues),
-              title="2012 Lower and Upper East Side Zip Population Estimates",
+              title="2012 Lower and Upper East Side ZCTA Population Estimates",
               legend="Population")
 ```
 
@@ -68,7 +68,7 @@ Here is an example of using the `msa_zoom` parameter to zoom in on the entire Ne
 ```{r}
 zip_choropleth(df_pop_zip,
                msa_zoom="New York-Newark-Jersey City, NY-NJ-PA",
-               title="2012 NY-Newark-Jersey City MSA\nZip Population Estimates",
+               title="2012 NY-Newark-Jersey City MSA\nZCTA Population Estimates",
                legend="Population")
 ```
 
@@ -80,7 +80,7 @@ Any customization outside the optional parameters presented above will require y
 library(ggplot2)
 
 choro = ZipChoropleth$new(df_pop_zip)
-choro$title = "2012 Population Estimates"
+choro$title = "2012 ZCTA Population Estimates"
 choro$ggplot_scale = scale_fill_brewer(name="Population", palette=2, drop=FALSE)
 choro$set_zoom_zip(state_zoom="new york", county_zoom=NULL, msa_zoom=NULL, zip_zoom=NULL)
 choro$render()
