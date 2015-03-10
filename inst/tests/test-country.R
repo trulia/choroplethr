@@ -52,7 +52,6 @@ test_that("less than full countries works", {
   expect_is(suppressWarnings(country_choropleth(df)), "ggplot")
 })
 
-#####
 test_that("regions not on map emit warning", {
   df = get_test_df()
   df = rbind(df, data.frame(region="asdf", value=1))
