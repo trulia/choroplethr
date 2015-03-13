@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{f) Mapping Census Data}
+%\VignetteIndexEntry{e) Mapping Census Data}
 -->
   
 Mapping US Census Data
@@ -10,10 +10,9 @@ choroplethr provides native support for creating choropleths from US Census data
 
 choroplethr has four functions for working with ACS data:
 
-1. `?get_acs_df`
+1. `?get_acs_data`
 1. `?state_choroplethr_acs` 
 2. `?county_choropleth_acs`
-3. `?zip_choropleth_acs`
 
 ## Census API Key
 

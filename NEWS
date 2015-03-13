@@ -1,19 +1,15 @@
 choroplethr 3.0.0
 ----------------------------------------------------------------
--Add zip_choropleth function which creates ZIP code choropleths using the US Census Bureau's
-ZIP Code Tabulated Area (ZCTA) shapefile, imported from the choroplethrZip package. This function has multiple zoom parameters: state_zoom, county_zoom, msa_zoom and zip_zoom. Parameters are translated to vectors of zips automagically. Exactly one zoom must be set; i.e., national zips choropleths are not supported.
--Due to its size, the choroplethrZip package is hosted on github, not CRAN. An installer function is provided - see ?install_choroplethrZip.
--zip_map function is deprecated. Dependency on zipcode package is removed. This is because the census choropleth and zipcode package are different, conflicting models of the same dataset (us zip codes). The zipcode package has been orphaned and has known inaccuracies. If people want a scatterplot representation of the new shapefile I can add that in later, but it will require some work since the census bureau does not ship with long, lat centroids of the zctas.
+-All zip related functionality has been deprecated and moved to the choroplethrZip package, which is available here: https://github.com/arilamstein/choroplethrZip. 
 -Merge the county_choropleth and county_choropleth_zoom functions. The resulting function now has two zoom parameters: state_zoom and county_zoom.
--Break the choroplethr_acs function into three separate functions: state_choropleth_acs, county_choropleth_acs and zip_choropleth_acs. This is because each function now has different zoom parameters, so it didn't make sense to have one function with a large number of parameters, many of which cannot be set for any given function call.
+-Break the choroplethr_acs function into three separate functions: state_choropleth_acs, county_choropleth_acs and zip_choropleth_acs (located in choroplethrZip). This is because each function now has different zoom parameters, so it didn't make sense to have one function with a large number of parameters, many of which cannot be set for any given function call.
 -Rename "buckets" parameter to "num_colors" to clarity the meaning for the user. During development it made sense to think of assigning values to buckets. But I think that it's easier for users to just think about how many colors they want on the map, and then see in the comments that each color has an equal number of regions assigned to it. Also, "num_colors=1" has a more natural relationship to a continuous scale than "buckets=1".
--Bug fix: zip_map wasn't working for zoom of HI or AK
 -Bug fix: documentation of choroplethr_animate() was not working
+-Deprecate get_acs_df in favor of get_acs_data
 
 choroplethr 2.1.1
 ----------------------------------------------------------------
 -Bug fix: text for vignettes was for some reason not rebuilt into HTML.
-
 
 choroplethr 2.1.0
 ----------------------------------------------------------------

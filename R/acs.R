@@ -89,86 +89,21 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, st
   county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, state_zoom, county_zoom)
 }
 
-#' Create a US ZIP choropleth from ACS data
-#' 
-#' Creates a US ZIP choropleth using the US Census' American Community Survey (ACS) data.  
-#' Requires the acs package to be installed, and a Census API Key to be set with 
-#' the acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
+#' Returns a list representing American Community Survey (ACS) estimates
+#'
+#' Given a map, ACS tableId, endyear and span. {p}rompts user for the column id if there 
+#' are multiple tables. The first element of the list is a data.frame with estimates. 
+#' The second element is the ACS title of the column.
+#' Requires the acs package to be installed, and a Census API Key to be set with the 
+#' acs's api.key.install function.  Census API keys can be obtained at http://api.census.gov/data/key_signup.html.
 #'
 #' @param tableId The id of an ACS table
+#' @param map The map you want to use. Must be one of "state", "county" or "zip".
 #' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
 #' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
 #' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
-#' @param num_colors The number of colors on the map. A value of 1 
-#' will use a continuous scale. A value in [2, 9] will use that many colors. 
-#' @param zip_zoom An optional vector of zip codes to zoom in on. Elements of this vector must exactly 
-#' match the names of zips as they appear in the "region" column of ?zip.regions.
-#' @param county_zoom An optional vector of county FIPS codes to zoom in on. Elements of this 
-#' vector must exactly match the names of zips as they appear in the "county.fips.numeric" column 
-#' of ?zip.regions.
-#' @param state_zoom An optional vector of State names to zoom in on. Elements of this 
-#' vector must exactly match the names of the state names as they appear in the "state.name" column 
-#' of ?zip.regions.
-#' @param msa_zoom An optional vector of MSA (Metroplitan/Micropolitan Statistical Area) names to zoom in on. Elements of this 
-#' vector must exactly match the names of the state names as they appear in the "cbsa.title" column 
-#' of ?zip.regions.
-#' @return A choropleth.
-#' 
-#' @keywords choropleth, acs
-#' 
-#' @seealso \code{api.key.install} in the acs package which sets an Census API key for the acs library
-#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS 
-#' which contains a list of all ACS surveys.
-#' @references Uses the acs package created by Ezra Haber Glenn.
-#' @export
-#' @examples
-#' \dontrun{
-#' # Median income of all ZCTAs in New York State
-#' zip_choropleth_acs("B19301", state_zoom="new york")
-#' 
-#' # zoom in on all ZCTAs in the 5 counties (boroughs) of New York City
-#' nyc_fips = c(36005, 36047, 36061, 36081, 36085)
-#' zip_choropleth_acs("B19301", county_zoom=nyc_fips)
-#' 
-#' # compare Manhattan's Lower East Side and Upper East Side
-#' manhattan_les = c("10002", "10003", "10009")
-#' manhattan_ues = c("10021", "10028", "10044", "10128")
-#' zip_choropleth_acs("B19301", num_colors=1, zip_zoom=c(manhattan_les, manhattan_ues))
-#' 
-#' # show all ZCTAs in the New York Metropolitan Statistical Area (MSA)
-#' zip_choropleth_acs("B19301", msa_zoom="New York-Newark-Jersey City, NY-NJ-PA")
-#' } 
-#' @importFrom acs acs.fetch geography estimate geo.make
-zip_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, state_zoom=NULL, county_zoom=NULL, msa_zoom=NULL, zip_zoom=NULL)
-{
-  acs.data = get_acs_data("zip", tableId, endyear, span)
-  zip_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors,  state_zoom=state_zoom, county_zoom=county_zoom, msa_zoom=msa_zoom, zip_zoom=zip_zoom)
-}
-
-# given an American Community Survey (ACS) tableId, endyear and span
-# prompts user for the column id if there are multiple tables
-# returns the result as a data.frame with one column named region and one column named value
-# note: the regions are clipped to the maps that choroplethr uses. i.e., 
-get_acs_data = function(map, tableId, endyear, span)
-{
-  acs.data   = acs.fetch(geography=make_geo(map), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
-  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
-  title      = acs.data@acs.colnames[column_idx] 
-  df         = make_df(map, acs.data, column_idx) # choroplethr requires a df
-  list(df=df, title=title) # need to return 2 values here
-}
-
-#' Returns a data.frame representing American Community Survey estimates
-#' 
-#' Requires the acs package to be installed, and a Census API Key to be set with the 
-#' acs's api.key.install function.  Census API keys can be obtained at http://www.census.gov/developers/tos/key_request.html.
-#'
-#' @param tableId The id of an ACS table.
-#' @param map The map you want the data to match. Must be one of "state", "county" or "zip". 
-#' @param endyear The end year of the survey.  Defaults to 2012.
-#' @param span The span of the survey.  Defaults to 5.
-#' @param column_idx An optional column index to specify.
-#' @return A data.frame.
+#' @param column_idx The optional column id of the table to use. If not specified and the table has multiple columns,
+#' you will be prompted for a column id.
 #' @export
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
 #' @importFrom acs acs.fetch geography estimate geo.make
@@ -176,30 +111,25 @@ get_acs_data = function(map, tableId, endyear, span)
 #' \dontrun{
 #' library(Hmisc) # for cut2
 #' # States with greater than 1M residents
-#' df       = get_acs_df("B01003", "state") # population
+#' df       = get_acs_data("B01003", "state")[[1]] # population
 #' df$value = cut2(df$value, cuts=c(0,1000000,Inf))
 #' state_choropleth(df, title="States with a population over 1M", legend="Population")
 #'
 #' # Counties with greater than or greater than 1M residents
-#' df       = get_acs_df("B01003", "county") # population
+#' df       = get_acs_df("B01003", "county")[[1]] # population
 #' df$value = cut2(df$value, cuts=c(0,1000000,Inf))
 #' county_choropleth(df, title="Counties with a population over 1M", legend="Population")
-#' 
-#' # ZIP codes in California where median age is between 20 and 30
-#' df       = get_acs_df("B01002", "zip") # median age
-#' df       = df[df$value >= 20 & df$value <= 30, ]
-#' df$value = cut2(df$value, g=3) # 3 equally-sized groups
-#' zip_map(df, title="CA Zip Codes by Age", legend="Median Age", zoom="california")
 #' }
-get_acs_df = function(tableId, map, endyear=2012, span=5, column_idx = -1)
+get_acs_data = function(tableId, map, endyear=2012, span=5, column_idx=-1)
 {
-  stopifnot(map %in% c("state", "county", "zip"))
-  
   acs.data   = acs.fetch(geography=make_geo(map), table.number = tableId, col.names = "pretty", endyear = endyear, span = span)
   if (column_idx == -1) {
     column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   }
-  make_df(map, acs.data, column_idx) # turn into df
+  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  title      = acs.data@acs.colnames[column_idx] 
+  df         = convert_acs_obj_to_df(map, acs.data, column_idx) # choroplethr requires a df
+  list(df=df, title=title) # need to return 2 values here
 }
 
 # support multiple column tables
@@ -227,11 +157,11 @@ make_geo = function(map)
   }
 }
 
-# convert the acs.data to a data.frame in the format that choroplethr uses.
+# the acs package returns data as a custom S4 object. But we need the data as a data.frame.
 # this is trickty for a few reasons. one of which is that acs.data is an S4 object.
 # another is that each map (state, county and zip) has a different naming convention for regions
 # another is that the census data needs to be clipped to the map (e.g. remove puerto rico)
-make_df = function(map, acs.data, column_idx) 
+convert_acs_obj_to_df = function(map, acs.data, column_idx) 
 {
   stopifnot(map %in% c("state", "county", "zip"))
   
@@ -256,14 +186,7 @@ make_df = function(map, acs.data, column_idx)
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
                         value  = as.numeric(estimate(acs.data[,column_idx])))
     acs.df$region = as.character(acs.df$region)
-    
-    # I removed zips in e.g. puerto rico from the map, so remove them here too to avoid a
-    # "your data contains unmappable region" error later on
-    if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
-      stop("Package choroplethrZip is needed for this function to work. Please install it.", call. = FALSE)
-    }
-    
-    data(zip.regions, package="choroplethrZip", envir=environment())
-    acs.df[acs.df$region %in% unique(zip.regions$region), ]
+    # clipping is done in the choroplethrZip package, because that's where the region definitions are
+    acs.df
   }
 }

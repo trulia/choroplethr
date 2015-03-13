@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{j) Creating Administrative Level 1 Maps}
+%\VignetteIndexEntry{i) Creating Administrative Level 1 Maps}
  \usepackage[utf8]{inputenc}
 -->
 

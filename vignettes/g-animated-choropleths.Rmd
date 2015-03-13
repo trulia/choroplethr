@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{h) Animated Choropleths}
+%\VignetteIndexEntry{g) Animated Choropleths}
 -->
   
 Animated Choropleths

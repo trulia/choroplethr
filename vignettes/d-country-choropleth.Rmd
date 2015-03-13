@@ -1,6 +1,6 @@
 <!--
   %\VignetteEngine{knitr}
-%\VignetteIndexEntry{e) Country Choropleths}
+%\VignetteIndexEntry{d) Country Choropleths}
 -->
 
 Country Choropleths 

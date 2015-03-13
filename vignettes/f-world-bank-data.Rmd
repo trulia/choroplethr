@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr}
-%\VignetteIndexEntry{g) Mapping World Bank Data}
+%\VignetteIndexEntry{f) Mapping World Bank Data}
 -->
 
 Mapping World Bank Data
