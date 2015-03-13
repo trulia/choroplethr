@@ -10,8 +10,9 @@ ZipChoropleth = R6Class("ZipChoropleth",
     # initialize with a ZIP map
     initialize = function(user.df)
     {
-      if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
-        stop("Package choroplethrZip is needed for this function to work. Please install it by calling ?install_choroplethrZip.", call. = FALSE)
+      if (!is.element("choroplethrZip", installed.packages()[,1]))
+      {
+        stop("Package choroplethrZip is needed for this function to work. Please install it by calling ?install_choroplethrZip", call. = FALSE)
       }
       
       data(zip.map, package="choroplethrZip", envir=environment())

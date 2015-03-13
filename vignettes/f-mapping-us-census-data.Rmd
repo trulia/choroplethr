@@ -17,7 +17,7 @@ choroplethr has four functions for working with ACS data:
 
 ## Census API Key
 
-To use these functions you must get and install a Census API. It is free and you can get one [here](http://www.census.gov/developers/tos/key_request.html). Then type the following from R:
+To use these functions you must get and install a Census API. It is free and you can get one [here](http://api.census.gov/data/key_signup.html). Then type the following from R:
 
 ```
 library(acs); 

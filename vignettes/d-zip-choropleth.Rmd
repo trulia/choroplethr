@@ -14,7 +14,7 @@ Note that because of its size (~60MB) the `choroplethrZip` package is not hosted
 library(choroplethr)
 
 ?install_choroplethrZip
-install_choroplethrZip
+install_choroplethrZip()
 ```
 
 A side effect of the package being hosted on github is that vignettes hosted on CRAN cannot use the functions which depend on it. Therefore these examples do not generate images in this vignette, but will do so once you install `choroplethrZip` on your computer.
