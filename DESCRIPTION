@@ -30,7 +30,10 @@ Suggests:
     testthat,
     knitr,
     choroplethrMaps,
-    choroplethrAdmin1
+    choroplethrAdmin1,
+    choroplethrZip
+Additional_repositories:
+    http://arilamstein.github.io/drat/
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
