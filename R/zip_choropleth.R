@@ -11,7 +11,7 @@ ZipChoropleth = R6Class("ZipChoropleth",
     initialize = function(user.df)
     {
       if (!requireNamespace("choroplethrZip", quietly = TRUE)) {
-        stop("Package choroplethrZip is needed for this function to work. Please install it.", call. = FALSE)
+        stop("Package choroplethrZip is needed for this function to work. Please install it by calling ?install_choroplethrZip.", call. = FALSE)
       }
       
       data(zip.map, package="choroplethrZip", envir=environment())
@@ -60,6 +60,19 @@ ZipChoropleth = R6Class("ZipChoropleth",
     }
   )
 )
+
+
+#' Installs the choroplethrZip package from github
+#' 
+#' The choroplethrZip package contains shapefiles and metadata of US Zip Code Tabulated Areas
+#' from the US Census Bureau. Due to the package's size (64MB) it is hosted on github, not CRAN.
+#' The address of the respository is https://github.com/arilamstein/choroplethrZip.
+#' @importFrom devtools install_github
+#' @export
+install_choroplethrZip = function()
+{
+  install_github('arilamstein/choroplethrZip@v1.0.0')
+}
 
 #' Create a choropleth of US Zip Codes
 #' 

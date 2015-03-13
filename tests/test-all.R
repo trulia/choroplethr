@@ -1,4 +1,4 @@
-library(testthat)
-library(choroplethr)
+#library(testthat)
+#library(choroplethr)
 
-test_package("choroplethr")
+#test_package("choroplethr")

@@ -24,13 +24,13 @@ Imports:
     dplyr,
     R6,
     acs,
-    WDI
+    WDI,
+    devtools
 Suggests:
     testthat,
     knitr,
     choroplethrMaps,
-    choroplethrAdmin1,
-    choroplethrZip
+    choroplethrAdmin1
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
