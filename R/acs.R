@@ -35,7 +35,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @importFrom acs acs.fetch geography estimate geo.make
 state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoom=NULL)
 {
-  acs.data = get_acs_data("state", tableId, endyear, span)
+  acs.data = get_acs_data(tableId, "state", endyear, span)
   state_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, zoom)
 }
 
@@ -85,7 +85,7 @@ state_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, zoo
 #' @importFrom acs acs.fetch geography estimate geo.make
 county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, state_zoom=NULL, county_zoom=NULL)
 {
-  acs.data = get_acs_data("county", tableId, endyear, span)
+  acs.data = get_acs_data(tableId, "county", endyear, span)
   county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, state_zoom, county_zoom)
 }
 
