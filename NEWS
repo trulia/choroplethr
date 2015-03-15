@@ -6,6 +6,7 @@ choroplethr 3.0.0
 -Rename "buckets" parameter to "num_colors" to clarity the meaning for the user. During development it made sense to think of assigning values to buckets. But I think that it's easier for users to just think about how many colors they want on the map, and then see in the comments that each color has an equal number of regions assigned to it. Also, "num_colors=1" has a more natural relationship to a continuous scale than "buckets=1".
 -Bug fix: documentation of choroplethr_animate() was not working
 -Deprecate get_acs_df in favor of get_acs_data
+-Export choropleth object.
 
 choroplethr 2.1.1
 ----------------------------------------------------------------

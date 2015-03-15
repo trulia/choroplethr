@@ -91,7 +91,7 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, st
 
 #' Returns a list representing American Community Survey (ACS) estimates
 #'
-#' Given a map, ACS tableId, endyear and span. {p}rompts user for the column id if there 
+#' Given a map, ACS tableId, endyear and span. Prompts user for the column id if there 
 #' are multiple tables. The first element of the list is a data.frame with estimates. 
 #' The second element is the ACS title of the column.
 #' Requires the acs package to be installed, and a Census API Key to be set with the 
@@ -116,7 +116,7 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, st
 #' state_choropleth(df, title="States with a population over 1M", legend="Population")
 #'
 #' # Counties with greater than or greater than 1M residents
-#' df       = get_acs_df("B01003", "county")[[1]] # population
+#' df       = get_acs_data("B01003", "county")[[1]] # population
 #' df$value = cut2(df$value, cuts=c(0,1000000,Inf))
 #' county_choropleth(df, title="Counties with a population over 1M", legend="Population")
 #' }

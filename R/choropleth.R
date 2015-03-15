@@ -1,6 +1,8 @@
+#' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
 #' @importFrom ggplot2 scale_color_continuous
+#' @export
 Choropleth = R6Class("Choropleth", 
                      
   public = list(

@@ -10,9 +10,9 @@ zip_map(...)
 \item{...}{All arguments are ignored.}
 }
 \description{
-This function is deprecated as of choroplether version 3.0.0. Please use ?zip_choropleth instead.
+This function is deprecated as of choroplethr version 3.0.0. Please use ?zip_choropleth instead.
 The last version of choroplethr
 in which this function worked was version 2.1.1, which can be downloaded from CRAN
-here: http://cran.r-project.org/web/packages/choroplethr/index.html))
+here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
 

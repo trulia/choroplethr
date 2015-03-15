@@ -20,7 +20,7 @@ on the same longitude and latitude map to scale. This variable is only checked w
 you will be prompted for a column id.}
 }
 \description{
-Given a map, ACS tableId, endyear and span. {p}rompts user for the column id if there
+Given a map, ACS tableId, endyear and span. Prompts user for the column id if there
 are multiple tables. The first element of the list is a data.frame with estimates.
 The second element is the ACS title of the column.
 Requires the acs package to be installed, and a Census API Key to be set with the
@@ -35,7 +35,7 @@ df$value = cut2(df$value, cuts=c(0,1000000,Inf))
 state_choropleth(df, title="States with a population over 1M", legend="Population")
 
 # Counties with greater than or greater than 1M residents
-df       = get_acs_df("B01003", "county")[[1]] # population
+df       = get_acs_data("B01003", "county")[[1]] # population
 df$value = cut2(df$value, cuts=c(0,1000000,Inf))
 county_choropleth(df, title="Counties with a population over 1M", legend="Population")
 }

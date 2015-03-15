@@ -10,9 +10,9 @@ choroplethr_acs(...)
 \item{...}{All arguments are ignored.}
 }
 \description{
-This function is deprecated as of choroplether version 3.0.0. Please use ?state_choropleth_acs,
+This function is deprecated as of choroplethr version 3.0.0. Please use ?state_choropleth_acs,
 ?county_choropleth_acs, ?zip_choropleth_acs. The last version of choroplethr
 in which this function worked was version 2.1.1, which can be downloaded from CRAN
-here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
+here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
 

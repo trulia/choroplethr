@@ -10,9 +10,9 @@ county_zoom_choropleth(...)
 \item{...}{All arguments are ignored.}
 }
 \description{
-This function is deprecated as of choroplether version 3.0.0. Please use ?county_choropleth
+This function is deprecated as of choroplethr version 3.0.0. Please use ?county_choropleth
 with the county_zoom parameter set instead.  The last version of choroplethr
 in which this function worked was version 2.1.1, which can be downloaded from CRAN
-here: http://cran.r-project.org/web/packages/choroplethr/index.html"))
+here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
 
