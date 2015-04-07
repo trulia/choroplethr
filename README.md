@@ -13,10 +13,10 @@ Please see the following pages for more details.
 1. [US State Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/b-state-choropleth.html)
 1. [US County Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/c-county-choropleth.html)
 1. [Country Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/e-country-choropleth.html)
-1. [Mapping US Census Data](http://cran.r-project.org/web/packages/choroplethr/vignettes/f-mapping-us-census-data.html)
-1. [Mapping World Bank WDI Data](http://cran.r-project.org/web/packages/choroplethr/vignettes/g-world-bank-data.html)
-1. [Animated Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/h-animated-choropleths.html)
-1. [Creating Your Own Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/i-creating-your-own-maps.html)
+1. [Mapping US Census Data](http://cran.r-project.org/web/packages/choroplethr/vignettes/e-mapping-us-census-data.html)
+1. [Mapping World Bank WDI Data](http://cran.r-project.org/web/packages/choroplethr/vignettes/f-world-bank-data.html)
+1. [Animated Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/g-animated-choropleths.html)
+1. [Creating Your Own Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/h-creating-your-own-maps.html)
 2. [Creating Administrative Level 1 Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/j-creating-admin1-maps.html)
 
 ## Installation
