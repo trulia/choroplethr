@@ -17,7 +17,7 @@ Please see the following pages for more details.
 1. [Mapping World Bank WDI Data](http://cran.r-project.org/web/packages/choroplethr/vignettes/f-world-bank-data.html)
 1. [Animated Choropleths](http://cran.r-project.org/web/packages/choroplethr/vignettes/g-animated-choropleths.html)
 1. [Creating Your Own Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/h-creating-your-own-maps.html)
-2. [Creating Administrative Level 1 Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/j-creating-admin1-maps.html)
+2. [Creating Administrative Level 1 Maps](http://cran.r-project.org/web/packages/choroplethr/vignettes/i-creating-admin1-maps.html)
 
 ## Installation
 
