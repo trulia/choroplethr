@@ -1,3 +1,4 @@
+sudo: required
 language: r 
 before_script:
 - Rscript -e "library(acs); api.key.install('f8b2a6df01479981aef39577b3c4466f5a4c8274')"
