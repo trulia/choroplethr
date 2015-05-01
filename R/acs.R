@@ -126,7 +126,6 @@ get_acs_data = function(tableId, map, endyear=2012, span=5, column_idx=-1)
   if (column_idx == -1) {
     column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   }
-  column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
   title      = acs.data@acs.colnames[column_idx] 
   df         = convert_acs_obj_to_df(map, acs.data, column_idx) # choroplethr requires a df
   list(df=df, title=title) # need to return 2 values here

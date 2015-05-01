@@ -1,3 +1,8 @@
+choroplethr 3.1.0
+----------------------------------------------------------------
+-Bug fix: 
+
+
 choroplethr 3.0.0
 ----------------------------------------------------------------
 -All zip related functionality has been deprecated and moved to the choroplethrZip package, which is available here: https://github.com/arilamstein/choroplethrZip. 
