@@ -3,10 +3,9 @@ choroplethr 3.1.0
 -Bug fix: in get_acs_data, do not prompt user for column_idx if they
 already supply it.
 -function ?get_state_demographics returns 8 cached demographic variables from a given ACS
--TODO: data.frame ?df_state_demographics caches the results of get_state_demograhpics for the 2013 5 year ACS
--TODO: function ?get_county_demographics returns 8 cached demographic variables from a given ACS
--TODO: data.frame ?df_county_demographics caches the results of get_county_demographics for the 2013 5 year ACS
-
+-data.frame ?df_state_demographics caches the results of get_state_demograhpics for the 2013 5 year ACS
+-function ?get_county_demographics returns 8 cached demographic variables from a given ACS
+-data.frame ?df_county_demographics caches the results of get_county_demographics for the 2013 5 year ACS
 
 choroplethr 3.0.0
 ----------------------------------------------------------------
