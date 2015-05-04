@@ -4,7 +4,7 @@ Description: Choropleths are thematic maps where geographic regions, such as
     states, are colored according to some metric, such as the number of people
     who live in that state.  choroplethr simplifies this process by 1.
     Providing ready-made functions for creating choropleths of common maps. 2.
-    Providing API connections to interesting data sources for making
+    Providing data and API connections to interesting data sources for making
     choropleths. 3. Providing a framework for creating choropleths from
     arbitrary shapefiles. Please see the vignettes for more details.
 Version: 3.1.0
@@ -45,5 +45,6 @@ Collate:
     'county_zoom.R'
     'data.R'
     'deprecated.R'
+    'get_county_demographics.R'
     'get_state_demograhpics.R'
     'state.R'
