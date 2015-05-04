@@ -53,7 +53,7 @@ get_state_demographics = function(endyear=2013, span=5)
   
   # remove the regions (such as zips in Puerto Rico) that are not on my map.
   data(state.regions, package="choroplethrMaps", envir=environment())
-  df_demograhpics = df_demographics[df_demographics$region %in% state.regions$region, ]
+  df_demographics = df_demographics[df_demographics$region %in% state.regions$region, ]
   
   df_demographics
 }
