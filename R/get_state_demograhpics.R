@@ -1,3 +1,7 @@
+if (base::getRversion() >= "2.15.1") {
+  utils::globalVariables(c("state.regions"))
+}
+
 #' Get a handful of demographic variables on US States from the US Census Bureau as a data.frame.
 #' 
 #' The data comes from the American Community Survey (ACS). The variables are: total population, percent White 
