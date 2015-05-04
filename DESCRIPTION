@@ -45,4 +45,5 @@ Collate:
     'county_zoom.R'
     'data.R'
     'deprecated.R'
+    'get_state_demograhpics.R'
     'state.R'
