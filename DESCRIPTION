@@ -2,7 +2,7 @@ Package: choroplethr
 Title: Simplify the Creation of Choropleth Maps in R
 Description: Choropleths are thematic maps where geographic regions, such as
     states, are colored according to some metric, such as the number of people
-    who live in that state.  choroplethr simplifies this process by 1.
+    who live in that state. This package simplifies this process by 1.
     Providing ready-made functions for creating choropleths of common maps. 2.
     Providing data and API connections to interesting data sources for making
     choropleths. 3. Providing a framework for creating choropleths from
