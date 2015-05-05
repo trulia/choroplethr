@@ -13,6 +13,21 @@ if (base::getRversion() >= "2.15.1") {
 #' @references A list of all ACS Surveys: http://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS
 #' @importFrom acs geo.make acs.fetch geography estimate
 #' @export
+#' @examples
+#' \dontrun{
+#' # get some demographic data on US counties from the 2010 5-year ACS
+#' df = get_county_demographics(endyear=2010, span=5)
+#' colnames(df)
+#' 
+#' # analyze the percent of people who are white not hispanic
+#' # a boxplot shows the distribution
+#' boxplot(df$percent_white)
+#' 
+#' # a choropleth map shows the location of the values
+#' # set the 'value' column to be the column we want to render
+#' df$value = df$percent_white
+#' county_choropleth(df)
+#' }
 get_county_demographics = function(endyear=2013, span=5)
 {  
   county_geo = geo.make(state = "*", county = "*")
@@ -45,15 +60,15 @@ get_county_demographics = function(endyear=2013, span=5)
   df_race = df_race[, c("region", "total_population", "percent_white", "percent_black", "percent_asian", "percent_hispanic")]
   
   # per capita income 
-  df_income = choroplethr::get_acs_data("B19301", "county", endyear=2013, span=5)[[1]]  
+  df_income = choroplethr::get_acs_data("B19301", "county", endyear=endyear, span=span)[[1]]  
   colnames(df_income)[[2]] = "per_capita_income"
   
   # median rent
-  df_rent = get_acs_data("B25058", "county", endyear=2013, span=5)[[1]]  
+  df_rent = get_acs_data("B25058", "county", endyear=endyear, span=span)[[1]]  
   colnames(df_rent)[[2]] = "median_rent"
   
   # median age
-  df_age = get_acs_data("B01002", "county", endyear=2013, span=5, column_idx=1)[[1]]  
+  df_age = get_acs_data("B01002", "county", endyear=endyear, span=span, column_idx=1)[[1]]  
   colnames(df_age)[[2]] = "median_age"
   
   df_demographics = merge(df_race        , df_income, all.x=TRUE)

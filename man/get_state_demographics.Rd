@@ -16,6 +16,22 @@ The data comes from the American Community Survey (ACS). The variables are: tota
 not Hispanic, Percent Black or African American not Hispanic, percent Asian not Hispanic,
 percent Hispanic all races, per-capita income, median rent and median age.
 }
+\examples{
+\dontrun{
+# get some demographic data on US states from the 2010 5-year ACS
+df = get_state_demographics(endyear=2010, span=5)
+colnames(df)
+
+# analyze the percent of people who are white not hispanic
+# a boxplot shows the distribution
+boxplot(df$percent_white)
+
+# a choropleth map shows the location of the values
+# set the 'value' column to be the column we want to render
+df$value = df$percent_white
+state_choropleth(df)
+}
+}
 \references{
 The choroplethr guide to Census data: http://cran.r-project.org/web/packages/choroplethr/vignettes/e-mapping-us-census-data.html
 
