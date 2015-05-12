@@ -16,7 +16,10 @@ Choropleth = R6Class("Choropleth",
     warn         = TRUE,  # warn user on clipped or missing values                      
     ggplot_scale = NULL,  # override default scale.
                           # warning, you need to set "drop=FALSE" for insets to render correctly
-    
+    # the default is nothing, since ggplot2 has some known issues with projections on
+    # world maps: https://github.com/hadley/ggplot2/issues/1104
+    projection   = element_blank(), 
+      
     # a choropleth map is defined by these two variables
     # a data.frame of a map
     # a data.frame that expresses values for regions of each map
@@ -67,7 +70,8 @@ Choropleth = R6Class("Choropleth",
         geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
         self$get_scale() +
         self$theme_clean() + 
-        ggtitle(self$title)
+        ggtitle(self$title) + 
+        self$projection
     },
         
     # support e.g. users just viewing states on the west coast
