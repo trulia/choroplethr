@@ -1,6 +1,8 @@
 choroplethr 3.2.0
 ----------------------------------------------------------------
 -Default projection for all maps is now coord_quickmap, including insets of US maps.
+-Add ggplot_polygon member variable to base choropleth object, which makes it easy to remove borders from choropleth objects.
+-Add variable continental_us_states, which is a vector of continental us state names.
 
 choroplethr 3.1.0
 ----------------------------------------------------------------
