@@ -128,3 +128,12 @@ NULL
 #' county_choropleth(df_county_demographics)
 #' }
 NULL
+
+#' A vector of the names of US Continental US States.
+#'
+#' @name continental_us_states
+#' @usage data(continental_us_states)
+#' @docType data
+#' @keywords data
+#' @author Ari Lamstein
+NULL
