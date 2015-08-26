@@ -4,7 +4,7 @@
 \name{Choropleth}
 \alias{Choropleth}
 \title{The base Choropleth object.}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x103d37e38> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x113195358> 
  - attr(*, "name")= chr "Choropleth_generator"
 }}
 \usage{

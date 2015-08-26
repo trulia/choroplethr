@@ -1,7 +1,7 @@
 #' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
-#' @importFrom ggplot2 scale_color_continuous
+#' @importFrom ggplot2 scale_color_continuous coord_quickmap
 #' @export
 Choropleth = R6Class("Choropleth", 
                      
@@ -16,9 +16,7 @@ Choropleth = R6Class("Choropleth",
     warn         = TRUE,  # warn user on clipped or missing values                      
     ggplot_scale = NULL,  # override default scale.
                           # warning, you need to set "drop=FALSE" for insets to render correctly
-    # the default is nothing, since ggplot2 has some known issues with projections on
-    # world maps: https://github.com/hadley/ggplot2/issues/1104
-    projection   = element_blank(), 
+    projection   = coord_quickmap(), 
       
     # a choropleth map is defined by these two variables
     # a data.frame of a map

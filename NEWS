@@ -1,3 +1,7 @@
+choroplethr 3.2.0
+----------------------------------------------------------------
+-Default projection for all maps is now coord_quickmap, including insets of US maps.
+
 choroplethr 3.1.0
 ----------------------------------------------------------------
 -Bug fix: in get_acs_data, do not prompt user for column_idx if they

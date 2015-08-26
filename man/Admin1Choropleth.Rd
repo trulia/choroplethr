@@ -4,7 +4,7 @@
 \name{Admin1Choropleth}
 \alias{Admin1Choropleth}
 \title{An R6 object for creating Administration Level 1 choropleths.}
-\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x103d6faa8> 
+\format{\preformatted{Class 'R6ClassGenerator' <environment: 0x1130cf990> 
  - attr(*, "name")= chr "Admin1Choropleth_generator"
 }}
 \usage{
