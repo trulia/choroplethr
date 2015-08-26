@@ -7,16 +7,17 @@ Choropleth = R6Class("Choropleth",
                      
   public = list(
     # the key objects for this class
-    user.df       = NULL, # input from user
-    map.df        = NULL, # geometry of the map
-    choropleth.df = NULL, # result of binding user data with our map data
+    user.df        = NULL, # input from user
+    map.df         = NULL, # geometry of the map
+    choropleth.df  = NULL, # result of binding user data with our map data
             
-    title        = "",    # title for map
-    legend       = "",    # title for legend
-    warn         = TRUE,  # warn user on clipped or missing values                      
-    ggplot_scale = NULL,  # override default scale.
-                          # warning, you need to set "drop=FALSE" for insets to render correctly
-    projection   = coord_quickmap(), 
+    title          = "",    # title for map
+    legend         = "",    # title for legend
+    warn           = TRUE,  # warn user on clipped or missing values                      
+    ggplot_scale   = NULL,  # override default scale.
+                            # warning, you need to set "drop=FALSE" for insets to render correctly
+    projection     = coord_quickmap(), 
+    ggplot_polygon = geom_polygon(aes(fill = value), color = "dark grey", size = 0.2),
       
     # a choropleth map is defined by these two variables
     # a data.frame of a map
@@ -65,7 +66,7 @@ Choropleth = R6Class("Choropleth",
       self$prepare_map()
       
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
-        geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+        self$ggplot_polygon + 
         self$get_scale() +
         self$theme_clean() + 
         ggtitle(self$title) + 

@@ -76,7 +76,7 @@ USAChoropleth = R6Class("USAChoropleth",
       if (is.numeric(choropleth.df$value))
       {
         ggplot(choropleth.df, aes(long, lat, group = group)) +
-          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          self$ggplot_polygon  + 
           self$get_scale() + 
           self$projection + 
           theme;
@@ -84,7 +84,7 @@ USAChoropleth = R6Class("USAChoropleth",
         stopifnot(length(unique(na.omit(choropleth.df$value))) <= 9) # brewer scale only goes up to 9
         
         ggplot(choropleth.df, aes(long, lat, group = group)) +
-          geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+          self$ggplot_polygon  + 
           self$get_scale() + 
           self$projection +
           theme;
