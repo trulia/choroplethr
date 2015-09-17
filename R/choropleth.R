@@ -2,6 +2,7 @@
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
 #' @importFrom ggplot2 scale_color_continuous coord_quickmap
+#' @importFrom ggmap get_map ggmap
 #' @export
 Choropleth = R6Class("Choropleth", 
                      
@@ -72,7 +73,50 @@ Choropleth = R6Class("Choropleth",
         ggtitle(self$title) + 
         self$projection
     },
-        
+    
+    render_with_ggmap = function(map_type = "hybrid", map_source = "osm", zoom = "auto")
+    {
+      self$prepare_map()
+      
+      # add extra area so polygons don't get clipped
+      left   = min(self$choropleth.df$long) 
+      bottom = min(self$choropleth.df$lat)  
+      right  = max(self$choropleth.df$long) 
+      top    = max(self$choropleth.df$lat)  
+      
+      print(left)
+      print(bottom)
+      print(top)
+      print(right)
+      
+      x_diff = right - left
+      x_extension = .1 * x_diff
+      
+      y_diff = top - bottom
+      y_extension = .1 * y_diff
+      
+      long = mean(self$choropleth.df$long)
+      lat = mean(self$choropleth.df$lat)
+      
+#      bbox      = c(leftbbx-x_extension, bottombbx-y_extension, rightbbx+x_extension, topbbx+y_extension)
+      bounding_box = c(left, bottom, right, top)
+      
+      base_map = get_map(location = c(long, lat), #bounding_box, 
+                         source = map_source, zoom=zoom)
+                 
+#      ggplot_polygon       
+      ggmap(base_map) + 
+        geom_polygon(data = self$choropleth.df,
+                     aes(x = long, y = lat, fill = value, group = group, alpha = .9)) +
+#        ggplot(self$choropleth.df, aes(long, lat, group = group)) +
+#        self$ggplot_polygon + 
+        self$get_scale() +
+        self$theme_clean() #+ 
+#        ggtitle(self$title) + 
+#        self$projection
+      
+    },
+    
     # support e.g. users just viewing states on the west coast
     clip = function() {
       stopifnot(!is.null(private$zoom))

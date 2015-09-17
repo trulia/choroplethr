@@ -6,7 +6,7 @@
 Mapping US Census Data
 ========================================================
   
-choroplethr provides native support for creating choropleths from US Census data. Note that the Census Bureau has many datasets; currently choroplethr only works with data from the [American Community Survey (ACS)](https://www.census.gov/acs/www/). Internally it uses the [acs](https://cran.r-project.org/web/packages/acs/index.html) package to get the data.  
+choroplethr provides native support for creating choropleths from US Census data. Note that the Census Bureau has many datasets; currently choroplethr only works with data from the [American Community Survey (ACS)](https://www.census.gov/acs/www/). Internally it uses the acs package to get the data.  
 
 choroplethr has four functions for working with ACS data:
 

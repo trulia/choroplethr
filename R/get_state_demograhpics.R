@@ -12,6 +12,7 @@ if (base::getRversion() >= "2.15.1") {
 #' @references The choroplethr guide to Census data: http://cran.r-project.org/web/packages/choroplethr/vignettes/e-mapping-us-census-data.html
 #' @references A list of all ACS Surveys: http://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS
 #' @importFrom acs geo.make acs.fetch geography estimate
+#' @importFrom utils data
 #' @export
 #' @examples
 #' \dontrun{
