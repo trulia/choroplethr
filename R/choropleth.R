@@ -1,7 +1,7 @@
 #' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
-#' @importFrom ggplot2 scale_color_continuous coord_quickmap
+#' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map
 #' @importFrom ggmap get_map ggmap
 #' @export
 Choropleth = R6Class("Choropleth", 
@@ -74,47 +74,58 @@ Choropleth = R6Class("Choropleth",
         self$projection
     },
     
-    render_with_ggmap = function(map_type = "hybrid", map_source = "osm", zoom = "auto")
+    get_long_margin = function(long_margin_percent)
+    {
+      (max(self$choropleth.df$long) - min(self$choropleth.df$long)) * long_margin_percent
+    },
+    
+    get_lat_margin = function(lat_margin_percent)
+    {
+      (max(self$choropleth.df$lat) - min(self$choropleth.df$lat)) * lat_margin_percent
+    },      
+    
+    get_bounding_box = function(long_margin_percent = .1, lat_margin_percent = .1)
+    {
+      c(min(self$choropleth.df$long) - self$get_long_margin(long_margin_percent), # left
+        min(self$choropleth.df$lat)  - self$get_lat_margin(lat_margin_percent),   # bottom
+        max(self$choropleth.df$long) + self$get_long_margin(long_margin_percent), # right
+        max(self$choropleth.df$lat)  + self$get_lat_margin(lat_margin_percent))   # top
+    },
+    
+    get_ggmap = function(map_type = "roadmap", 
+                         map_source = "google", 
+                         long_margin_percent = .1,
+                         lat_margin_percent  = .1)
+    {
+      bounding_box = self$get_bounding_box(long_margin_percent, lat_margin_percent)
+      get_map(location = bounding_box,
+              maptype  = map_type,
+              source   = map_source)  
+    },
+    
+    get_choropleth_as_polygon = function(a = 0.5)
+    {
+      geom_polygon(data = self$choropleth.df,
+                   aes(x = long, y = lat, fill = value, group = group, alpha=0.5)) 
+    },
+    
+    render_with_ggmap = function(map_type = "roadmap", 
+                                 map_source = "google", 
+                                 long_margin_percent = 0.1,
+                                 lat_margin_percent  = 0.1)
     {
       self$prepare_map()
-      
-      # add extra area so polygons don't get clipped
-      left   = min(self$choropleth.df$long) 
-      bottom = min(self$choropleth.df$lat)  
-      right  = max(self$choropleth.df$long) 
-      top    = max(self$choropleth.df$lat)  
-      
-      print(left)
-      print(bottom)
-      print(top)
-      print(right)
-      
-      x_diff = right - left
-      x_extension = .1 * x_diff
-      
-      y_diff = top - bottom
-      y_extension = .1 * y_diff
-      
-      long = mean(self$choropleth.df$long)
-      lat = mean(self$choropleth.df$lat)
-      
-#      bbox      = c(leftbbx-x_extension, bottombbx-y_extension, rightbbx+x_extension, topbbx+y_extension)
-      bounding_box = c(left, bottom, right, top)
-      
-      base_map = get_map(location = c(long, lat), #bounding_box, 
-                         source = map_source, zoom=zoom)
-                 
-#      ggplot_polygon       
-      ggmap(base_map) + 
-        geom_polygon(data = self$choropleth.df,
-                     aes(x = long, y = lat, fill = value, group = group, alpha = .9)) +
-#        ggplot(self$choropleth.df, aes(long, lat, group = group)) +
-#        self$ggplot_polygon + 
+
+      m = self$get_ggmap(map_type = map_type, 
+                         map_source = map_source, 
+                         long_margin_percent = long_margin_percent,
+                         lat_margin_percent = lat_margin_percent)
+      ggmap(m) +  
+        self$get_choropleth_as_polygon() + 
         self$get_scale() +
-        self$theme_clean() #+ 
-#        ggtitle(self$title) + 
-#        self$projection
-      
+        self$theme_clean() + 
+        ggtitle(self$title) + 
+        coord_map()
     },
     
     # support e.g. users just viewing states on the west coast
@@ -162,7 +173,7 @@ Choropleth = R6Class("Choropleth",
       self$discretize() # discretize the input. normally people don't want a continuous scale
       self$bind() # bind the input values to the map values
     },
-    
+
     #' @importFrom scales comma
     get_scale = function()
     {
