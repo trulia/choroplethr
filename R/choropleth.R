@@ -106,7 +106,7 @@ Choropleth = R6Class("Choropleth",
     get_choropleth_as_polygon = function(a = 0.5)
     {
       geom_polygon(data = self$choropleth.df,
-                   aes(x = long, y = lat, fill = value, group = group, alpha=0.5)) 
+                   aes(x = long, y = lat, fill = value, group = group), alpha=0.5) 
     },
     
     render_with_ggmap = function(map_type = "roadmap", 
