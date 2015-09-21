@@ -66,6 +66,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' match the names of states as they appear in the "region" column of ?state.regions.
 #' @param county_zoom An optional vector of counties to zoom in on. Elements of this vector must exactly 
 #' match the names of counties as they appear in the "region" column of ?county.regions.
+#' @param reference_map If true, render the choropleth over a reference map.
 #' 
 #' @examples
 #' \dontrun{
@@ -103,7 +104,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-county_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=NULL, county_zoom=NULL)
+county_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=NULL, county_zoom=NULL, reference_map=FALSE)
 {
   # user can only zoom in by one of the zoom options
   if (!is.null(state_zoom) && !is.null(county_zoom))
@@ -118,13 +119,21 @@ county_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=N
     c$legend = legend
     c$set_num_colors(num_colors)
     c$set_zoom(county_zoom)
-    c$render()
+    if (reference_map) {
+      c$render_with_reference_map()
+    } else {
+      c$render()
+    }
   } else {
     c = CountyChoropleth$new(df)
     c$title  = title
     c$legend = legend
     c$set_num_colors(num_colors)
     c$set_zoom(state_zoom)
-    c$render()
+    if (reference_map) {
+      c$render_with_reference_map()
+    } else {
+      c$render()
+    }
   }
 }

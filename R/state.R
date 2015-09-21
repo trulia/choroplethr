@@ -58,7 +58,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.regions.
-#' 
+#' @param reference_map If true, render the choropleth over a reference map.
 #' @examples
 #' \dontrun{
 #' # default parameters
@@ -96,12 +96,16 @@ StateChoropleth = R6Class("StateChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-state_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL)
+state_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL, reference_map = FALSE)
 {
   c = StateChoropleth$new(df)
   c$title  = title
   c$legend = legend
   c$set_num_colors(num_colors)
   c$set_zoom(zoom)
-  c$render()
+  if (reference_map) {
+    c$render_with_reference_map()
+  } else {
+    c$render()
+  }
 }
