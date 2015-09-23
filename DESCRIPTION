@@ -7,7 +7,7 @@ Description: Choropleths are thematic maps where geographic regions, such as
     Providing data and API connections to interesting data sources for making
     choropleths. 3. Providing a framework for creating choropleths from
     arbitrary shapefiles. Please see the vignettes for more details.
-Version: 3.2.0
+Version: 3.3.0
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <arilamstein@gmail.com>

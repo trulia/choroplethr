@@ -132,6 +132,7 @@ get_acs_data = function(tableId, map, endyear=2012, span=5, column_idx=-1)
 }
 
 # support multiple column tables
+#' @importFrom utils menu
 get_column_idx = function(acs.data, tableId)
 {
   column_idx = 1

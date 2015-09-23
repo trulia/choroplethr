@@ -1,7 +1,8 @@
 #' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
-#' @importFrom ggplot2 scale_color_continuous coord_quickmap
+#' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map
+#' @importFrom ggmap get_map ggmap
 #' @export
 Choropleth = R6Class("Choropleth", 
                      
@@ -72,7 +73,59 @@ Choropleth = R6Class("Choropleth",
         ggtitle(self$title) + 
         self$projection
     },
-        
+    
+    get_long_margin = function(long_margin_percent)
+    {
+      (max(self$choropleth.df$long) - min(self$choropleth.df$long)) * long_margin_percent
+    },
+    
+    get_lat_margin = function(lat_margin_percent)
+    {
+      (max(self$choropleth.df$lat) - min(self$choropleth.df$lat)) * lat_margin_percent
+    },      
+    
+    get_bounding_box = function(long_margin_percent, lat_margin_percent)
+    {
+      c(min(self$choropleth.df$long) - self$get_long_margin(long_margin_percent), # left
+        min(self$choropleth.df$lat)  - self$get_lat_margin(lat_margin_percent),   # bottom
+        max(self$choropleth.df$long) + self$get_long_margin(long_margin_percent), # right
+        max(self$choropleth.df$lat)  + self$get_lat_margin(lat_margin_percent))   # top
+    },
+    
+    get_reference_map = function(map_type, map_source, long_margin_percent, lat_margin_percent)
+    {
+      bounding_box = self$get_bounding_box(long_margin_percent, lat_margin_percent)
+      get_map(location = bounding_box,
+              maptype  = map_type,
+              source   = map_source)  
+    },
+    
+    get_choropleth_as_polygon = function(alpha)
+    {
+      geom_polygon(data = self$choropleth.df,
+                   aes(x = long, y = lat, fill = value, group = group), alpha = alpha) 
+    },
+    
+    render_with_reference_map = function(map_type            = "roadmap", 
+                                         map_source          = "google", 
+                                         long_margin_percent = 0.25,
+                                         lat_margin_percent  = 0.25,
+                                         alpha               = 0.5)
+    {
+      warning("Reference maps are an experimental feature in choroplethr")
+      
+      self$prepare_map()
+
+      m = self$get_reference_map(map_type, map_source, long_margin_percent, lat_margin_percent)
+      
+      ggmap(m) +  
+        self$get_choropleth_as_polygon(alpha) + 
+        self$get_scale() +
+        self$theme_clean() + 
+        ggtitle(self$title) + 
+        coord_map()
+    },
+    
     # support e.g. users just viewing states on the west coast
     clip = function() {
       stopifnot(!is.null(private$zoom))
@@ -118,7 +171,7 @@ Choropleth = R6Class("Choropleth",
       self$discretize() # discretize the input. normally people don't want a continuous scale
       self$bind() # bind the input values to the map values
     },
-    
+
     #' @importFrom scales comma
     get_scale = function()
     {
