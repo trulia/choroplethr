@@ -97,7 +97,8 @@ Choropleth = R6Class("Choropleth",
       bounding_box = self$get_bounding_box(long_margin_percent, lat_margin_percent)
       get_map(location = bounding_box,
               maptype  = map_type,
-              source   = map_source)  
+              source   = map_source,
+              color    = "bw")  
     },
     
     get_choropleth_as_polygon = function(alpha)
