@@ -112,6 +112,8 @@ Choropleth = R6Class("Choropleth",
                                          lat_margin_percent  = 0.25,
                                          alpha               = 0.5)
     {
+      warning("Reference maps are an experimental feature in choroplethr")
+      
       self$prepare_map()
 
       m = self$get_reference_map(map_type, map_source, long_margin_percent, lat_margin_percent)
