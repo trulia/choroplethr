@@ -24,7 +24,8 @@ Imports:
     dplyr,
     R6,
     acs,
-    WDI
+    WDI,
+    ggmap
 Suggests:
     testthat,
     knitr,

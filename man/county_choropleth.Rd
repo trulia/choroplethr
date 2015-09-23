@@ -5,7 +5,7 @@
 \title{Create a choropleth of US Counties}
 \usage{
 county_choropleth(df, title = "", legend = "", num_colors = 7,
-  state_zoom = NULL, county_zoom = NULL)
+  state_zoom = NULL, county_zoom = NULL, reference_map = FALSE)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".  Elements in
@@ -23,6 +23,8 @@ match the names of states as they appear in the "region" column of ?state.region
 
 \item{county_zoom}{An optional vector of counties to zoom in on. Elements of this vector must exactly
 match the names of counties as they appear in the "region" column of ?county.regions.}
+
+\item{reference_map}{If true, render the choropleth over a reference map.}
 }
 \description{
 The map used is county.map in the choroplethrMaps package.  See country.regions
