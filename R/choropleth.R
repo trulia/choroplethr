@@ -3,6 +3,7 @@
 #' @importFrom scales comma
 #' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map
 #' @importFrom ggmap get_map ggmap
+#' @importFrom RgoogleMaps MaxZoom
 #' @export
 Choropleth = R6Class("Choropleth", 
                      
@@ -73,31 +74,19 @@ Choropleth = R6Class("Choropleth",
         ggtitle(self$title) + 
         self$projection
     },
-    
-    get_long_margin = function(long_margin_percent)
+
+    get_reference_map = function()
     {
-      (max(self$choropleth.df$long) - min(self$choropleth.df$long)) * long_margin_percent
-    },
-    
-    get_lat_margin = function(lat_margin_percent)
-    {
-      (max(self$choropleth.df$lat) - min(self$choropleth.df$lat)) * lat_margin_percent
-    },      
-    
-    get_bounding_box = function(long_margin_percent, lat_margin_percent)
-    {
-      c(min(self$choropleth.df$long) - self$get_long_margin(long_margin_percent), # left
-        min(self$choropleth.df$lat)  - self$get_lat_margin(lat_margin_percent),   # bottom
-        max(self$choropleth.df$long) + self$get_long_margin(long_margin_percent), # right
-        max(self$choropleth.df$lat)  + self$get_lat_margin(lat_margin_percent))   # top
-    },
-    
-    get_reference_map = function(map_type, map_source, long_margin_percent, lat_margin_percent)
-    {
-      bounding_box = self$get_bounding_box(long_margin_percent, lat_margin_percent)
-      get_map(location = bounding_box,
-              maptype  = map_type,
-              source   = map_source,
+      # note: center is (long, lat) but MaxZoom is (lat, long)
+      
+      center = c(mean(self$choropleth.df$long), 
+                 mean(self$choropleth.df$lat))
+
+      max_zoom = MaxZoom(range(self$choropleth.df$lat), 
+                         range(self$choropleth.df$long))
+      
+      get_map(location = center,
+              zoom     = max_zoom,
               color    = "bw")  
     },
     
@@ -107,19 +96,13 @@ Choropleth = R6Class("Choropleth",
                    aes(x = long, y = lat, fill = value, group = group), alpha = alpha) 
     },
     
-    render_with_reference_map = function(map_type            = "roadmap", 
-                                         map_source          = "google", 
-                                         long_margin_percent = 0.25,
-                                         lat_margin_percent  = 0.25,
-                                         alpha               = 0.5)
+    render_with_reference_map = function(alpha = 0.5)
     {
-      warning("Reference maps are an experimental feature in choroplethr")
-      
       self$prepare_map()
 
-      m = self$get_reference_map(map_type, map_source, long_margin_percent, lat_margin_percent)
+      reference_map = self$get_reference_map()
       
-      ggmap(m) +  
+      ggmap(reference_map) +  
         self$get_choropleth_as_polygon(alpha) + 
         self$get_scale() +
         self$theme_clean() + 
@@ -285,6 +268,7 @@ Choropleth = R6Class("Choropleth",
         private$zoom = zoom
       }
     },
+
     get_zoom = function() { private$zoom },
     
     set_num_colors = function(num_colors)

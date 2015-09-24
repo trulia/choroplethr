@@ -25,7 +25,8 @@ Imports:
     R6,
     acs,
     WDI,
-    ggmap
+    ggmap,
+    RgoogleMaps
 Suggests:
     testthat,
     knitr,
