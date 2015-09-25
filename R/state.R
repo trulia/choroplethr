@@ -58,7 +58,7 @@ StateChoropleth = R6Class("StateChoropleth",
 #' will use a continuous scale. A value in [2, 9] will use that many colors. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.regions.
-#' @param reference_map If true, render the choropleth over a reference map.
+#' @param reference_map If true, render the choropleth over a reference map from Google Maps.
 #' @examples
 #' \dontrun{
 #' # default parameters

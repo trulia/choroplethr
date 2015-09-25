@@ -66,7 +66,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' match the names of states as they appear in the "region" column of ?state.regions.
 #' @param county_zoom An optional vector of counties to zoom in on. Elements of this vector must exactly 
 #' match the names of counties as they appear in the "region" column of ?county.regions.
-#' @param reference_map If true, render the choropleth over a reference map.
+#' @param reference_map If true, render the choropleth over a reference map from Google Maps.
 #' 
 #' @examples
 #' \dontrun{

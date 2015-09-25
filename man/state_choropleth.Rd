@@ -21,7 +21,7 @@ will use a continuous scale. A value in [2, 9] will use that many colors.}
 \item{zoom}{An optional vector of states to zoom in on. Elements of this vector must exactly
 match the names of states as they appear in the "region" column of ?state.regions.}
 
-\item{reference_map}{If true, render the choropleth over a reference map.}
+\item{reference_map}{If true, render the choropleth over a reference map from Google Maps.}
 }
 \description{
 The map used is state.map in the package choroplethrMaps.  See state.regions in
