@@ -131,6 +131,10 @@ county_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=N
     c$set_num_colors(num_colors)
     c$set_zoom(state_zoom)
     if (reference_map) {
+      if (is.null(state_zoom))
+      {
+        stop("Reference maps do not currently work with maps that have insets, such as maps of the 50 US States.")
+      }
       c$render_with_reference_map()
     } else {
       c$render()
