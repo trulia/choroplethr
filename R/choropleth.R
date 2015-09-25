@@ -75,6 +75,48 @@ Choropleth = R6Class("Choropleth",
         self$projection
     },
 
+    # left
+    get_min_long = function() 
+    {
+      min(self$choropleth.df$long)
+    },
+    
+    # right 
+    get_max_long = function() 
+    {
+      max(self$choropleth.df$long) 
+    },
+    
+    # bottom 
+    get_min_lat = function() 
+    {
+      min(self$choropleth.df$lat) 
+    },
+    
+    # top
+    get_max_lat = function() 
+    {
+      max(self$choropleth.df$lat) 
+    },
+    
+    get_bounding_box = function(long_margin_percent, lat_margin_percent)
+    {
+      c(self$get_min_long(), # left
+        self$get_min_lat(),  # bottom
+        self$get_max_long(), # right
+        self$get_max_lat())  # top
+    },
+    
+    get_x_scale = function()
+    {
+      scale_x_continuous(limits = c(self$get_min_long(), self$get_max_long()))
+    },
+    
+    get_y_scale = function()
+    {
+      scale_y_continuous(limits = c(self$get_min_lat(), self$get_max_lat()))
+    },
+    
     get_reference_map = function()
     {
       # note: center is (long, lat) but MaxZoom is (lat, long)
@@ -105,6 +147,8 @@ Choropleth = R6Class("Choropleth",
       ggmap(reference_map) +  
         self$get_choropleth_as_polygon(alpha) + 
         self$get_scale() +
+        self$get_x_scale() +
+        self$get_y_scale() +
         self$theme_clean() + 
         ggtitle(self$title) + 
         coord_map()
