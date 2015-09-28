@@ -32,15 +32,25 @@ into the required format.
 \dontrun{
 # default parameters
 data(df_pop_state)
-state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
+state_choropleth(df_pop_state,
+                 title  = "US 2012 State Population Estimates",
+                 legend = "Population")
+
+# choropleth over reference map of continental usa
+data(continental_us_states)
+state_choropleth(df_pop_state,
+                 title         = "US 2012 State Population Estimates",
+                 legend        = "Population",
+                 zoom          = continental_us_states,
+                 reference_map = TRUE)
 
 # continuous scale and zoom
 data(df_pop_state)
 state_choropleth(df_pop_state,
-                 title="US 2012 State Population Estimates",
-                 legend="Population",
-                 num_colors=1,
-                 zoom=c("california", "oregon", "washington"))
+                 title      = "US 2012 State Population Estimates",
+                 legend     = "Population",
+                 num_colors = 1,
+                 zoom       = c("california", "oregon", "washington"))
 
 # demonstrate user creating their own discretization of the input
 # demonstrate how choroplethr handles character and factor values
@@ -56,7 +66,8 @@ for (i in 1:nrow(df_pop_state))
   }
 }
 df_pop_state$value = df_pop_state$str
-state_choropleth(df_pop_state, title="Which states have less than 1M people?")
+state_choropleth(df_pop_state, title = "Which states have less than 1M people?")
+
 }
 }
 

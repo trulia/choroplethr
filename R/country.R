@@ -66,9 +66,5 @@ country_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL)
   c$legend = legend
   c$set_num_colors(num_colors)
   c$set_zoom(zoom)
-  if (reference_map) {
-    c$render_with_reference_map()
-  } else {
-    c$render()
-  }
+  c$render()
 }
