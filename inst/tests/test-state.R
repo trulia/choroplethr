@@ -49,3 +49,11 @@ test_that("any duplicate regions trigger an error", {
   df = rbind(df_pop_state, data.frame(region = "new york", value=1))
   expect_error(state_choropleth(df))
 })
+
+test_that("state reference map returns ggplot", {
+  data(df_pop_state)
+  data(continental_us_states)
+  expect_is(state_choropleth(df_pop_state, 
+                             zoom=continental_us_states,
+                             reference_map=TRUE), "ggplot")
+})

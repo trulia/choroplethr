@@ -1,7 +1,7 @@
 #' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
-#' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map
+#' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map scale_x_continuous scale_y_continuous
 #' @importFrom ggmap get_map ggmap
 #' @importFrom RgoogleMaps MaxZoom
 #' @export

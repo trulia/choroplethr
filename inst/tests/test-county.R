@@ -48,3 +48,10 @@ test_that("less than full states works", {
   expect_is(suppressWarnings(county_choropleth(df)), "ggplot")  
 })
 
+test_that("county reference map returns ggplot", {
+  data(df_pop_county)
+  data(continental_us_states)
+  expect_is(county_choropleth(df_pop_county, 
+                              state_zoom=continental_us_states,
+                              reference_map=TRUE), "ggplot")
+})
