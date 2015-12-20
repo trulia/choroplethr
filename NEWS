@@ -1,3 +1,12 @@
+choroplethr 3.3.1
+----------------------------------------------------------------
+-Fixes to support building with roxygen2 version 5.0.1
+
+choroplethr 3.3.0
+----------------------------------------------------------------
+-Set reference_map=TRUE in state_choropleth and county_choropleth functions to overlay the choropleth over a reference map taken from google maps. The reference map is in black and white and the alpha of the choropleth is set to .5 by default.
+-The reference map code is in the base choropleth object, so you should be able to easily use it for other maps as well.
+
 choroplethr 3.2.0
 ----------------------------------------------------------------
 -Default projection for all maps is now coord_quickmap, including insets of US maps.

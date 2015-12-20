@@ -4,6 +4,7 @@
 #' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map scale_x_continuous scale_y_continuous
 #' @importFrom ggmap get_map ggmap
 #' @importFrom RgoogleMaps MaxZoom
+#' @importFrom stringr str_extract_all
 #' @export
 Choropleth = R6Class("Choropleth", 
                      
@@ -221,8 +222,8 @@ Choropleth = R6Class("Choropleth",
       }
     },
     
-    #' Removes axes, margins and sets the background to white.
-    #' This code, with minor modifications, comes from section 13.19 
+    # Removes axes, margins and sets the background to white.
+    # This code, with minor modifications, comes from section 13.19 
     # "Making a Map with a Clean Background" of "R Graphics Cookbook" by Winston Chang.  
     # Reused with permission. 
     theme_clean = function()
@@ -233,7 +234,6 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        axis.ticks.margin = unit(0, "cm"),
         panel.margin      = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
@@ -250,33 +250,31 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        axis.ticks.margin = unit(0, "cm"),
         panel.margin      = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
     },
   
-    #' Make the output of cut2 a bit easier to read
-    #' 
-    #' Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.
-    #' 
-    #' @param x A factor with levels created via Hmisc::cut2.
-    #' @param nsep A separator which you wish to use.  Defaults to " to ".
-    #' 
-    #' @export
-    #' @examples
-    #' data(df_pop_state)
-    #'
-    #' x = Hmisc::cut2(df_pop_state$value, g=3)
-    #' levels(x)
-    #' # [1] "[ 562803, 2851183)" "[2851183, 6353226)" "[6353226,37325068]"
-    #' levels(x) = sapply(levels(x), format_levels)
-    #' levels(x)
-    #' # [1] "[562,803 to 2,851,183)"    "[2,851,183 to 6,353,226)"  "[6,353,226 to 37,325,068]"
-    #'
-    #' @seealso \url{http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/}, which this implementation is based on.
-    #' @importFrom stringr str_extract_all
+    # Make the output of cut2 a bit easier to read
+    # 
+    # Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.
+    # 
+    # @param x A factor with levels created via Hmisc::cut2.
+    # @param nsep A separator which you wish to use.  Defaults to " to ".
+    # 
+    # @export
+    # @examples
+    # data(df_pop_state)
+    #
+    # x = Hmisc::cut2(df_pop_state$value, g=3)
+    # levels(x)
+    # # [1] "[ 562803, 2851183)" "[2851183, 6353226)" "[6353226,37325068]"
+    # levels(x) = sapply(levels(x), format_levels)
+    # levels(x)
+    # # [1] "[562,803 to 2,851,183)"    "[2,851,183 to 6,353,226)"  "[6,353,226 to 37,325,068]"
+    #
+    # @seealso \url{http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/}, which this implementation is based on.
     format_levels = function(x, nsep=" to ") 
     {
       n = str_extract_all(x, "[-+]?[0-9]*\\.?[0-9]+")[[1]]  # extract numbers

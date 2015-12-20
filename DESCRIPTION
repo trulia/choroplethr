@@ -8,11 +8,12 @@ Description: Choropleths are thematic maps where geographic regions, such as
     choropleths. 3. Providing a framework for creating choropleths from
     arbitrary shapefiles. 4. Overlaying those maps over reference maps from
     Google Maps. Please see the vignettes for more details.
-Version: 3.3.0
+Version: 3.3.1
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
-URL: https://github.com/arilamstein/choroplethr/,
+URL: http://www.arilamstein.com/,
+    https://github.com/arilamstein/choroplethr/,
     https://groups.google.com/forum/#!forum/choroplethr
 BugReports: https://github.com/arilamstein/choroplethr/issues
 Copyright: Trulia, Inc.
@@ -51,3 +52,4 @@ Collate:
     'get_county_demographics.R'
     'get_state_demograhpics.R'
     'state.R'
+RoxygenNote: 5.0.1
