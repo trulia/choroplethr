@@ -1,6 +1,7 @@
 choroplethr 3.3.1
 ----------------------------------------------------------------
--Fixes to support building with roxygen2 version 5.0.1
+-Compatability changes to support building with roxygen2 version 5.0.1.
+-Compatability changes to work with ggplot2 version 2.0.0.
 
 choroplethr 3.3.0
 ----------------------------------------------------------------
