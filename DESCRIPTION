@@ -8,7 +8,7 @@ Description: Choropleths are thematic maps where geographic regions, such as
     choropleths. 3. Providing a framework for creating choropleths from
     arbitrary shapefiles. 4. Overlaying those maps over reference maps from
     Google Maps. Please see the vignettes for more details.
-Version: 3.3.1
+Version: 3.4.0
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <arilamstein@gmail.com>
@@ -22,7 +22,7 @@ Imports:
     scales,
     Hmisc,
     stringr,
-    ggplot2,
+    ggplot2 (>= 2.0.0),
     dplyr,
     R6,
     acs,
@@ -33,7 +33,7 @@ Suggests:
     testthat,
     knitr,
     choroplethrMaps,
-    choroplethrAdmin1
+    choroplethrAdmin1 (>= 1.1.0)
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
@@ -51,5 +51,6 @@ Collate:
     'deprecated.R'
     'get_county_demographics.R'
     'get_state_demograhpics.R'
+    'startup_messages.R'
     'state.R'
 RoxygenNote: 5.0.1

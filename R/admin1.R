@@ -45,6 +45,8 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
 #' @examples
 #' \dontrun{
 #' 
+#' library(choroplethrAdmin1)
+#' 
 #' data(df_japan_census)
 #' head(df_japan_census)
 #' # set the value we want to map to be the 2010 population estimates
@@ -64,6 +66,14 @@ Admin1Choropleth = R6Class("Admin1Choropleth",
 #'                    "Population", 
 #'                    1, 
 #'                    kansai)
+#'                    
+#' admin1_choropleth("japan", 
+#'                    df_japan_census, 
+#'                    "2010 Japan Population Estimates", 
+#'                    "Population", 
+#'                    1, 
+#'                    kansai,
+#'                    reference_map = TRUE)
 #' }
 #' @export
 #' @importFrom Hmisc cut2

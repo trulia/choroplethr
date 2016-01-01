@@ -5,7 +5,7 @@
 \title{Create an admin1-level choropleth for a specified country}
 \usage{
 admin1_choropleth(country.name, df, title = "", legend = "",
-  num_colors = 7, zoom = NULL)
+  num_colors = 7, zoom = NULL, reference_map = FALSE)
 }
 \arguments{
 \item{country.name}{The name of the country. Must exactly match how the country is named in the "country"
@@ -24,6 +24,8 @@ will use a continuous scale. A value in [2, 9] will use that many colors.}
 
 \item{zoom}{An optional vector of regions to zoom in on. Elements of this vector must exactly 
 match the names of regions as they appear in the "region" column of ?admin1.regions.}
+
+\item{reference_map}{If true, render the choropleth over a reference map from Google Maps.}
 }
 \description{
 The map used comes from ?admin1.map in the choroplethrAdmin1 package. See ?get_admin_countries
@@ -31,6 +33,8 @@ and ?get_admin_regions in the choroplethrAdmin1 package for help with the spelli
 }
 \examples{
 \dontrun{
+
+library(choroplethrAdmin1)
 
 data(df_japan_census)
 head(df_japan_census)
@@ -51,6 +55,14 @@ admin1_choropleth("japan",
                    "Population", 
                    1, 
                    kansai)
+                   
+admin1_choropleth("japan", 
+                   df_japan_census, 
+                   "2010 Japan Population Estimates", 
+                   "Population", 
+                   1, 
+                   kansai,
+                   reference_map = TRUE)
 }
 }
 
