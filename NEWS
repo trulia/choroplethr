@@ -1,3 +1,8 @@
+choroplethr 3.5.0
+----------------------------------------------------------------
+-New function admin1_region_choropleth lets you create admin 1 choropleths
+based on a list of admin 1 regions. This can span multiple countries and include subset of countries.
+
 choroplethr 3.4.0
 ----------------------------------------------------------------
 -Set reference_map=TRUE in admin1_choropleth to overlay the choropleth over
