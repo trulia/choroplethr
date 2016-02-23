@@ -2,7 +2,7 @@
 % Please edit documentation in R/acs.R
 \name{get_acs_data}
 \alias{get_acs_data}
-\title{Returns a list representing American Community Survey (ACS) estimates}
+\title{Returns a list representing American Community Survey (ACS) estimates and margins of error}
 \usage{
 get_acs_data(tableId, map, endyear = 2012, span = 5, column_idx = -1)
 }
@@ -25,6 +25,9 @@ are multiple tables. The first element of the list is a data.frame with estimate
 The second element is the ACS title of the column.
 Requires the acs package to be installed, and a Census API Key to be set with the 
 acs's api.key.install function.  Census API keys can be obtained at http://api.census.gov/data/key_signup.html.
+}
+\note{
+margin.of.error is the 90% margin of error.
 }
 \examples{
 \dontrun{

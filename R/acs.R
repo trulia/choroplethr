@@ -89,7 +89,7 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, st
   county_choropleth(acs.data[['df']], acs.data[['title']], "", num_colors, state_zoom, county_zoom)
 }
 
-#' Returns a list representing American Community Survey (ACS) estimates
+#' Returns a list representing American Community Survey (ACS) estimates and margins of error
 #'
 #' Given a map, ACS tableId, endyear and span. Prompts user for the column id if there 
 #' are multiple tables. The first element of the list is a data.frame with estimates. 
@@ -107,6 +107,7 @@ county_choropleth_acs = function(tableId, endyear=2011, span=5, num_colors=7, st
 #' @export
 #' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
 #' @importFrom acs acs.fetch geography estimate geo.make
+#' @note margin.of.error is the 90% margin of error.
 #' @examples
 #' \dontrun{
 #' library(Hmisc) # for cut2
@@ -161,14 +162,16 @@ make_geo = function(map)
 # this is trickty for a few reasons. one of which is that acs.data is an S4 object.
 # another is that each map (state, county and zip) has a different naming convention for regions
 # another is that the census data needs to be clipped to the map (e.g. remove puerto rico)
+#' @importFrom acs standard.error
 convert_acs_obj_to_df = function(map, acs.data, column_idx) 
 {
   stopifnot(map %in% c("state", "county", "zip"))
   
   if (map == "state") {
     df = data.frame(region = tolower(geography(acs.data)$NAME), 
-                    value  = as.numeric(estimate(acs.data[,column_idx])));
-    df$region = as.character(df$region)
+                    value  = as.numeric(estimate(acs.data[,column_idx])),
+                    margin.of.error = 1.645 * as.numeric(standard.error(acs.data[,column_idx])))
+      df$region = as.character(df$region)
     df[df$region != "puerto rico", ]
   } else if (map == "county") {
     # create fips code
@@ -178,13 +181,15 @@ convert_acs_obj_to_df = function(map, acs.data, column_idx)
     # put in format for call to all_county_choropleth
     acs.data@geography$fips = as.numeric(acs.data@geography$fips)
     df = data.frame(region = geography(acs.data)$fips, 
-                    value  = as.numeric(estimate(acs.data[,column_idx])));
+                    value  = as.numeric(estimate(acs.data[,column_idx])),
+                    margin.of.error = 1.645 * as.numeric(standard.error(acs.data[,column_idx])))
     # remove state fips code 72, which is Puerto Rico, which we don't map
     df[df$region < 72000 | df$region > 72999, ]     
   } else if (map == "zip") {
     # put in format for call to choroplethr
     acs.df = data.frame(region = geography(acs.data)$zipcodetabulationarea, 
-                        value  = as.numeric(estimate(acs.data[,column_idx])))
+                        value  = as.numeric(estimate(acs.data[,column_idx])),
+                        margin.of.error  = 1.645 * as.numeric(standard.error(acs.data[,column_idx])))
     acs.df$region = as.character(acs.df$region)
     # clipping is done in the choroplethrZip package, because that's where the region definitions are
     acs.df
