@@ -2,6 +2,8 @@ choroplethr 3.5.0
 ----------------------------------------------------------------
 -New function admin1_region_choropleth lets you create admin 1 choropleths
 based on a list of admin 1 regions. This can span multiple countries and include subset of countries.
+-Function get_acs_data now has a parameter include_moe which, if true will
+return the 90% margins of error in the data frame.
 
 choroplethr 3.4.0
 ----------------------------------------------------------------
