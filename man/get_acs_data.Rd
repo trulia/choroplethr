@@ -2,9 +2,10 @@
 % Please edit documentation in R/acs.R
 \name{get_acs_data}
 \alias{get_acs_data}
-\title{Returns a list representing American Community Survey (ACS) estimates and margins of error}
+\title{Returns a list representing American Community Survey (ACS) estimates}
 \usage{
-get_acs_data(tableId, map, endyear = 2012, span = 5, column_idx = -1)
+get_acs_data(tableId, map, endyear = 2012, span = 5, column_idx = -1,
+  include_moe = FALSE)
 }
 \arguments{
 \item{tableId}{The id of an ACS table}
@@ -18,6 +19,8 @@ on the same longitude and latitude map to scale. This variable is only checked w
 
 \item{column_idx}{The optional column id of the table to use. If not specified and the table has multiple columns,
 you will be prompted for a column id.}
+
+\item{include_moe}{Whether to include the 90 percent margin of error.}
 }
 \description{
 Given a map, ACS tableId, endyear and span. Prompts user for the column id if there 
@@ -25,9 +28,6 @@ are multiple tables. The first element of the list is a data.frame with estimate
 The second element is the ACS title of the column.
 Requires the acs package to be installed, and a Census API Key to be set with the 
 acs's api.key.install function.  Census API keys can be obtained at http://api.census.gov/data/key_signup.html.
-}
-\note{
-margin.of.error is the 90% margin of error.
 }
 \examples{
 \dontrun{
