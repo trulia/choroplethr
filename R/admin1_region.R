@@ -30,10 +30,9 @@ Admin1RegionChoropleth = R6Class("Admin1RegionChoropleth",
   )
 )
 
-#' Create an admin1-level choropleth based on regions.
+#' Create a map of Administrative Level 1 regions
 #' 
-#' Compare this function with ?admin1_choropleth. This function can create a map
-#' that both includes multiple countries and portions of individual countries.
+#' Unlike ?admin1_choropleth, the regions here can span multiple countries.
 #'
 #' The map used comes from ?admin1.map in the choroplethrAdmin1 package. See ?get_admin_countries
 #' and ?get_admin_regions in the choroplethrAdmin1 package for help with the spelling of regions.

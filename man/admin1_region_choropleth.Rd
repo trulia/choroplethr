@@ -2,7 +2,7 @@
 % Please edit documentation in R/admin1_region.R
 \name{admin1_region_choropleth}
 \alias{admin1_region_choropleth}
-\title{Create an admin1-level choropleth based on regions.}
+\title{Create a map of Administrative Level 1 regions}
 \usage{
 admin1_region_choropleth(df, title = "", legend = "", num_colors = 7,
   zoom = NULL, reference_map = FALSE)
@@ -25,8 +25,7 @@ match the names of regions as they appear in the "region" column of ?admin1.regi
 \item{reference_map}{If true, render the choropleth over a reference map from Google Maps.}
 }
 \description{
-Compare this function with ?admin1_choropleth. This function can create a map
-that both includes multiple countries and portions of individual countries.
+Unlike ?admin1_choropleth, the regions here can span multiple countries.
 }
 \details{
 The map used comes from ?admin1.map in the choroplethrAdmin1 package. See ?get_admin_countries

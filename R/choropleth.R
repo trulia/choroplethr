@@ -19,8 +19,12 @@ Choropleth = R6Class("Choropleth",
     warn           = TRUE,  # warn user on clipped or missing values                      
     ggplot_scale   = NULL,  # override default scale.
                             # warning, you need to set "drop=FALSE" for insets to render correctly
-    projection     = coord_quickmap(), 
-    ggplot_polygon = geom_polygon(aes(fill = value), color = "dark grey", size = 0.2),
+    
+    # as of ggplot v2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+    # in the class declaration. Doing so will break binary builds, so assign them
+    # in the constructor instead
+    projection     = NULL, 
+    ggplot_polygon = NULL, 
       
     # a choropleth map is defined by these two variables
     # a data.frame of a map
@@ -61,6 +65,12 @@ Choropleth = R6Class("Choropleth",
           warning(paste0("Your data.frame contains the following regions which are not mappable: ", invalid_regions))
         }
       }
+      
+      # as of ggplot v2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+      # in the class declaration. Doing so will break binary builds, so assign them
+      # in the constructor instead
+      self$projection     = coord_quickmap()
+      self$ggplot_polygon = geom_polygon(aes(fill = value), color = "dark grey", size = 0.2)
       
     },
 

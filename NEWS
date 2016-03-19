@@ -1,3 +1,9 @@
+choroplethr 3.5.1
+----------------------------------------------------------------
+-Bug fix: As of ggplot 2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+in the class declaration. Doing so will break binary builds. So now assign them
+in the constructor instead
+
 choroplethr 3.5.0
 ----------------------------------------------------------------
 -New function admin1_region_choropleth lets you create admin 1 choropleths
