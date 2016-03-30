@@ -1,3 +1,8 @@
+choroplethr 3.5.2
+----------------------------------------------------------------
+-Move "acs" package from Import to Depends. While I don't think that this should be
+necessary, it seems to be the only way to fix a bug I describe here: https://stat.ethz.ch/pipermail/r-package-devel/2016q1/000760.html
+
 choroplethr 3.5.1
 ----------------------------------------------------------------
 -Bug fix: As of ggplot 2.1.0, R6 class variables cannot be assigned to ggplot2 objects
