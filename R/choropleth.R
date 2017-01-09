@@ -244,7 +244,7 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        panel.margin      = unit(0, "lines"),
+        panel.spacing     = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
@@ -260,7 +260,7 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        panel.margin      = unit(0, "lines"),
+        panel.spacing     = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
