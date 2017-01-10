@@ -1,5 +1,11 @@
 .onAttach <- function(...) {
   if (!interactive()) return()
   
-  packageStartupMessage("Choroplethr has a free course: www.CensusMappingCourse.com")
+  tips <- c(
+    "View the Choroplethr documentation here: www.AriLamstein.com/open-source",
+    "Choroplethr has a free course: www.CensusMappingCourse.com"
+  )
+  
+  tip <- sample(tips, 1)
+  packageStartupMessage(paste(strwrap(tip), collapse = "\n"))
 }

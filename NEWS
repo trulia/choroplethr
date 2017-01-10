@@ -1,6 +1,7 @@
 choroplethr 3.5.3
 ----------------------------------------------------------------
 -Fix warnings that were introduced by latest version of ggplot2
+-Move documentation to my own site
 
 choroplethr 3.5.2
 ----------------------------------------------------------------
