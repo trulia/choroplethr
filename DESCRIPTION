@@ -12,7 +12,7 @@ Version: 3.5.3
 Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <ari@lamsteinconsulting.com>
-URL: http://www.arilamstein.com/
+URL: http://www.arilamstein.com/open-source
 Copyright: Trulia, Inc.
 License: BSD_3_clause + file LICENSE
 Imports:
