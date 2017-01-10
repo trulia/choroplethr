@@ -9,7 +9,7 @@ Description: Choropleths are thematic maps where geographic regions, such as
     arbitrary shapefiles. 4. Overlaying those maps over reference maps from
     Google Maps. Please see the vignettes for more details.
 Version: 3.5.3
-Author: Ari Lamstein <arilamstein@gmail.com>[cre, aut],
+Author: Ari Lamstein <ari@lamsteinconsulting.com>[cre, aut],
     Brian P Johnson <brian@pjohnson.info> [ctb, frontend animation code]
 Maintainer: Ari Lamstein <ari@lamsteinconsulting.com>
 URL: http://www.arilamstein.com/open-source
