@@ -4,10 +4,10 @@
 \alias{get_tract_demographics}
 \title{Get a handful of demographic variables on Census Tracts in a State from the US Census Bureau as a data.frame.}
 \usage{
-get_tract_demographics(state_fips, endyear = 2013, span = 5)
+get_tract_demographics(state_name, endyear = 2013, span = 5)
 }
 \arguments{
-\item{state_fips}{The FIPS code of the state you want demographics for}
+\item{state_name}{The name of the state. See ?state.regions for proper spelling and capitalization.}
 
 \item{endyear}{The end year for the survey}
 

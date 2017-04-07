@@ -15,7 +15,7 @@ get_tracts_in_state = function(state_fips)
 #' The data comes from the American Community Survey (ACS). The variables are: total population, percent White 
 #' not Hispanic, Percent Black or African American not Hispanic, percent Asian not Hispanic,
 #' percent Hispanic all races, per-capita income, median rent and median age.
-#' @param state_fips The FIPS code of the state you want demographics for
+#' @param state_name The name of the state. See ?state.regions for proper spelling and capitalization.
 #' @param endyear The end year for the survey
 #' @param span The span of the survey
 #' @references The choroplethr guide to Census data: http://www.arilamstein.com/open-source/choroplethr/mapping-us-census-data/
@@ -24,8 +24,10 @@ get_tracts_in_state = function(state_fips)
 #' @importFrom utils data
 #' @importFrom acs acs.fetch
 #' @export
-get_tract_demographics = function(state_fips, endyear=2013, span=5)
+get_tract_demographics = function(state_name, endyear=2013, span=5)
 {  
+  state_fips = get_state_fips_from_name(state_name)
+  
   all.tracts = get_tracts_in_state(state_fips)
   race.data = acs::acs.fetch(geography    = all.tracts, 
                              table.number = "B03002", 

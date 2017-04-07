@@ -4,13 +4,13 @@
 \alias{tract_choropleth}
 \title{Create a choropleth of Census Tracts in a particular state.}
 \usage{
-tract_choropleth(df, state_fips, title = "", legend = "", num_colors = 7,
+tract_choropleth(df, state_name, title = "", legend = "", num_colors = 7,
   tract_zoom = NULL, county_zoom = NULL, reference_map = FALSE)
 }
 \arguments{
 \item{df}{A data.frame with a column named "region" and a column named "value".}
 
-\item{state_fips}{the FIPS code for the state you want to map}
+\item{state_name}{The name of the state. See ?state.regions for proper spelling and capitalization.}
 
 \item{title}{An optional title for the map.}
 

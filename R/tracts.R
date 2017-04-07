@@ -2,18 +2,30 @@ if (base::getRversion() >= "2.15.1") {
   utils::globalVariables(c("fortify", "inner_join"))
 }
 
+get_state_fips_from_name = function(state_name)
+{
+  # Within choroplethr, states are identified by the region column of the state.regions object.
+  # (I.e. lower-case, full name). However, when working with tigris, we use the numeric fips code
+  data(state.regions, package="choroplethrMaps", envir=environment())
+  stopifnot(state_name %in% state.regions$region)
+  
+  state.regions[state.regions$region == state_name, "fips.numeric"]
+}
+
 #' Get a map of tracts in a state, as a data.frame
 #' 
 #' The map returned is exactly the same map which tract_choropleth uses. It is downloaded
 #' using the "tracts" function in the tigris package, and then it is modified for use with 
 #' choroplethr.
-#' @param state_fips The fips code of the state
+#' @param state_name The name of the state. See ?state.regions for proper spelling and capitalization.
 #' @export
 #' @importFrom tigris tracts
 #' @importFrom dplyr inner_join
 #' @importFrom ggplot2 fortify
-get_tract_map = function(state_fips) 
+get_tract_map = function(state_name) 
 {
+  state_fips = get_state_fips_from_name(state_name)
+  
   # tigris returns the map as a SpatialPolygonsDataFrame, 
   tract.map = tracts(state = state_fips, cb = TRUE)
 
@@ -82,8 +94,8 @@ TractChoropleth = R6Class("TractChoropleth",
 #' Create a choropleth of Census Tracts in a particular state.
 #' 
 #' @param df A data.frame with a column named "region" and a column named "value".  
-#' @param state_fips the FIPS code for the state you want to map
-#' @param title An optional title for the map.  
+#' @param state_name The name of the state. See ?state.regions for proper spelling and capitalization.
+#' @param title An optional title for the map.
 #' @param legend An optional name for the legend.  
 #' @param num_colors The number of colors on the map. A value of 1 
 #' will use a continuous scale. A value in [2, 9] will use that many colors. 
@@ -102,7 +114,7 @@ TractChoropleth = R6Class("TractChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer  
 #' @importFrom scales comma
 tract_choropleth = function(df, 
-                            state_fips,
+                            state_name,
                             title         = "", 
                             legend        = "", 
                             num_colors    = 7, 
@@ -110,6 +122,8 @@ tract_choropleth = function(df,
                             county_zoom   = NULL,
                             reference_map = FALSE)
 {
+  state_fips = get_state_fips_from_name(state_name)
+  
   c = TractChoropleth$new(state_fips, df)
   c$title  = title
   c$legend = legend

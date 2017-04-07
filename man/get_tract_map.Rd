@@ -4,10 +4,10 @@
 \alias{get_tract_map}
 \title{Get a map of tracts in a state, as a data.frame}
 \usage{
-get_tract_map(state_fips)
+get_tract_map(state_name)
 }
 \arguments{
-\item{state_fips}{The fips code of the state}
+\item{state_name}{The name of the state. See ?state.regions for proper spelling and capitalization.}
 }
 \description{
 The map returned is exactly the same map which tract_choropleth uses. It is downloaded
