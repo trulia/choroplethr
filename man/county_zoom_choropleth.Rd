@@ -15,4 +15,3 @@ with the county_zoom parameter set instead.  The last version of choroplethr
 in which this function worked was version 2.1.1, which can be downloaded from CRAN 
 here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
-

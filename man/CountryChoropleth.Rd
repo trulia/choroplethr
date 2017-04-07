@@ -12,4 +12,3 @@ CountryChoropleth
 An R6 object for creating country-level choropleths.
 }
 \keyword{datasets}
-

@@ -14,4 +14,3 @@ A vector of the names of US Continental US States.
 Ari Lamstein
 }
 \keyword{data}
-

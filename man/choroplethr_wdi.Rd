@@ -42,4 +42,3 @@ choroplethr_wdi(code="NY.GDP.PCAP.CD", year=2012, title="2012 Per Capita Income"
 \references{
 Uses the WDI function from the WDI package by Vincent Arel-Bundock.
 }
-

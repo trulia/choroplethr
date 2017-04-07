@@ -31,4 +31,3 @@ Data comes from the 2013 5-year American Community Survey (ACS). Data generated 
 ?get_county_demographics.
 }
 \keyword{data}
-

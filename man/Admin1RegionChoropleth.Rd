@@ -14,4 +14,3 @@ Countries. This function is useful if you want a map that spans multiple countri
 Especially if it only needs to include a portion of a country.
 }
 \keyword{datasets}
-

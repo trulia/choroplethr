@@ -65,4 +65,3 @@ admin1_choropleth("japan",
                    reference_map = TRUE)
 }
 }
-

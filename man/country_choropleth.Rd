@@ -39,4 +39,3 @@ country_choropleth(df_pop_country,
                    num_colors=1,
                    zoom=c("united states of america", "canada", "mexico"))
 }
-

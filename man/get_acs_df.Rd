@@ -14,4 +14,3 @@ This function is deprecated as of choroplethr version 3.0.0. Please use ?get_acs
 The last version of choroplethr in which this functions worked was version 2.1.1, which can
 be downloaded from CRAN here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
-

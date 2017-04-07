@@ -70,4 +70,3 @@ county_choropleth(df_pop_county,
                   county_zoom = nyc_county_fips$region)
 }
 }
-

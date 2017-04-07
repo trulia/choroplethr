@@ -12,4 +12,3 @@ Admin1Choropleth
 An R6 object for creating Administration Level 1 choropleths.
 }
 \keyword{datasets}
-

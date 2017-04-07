@@ -14,4 +14,3 @@ A data.frame containing population estimates for Countries in 2012.
 Taken from the WDI package with code SP.POP.TOTL for year 2012.
 }
 \keyword{data}
-

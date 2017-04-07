@@ -132,6 +132,43 @@ get_acs_data = function(tableId, map, endyear=2012, span=5, column_idx=-1, inclu
   list(df=df, title=title) # need to return 2 values here
 }
 
+#' Returns a list representing American Community Survey (ACS) estimates for Tracts in a state
+#'
+#' Given a state, ACS tableId, endyear and span. Prompts user for the column id if there 
+#' are multiple tables. The first element of the list is a data.frame with estimates. 
+#' The second element is the ACS title of the column.
+#' Requires the acs package to be installed, and a Census API Key to be set with the 
+#' acs's api.key.install function.  Census API keys can be obtained at http://api.census.gov/data/key_signup.html.
+#'
+#' @param state_fips The fips code of the state you're interested in
+#' @param tableId The id of an ACS table
+#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
+#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
+#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
+#' @param column_idx The optional column id of the table to use. If not specified and the table has multiple columns,
+#' you will be prompted for a column id.
+#' @param include_moe Whether to include the 90 percent margin of error. 
+#' @export
+#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
+#' @importFrom acs acs.fetch geography estimate geo.make
+get_tract_acs_data = function(state_fips, tableId, endyear=2012, span=5, column_idx=-1, include_moe=FALSE)
+{
+  all.tracts = get_tracts_in_state(state_fips)
+  
+  acs.data = acs.fetch(geography    = all.tracts, 
+                       table.number = tableId,
+                       col.names    = "pretty", 
+                       endyear      = endyear, 
+                       span         = span)
+  
+  if (column_idx == -1) {
+    column_idx = get_column_idx(acs.data, tableId) # some tables have multiple columns 
+  }
+  title      = acs.data@acs.colnames[column_idx] 
+  df         = convert_acs_obj_to_df("tract", acs.data, column_idx, include_moe) # choroplethr requires a df
+  list(df=df, title=title) # need to return 2 values here
+}
+
 # support multiple column tables
 #' @importFrom utils menu
 get_column_idx = function(acs.data, tableId)
@@ -165,7 +202,7 @@ make_geo = function(map)
 #' @importFrom acs standard.error
 convert_acs_obj_to_df = function(map, acs.data, column_idx, include_moe) 
 {
-  stopifnot(map %in% c("state", "county", "zip"))
+  stopifnot(map %in% c("state", "county", "zip", "tract"))
   
   if (map == "state") {
     # create a data.frame of (region, value) pairs
@@ -214,6 +251,42 @@ convert_acs_obj_to_df = function(map, acs.data, column_idx, include_moe)
 
     # clipping is done in the choroplethrZip package, because that's where the region definitions are
     df
+  } else if (map == "tract") {
+    df = data.frame(state  = geography(acs.data)$state,   # integer
+                    county = geography(acs.data)$county,  # integer
+                    tract  = geography(acs.data)$tract,   # character
+                    value  = as.numeric(estimate(acs.data[,column_idx])))
+    
+    if (include_moe)
+    {
+      df$margin.of.error = 1.645 * as.numeric(standard.error(acs.data[, column_idx])) 
+    }    
+    
+    # county fips code must be 5 chars
+    # 2 chars for the state (i.e. leading "0")
+    df$state = as.character(df$state)
+    df$state = paste0("0", df$state)
+    # 3 chars for the county - i.e. leading "0" or leading "00"
+    df$county = as.character(df$county)
+    for (i in 1:nrow(df))
+    {
+      if (nchar(df[i, "county"]) == 1) {
+        df[i, "county"] = paste0("00", df[i, "county"])
+      } else if (nchar(df[i, "county"]) == 2) {
+        df[i, "county"] = paste0("0", df[i, "county"])
+      }
+    } 
+    
+    # now concat with the tract id
+    df$region = paste0(df$state, df$county, df$tract)
+    
+    # only include relevant columns
+    if (include_moe)
+    {
+      df[, c("region", "value", "margin.of.error")] # only return (region, value) pairs
+    } else {
+      df[, c("region", "value")]
+    }
   }
   
 }

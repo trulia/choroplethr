@@ -43,4 +43,3 @@ Ari Lamstein (R code) and Brian Johnson (JavaScript, HTML and CSS code)
 }
 \keyword{animation}
 \keyword{choropleth}
-

@@ -12,4 +12,3 @@ StateChoropleth
 Create a state-level choropleth
 }
 \keyword{datasets}
-

@@ -12,4 +12,3 @@ CountyChoropleth
 Create a county-level choropleth
 }
 \keyword{datasets}
-

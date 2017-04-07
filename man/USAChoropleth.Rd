@@ -14,4 +14,3 @@ Normal choropleth that draws Alaska and Hawaii as insets.
 In addition to a columns named "region" and "value", also requires a column named "state".
 }
 \keyword{datasets}
-

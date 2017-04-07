@@ -1,3 +1,8 @@
+choroplethr 3.6.0
+----------------------------------------------------------------
+-New function tract_choropleth makes choropleths of Census Tracts.
+-New function get_tract_demographics gets tract demographics by ACS survey year and span.
+
 choroplethr 3.5.3
 ----------------------------------------------------------------
 -Fix warnings that were introduced by latest version of ggplot2

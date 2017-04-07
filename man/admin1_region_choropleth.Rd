@@ -47,4 +47,3 @@ admin1_region_choropleth(df)
 
 }
 }
-

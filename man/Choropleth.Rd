@@ -12,4 +12,3 @@ Choropleth
 The base Choropleth object.
 }
 \keyword{datasets}
-

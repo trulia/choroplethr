@@ -35,4 +35,3 @@ Legend:
 Taken from \url{http://en.wikipedia.org/wiki/List_of_United_States_presidential_election_results_by_state} 3/20/2014.
 }
 \keyword{data}
-

@@ -12,4 +12,3 @@ CountyZoomChoropleth
 Create a county-level choropleth that zooms on counties, not states.
 }
 \keyword{datasets}
-

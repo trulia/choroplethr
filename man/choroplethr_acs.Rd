@@ -15,4 +15,3 @@ This function is deprecated as of choroplethr version 3.0.0. Please use ?state_c
 in which this function worked was version 2.1.1, which can be downloaded from CRAN 
 here: http://cran.r-project.org/web/packages/choroplethr/index.html
 }
-

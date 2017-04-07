@@ -70,4 +70,3 @@ state_choropleth(df_pop_state, title = "Which states have less than 1M people?")
 
 }
 }
-

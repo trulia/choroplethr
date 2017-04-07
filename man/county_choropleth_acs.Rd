@@ -62,4 +62,3 @@ which contains a list of all ACS surveys.
 }
 \keyword{acs}
 \keyword{choropleth,}
-
