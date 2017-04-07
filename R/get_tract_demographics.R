@@ -71,5 +71,8 @@ get_tract_demographics = function(state_name, endyear=2013, span=5)
   df_demographics = merge(df_demographics, df_rent  , all.x=TRUE)  
   df_demographics = merge(df_demographics, df_age   , all.x=TRUE)
   
+  # making the region numeric is the easiest way to handle leading 0's
+  df_demographics$region = as.numeric(df_demographics$region)
+
   df_demographics
 }

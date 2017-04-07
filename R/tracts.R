@@ -35,7 +35,8 @@ get_tract_map = function(state_name)
   tract.map.df      = inner_join(tract.map.points, tract.map@data, by="id")
 
   # and choroplethr requires a "region" column
-  tract.map.df$region = tract.map.df$GEOID
+  # calling as.numeric is the easiest way to handle leading 0's
+  tract.map.df$region = as.numeric(tract.map.df$GEOID)
   
   # choroplethr also wants a list of counties as unique numeric fips codes
   tract.map.df$county.fips.numeric = paste0(tract.map.df$STATEFP, tract.map.df$COUNTYFP)
@@ -52,9 +53,9 @@ TractChoropleth = R6Class("TractChoropleth",
   public = list(
     
     # initialize with the proper shapefile
-    initialize = function(state_fips, user.df)
+    initialize = function(state_name, user.df)
     {
-      tract.map = get_tract_map(state_fips)
+      tract.map = get_tract_map(state_name)
 
       super$initialize(tract.map, user.df)
       
@@ -122,9 +123,7 @@ tract_choropleth = function(df,
                             county_zoom   = NULL,
                             reference_map = FALSE)
 {
-  state_fips = get_state_fips_from_name(state_name)
-  
-  c = TractChoropleth$new(state_fips, df)
+  c = TractChoropleth$new(state_name, df)
   c$title  = title
   c$legend = legend
   c$set_num_colors(num_colors)
