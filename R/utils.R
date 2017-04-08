@@ -19,3 +19,17 @@ calculate_percent_change = function(df1, df2)
   
   df
 }
+
+#' Place two maps side by side
+#' 
+#' With an optional title. Especially useful for contrasting choropleth maps both with
+#' and without a reference map underneath.
+#' @param title An optional title
+#' @param map1 The first map
+#' @param map2 The second map
+#' @importFrom gridExtra grid.arrange
+#' @export
+double_map = function(map1, map2, title = "")
+{
+  grid.arrange(map1, map2, ncol=2, top = title)
+}

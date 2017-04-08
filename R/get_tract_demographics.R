@@ -1,7 +1,30 @@
 #' @importFrom acs acs.fetch geo.make
-get_tracts_in_state = function(state_fips)
+get_tracts_by_state = function(state_fips)
 {
   counties = acs.fetch(geography    = geo.make(state = state_fips, county = "*"), 
+                       table.number = "B01003",
+                       endyear      = 2015)
+  
+  geo.make(state  = state_fips, 
+           county = as.numeric(geography(counties)[[3]]), 
+           tract  = "*")
+}
+
+#' @importFrom acs acs.fetch geo.make
+get_tracts_by_state_and_county = function(state_fips, county_fips)
+{
+  stopifnot(!is.null(county_fips))
+  
+  # choroplethr requires users to use a numeric form of county fips codes.
+  # but acs package here requires the county argument here to be just the 
+  # 3 digit county part of the fips code.
+  # Manhattan is 61, not 36061
+  county_fips = as.character(county_fips)
+  len         = nchar(county_fips)
+  county_fips = substr(county_fips, len-2, len)
+  county_fips = as.numeric(county_fips)
+  
+  counties = acs.fetch(geography    = geo.make(state = state_fips, county = county_fips), 
                        table.number = "B01003",
                        endyear      = 2015)
   
@@ -16,6 +39,7 @@ get_tracts_in_state = function(state_fips)
 #' not Hispanic, Percent Black or African American not Hispanic, percent Asian not Hispanic,
 #' percent Hispanic all races, per-capita income, median rent and median age.
 #' @param state_name The name of the state. See ?state.regions for proper spelling and capitalization.
+#' @param county_fips An optional vector of county fips codes within the state. Useful to set because getting data on all tracts can be slow.
 #' @param endyear The end year for the survey
 #' @param span The span of the survey
 #' @references The choroplethr guide to Census data: http://www.arilamstein.com/open-source/choroplethr/mapping-us-census-data/
@@ -24,12 +48,17 @@ get_tracts_in_state = function(state_fips)
 #' @importFrom utils data
 #' @importFrom acs acs.fetch
 #' @export
-get_tract_demographics = function(state_name, endyear=2013, span=5)
+get_tract_demographics = function(state_name, county_fips = NULL, endyear=2013, span=5)
 {  
   state_fips = get_state_fips_from_name(state_name)
   
-  all.tracts = get_tracts_in_state(state_fips)
-  race.data = acs::acs.fetch(geography    = all.tracts, 
+  if (is.null(county_fips)) {
+    tracts = get_tracts_by_state(state_fips)
+  } else {
+    tracts = get_tracts_by_state_and_county(state_fips, county_fips)
+  }
+  
+  race.data = acs::acs.fetch(geography    = tracts, 
                              table.number = "B03002", 
                              col.names    = "pretty", 
                              endyear      = endyear, 
@@ -56,15 +85,15 @@ get_tract_demographics = function(state_name, endyear=2013, span=5)
   df_race = df_race[, c("region", "total_population", "percent_white", "percent_black", "percent_asian", "percent_hispanic")]
   
   # per capita income 
-  df_income = get_tract_acs_data(state_fips, "B19301", endyear=endyear, span=span)[[1]]   
+  df_income = get_tract_acs_data(tracts, "B19301", endyear=endyear, span=span)[[1]]   
   colnames(df_income)[[2]] = "per_capita_income"
   
   # median rent
-  df_rent = get_tract_acs_data(state_fips, "B25058", endyear=endyear, span=span)[[1]]  
+  df_rent = get_tract_acs_data(tracts, "B25058", endyear=endyear, span=span)[[1]]  
   colnames(df_rent)[[2]] = "median_rent"
   
   # median age
-  df_age = get_tract_acs_data(state_fips, "B01002", endyear=endyear, span=span, column_idx=1)[[1]]  
+  df_age = get_tract_acs_data(tracts, "B01002", endyear=endyear, span=span, column_idx=1)[[1]]  
   colnames(df_age)[[2]] = "median_age"
   
   df_demographics = merge(df_race        , df_income, all.x=TRUE)

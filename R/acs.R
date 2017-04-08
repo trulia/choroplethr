@@ -132,30 +132,9 @@ get_acs_data = function(tableId, map, endyear=2012, span=5, column_idx=-1, inclu
   list(df=df, title=title) # need to return 2 values here
 }
 
-#' Returns a list representing American Community Survey (ACS) estimates for Tracts in a state
-#'
-#' Given a state, ACS tableId, endyear and span. Prompts user for the column id if there 
-#' are multiple tables. The first element of the list is a data.frame with estimates. 
-#' The second element is the ACS title of the column.
-#' Requires the acs package to be installed, and a Census API Key to be set with the 
-#' acs's api.key.install function.  Census API keys can be obtained at http://api.census.gov/data/key_signup.html.
-#'
-#' @param state_fips The fips code of the state you're interested in
-#' @param tableId The id of an ACS table
-#' @param endyear The end year of the survey to use.  See acs.fetch (?acs.fetch) and http://1.usa.gov/1geFSSj for details.
-#' @param span The span of time to use.  See acs.fetch and http://1.usa.gov/1geFSSj for details.
-#' on the same longitude and latitude map to scale. This variable is only checked when the "states" variable is equal to all 50 states.
-#' @param column_idx The optional column id of the table to use. If not specified and the table has multiple columns,
-#' you will be prompted for a column id.
-#' @param include_moe Whether to include the 90 percent margin of error. 
-#' @export
-#' @seealso http://factfinder2.census.gov/faces/help/jsf/pages/metadata.xhtml?lang=en&type=survey&id=survey.en.ACS_ACS, which lists all ACS Surveys.
-#' @importFrom acs acs.fetch geography estimate geo.make
-get_tract_acs_data = function(state_fips, tableId, endyear=2012, span=5, column_idx=-1, include_moe=FALSE)
+get_tract_acs_data = function(tracts, tableId, endyear=2012, span=5, column_idx=-1, include_moe=FALSE)
 {
-  all.tracts = get_tracts_in_state(state_fips)
-  
-  acs.data = acs.fetch(geography    = all.tracts, 
+  acs.data = acs.fetch(geography    = tracts, 
                        table.number = tableId,
                        col.names    = "pretty", 
                        endyear      = endyear, 

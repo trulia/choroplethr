@@ -2,6 +2,8 @@ choroplethr 3.6.0
 ----------------------------------------------------------------
 -New function tract_choropleth makes choropleths of Census Tracts.
 -New function get_tract_demographics gets tract demographics by ACS survey year and span.
+-New function calculate_percent_change
+-New function double_map
 
 choroplethr 3.5.3
 ----------------------------------------------------------------

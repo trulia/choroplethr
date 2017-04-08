@@ -25,7 +25,8 @@ Imports:
     WDI,
     ggmap,
     RgoogleMaps,
-    tigris
+    tigris,
+    gridExtra
 Suggests:
     testthat,
     choroplethrMaps,
