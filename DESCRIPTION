@@ -52,4 +52,5 @@ Collate:
     'startup_messages.R'
     'state.R'
     'tracts.R'
+    'utils.R'
 RoxygenNote: 6.0.1
