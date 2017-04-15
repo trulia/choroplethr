@@ -34,8 +34,10 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in ?country.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param num_colors The number of colors to use on the map.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many colors. 
+#' @param num_colors The number of colors to use on the map.  A value of 0 uses 
+#' a divergent scale (useful for visualizing negative and positive numbers), A 
+#' value of 1 uses a continuous scale (useful for visualizing outliers), and a 
+#' value in [2, 9] will use that many quantiles. 
 #' @param zoom An optional vector of countries to zoom in on. Elements of this vector must exactly 
 #' match the names of countries as they appear in the "region" column of ?country.regions
 #' @examples

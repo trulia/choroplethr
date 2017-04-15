@@ -1,3 +1,9 @@
+choroplethr 3.6.1
+----------------------------------------------------------------
+-Setting num_colors=0 will use a divergent scale. Useful when looking at percent change maps, or 
+any maps that have both negative and positive values. Negative values appear red, 0 appears white
+and positive values appear blue.
+
 choroplethr 3.6.0
 ----------------------------------------------------------------
 -New function tract_choropleth makes choropleths of Census Tracts.

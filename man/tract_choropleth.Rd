@@ -16,8 +16,10 @@ tract_choropleth(df, state_name, title = "", legend = "", num_colors = 7,
 
 \item{legend}{An optional name for the legend.}
 
-\item{num_colors}{The number of colors on the map. A value of 1 
-will use a continuous scale. A value in [2, 9] will use that many colors.}
+\item{num_colors}{The number of colors to use on the map.  A value of 0 uses 
+a divergent scale (useful for visualizing negative and positive numbers), A 
+value of 1 uses a continuous scale (useful for visualizing outliers), and a 
+value in [2, 9] will use that many quantiles.}
 
 \item{tract_zoom}{An optional vector of tracts to zoom in on. Elements of this vector must exactly 
 match the names of tracts as they appear in the "region" column of the object returned from "get_tract_map".}

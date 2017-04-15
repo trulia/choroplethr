@@ -6,6 +6,18 @@
 #' 
 #' @param df1 A dataframe with columns named "region" and "value"
 #' @param df2 A dataframe with columns named "region" and "value"
+#' 
+#' @examples
+#' # load median age estimates from 2010 and 2015
+#' data(df_state_age_2010)
+#' data(df_state_age_2015)
+#' 
+#' df_age_diff = calculate_percent_change(df_state_age_2010, df_state_age_2015)
+#' state_choropleth(df_age_diff, 
+#'     title      = "Percent Change in Median Age, 2010-2015", 
+#'     legend     = "Percent Change", 
+#'     num_colors = 0)
+#' 
 #' @export
 calculate_percent_change = function(df1, df2)
 {

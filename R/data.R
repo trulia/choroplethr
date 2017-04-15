@@ -48,6 +48,26 @@ NULL
 #' @usage data(df_pop_state)
 NULL
 
+#' A data.frame containing median age estimates for US states in 2010
+#' 
+#' @name df_state_age_2010
+#' @docType data
+#' @references Taken from the US American Community Survey (ACS) 5 year estimates.
+#' 
+#' @keywords data
+#' @usage data(df_state_age_2010)
+NULL
+
+#' A data.frame containing median age estimates for US states in 2015
+#' 
+#' @name df_state_age_2015
+#' @docType data
+#' @references Taken from the US American Community Survey (ACS) 5 year estimates.
+#' 
+#' @keywords data
+#' @usage data(df_state_age_2015)
+NULL
+
 #' A data.frame containing all US presdiential election results from 1789 to 2012
 #' 
 #' Legend: 

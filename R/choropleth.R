@@ -212,11 +212,19 @@ Choropleth = R6Class("Choropleth",
     },
 
     #' @importFrom scales comma
+    #' @importFrom ggplot2 scale_fill_gradient2
     get_scale = function()
     {
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
+      } else if (private$num_colors == 0) {
+        min_value = min(self$choropleth.df$value, na.rm = TRUE)
+        max_value = max(self$choropleth.df$value, na.rm = TRUE)
+        stopifnot(!is.na(min_value) && !is.na(max_value))
+
+        scale_fill_gradient2(self$legend, labels=comma, na.value = "black", limits = c(min_value, max_value))
+
       } else if (private$num_colors == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm = TRUE)
@@ -329,7 +337,7 @@ Choropleth = R6Class("Choropleth",
       # first 2 tests with is.integer(num_colors)
       stopifnot(is.numeric(num_colors) 
                 && num_colors%%1 == 0 
-                && num_colors > 0 
+                && num_colors >= 0 
                 && num_colors < 10)
       
       private$num_colors = num_colors      
