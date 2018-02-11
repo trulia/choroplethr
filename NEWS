@@ -1,13 +1,83 @@
-choroplethr 2.2.0
+choroplethr 3.6.1
 ----------------------------------------------------------------
--Bug fix: zip_map wasn't working for zoom of HI or AK
--Bug fix: documentation of choroplethr_animate() was not working
+-Setting num_colors=0 will use a divergent scale. Useful when looking at percent change maps, or 
+any maps that have both negative and positive values. Negative values appear red, 0 appears white
+and positive values appear blue.
 
+choroplethr 3.6.0
+----------------------------------------------------------------
+-New function tract_choropleth makes choropleths of Census Tracts.
+-New function get_tract_demographics gets tract demographics by ACS survey year and span.
+-New function calculate_percent_change
+-New function double_map
+
+choroplethr 3.5.3
+----------------------------------------------------------------
+-Fix warnings that were introduced by latest version of ggplot2
+-Move documentation to my own site
+
+choroplethr 3.5.2
+----------------------------------------------------------------
+-Move "acs" package from Import to Depends. While I don't think that this should be
+necessary, it seems to be the only way to fix a bug I describe here: https://stat.ethz.ch/pipermail/r-package-devel/2016q1/000760.html
+
+choroplethr 3.5.1
+----------------------------------------------------------------
+-Bug fix: As of ggplot 2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+in the class declaration. Doing so will break binary builds. So now assign them
+in the constructor instead
+
+choroplethr 3.5.0
+----------------------------------------------------------------
+-New function admin1_region_choropleth lets you create admin 1 choropleths
+based on a list of admin 1 regions. This can span multiple countries and include subset of countries.
+-Function get_acs_data now has a parameter include_moe which, if true will
+return the 90% margins of error in the data frame.
+
+choroplethr 3.4.0
+----------------------------------------------------------------
+-Set reference_map=TRUE in admin1_choropleth to overlay the choropleth over
+a reference map taken from google maps.
+-Add startup messages designed to help users.
+
+choroplethr 3.3.1
+----------------------------------------------------------------
+-Compatability changes to support building with roxygen2 version 5.0.1.
+-Compatability changes to work with ggplot2 version 2.0.0.
+
+choroplethr 3.3.0
+----------------------------------------------------------------
+-Set reference_map=TRUE in state_choropleth and county_choropleth functions to overlay the choropleth over a reference map taken from google maps. The reference map is in black and white and the alpha of the choropleth is set to .5 by default.
+-The reference map code is in the base choropleth object, so you should be able to easily use it for other maps as well.
+
+choroplethr 3.2.0
+----------------------------------------------------------------
+-Default projection for all maps is now coord_quickmap, including insets of US maps.
+-Add ggplot_polygon member variable to base choropleth object, which makes it easy to remove borders from choropleth objects.
+-Add variable continental_us_states, which is a vector of continental us state names.
+
+choroplethr 3.1.0
+----------------------------------------------------------------
+-Bug fix: in get_acs_data, do not prompt user for column_idx if they
+already supply it.
+-function ?get_state_demographics returns 8 cached demographic variables from a given ACS
+-data.frame ?df_state_demographics caches the results of get_state_demograhpics for the 2013 5 year ACS
+-function ?get_county_demographics returns 8 cached demographic variables from a given ACS
+-data.frame ?df_county_demographics caches the results of get_county_demographics for the 2013 5 year ACS
+
+choroplethr 3.0.0
+----------------------------------------------------------------
+-All zip related functionality has been deprecated and moved to the choroplethrZip package, which is available here: https://github.com/arilamstein/choroplethrZip. 
+-Merge the county_choropleth and county_choropleth_zoom functions. The resulting function now has two zoom parameters: state_zoom and county_zoom.
+-Break the choroplethr_acs function into three separate functions: state_choropleth_acs, county_choropleth_acs and zip_choropleth_acs (located in choroplethrZip). This is because each function now has different zoom parameters, so it didn't make sense to have one function with a large number of parameters, many of which cannot be set for any given function call.
+-Rename "buckets" parameter to "num_colors" to clarity the meaning for the user. During development it made sense to think of assigning values to buckets. But I think that it's easier for users to just think about how many colors they want on the map, and then see in the comments that each color has an equal number of regions assigned to it. Also, "num_colors=1" has a more natural relationship to a continuous scale than "buckets=1".
+-Bug fix: documentation of choroplethr_animate() was not working
+-Deprecate get_acs_df in favor of get_acs_data
+-Export choropleth object.
 
 choroplethr 2.1.1
 ----------------------------------------------------------------
 -Bug fix: text for vignettes was for some reason not rebuilt into HTML.
-
 
 choroplethr 2.1.0
 ----------------------------------------------------------------

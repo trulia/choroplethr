@@ -34,23 +34,24 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in ?country.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors to use on the map.  A value of 0 uses 
+#' a divergent scale (useful for visualizing negative and positive numbers), A 
+#' value of 1 uses a continuous scale (useful for visualizing outliers), and a 
+#' value in [2, 9] will use that many quantiles. 
 #' @param zoom An optional vector of countries to zoom in on. Elements of this vector must exactly 
 #' match the names of countries as they appear in the "region" column of ?country.regions
-
 #' @examples
 #' # demonstrate default options
 #' data(df_pop_country)
 #' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates")
 #'
 #' # demonstrate continuous scale
-#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", buckets=1)
+#' country_choropleth(df_pop_country, "2012 World Bank Populate Estimates", num_colors=1)
 #'
 #' # demonstrate zooming
 #' country_choropleth(df_pop_country, 
 #'                    "2012 World Bank Population Estimates", 
-#'                    buckets=1,
+#'                    num_colors=1,
 #'                    zoom=c("united states of america", "canada", "mexico"))
 
 #' @export
@@ -60,12 +61,12 @@ CountryChoropleth = R6Class("CountryChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer ggplotGrob annotation_custom 
 #' @importFrom scales comma
 #' @importFrom grid unit grobTree
-country_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
+country_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL)
 {
   c = CountryChoropleth$new(df)
   c$title  = title
   c$legend = legend
-  c$set_buckets(buckets)
+  c$set_num_colors(num_colors)
   c$set_zoom(zoom)
   c$render()
 }

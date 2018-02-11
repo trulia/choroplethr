@@ -50,7 +50,7 @@ CountyChoropleth = R6Class("CountyChoropleth",
 )
 
 
-#' Create a choropleth of USA Counties with sensible defaults.
+#' Create a choropleth of US Counties
 #' 
 #' The map used is county.map in the choroplethrMaps package.  See country.regions
 #' in the choroplethrMaps package for an object which can help you coerce your regions
@@ -60,40 +60,53 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in county.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.  
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
-#' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
+#' @param num_colors The number of colors to use on the map.  A value of 0 uses 
+#' a divergent scale (useful for visualizing negative and positive numbers), A 
+#' value of 1 uses a continuous scale (useful for visualizing outliers), and a 
+#' value in [2, 9] will use that many quantiles. 
+#' @param state_zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.regions.
+#' @param county_zoom An optional vector of counties to zoom in on. Elements of this vector must exactly 
+#' match the names of counties as they appear in the "region" column of ?county.regions.
+#' @param reference_map If true, render the choropleth over a reference map from Google Maps.
 #' 
 #' @examples
 #' \dontrun{
-#' # demonstrate default parameters - visualization using 7 equally sized buckets
-#' data(df_pop_county)
-#' county_choropleth(df_pop_county, title="US 2012 County Population Estimates", legend="Population")
-#'
-#'#' # demonstrate continuous scale and zoom
+#' # default parameters
 #' data(df_pop_county)
 #' county_choropleth(df_pop_county, 
-#'                  title="US 2012 County Population Estimates", 
-#'                  legend="Population", 
-#'                  buckets=1, 
-#'                  zoom=c("california", "oregon", "washington"))
+#'                   title  = "US 2012 County Population Estimates", 
+#'                   legend = "Population")
+#'                   
+#' # zoom in on california and add a reference map
+#' county_choropleth(df_pop_county, 
+#'                   title         = "California County Population Estimates", 
+#'                   legend        = "Population",
+#'                   state_zoom    = "california",
+#'                   reference_map = TRUE)
 #'
-#' # demonstrate how choroplethr handles character and factor values
-#' # demonstrate user creating their own discretization of the input
+#' # continuous scale 
 #' data(df_pop_county)
-#' df_pop_county$str = ""
-#' for (i in 1:nrow(df_pop_county))
-#' {
-#'   if (df_pop_county[i,"value"] < 1000000)
-#'   {
-#'     df_pop_county[i,"str"] = "< 1M"
-#'   } else {
-#'     df_pop_county[i,"str"] = "> 1M"
-#'   }
-#' }
-#' df_pop_county$value = df_pop_county$str
-#' county_choropleth(df_pop_county, title="Which counties have more than 1M people?")
+#' county_choropleth(df_pop_county, 
+#'                  title      = "US 2012 County Population Estimates", 
+#'                  legend     = "Population", 
+#'                  num_colors = 1, 
+#'                  state_zoom = c("california", "oregon", "washington"))
+#'
+#' library(dplyr)
+#' library(choroplethrMaps)
+#' data(county.regions)
+#'
+#' # show the population of the 5 counties (boroughs) that make up New York City
+#' nyc_county_names = c("kings", "bronx", "new york", "queens", "richmond")
+#' nyc_county_fips = county.regions %>%
+#'   filter(state.name == "new york" & county.name %in% nyc_county_names) %>%
+#'   select(region)
+#' county_choropleth(df_pop_county, 
+#'                   title        = "Population of Counties in New York City",
+#'                   legend       = "Population",
+#'                   num_colors   = 1,
+#'                   county_zoom = nyc_county_fips$region)
 #' }
 #' @export
 #' @importFrom Hmisc cut2
@@ -102,12 +115,40 @@ CountyChoropleth = R6Class("CountyChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-county_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
+county_choropleth = function(df, title="", legend="", num_colors=7, state_zoom=NULL, county_zoom=NULL, reference_map=FALSE)
 {
-  c = CountyChoropleth$new(df)
-  c$title  = title
-  c$legend = legend
-  c$set_buckets(buckets)
-  c$set_zoom(zoom)
-  c$render()
+  # user can only zoom in by one of the zoom options
+  if (!is.null(state_zoom) && !is.null(county_zoom))
+  {
+    stop("You cannnot set state_zoom and county_zoom at the same time.")
+  }
+
+  if (!is.null(county_zoom))
+  {
+    c = CountyZoomChoropleth$new(df)
+    c$title  = title
+    c$legend = legend
+    c$set_num_colors(num_colors)
+    c$set_zoom(county_zoom)
+    if (reference_map) {
+      c$render_with_reference_map()
+    } else {
+      c$render()
+    }
+  } else {
+    c = CountyChoropleth$new(df)
+    c$title  = title
+    c$legend = legend
+    c$set_num_colors(num_colors)
+    c$set_zoom(state_zoom)
+    if (reference_map) {
+      if (is.null(state_zoom))
+      {
+        stop("Reference maps do not currently work with maps that have insets, such as maps of the 50 US States.")
+      }
+      c$render_with_reference_map()
+    } else {
+      c$render()
+    }
+  }
 }

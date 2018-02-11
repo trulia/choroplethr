@@ -1,20 +1,31 @@
+#' The base Choropleth object.
 #' @importFrom R6 R6Class
 #' @importFrom scales comma
-#' @importFrom ggplot2 scale_color_continuous
+#' @importFrom ggplot2 scale_color_continuous coord_quickmap coord_map scale_x_continuous scale_y_continuous
+#' @importFrom ggmap get_map ggmap
+#' @importFrom RgoogleMaps MaxZoom
+#' @importFrom stringr str_extract_all
+#' @export
 Choropleth = R6Class("Choropleth", 
                      
   public = list(
     # the key objects for this class
-    user.df       = NULL, # input from user
-    map.df        = NULL, # geometry of the map
-    choropleth.df = NULL, # result of binding user data with our map data
+    user.df        = NULL, # input from user
+    map.df         = NULL, # geometry of the map
+    choropleth.df  = NULL, # result of binding user data with our map data
             
-    title        = "",    # title for map
-    legend       = "",    # title for legend
-    warn         = TRUE,  # warn user on clipped or missing values                      
-    ggplot_scale = NULL,  # override default scale.
-                          # warning, you need to set "drop=FALSE" for insets to render correctly
+    title          = "",    # title for map
+    legend         = "",    # title for legend
+    warn           = TRUE,  # warn user on clipped or missing values                      
+    ggplot_scale   = NULL,  # override default scale.
+                            # warning, you need to set "drop=FALSE" for insets to render correctly
     
+    # as of ggplot v2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+    # in the class declaration. Doing so will break binary builds, so assign them
+    # in the constructor instead
+    projection     = NULL, 
+    ggplot_polygon = NULL, 
+      
     # a choropleth map is defined by these two variables
     # a data.frame of a map
     # a data.frame that expresses values for regions of each map
@@ -55,6 +66,12 @@ Choropleth = R6Class("Choropleth",
         }
       }
       
+      # as of ggplot v2.1.0, R6 class variables cannot be assigned to ggplot2 objects
+      # in the class declaration. Doing so will break binary builds, so assign them
+      # in the constructor instead
+      self$projection     = coord_quickmap()
+      self$ggplot_polygon = geom_polygon(aes(fill = value), color = "dark grey", size = 0.2)
+      
     },
 
     render = function() 
@@ -62,12 +79,92 @@ Choropleth = R6Class("Choropleth",
       self$prepare_map()
       
       ggplot(self$choropleth.df, aes(long, lat, group = group)) +
-        geom_polygon(aes(fill = value), color = "dark grey", size = 0.2) + 
+        self$ggplot_polygon + 
         self$get_scale() +
         self$theme_clean() + 
-        ggtitle(self$title)
+        ggtitle(self$title) + 
+        self$projection
     },
-        
+
+    # left
+    get_min_long = function() 
+    {
+      min(self$choropleth.df$long)
+    },
+    
+    # right 
+    get_max_long = function() 
+    {
+      max(self$choropleth.df$long) 
+    },
+    
+    # bottom 
+    get_min_lat = function() 
+    {
+      min(self$choropleth.df$lat) 
+    },
+    
+    # top
+    get_max_lat = function() 
+    {
+      max(self$choropleth.df$lat) 
+    },
+    
+    get_bounding_box = function(long_margin_percent, lat_margin_percent)
+    {
+      c(self$get_min_long(), # left
+        self$get_min_lat(),  # bottom
+        self$get_max_long(), # right
+        self$get_max_lat())  # top
+    },
+    
+    get_x_scale = function()
+    {
+      scale_x_continuous(limits = c(self$get_min_long(), self$get_max_long()))
+    },
+    
+    get_y_scale = function()
+    {
+      scale_y_continuous(limits = c(self$get_min_lat(), self$get_max_lat()))
+    },
+    
+    get_reference_map = function()
+    {
+      # note: center is (long, lat) but MaxZoom is (lat, long)
+      
+      center = c(mean(self$choropleth.df$long), 
+                 mean(self$choropleth.df$lat))
+
+      max_zoom = MaxZoom(range(self$choropleth.df$lat), 
+                         range(self$choropleth.df$long))
+      
+      get_map(location = center,
+              zoom     = max_zoom,
+              color    = "bw")  
+    },
+    
+    get_choropleth_as_polygon = function(alpha)
+    {
+      geom_polygon(data = self$choropleth.df,
+                   aes(x = long, y = lat, fill = value, group = group), alpha = alpha) 
+    },
+    
+    render_with_reference_map = function(alpha = 0.5)
+    {
+      self$prepare_map()
+
+      reference_map = self$get_reference_map()
+      
+      ggmap(reference_map) +  
+        self$get_choropleth_as_polygon(alpha) + 
+        self$get_scale() +
+        self$get_x_scale() +
+        self$get_y_scale() +
+        self$theme_clean() + 
+        ggtitle(self$title) + 
+        coord_map()
+    },
+    
     # support e.g. users just viewing states on the west coast
     clip = function() {
       stopifnot(!is.null(private$zoom))
@@ -77,17 +174,17 @@ Choropleth = R6Class("Choropleth",
     },
     
     # for us, discretizing values means 
-    # 1. breaking the values into buckets equal intervals
+    # 1. assigning each value to one of num_colors colors
     # 2. formatting the intervals e.g. with commas
     #' @importFrom Hmisc cut2    
     discretize = function() 
     {
-      if (is.numeric(self$user.df$value) && private$buckets > 1) {
+      if (is.numeric(self$user.df$value) && private$num_colors > 1) {
         
         # if cut2 uses scientific notation,  our attempt to put in commas will fail
         scipen_orig = getOption("scipen")
         options(scipen=999)
-        self$user.df$value = cut2(self$user.df$value, g = private$buckets)
+        self$user.df$value = cut2(self$user.df$value, g = private$num_colors)
         options(scipen=scipen_orig)
         
         levels(self$user.df$value) = sapply(levels(self$user.df$value), self$format_levels)
@@ -113,14 +210,22 @@ Choropleth = R6Class("Choropleth",
       self$discretize() # discretize the input. normally people don't want a continuous scale
       self$bind() # bind the input values to the map values
     },
-    
+
     #' @importFrom scales comma
+    #' @importFrom ggplot2 scale_fill_gradient2
     get_scale = function()
     {
       if (!is.null(self$ggplot_scale)) 
       {
         self$ggplot_scale
-      } else if (private$buckets == 1) {
+      } else if (private$num_colors == 0) {
+        min_value = min(self$choropleth.df$value, na.rm = TRUE)
+        max_value = max(self$choropleth.df$value, na.rm = TRUE)
+        stopifnot(!is.na(min_value) && !is.na(max_value))
+
+        scale_fill_gradient2(self$legend, labels=comma, na.value = "black", limits = c(min_value, max_value))
+
+      } else if (private$num_colors == 1) {
         
         min_value = min(self$choropleth.df$value, na.rm = TRUE)
         max_value = max(self$choropleth.df$value, na.rm = TRUE)
@@ -135,8 +240,8 @@ Choropleth = R6Class("Choropleth",
       }
     },
     
-    #' Removes axes, margins and sets the background to white.
-    #' This code, with minor modifications, comes from section 13.19 
+    # Removes axes, margins and sets the background to white.
+    # This code, with minor modifications, comes from section 13.19 
     # "Making a Map with a Clean Background" of "R Graphics Cookbook" by Winston Chang.  
     # Reused with permission. 
     theme_clean = function()
@@ -147,8 +252,7 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        axis.ticks.margin = unit(0, "cm"),
-        panel.margin      = unit(0, "lines"),
+        panel.spacing     = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
@@ -164,33 +268,31 @@ Choropleth = R6Class("Choropleth",
         panel.background  = element_blank(),
         panel.grid        = element_blank(),
         axis.ticks.length = unit(0, "cm"),
-        axis.ticks.margin = unit(0, "cm"),
-        panel.margin      = unit(0, "lines"),
+        panel.spacing     = unit(0, "lines"),
         plot.margin       = unit(c(0, 0, 0, 0), "lines"),
         complete          = TRUE
       )
     },
   
-    #' Make the output of cut2 a bit easier to read
-    #' 
-    #' Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.
-    #' 
-    #' @param x A factor with levels created via Hmisc::cut2.
-    #' @param nsep A separator which you wish to use.  Defaults to " to ".
-    #' 
-    #' @export
-    #' @examples
-    #' data(df_pop_state)
-    #'
-    #' x = Hmisc::cut2(df_pop_state$value, g=3)
-    #' levels(x)
-    #' # [1] "[ 562803, 2851183)" "[2851183, 6353226)" "[6353226,37325068]"
-    #' levels(x) = sapply(levels(x), format_levels)
-    #' levels(x)
-    #' # [1] "[562,803 to 2,851,183)"    "[2,851,183 to 6,353,226)"  "[6,353,226 to 37,325,068]"
-    #'
-    #' @seealso \url{http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/}, which this implementation is based on.
-    #' @importFrom stringr str_extract_all
+    # Make the output of cut2 a bit easier to read
+    # 
+    # Adds commas to numbers, removes unnecessary whitespace and allows an arbitrary separator.
+    # 
+    # @param x A factor with levels created via Hmisc::cut2.
+    # @param nsep A separator which you wish to use.  Defaults to " to ".
+    # 
+    # @export
+    # @examples
+    # data(df_pop_state)
+    #
+    # x = Hmisc::cut2(df_pop_state$value, g=3)
+    # levels(x)
+    # # [1] "[ 562803, 2851183)" "[2851183, 6353226)" "[6353226,37325068]"
+    # levels(x) = sapply(levels(x), format_levels)
+    # levels(x)
+    # # [1] "[562,803 to 2,851,183)"    "[2,851,183 to 6,353,226)"  "[6,353,226 to 37,325,068]"
+    #
+    # @seealso \url{http://stackoverflow.com/questions/22416612/how-can-i-get-cut2-to-use-commas/}, which this implementation is based on.
     format_levels = function(x, nsep=" to ") 
     {
       n = str_extract_all(x, "[-+]?[0-9]*\\.?[0-9]+")[[1]]  # extract numbers
@@ -226,24 +328,25 @@ Choropleth = R6Class("Choropleth",
         private$zoom = zoom
       }
     },
+
     get_zoom = function() { private$zoom },
     
-    set_buckets = function(buckets)
+    set_num_colors = function(num_colors)
     {
       # if R's ?is.integer actually tested if a value was an integer, we could replace the 
-      # first 2 tests with is.integer(buckets)
-      stopifnot(is.numeric(buckets) 
-                && buckets%%1 == 0 
-                && buckets > 0 
-                && buckets < 10)
+      # first 2 tests with is.integer(num_colors)
+      stopifnot(is.numeric(num_colors) 
+                && num_colors%%1 == 0 
+                && num_colors >= 0 
+                && num_colors < 10)
       
-      private$buckets = buckets      
+      private$num_colors = num_colors      
     }
   ),
   
   private = list(
-    zoom    = NULL, # a vector of regions to zoom in on. if NULL, show all
-    buckets = 7,     # number of equally-sized buckets for scale. if 1 then use a continuous scale
+    zoom = NULL, # a vector of regions to zoom in on. if NULL, show all
+    num_colors = 7,     # number of colors to use on the map. if 1 then use a continuous scale
     has_invalid_regions = FALSE
   )
 )

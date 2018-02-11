@@ -44,7 +44,7 @@ StateChoropleth = R6Class("StateChoropleth",
 )
 
 
-#' Create a choropleth of US States with sensible defaults.
+#' Create a choropleth of US States
 #' 
 #' The map used is state.map in the package choroplethrMaps.  See state.regions in 
 #' the choroplethrMaps package for a data.frame that can help you coerce your regions 
@@ -54,26 +54,39 @@ StateChoropleth = R6Class("StateChoropleth",
 #' the "region" column must exactly match how regions are named in the "region" column in state.map.
 #' @param title An optional title for the map.  
 #' @param legend An optional name for the legend.
-#' @param buckets The number of equally sized buckets to places the values in.  A value of 1 
-#' will use a continuous scale, and a value in [2, 9] will use that many buckets. 
+#' @param num_colors The number of colors to use on the map.  A value of 0 uses 
+#' a divergent scale (useful for visualizing negative and positive numbers), A 
+#' value of 1 uses a continuous scale (useful for visualizing outliers), and a 
+#' value in [2, 9] will use that many quantiles. 
 #' @param zoom An optional vector of states to zoom in on. Elements of this vector must exactly 
 #' match the names of states as they appear in the "region" column of ?state.regions.
-#' 
+#' @param reference_map If true, render the choropleth over a reference map from Google Maps.
 #' @examples
-#' # demonstrate default parameters - visualization using 7 equally sized buckets
-#' data(df_pop_state)
-#' state_choropleth(df_pop_state, title="US 2012 State Population Estimates", legend="Population")
-#'
-#' # demonstrate continuous scale and zoom
+#' \dontrun{
+#' # default parameters
 #' data(df_pop_state)
 #' state_choropleth(df_pop_state, 
-#'                  title="US 2012 State Population Estimates", 
-#'                  legend="Population", 
-#'                  buckets=1,
-#'                  zoom=c("california", "oregon", "washington"))
+#'                  title  = "US 2012 State Population Estimates", 
+#'                  legend = "Population")
+#'
+#' # choropleth over reference map of continental usa
+#' data(continental_us_states)
+#' state_choropleth(df_pop_state, 
+#'                  title         = "US 2012 State Population Estimates",
+#'                  legend        = "Population",
+#'                  zoom          = continental_us_states, 
+#'                  reference_map = TRUE)
+#'
+#' # continuous scale and zoom
+#' data(df_pop_state)
+#' state_choropleth(df_pop_state, 
+#'                  title      = "US 2012 State Population Estimates", 
+#'                  legend     = "Population", 
+#'                  num_colors = 1,
+#'                  zoom       = c("california", "oregon", "washington"))
 #' 
-#' # demonstrate how choroplethr handles character and factor values
 #' # demonstrate user creating their own discretization of the input
+#' # demonstrate how choroplethr handles character and factor values
 #' data(df_pop_state)
 #' df_pop_state$str = ""
 #' for (i in 1:nrow(df_pop_state))
@@ -86,8 +99,9 @@ StateChoropleth = R6Class("StateChoropleth",
 #'   }
 #' }
 #' df_pop_state$value = df_pop_state$str
-#' state_choropleth(df_pop_state, title="Which states have less than 1M people?")
-#' 
+#' state_choropleth(df_pop_state, title = "Which states have less than 1M people?")
+#'
+#' }
 #' @export
 #' @importFrom Hmisc cut2
 #' @importFrom stringr str_extract_all
@@ -95,12 +109,20 @@ StateChoropleth = R6Class("StateChoropleth",
 #' @importFrom ggplot2 scale_fill_continuous scale_colour_brewer
 #' @importFrom scales comma
 #' @importFrom grid unit
-state_choropleth = function(df, title="", legend="", buckets=7, zoom=NULL)
+state_choropleth = function(df, title="", legend="", num_colors=7, zoom=NULL, reference_map = FALSE)
 {
   c = StateChoropleth$new(df)
   c$title  = title
   c$legend = legend
-  c$set_buckets(buckets)
+  c$set_num_colors(num_colors)
   c$set_zoom(zoom)
-  c$render()
+  if (reference_map) {
+    if (is.null(zoom))
+    {
+      stop("Reference maps do not currently work with maps that have insets, such as maps of the 50 US States.")
+    }
+    c$render_with_reference_map()
+  } else {
+    c$render()
+  }
 }
